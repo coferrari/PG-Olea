@@ -41,6 +41,16 @@ const { Brand, Category, OrderDetail, Product, User } = sequelize.models;
 
 // Aca vendrian las relaciones
 
+User.hasMany(OrderDetail);
+OrderDetail.belongsTo(User);
+OrderDetail.belongsToMany(Product, { through: "OrderD_Product" });
+Product.belongsToMany(OrderDetail, { through: "OrderD_Product" });
+Brand.hasMany(Product);
+Product.belongsTo(Brand);
+Category.hasMany(Product);
+Product.belongsTo(Category);
+
+
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
   conn: sequelize, // para importart la conexión { conn } = require('./db.js');
