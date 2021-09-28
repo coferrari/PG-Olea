@@ -13,7 +13,7 @@ export function Search () {
       }
 
     const handleClick = function() {
-        history.push('URL DE LOS RESULTADOS DEL SEARCH');
+        history.push(`/products/${input.name}`);
     }
 
 
