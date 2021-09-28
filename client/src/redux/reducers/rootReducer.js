@@ -1,8 +1,9 @@
 import { combineReducers } from 'redux';
 // importar reducers
+import categoryFilter from './categoryReducer';
 
 const rootReducer = combineReducers({
-    // aca irian los nombres de los reducers
+    categoryFilter,
 });
 
 export default rootReducer;
