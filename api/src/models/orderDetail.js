@@ -18,7 +18,7 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    SKU: {
+    Status: {
       type: DataTypes.STRING,
       allowNull: false,
     },

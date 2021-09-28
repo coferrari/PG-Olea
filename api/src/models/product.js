@@ -27,5 +27,21 @@ module.exports = (sequelize) => {
       type: DataTypes.DECIMAL,
       allowNull: false,
     },
+    image: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    description: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    rating: {
+      type: DataTypes.DECIMAL,
+      allowNull: false,
+    },
+    SKU: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
   });
 };
