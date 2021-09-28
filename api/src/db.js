@@ -41,7 +41,7 @@ const { Brand, Category, OrderDetail, Product, User } = sequelize.models;
 
 // Aca vendrian las relaciones
 
-User.hasOne(OrderDetail);
+User.hasMany(OrderDetail);
 OrderDetail.belongsTo(User);
 //
 OrderDetail.belongsToMany(Product, { through: "OrderD_Product" });

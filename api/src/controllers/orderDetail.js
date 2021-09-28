@@ -56,7 +56,22 @@ class orderDetailModel extends Modelo {
     }
   };
 
-  createOrder = async (req, res, next) => {};
+  filterByStatus = async (req, res, next) => {
+    const { status } = req.params;
+
+    if (status) {
+      const order = await this.model.findAll({
+        where: {
+          status,
+        },
+      });
+      if (order.length >= 1) {
+        res.status(200).json(order);
+      } else {
+        res.status(400).send({ error: err });
+      }
+    }
+  };
 }
 
 const orderDetailControllers = new orderDetailModel(orderDetail);
