@@ -18,7 +18,7 @@ class orderDetailModel extends Modelo {
         });
         res.status(200).send(orderStatus);
       } catch (err) {
-        next(err);
+        res.status(400).send({ error: err });
       }
     } else if (status === "inactive") {
       try {
@@ -27,7 +27,31 @@ class orderDetailModel extends Modelo {
         });
         res.status(200).send(orderStatus);
       } catch (err) {
-        next(err);
+        res.status(400).send({ error: err });
+      }
+    }
+  };
+
+  orderByDate = async (req, res, next) => {
+    const { type } = req.query;
+
+    if (type === "ASC") {
+      try {
+        const orderDate = await this.model.findAll({
+          order: [["createdAt", "ASC"]],
+        });
+        res.status(200).send(orderDate);
+      } catch (err) {
+        res.status(400).send({ error: err });
+      }
+    } else if (type === "DES") {
+      try {
+        const orderDate = await this.model.findAll({
+          order: [["createdAt", "DESC"]],
+        });
+        res.status(200).send(orderDate);
+      } catch (err) {
+        res.status(400).send({ error: err });
       }
     }
   };

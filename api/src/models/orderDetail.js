@@ -14,11 +14,7 @@ module.exports = (sequelize) => {
       type: DataTypes.DECIMAL,
       allowNull: false,
     },
-    Quantity: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    Status: {
+    status: {
       type: DataTypes.STRING,
       allowNull: false,
     },
