@@ -1,6 +1,2 @@
-const types = {
-    GET_PRODUCTS: 'GET_PRODUCTS',
-    SEARCH_PRODUCTS: 'SEARCH_PRODUCTS'
-}
-
-export default types; 
+export const GET_PRODUCTS = 'GET_PRODUCTS'; 
+export const SEARCH_PRODUCTS = 'SEARCH_PRODUCTS';
