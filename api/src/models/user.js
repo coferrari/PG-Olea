@@ -30,5 +30,9 @@ module.exports = (sequelize) => {
       type: DataTypes.BOOLEAN,
       allowNull: false,
     },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    }
   });
 };
