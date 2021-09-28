@@ -1,6 +1,6 @@
 import { GET_PRODUCTS } from './types';
 import axios from 'axios';
-import { GET_PRODUCTS_URL, SEARCH_PRODUCTS } from '../../consts';
+import { GET_PRODUCTS_URL, SEARCH_PRODUCTS_URL } from '../../consts';
 
 
 
@@ -16,9 +16,9 @@ export function getProducts() {
     }
 }
 
-export function searchProducts() {
+export function searchProducts(name) {
     return function (dispatch) {
-        return axios.get(SEARCH_PRODUCTS_URL)
+        return axios.get(SEARCH_PRODUCTS_URL + name)
         .then((products) => {
             dispatch ({
                 type: GET_PRODUCTS,
