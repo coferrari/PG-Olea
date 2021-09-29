@@ -21,7 +21,7 @@ export default function SelectCategory(){
         <div>
             <select onChange={(e) => handleCategorySelect(e.target.value)}>
                 <option disabled selected hidden>Category...</option>
-                {categories.map(c => <option value={c.id}>{c.NameCategory}</option>)}
+                {categories?.map(c => <option value={c.id}>{c.NameCategory}</option>)}
             </select>
         </div>
     );
