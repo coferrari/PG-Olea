@@ -3,7 +3,7 @@ const { encryptPassword, comparePassword } = require("../helpers/index");
 const jwt = require("jsonwebtoken");
 const userFunction = {};
 
-userFunction.register = async (req, res) => {
+userFunction.register = async (req, res, next) => {
   try {
     const { username, password, email } = req.body;
     const encryptedPassword = await encryptPassword(password);
@@ -18,7 +18,7 @@ userFunction.register = async (req, res) => {
     }
     return res.send("Este usuario existe en la base de datos");
   } catch (err) {
-    res.status(400).send(err.message);
+    next(err);
   }
 };
 userFunction.login = async (req, res, next) => {

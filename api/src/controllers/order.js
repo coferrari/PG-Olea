@@ -18,7 +18,7 @@ class OrderModel extends Modelo {
         });
         res.status(200).send(orderStatus);
       } catch (err) {
-        res.status(400).send({ error: err });
+        next(err);
       }
     } else if (status === "inactive") {
       try {
@@ -27,7 +27,7 @@ class OrderModel extends Modelo {
         });
         res.status(200).send(orderStatus);
       } catch (err) {
-        res.status(400).send({ error: err });
+        next(err);
       }
     }
   };
@@ -51,7 +51,7 @@ class OrderModel extends Modelo {
         });
         res.status(200).send(orderDate);
       } catch (err) {
-        res.status(400).send({ error: err });
+        next(err);
       }
     }
   };
