@@ -1,9 +1,9 @@
-const { orderDetail } = require("../db.js");
+const { Order } = require("../db.js");
 const Modelo = require("./index.js");
 
 let id = 0;
 
-class orderDetailModel extends Modelo {
+class OrderModel extends Modelo {
   constructor(model) {
     super(model);
   }
@@ -74,6 +74,6 @@ class orderDetailModel extends Modelo {
   };
 }
 
-const orderDetailControllers = new orderDetailModel(orderDetail);
+const OrderControllers = new OrderModel(Order);
 
-module.exports = orderDetailControllers;
+module.exports = OrderControllers;
