@@ -20,10 +20,26 @@
 
 const server = require("./src/app.js");
 const { conn } = require("./src/db.js");
+const marcas = require("./json/marcas.js");
+const categorias = require("./json/categorias");
 
+const axios = require("axios");
 
 // Syncing all the models at once.
 conn.sync({ force: true }).then(() => {
+  //Posteo todas las marcas y categorias
+  for (let i = 0; i < marcas.length; i++) {
+    const post = axios.post("http://localhost:3001/api/brand", marcas[i]);
+    post.then();
+  }
+  for (let i = 0; i < categorias.length; i++) {
+    const post = axios.post(
+      "http://localhost:3001/api/category",
+      categorias[i]
+    );
+    post.then();
+  }
+
   server.listen(3001, () => {
     console.log("%s listening at 3001"); // eslint-disable-line no-console
   });
