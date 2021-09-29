@@ -1,4 +1,4 @@
-import { CATEGORY_FILTER, ALL_CATEGORIES } from '../actions/index';
+import { CATEGORY_FILTER, ALL_CATEGORIES } from '../actions/types';
 
 const initialState = {
     categories: [],
