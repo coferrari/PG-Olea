@@ -1,7 +1,7 @@
 import { SEARCH_PRODUCTS } from '../actions/types';
 
 const initialState = {
-    searchedProducts = []
+    searchedProducts : []
 }
 
 
