@@ -9,6 +9,9 @@ const router = Router();
 // Ejemplo: router.use('/auth', authRouter);
 router.get("/", productControllers.getAll);
 router.get("/:id", productControllers.getByID);
+router.get("/orderByPrice/:price", productControllers.orderByPrice)
+router.get("/orderByName/:name", productControllers.orderByName)
+router.get("/orderByRating/:rating", productControllers.orderByRating)
 router.post("/", productControllers.create);
 router.put("/:id", productControllers.update);
 router.delete("/:id", productControllers.delete);
