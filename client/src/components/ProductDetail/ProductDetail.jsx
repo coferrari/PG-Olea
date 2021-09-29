@@ -16,6 +16,7 @@ export function ProductDetail () {
         <div>
             <img src={product?.image} alt='' />
             <span>{product?.name}</span>
+            <span>{product?.price}</span>
             <span>{product?.description}</span>
             <span>{product?.rating}</span>
         </div>
