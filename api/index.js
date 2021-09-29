@@ -22,6 +22,7 @@ const server = require("./src/app.js");
 const { conn } = require("./src/db.js");
 const marcas = require("./json/marcas.js");
 const categorias = require("./json/categorias");
+const productos = require("./json/productos");
 
 const axios = require("axios");
 
@@ -38,6 +39,16 @@ conn.sync({ force: true }).then(() => {
       categorias[i]
     );
     post.then();
+  }
+
+  for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < productos.length; i++) {
+      const post = axios.post(
+        "http://localhost:3001/api/product",
+        productos[i]
+      );
+      post.then();
+    }
   }
 
   server.listen(3001, () => {
