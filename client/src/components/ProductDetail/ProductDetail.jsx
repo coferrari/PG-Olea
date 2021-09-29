@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { getProductDetail } from '../../redux/actions/index';
 
 export function ProductDetail () {
     const dispatch = useDispatch();
@@ -8,7 +9,7 @@ export function ProductDetail () {
     const product = useSelector(state => state.productDetail);
 
     useEffect(() => {
-        dispatch(searchProducts(id))
+        dispatch(getProductDetail(id))
     }, [dispatch, id])
 
     return (
