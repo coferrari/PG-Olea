@@ -5,19 +5,11 @@ import { Product } from '../Product/Product';
 
 
 export function Products({products}) {
-    const dispatch = useDispatch();
-    const products = useSelector(state => state.products);
-
-
-    useEffect(() => {
-        dispatch(getProducts());
-      }, [dispatch]);
-
       
     return (
        <div>
            {products.map((p) => {
-               return <Product product={p} /> 
+               return <Product id={p.id} name={p.name} image={p.image} price={p.price} /> 
            })}
        </div>
     )
