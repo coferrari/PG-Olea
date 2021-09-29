@@ -1,8 +1,9 @@
 const { User } = require("../db.js");
-const encryptPassword = require("../helpers/index");
+const { encryptPassword, comparePassword } = require("../helpers/index");
+const jwt = require("jsonwebtoken");
 const userFunction = {};
 
-userFunction.signUp = async (req, res) => {
+userFunction.register = async (req, res) => {
   try {
     const { username, password, email } = req.body;
     const encryptedPassword = await encryptPassword(password);
@@ -19,5 +20,24 @@ userFunction.signUp = async (req, res) => {
   } catch (err) {
     res.status(400).send(err.message);
   }
+};
+userFunction.login = async (req, res, next) => {
+  const { email, password } = req.body;
+  const emailFind = await User.findOne({ where: { email } });
+  if (emailFind === null) return res.send("email no encontrado");
+  const compared = await comparePassword(password, emailFind.password);
+  if (compared === true) {
+    const token = jwt.sign(
+      {
+        username: emailFind.username,
+      },
+      process.env.TOKEN_SECRET
+    );
+    return res.header("auth-token", token).json({
+      error: null,
+      data: { token },
+    });
+  }
+  return res.send("password incorrecta");
 };
 module.exports = userFunction;
