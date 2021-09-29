@@ -73,6 +73,7 @@ class ProductModel extends Modelo {
             }
         }
     }
+
 }
 
 const productControllers = new ProductModel(Product);
