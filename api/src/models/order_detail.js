@@ -10,15 +10,19 @@ module.exports = (sequelize) => {
       primaryKey: true,
       autoIncrement: true,
     },
-    price: {
-      type: DataTypes.DECIMAL,
-      allowNull: false,
-    },
-    Quantity: {
+    productName: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    Status: {
+    price: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    quantity: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    image: {
       type: DataTypes.STRING,
       allowNull: false,
     },
