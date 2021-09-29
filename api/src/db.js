@@ -13,6 +13,7 @@ const sequelize = dbPassword
       logging: false,
       native: false,
     });
+
 const basename = path.basename(__filename);
 
 const modelDefiners = [];
@@ -54,9 +55,13 @@ Order.hasMany(OrderDetail);
 //
 Brand.hasMany(Product);
 Product.belongsTo(Brand);
-//
+
+Category.hasMany(Product);
+Product.belongsTo(Category);
+
 Category.belongsToMany(Product, { through: "Product_Category" });
 Product.belongsToMany(Category, { through: "Product_Category" });
+
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

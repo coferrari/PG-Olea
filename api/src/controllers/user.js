@@ -40,4 +40,20 @@ userFunction.login = async (req, res, next) => {
   }
   return res.send("password incorrecta");
 };
+userFunction.changePassword = async (req, res, next) => {
+  const { email, password } = req.body;
+  const user = await User.findOne({ where: { email } });
+  const newPasswordEncrypted = await encryptPassword(password);
+  user.password = newPasswordEncrypted;
+  res.send("nueva contraseña guardada");
+};
+userFunction.getAll = async (req, res, next) => {
+  const users = await User.findAll();
+  try {
+    res.send(users);
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
+};
+
 module.exports = userFunction;

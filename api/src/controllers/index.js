@@ -44,7 +44,6 @@ class Modelo {
 
   delete = (req, res, next) => {
     const { id } = req.params;
-
     this.model
       .destroy({
         where: {

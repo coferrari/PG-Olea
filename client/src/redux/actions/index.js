@@ -1,7 +1,6 @@
-import { GET_PRODUCTS } from './types';
 import axios from 'axios';
-import { GET_PRODUCTS_URL, SEARCH_PRODUCTS_URL } from '../../consts';
-
+import { GET_PRODUCTS, SEARCH_PRODUCTS, GET_PRODUCT_DETAIL, CATEGORY_FILTER, ALL_CATEGORIES} from './types';
+import { GET_PRODUCTS_URL, SEARCH_PRODUCTS_URL, GET_PRODUCT_DETAIL_URL, CATEGORY_URL } from '../../consts';
 
 
 export function getProducts() {
@@ -21,9 +20,49 @@ export function searchProducts(name) {
         return axios.get(SEARCH_PRODUCTS_URL + name)
         .then((products) => {
             dispatch ({
-                type: GET_PRODUCTS,
+                type: SEARCH_PRODUCTS,
                 payload: products.data
             })
         })
+    }
+}
+
+export function getProductDetail(id) {
+    return function (dispatch) {
+        return axios.get(GET_PRODUCT_DETAIL_URL + id)
+        .then((product) => {
+            dispatch ({
+                type: GET_PRODUCT_DETAIL,
+                payload: product.data
+            })
+        })
+    }
+}
+
+export function getProductsByCategory(id){
+    return function(dispatch){
+        return axios.get(CATEGORY_URL + id)
+        .then(
+            (products) => {
+                dispatch({
+                    type: CATEGORY_FILTER,
+                    payload: products.data
+                })
+            }
+        )
+    }
+}
+
+export function getCategories(){
+    return function(dispatch){
+        return axios.get(CATEGORY_URL)
+        .then(
+            (categories) => {
+                dispatch({
+                    type: ALL_CATEGORIES,
+                    payload: categories.data
+                })
+            }
+        )
     }
 }
