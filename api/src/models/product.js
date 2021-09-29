@@ -43,5 +43,12 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
+    quantity: {
+      type: DataTypes.STRING,
+      validate: {
+        min: "0",
+        max: "100",
+      },
+    },
   });
 };
