@@ -1,0 +1,22 @@
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+
+export function ProductDetail () {
+    const dispatch = useDispatch();
+    const { id } = useParams();
+    const product = useSelector(state => state.productDetail);
+
+    useEffect(() => {
+        dispatch(searchProducts(id))
+    }, [dispatch, id])
+
+    return (
+        <div>
+            <span>{product?.image}</span>
+            <span>{product?.name}</span>
+            <span>{product?.description}</span>
+            <span>{product?.rating}</span>
+        </div>
+    )
+}
