@@ -4,13 +4,16 @@ const fs = require("fs");
 const path = require("path");
 const { dbUser, dbPassword, dbHost, dbName } = require("./utils/config");
 
-const sequelize = new Sequelize(
-  `postgres://${dbUser}:${dbPassword}@${dbHost}/${dbName}`,
-  {
-    logging: false, // set to console.log to see the raw SQL queries
-    native: false, // lets Sequelize know we can use pg-native for ~30% more speed
-  }
-);
+const sequelize = dbPassword
+  ? new Sequelize(`postgres://${dbUser}:${dbPassword}@${dbHost}/${dbName}`, {
+      logging: false, // set to console.log to see the raw SQL queries
+      native: false, // lets Sequelize know we can use pg-native for ~30% more speed
+    })
+  : new Sequelize(`postgres://${dbUser}@${dbHost}/${dbName}`, {
+      logging: false,
+      native: false,
+    });
+
 const basename = path.basename(__filename);
 
 const modelDefiners = [];
@@ -52,9 +55,13 @@ Order.hasMany(OrderDetail);
 //
 Brand.hasMany(Product);
 Product.belongsTo(Brand);
-//
+
+Category.hasMany(Product);
+Product.belongsTo(Category);
+
 Category.belongsToMany(Product, { through: "Product_Category" });
 Product.belongsToMany(Category, { through: "Product_Category" });
+
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

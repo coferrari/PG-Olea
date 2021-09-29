@@ -6,14 +6,16 @@ const { Router } = require("express");
 const router = Router();
 // requerimos los modelos de la db
 const userRoutes = require("./user");
-const productRoutes = require ("./product")
+const productRoutes = require("./product");
 const orderRoutes = require("./order");
+const brandRoutes = require("./brand");
+const categoryRoutes = require("./category");
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 router.use("/user", userRoutes);
 router.use("/product", productRoutes);
 router.use("/order", orderRoutes);
-
-
+router.use("/brand", brandRoutes);
+router.use("/category", categoryRoutes);
 
 module.exports = router;
