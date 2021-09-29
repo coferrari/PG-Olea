@@ -16,7 +16,7 @@ class OrderModel extends Modelo {
         });
         res.status(200).send(orderStatus);
       } catch (err) {
-        res.status(400).send({ error: err });
+        next(err);
       }
     } else if (status === "inactive") {
       try {
@@ -25,7 +25,7 @@ class OrderModel extends Modelo {
         });
         res.status(200).send(orderStatus);
       } catch (err) {
-        res.status(400).send({ error: err });
+        next(err);
       }
     }
   };
@@ -40,7 +40,7 @@ class OrderModel extends Modelo {
         });
         res.status(200).send(orderDate);
       } catch (err) {
-        res.status(400).send({ error: err });
+        next(err);
       }
     } else if (date === "DES") {
       try {
@@ -49,7 +49,7 @@ class OrderModel extends Modelo {
         });
         res.status(200).send(orderDate);
       } catch (err) {
-        res.status(400).send({ error: err });
+        next(err);
       }
     }
   };
@@ -66,7 +66,7 @@ class OrderModel extends Modelo {
       if (order.length >= 1) {
         res.status(200).json(order);
       } else {
-        res.status(400).send({ error: err });
+        next(err);
       }
     }
   };
