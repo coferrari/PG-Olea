@@ -1,6 +1,8 @@
-import "./App.css";
+import React from 'react';
 import "./App.css";
 import { Route } from "react-router-dom";
+import Home from './components/home/home';
+import CategoryProduct from './components/categoryProduct/categoryProduct';
 import LoginButton from "./components/Login/Login";
 import LogoutButton from "./components/Logout/Logout";
 import Profile from "./components/Profile/Profile";
@@ -20,6 +22,8 @@ function App() {
       <Route exact path="/logout">
         <LogoutButton />
       </Route>
+      <Route exact path='/home' component={Home}/>
+      <Route path='/category/:id' component={CategoryProduct}/>
     </div>
   );
 }
