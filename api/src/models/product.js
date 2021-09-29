@@ -18,6 +18,7 @@ module.exports = (sequelize) => {
     new: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
+      defaultValue: true
     },
     stock: {
       type: DataTypes.INTEGER,
@@ -38,6 +39,7 @@ module.exports = (sequelize) => {
     rating: {
       type: DataTypes.DECIMAL,
       allowNull: false,
+      defaultValue: 0
     },
     SKU: {
       type: DataTypes.STRING,
