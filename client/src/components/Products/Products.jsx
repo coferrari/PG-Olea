@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getProducts } from '../../redux/actions/index'; 
-import { Product } from '../Product/Product';
-
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getProducts } from "../../redux/actions/index";
+import { Product } from "../Product/Product";
+import styles from "./Products.module.css";
 
 export default function Products({products}) {
       
