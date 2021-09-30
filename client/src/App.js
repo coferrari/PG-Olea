@@ -25,6 +25,9 @@ function App() {
       <Route exact path="/home">
         <Home />
       </Route>
+      <Route path="/home/:attribute/:order">
+        <Home />
+      </Route>
       <Route path="/category/:id">
         <CategoryProduct />
       </Route>

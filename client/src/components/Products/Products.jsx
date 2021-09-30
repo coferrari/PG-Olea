@@ -4,16 +4,7 @@ import { getProducts } from '../../redux/actions/index';
 import { Product } from '../Product/Product';
 
 
-export default function Products() {
-
-    const dispatch = useDispatch();
-    const products = useSelector(state => state.productsReducer.products);
-
-    useEffect(() => {
-        dispatch(getProducts());
-    }, []);
-    
-    console.log(products);
+export default function Products({products}) {
       
     return (
        <div>
