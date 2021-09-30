@@ -8,7 +8,7 @@ class OrderModel extends Modelo {
   //A partir de aca se pueden agregar funciones que necesitemos en la ruta
   orderByStatus = async (req, res, next) => {
     const { status } = req.params;
-    console.log(status);
+
     if (status === "active") {
       try {
         const orderStatus = await this.model.findAll({
@@ -32,7 +32,7 @@ class OrderModel extends Modelo {
 
   orderByDate = async (req, res, next) => {
     const { date } = req.params;
-    console.log(date);
+
     if (date === "ASC") {
       try {
         const orderDate = await this.model.findAll({
