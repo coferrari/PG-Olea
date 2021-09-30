@@ -4,13 +4,27 @@ import { getProducts } from '../../redux/actions/index';
 import { Product } from '../Product/Product';
 
 
-export function Products({products}) {
+export default function Products() {
+
+    const dispatch = useDispatch();
+    const products = useSelector(state => state.productsReducer.products);
+
+    useEffect(() => {
+        dispatch(getProducts());
+    }, []);
+    
+    console.log(products);
       
     return (
        <div>
-           {products.map((p) => {
-               return <Product id={p.id} name={p.name} image={p.image} price={p.price} /> 
+           {products?.map((p) => {
+               return <Product
+                id={p.id}
+                name={p.name}
+                image={p.image[0]}
+                price={p.price} 
+               /> 
            })}
        </div>
-    )
+    );
 }

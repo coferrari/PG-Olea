@@ -1,9 +1,6 @@
-const url = {
-    CATEGORY_URL: 'http://localhost:3001/category',
-    GET_PRODUCTS_URL: 'http://localhost:3001/products',
-    SEARCH_PRODUCTS_URL: 'http://localhost:3001/products?name=',
-    GET_PRODUCT_DETAIL_URL: 'http://localhost:3001/product/'
-}
+    export const CATEGORY_URL = 'http://localhost:3001/category';
+    export const GET_PRODUCTS_URL = 'http://localhost:3001/api/product';
+    export const SEARCH_PRODUCTS_URL = 'http://localhost:3001/products?name=';
+    export const GET_PRODUCT_DETAIL_URL = 'http://localhost:3001/product/';
 
-export default url; 
 
