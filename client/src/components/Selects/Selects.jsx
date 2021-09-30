@@ -38,7 +38,7 @@ export default function Selects() {
         <option value={"name asc"}>Order by name: A-Z</option>
         <option value={"name desc"}>Order by name: Z-A</option>
         <option
-          value={"rating desc"}
+          value={"price desc"}
           onChange={(e) => handleOrderSelect(e.target.name, e.target.value)}
         >
 
