@@ -2,7 +2,7 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
-import { logIn } from "../../auth/users";
+import { logIn, logInGoogle } from "../../auth/users";
 import GoogleLogin from "react-google-login";
 const LoginButton = () => {
   const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
@@ -23,10 +23,9 @@ const LoginButton = () => {
       throw new Error(err);
     }
   };
-  const responseSuccessGoogle = (response) => {
+  const responseSuccessGoogle = async (response) => {
     console.log(response);
-    console.log(response.profileObj);
-    // despachar accion a back / post  || tokenId: response.tokenId
+    await logInGoogle(response);
     history.push("/");
   };
   const responseErrorGoogle = (response) => {
