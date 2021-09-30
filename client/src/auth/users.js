@@ -14,3 +14,14 @@ export const logIn = async (user) => {
 export const logOut = () => {
   window.localStorage.removeItem("token");
 };
+export const logInGoogle = async (response) => {
+  const res = await axios.post(`${baseUrl}/googlelogin`, {
+    token: response.tokenId,
+  });
+  console.log(res);
+};
+export const registerGoogle = async (response) => {
+  const res = await axios.post(`${baseUrl}/googleregister`, {
+    token: response.tokenId,
+  });
+};
