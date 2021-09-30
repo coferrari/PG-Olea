@@ -10,7 +10,7 @@ export default function Selects() {
 
   useEffect(() => {
     dispatch(getCategories());
-  }, []);
+  }, [dispatch]);
 
   function handleCategorySelect(id) {
     history.push(`/category/${id}`);
@@ -41,6 +41,7 @@ export default function Selects() {
           value={"rating desc"}
           onChange={(e) => handleOrderSelect(e.target.name, e.target.value)}
         >
+
         Order by price: highest to lowest
         </option>
         <option value={"price asc"}>Order by price: lowest to highest</option>
