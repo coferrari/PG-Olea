@@ -10,9 +10,17 @@ class ProductModel extends Modelo {
 
   create = async (req, res, next) => {
     try {
-      const { name, price, image, description, rating, stock, categoryID } =
-        req.body;
-      var newProduct = await this.model.create({
+      const {
+        name,
+        price,
+        image,
+        description,
+        rating,
+        stock,
+        categoryID,
+        newItem,
+      } = req.body;
+      var newItemProduct = await this.model.create({
         name,
         price,
         image,
@@ -20,8 +28,10 @@ class ProductModel extends Modelo {
         rating,
         id: id,
         stock,
+        newItem,
       });
-      res.send(await newProduct.addCategory(categoryID));
+      await newItemProduct.addCategory(categoryID);
+      return res.send("done");
     } catch (error) {
       next(error);
     }
