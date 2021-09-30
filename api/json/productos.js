@@ -1,8 +1,8 @@
 let productos = [
   {
     name: "Dulce de frambuesa artesanal",
-    price: "300",
-    new: true,
+    price: 300,
+    newItem: false,
     image: [
       "https://d3ugyf2ht6aenh.cloudfront.net/stores/001/130/674/products/beepure_dulce-frambuesal-copia11-721e7340aa8dec81ac15900785230333-640-0.jpg",
     ],
@@ -16,7 +16,7 @@ let productos = [
   {
     name: "Dulce de leche Sin Azúcar Agregada",
     price: "200",
-    new: true,
+    newItem: false,
     image: [
       "https://d3ugyf2ht6aenh.cloudfront.net/stores/001/130/674/products/beepure-dulce-de-leche-sin-azucar1-ee43bb6b152f0ea31616052114309444-640-0.jpg",
       "https://d3ugyf2ht6aenh.cloudfront.net/stores/001/130/674/products/dulce-de-leche-sin-azucar-agregada-budin1-a9dd7ac8e29ef6b0b716121964536217-640-0.jpg",
@@ -31,7 +31,7 @@ let productos = [
   {
     name: "Serum Facial Ácido Hialurónico",
     price: "800",
-    new: true,
+    newItem: false,
     image: [
       "https://d3ugyf2ht6aenh.cloudfront.net/stores/776/340/products/sfah11-4c29beb497dfe2d40216321606328979-640-0.jpg",
       "https://d3ugyf2ht6aenh.cloudfront.net/stores/776/340/products/sfah11-4c29beb497dfe2d40216321606328979-640-0.jpg",
@@ -46,7 +46,7 @@ let productos = [
   {
     name: "Leche Estrías - Coco & Calendula",
     price: "700",
-    new: true,
+    newItem: true,
     image: [
       "https://d3ugyf2ht6aenh.cloudfront.net/stores/776/340/products/coco-11-7342609717327eb20516313651755734-640-0.jpg",
       "https://d3ugyf2ht6aenh.cloudfront.net/stores/776/340/products/coco-11-7342609717327eb20516313651755734-640-0.jpg",

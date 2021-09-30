@@ -1,6 +1,8 @@
+
 import React, {useEffect} from 'react';
 import Products from '../Products/Products';
 import Selects from '../Selects/Selects';
+import Carousel from "../Carousel/Carousel";
 import { useDispatch, useSelector } from 'react-redux';
 import { getProducts } from '../../redux/actions/index'; 
 import { useParams, useHistory } from 'react-router-dom';
@@ -49,8 +51,10 @@ export default function Home(){
 
     return(
         <div>
+       <Carousel />
             <Selects />
             <Products products={products}/>
         </div>
     );
 }
+

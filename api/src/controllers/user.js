@@ -9,7 +9,7 @@ userFunction.register = async (req, res, next) => {
     const encryptedPassword = await encryptPassword(password);
     const userFind = await User.findOne({ where: { username } });
     if (userFind === null) {
-      const newUser = await User.create({
+      constnewUser = await User.create({
         username,
         password: encryptedPassword,
         email,
@@ -43,7 +43,7 @@ userFunction.login = async (req, res, next) => {
 userFunction.changePassword = async (req, res, next) => {
   const { email, password } = req.body;
   const user = await User.findOne({ where: { email } });
-  const newPasswordEncrypted = await encryptPassword(password);
+  constnewPasswordEncrypted = await encryptPassword(password);
   user.password = newPasswordEncrypted;
   res.send("nueva contraseña guardada");
 };
