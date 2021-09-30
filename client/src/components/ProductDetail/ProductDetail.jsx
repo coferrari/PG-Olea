@@ -16,7 +16,7 @@ export function ProductDetail() {
   console.log(product);
   return (
     <div>
-      <img src={product?.image[0]} alt="imagenproducto" />
+      <img src={product?.image?.[0]} alt="imagenproducto" />
       <h1>{product?.name}</h1>
       <span>{product?.price}</span> <br />
       <span>{product?.description}</span> <br />
