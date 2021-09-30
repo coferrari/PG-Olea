@@ -1,20 +1,19 @@
-import { GET_PRODUCT_DETAIL } from '../actions/types';
+import { GET_PRODUCT_DETAIL } from "../actions/types";
 
 const initialState = {
-    productDetail : []
-}
-
+  productDetail: [],
+};
 
 function productDetailReducer(state = initialState, action) {
-    switch (action.type){
-        case GET_PRODUCT_DETAIL:
-            return {
-                ...state,
-                productDetail: action.payload
-            }
-        default: 
-            return state;
-    }
+  switch (action.type) {
+    case GET_PRODUCT_DETAIL:
+      return {
+        ...state,
+        productDetail: action.payload,
+      };
+    default:
+      return state;
+  }
 }
 
-export default productDetailReducer; 
+export default productDetailReducer;
