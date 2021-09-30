@@ -1,6 +1,5 @@
 const { Product, Category } = require("../db.js");
 const Modelo = require("./index.js");
-var Sequelize = require('sequelize');
 
 class CategoryModel extends Modelo {
   constructor(model) {
@@ -8,7 +7,6 @@ class CategoryModel extends Modelo {
   }
   filterByCategory = async (req, res, next) => {
     try {
-      var Op = Sequelize.Op;
       let productsFiltered = await Product.findAll({
         include: {
          model: Category, 
