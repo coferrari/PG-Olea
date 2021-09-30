@@ -1,6 +1,10 @@
 const { User } = require("../db.js");
 const { encryptPassword, comparePassword } = require("../helpers/index");
 const jwt = require("jsonwebtoken");
+const { OAuth2Client } = require("google-auth-library");
+const client = new OAuth2Client(
+  "699731210579-fq1sd4ijgh6ph842rlc3f0rf86eftdgh.apps.googleusercontent.com"
+);
 const userFunction = {};
 
 userFunction.register = async (req, res, next) => {
@@ -54,6 +58,22 @@ userFunction.getAll = async (req, res, next) => {
   } catch (err) {
     res.status(400).send(err.message);
   }
+};
+userFunction.googleLogin = async (req, res, next) => {
+  const { token } = req.body;
+  const ticket = await client.verifyIdToken({
+    idToken: token,
+    audience: process.env.CLIENT_ID,
+  });
+  console.log("ticket", ticket);
+  const { name, email, picture } = ticket.getPayload();
+  const user = await User.findOrCreate({
+    where: { email },
+    username,
+    email,
+  });
+
+  res.send("ok");
 };
 
 module.exports = userFunction;
