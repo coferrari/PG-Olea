@@ -56,9 +56,6 @@ Order.hasMany(OrderDetail);
 Brand.hasMany(Product);
 Product.belongsTo(Brand);
 
-Category.hasMany(Product);
-Product.belongsTo(Category);
-
 Category.belongsToMany(Product, { through: "Product_Category" });
 Product.belongsToMany(Category, { through: "Product_Category" });
 

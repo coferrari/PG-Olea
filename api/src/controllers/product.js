@@ -1,4 +1,4 @@
-const { Product, category } = require("../db.js");
+const { Product, Category } = require("../db.js");
 const Modelo = require("./index.js");
 
 let id = 0;
@@ -94,6 +94,16 @@ class ProductModel extends Modelo {
         next(err);
       }
     }
+  };
+  getAll = (req, res, next) => {
+    const Users = this.model.findAll({
+      include: {
+        model: Category,
+      },
+    });
+    Users.then((results) => {
+      res.send(results);
+    }).catch((error) => next(error));
   };
 }
 
