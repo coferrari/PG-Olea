@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
-import { register } from "../../auth/users";
-import { Redirect } from "react-router";
+import { register, registerGoogle } from "../../auth/users";
+import { useHistory } from "react-router-dom";
+
+import GoogleLogin from "react-google-login";
 const Register = () => {
   const [input, setInput] = useState({
     username: "",
     email: "",
     password: "",
   });
-  const [loggedIn, setLoggedIn] = useState(false);
+  const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+  const history = useHistory();
   const handleChange = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
@@ -16,11 +19,19 @@ const Register = () => {
     e.preventDefault();
     try {
       await register(input);
-      setLoggedIn(true);
-      <Redirect to="/" />;
+      history.push("/");
     } catch (err) {
       throw new Error(err);
     }
+  };
+  const responseSuccessGoogle = async (response) => {
+    await registerGoogle(response);
+    history.push("/");
+  };
+  const responseErrorGoogle = (response) => {
+    console.log(response);
+    console.log(response.profileObj);
+    history.push("/");
   };
 
   return (
@@ -74,6 +85,14 @@ const Register = () => {
           Submit
         </Button>
       </Form>
+      <GoogleLogin
+        clientId={clientId}
+        buttonText="Registrarse con Google"
+        onSuccess={responseSuccessGoogle}
+        onFailure={responseErrorGoogle}
+        cookiePolicy={"single_host_origin"}
+        isSignedIn={true}
+      />
     </div>
   );
 };
