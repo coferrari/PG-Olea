@@ -50,7 +50,7 @@ let productos = [
     image: [
       "https://d3ugyf2ht6aenh.cloudfront.net/stores/776/340/products/coco-11-7342609717327eb20516313651755734-640-0.jpg",
       "https://d3ugyf2ht6aenh.cloudfront.net/stores/776/340/products/coco-11-7342609717327eb20516313651755734-640-0.jpg",
-      " https://d3ugyf2ht6aenh.cloudfront.net/stores/776/340/products/coco-11-7342609717327eb20516313651755734-640-0.jpg",
+      "https://d3ugyf2ht6aenh.cloudfront.net/stores/776/340/products/coco-11-7342609717327eb20516313651755734-640-0.jpg",
     ],
     stock: 1,
     description:
