@@ -1,5 +1,3 @@
 .container {
-  border: black 0.2rem solid;
-  display: flex;
-  flex-direction: column;
+  padding: 5rem;
 }

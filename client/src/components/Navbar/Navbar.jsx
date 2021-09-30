@@ -1,19 +1,25 @@
-import React from 'react';
-import { Link } from "react-router-dom";
-import Register from '../Register/Register';
+import React from "react";
+import Nav from "react-bootstrap/Nav";
 
 const Navbar = () => {
-    return (
-        <div>
-            OLEA
-            <ul>
-            <Link to="/login"><li>Login</li></Link>
-            <Link to="/register"><li>Register</li></Link>
-            <Link to="/logout"><li>Logout</li></Link>
-            </ul>
-            
-        </div>
-    );
-}
- 
+  return (
+    <div>
+      <Nav justify variant="tabs" defaultActiveKey="/home">
+        <Nav.Item>
+          <Nav.Link href="/login">Login</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link href="/register">Register</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link href="/logout">Logout</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link href="/">Back</Nav.Link>
+        </Nav.Item>
+      </Nav>
+    </div>
+  );
+};
+
 export default Navbar;
