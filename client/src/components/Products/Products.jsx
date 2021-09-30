@@ -1,19 +1,10 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getProducts } from '../../redux/actions/index'; 
-import { Product } from '../Product/Product';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getProducts } from "../../redux/actions/index";
+import { Product } from "../Product/Product";
+import styles from "./Products.module.css";
 
-
-export default function Products() {
-
-    const dispatch = useDispatch();
-    const products = useSelector(state => state.productsReducer.products);
-
-    useEffect(() => {
-        dispatch(getProducts());
-    }, []);
-    
-    console.log(products);
+export default function Products({products}) {
       
     return (
        <div>

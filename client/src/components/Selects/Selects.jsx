@@ -41,9 +41,10 @@ export default function Selects() {
           value={"rating desc"}
           onChange={(e) => handleOrderSelect(e.target.name, e.target.value)}
         >
-          Order by rating: highest to lowest
+
+        Order by price: highest to lowest
         </option>
-        <option value={"rating asc"}>Order by rating: lowest to highest</option>
+        <option value={"price asc"}>Order by price: lowest to highest</option>
       </select>
     </div>
   );
