@@ -10,9 +10,10 @@ const verifyToken = require("../utils/middlewares/validateToken");
 // Ejemplo: router.use('/auth', authRouter);
 router.get("/", verifyToken, userFunction.getAll);
 // router.get("/:id", userControllers.getByID);
-router.post("/register", validate(schema), userFunction.register);
+router.post("/register", userFunction.register);
 router.post("/login", userFunction.login);
 router.put("/", verifyToken, userFunction.changePassword);
+router.post("/googlelogin", userFunction.googleLogin);
 // router.delete("/:id", userControllers.delete);
 
 module.exports = router;
