@@ -1,9 +1,11 @@
 import React from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { logIn } from "../../auth/users";
+import GoogleLogin from "react-google-login";
 const LoginButton = () => {
+  const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
   const history = useHistory();
   const [input, setInput] = useState({
     email: "",
@@ -20,6 +22,17 @@ const LoginButton = () => {
     } catch (err) {
       throw new Error(err);
     }
+  };
+  const responseSuccessGoogle = (response) => {
+    console.log(response);
+    console.log(response.profileObj);
+    // despachar accion a back / post  || tokenId: response.tokenId
+    history.push("/");
+  };
+  const responseErrorGoogle = (response) => {
+    console.log(response);
+    console.log(response.profileObj);
+    history.push("/");
   };
 
   return (
@@ -61,6 +74,14 @@ const LoginButton = () => {
           Submit
         </Button>
       </Form>
+      <GoogleLogin
+        clientId={clientId}
+        buttonText="Iniciar sesión con Google"
+        onSuccess={responseSuccessGoogle}
+        onFailure={responseErrorGoogle}
+        cookiePolicy={"single_host_origin"}
+        isSignedIn={true}
+      />
     </div>
   );
 };
