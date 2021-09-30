@@ -6,7 +6,7 @@ import { getCategories } from "../../redux/actions";
 export default function Selects() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const categories = useSelector((state) => state.categories);
+  const categories = useSelector((state) => state.categoryReducer.categories);
 
   useEffect(() => {
     dispatch(getCategories());
