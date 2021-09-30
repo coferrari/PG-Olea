@@ -34,5 +34,9 @@ module.exports = (sequelize) => {
       type: DataTypes.BOOLEAN,
       allowNull: true,
     },
+    picture: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
   });
 };
