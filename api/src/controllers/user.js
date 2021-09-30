@@ -47,7 +47,7 @@ userFunction.login = async (req, res, next) => {
 userFunction.changePassword = async (req, res, next) => {
   const { email, password } = req.body;
   const user = await User.findOne({ where: { email } });
-  const newPasswordEncrypted = await encryptPassword(password);
+
   user.password = newPasswordEncrypted;
   res.send("nueva contraseña guardada");
 };
@@ -65,15 +65,43 @@ userFunction.googleLogin = async (req, res, next) => {
     idToken: token,
     audience: process.env.CLIENT_ID,
   });
-  console.log("ticket", ticket);
-  const { name, email, picture } = ticket.getPayload();
-  const user = await User.findOrCreate({
+  const { name, given_name, family_name, email, picture, at_hash } =
+    ticket.getPayload();
+  const user = await User.findOne({
     where: { email },
-    username,
-    email,
   });
-
-  res.send("ok");
+  console.log(ticket);
+  if (user === null) {
+    const newPasswordEncrypted = await encryptPassword(at_hash);
+    const newUser = await User.create({
+      name: given_name,
+      username: email,
+      password: newPasswordEncrypted,
+      email: email,
+      surname: family_name,
+      picture,
+    });
+    const token = jwt.sign(
+      {
+        username: email,
+      },
+      process.env.TOKEN_SECRET
+    );
+    return res.header("auth-token", token).json({
+      error: null,
+      data: { token },
+    });
+  }
+  if (user) {
+    const token = jwt.sign({ username: email }, process.env.TOKEN_SECRET);
+    return res.header("auth-token", token).json({
+      error: null,
+      data: {
+        token,
+      },
+    });
+  }
 };
+userFunction.googleRegister = async (req, res, next) => {};
 
 module.exports = userFunction;
