@@ -19,9 +19,5 @@ module.exports = (sequelize) => {
       allowNull: false,
       defaultValue: "active",
     },
-    // products: {
-    //   type: DataTypes.ARRAY(STRING),
-    //   allowNull: false,
-    // },
   });
 };

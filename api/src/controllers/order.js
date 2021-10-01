@@ -1,4 +1,4 @@
-const { Order, OrderDetail } = require("../db.js");
+const { Order } = require("../db.js");
 const Modelo = require("./index.js");
 class OrderModel extends Modelo {
   constructor(model) {
@@ -68,32 +68,6 @@ class OrderModel extends Modelo {
         next(err);
       }
     }
-  };
-
-  create = async (req, res, next) => {
-    const { price } = req.body;
-    try {
-      var orden = await this.model.create({
-        price,
-      });
-      orden.addOrderDetail(id);
-      res.status(200).send("Orden Creada");
-    } catch (err) {
-      next(err);
-    }
-  };
-
-  getAll = async (req, res, next) => {
-    const order = this.model.findAll({
-      include: {
-        model: OrderDetail,
-      },
-    });
-    order
-      .then((results) => {
-        res.send(results);
-      })
-      .catch((error) => next(error));
   };
 }
 
