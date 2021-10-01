@@ -10,7 +10,10 @@ const NavResponsive = () => {
     const user = decodeToken();
     return (
       <div>
-        <h1>hola {user.username}</h1>
+
+        <h1>hola {user.name}</h1>
+        OLEA
+
         <ul>
           <Link to="/logout">
             <li>Logout</li>
