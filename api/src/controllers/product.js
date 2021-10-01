@@ -1,79 +1,119 @@
-const { Product } = require("../db.js");
+const { Product, Category } = require("../db.js");
 const Modelo = require("./index.js");
 
+let id = 0;
+
 class ProductModel extends Modelo {
-    constructor(model) {
-        super(model);
-    }
+  constructor(model) {
+    super(model);
+  }
 
-    orderByPrice = async (req, res, next) => {
-        const { price } = req.params;
-        console.log(price)
-        if (price === "ASC") {
-            try {
-                const orderPrice = await this.model.findAll({
-                    order: [["price", "ASC"]]
-                })
-                res.status(200).send(orderPrice)
-            } catch (err) {
-                next(err);
-            }
-        } else if ( price === "DES"){
-            try {
-                const orderPrice = await this.model.findAll({
-                    order: [["price", "DESC"]]
-                })
-                res.status(200).send(orderPrice)
-            } catch (err) {
-                next(err);
-            }
-        }
+  create = async (req, res, next) => {
+    try {
+      const {
+        name,
+        price,
+        image,
+        description,
+        rating,
+        stock,
+        categoryID,
+        newItem,
+      } = req.body;
+      var newItemProduct = await this.model.create({
+        name,
+        price,
+        image,
+        description,
+        rating,
+        id: id,
+        stock,
+        newItem,
+      });
+      await newItemProduct.addCategory(categoryID);
+      return res.send("done");
+    } catch (error) {
+      next(error);
     }
-    orderByName = async (req, res, next) => {
-        const { name } = req.params;
-        if (name === "ASC") {
-            try {
-                const orderAZ = await this.model.findAll({
-                    order: [["name", "ASC"]]
-                })
-                res.status(200).send(orderAZ)
-            } catch (err) {
-                next(err);
-            }
-        } else if ( name === "DES"){
-            try {
-                const orderZA = await this.model.findAll({
-                    order: [["name", "DESC"]]
-                })
-                res.status(200).send(orderZA)
-            } catch (err) {
-                next(err);
-            }
-        }
-    }
-    orderByRating = async (req, res, next) => {
-        const { rating } = req.params;
-        if (rating === "ASC") {
-            try {
-                const orderRating = await this.model.findAll({
-                    order: [["rating", "ASC"]]
-                })
-                res.status(200).send(orderRating)
-            } catch (err) {
-                next(err);
-            }
-        } else if ( rating === "DES"){
-            try {
-                const orderRating = await this.model.findAll({
-                    order: [["rating", "DESC"]]
-                })
-                res.status(200).send(orderRating)
-            } catch (err) {
-                next(err);
-            }
-        }
-    }
+  };
 
+  orderByPrice = async (req, res, next) => {
+    const { price } = req.params;
+    console.log(price);
+    if (price === "ASC") {
+      try {
+        const orderPrice = await this.model.findAll({
+          order: [["price", "ASC"]],
+        });
+        res.status(200).send(orderPrice);
+      } catch (err) {
+        next(err);
+      }
+    } else if (price === "DES") {
+      try {
+        const orderPrice = await this.model.findAll({
+          order: [["price", "DESC"]],
+        });
+        res.status(200).send(orderPrice);
+      } catch (err) {
+        next(err);
+      }
+    }
+  };
+  orderByName = async (req, res, next) => {
+    const { name } = req.params;
+    if (name === "ASC") {
+      try {
+        const orderAZ = await this.model.findAll({
+          order: [["name", "ASC"]],
+        });
+        res.status(200).send(orderAZ);
+      } catch (err) {
+        next(err);
+      }
+    } else if (name === "DES") {
+      try {
+        const orderZA = await this.model.findAll({
+          order: [["name", "DESC"]],
+        });
+        res.status(200).send(orderZA);
+      } catch (err) {
+        next(err);
+      }
+    }
+  };
+  orderByRating = async (req, res, next) => {
+    const { rating } = req.params;
+    if (rating === "ASC") {
+      try {
+        const orderRating = await this.model.findAll({
+          order: [["rating", "ASC"]],
+        });
+        res.status(200).send(orderRating);
+      } catch (err) {
+        next(err);
+      }
+    } else if (rating === "DES") {
+      try {
+        const orderRating = await this.model.findAll({
+          order: [["rating", "DESC"]],
+        });
+        res.status(200).send(orderRating);
+      } catch (err) {
+        next(err);
+      }
+    }
+  };
+  getAll = (req, res, next) => {
+    const Users = this.model.findAll({
+      include: {
+        model: Category,
+      },
+    });
+    Users.then((results) => {
+      res.send(results);
+    }).catch((error) => next(error));
+  };
 }
 
 const productControllers = new ProductModel(Product);

@@ -13,6 +13,7 @@ userFunction.register = async (req, res, next) => {
   const { username, password, email } = req.body;
   try {
     const userFind = await User.findOne({ where: { username } });
+
     if (!userFind) {
       const token = jwt.sign(
         {
@@ -25,6 +26,7 @@ userFunction.register = async (req, res, next) => {
       const template = getTemplate(username, token);
       await sendEmail(email, "Confirmar registro", template);
       res.send("email enviado");
+
     }
     if (userFind) res.status(304).send("este email ya esta registrado");
   } catch (err) {
@@ -64,7 +66,7 @@ userFunction.login = async (req, res, next) => {
 userFunction.changePassword = async (req, res, next) => {
   const { email, password } = req.body;
   const user = await User.findOne({ where: { email } });
-
+  const newPasswordEncrypted = await encryptPassword(password);
   user.password = newPasswordEncrypted;
   res.send("nueva contraseña guardada");
 };
