@@ -6,17 +6,20 @@ const client = new OAuth2Client(
   "699731210579-fq1sd4ijgh6ph842rlc3f0rf86eftdgh.apps.googleusercontent.com"
 );
 const nodemailer = require("nodemailer");
-const { getTemplate, sendEmail } = require("../helpers/mail");
+const { getTemplate, sendEmail, getTemplateChangePassword } = require("../helpers/mail");
 const userFunction = {};
 
 userFunction.register = async (req, res, next) => {
-  const { username, password, email } = req.body;
+  const { name, surname, username, password, email } = req.body;
   try {
     const userFind = await User.findOne({ where: { username } });
 
+    // esto manda un mail de confirmacion, todavia no se guarda la informacion en la db
     if (!userFind) {
       const token = jwt.sign(
         {
+          name: name,
+          surname: surname,
           username: username,
           password: password,
           email: email,
@@ -38,12 +41,36 @@ userFunction.confirmRegister = async (req, res, next) => {
   const verified = jwt.verify(token, process.env.TOKEN_SECRET);
   const encryptedPassword = await encryptPassword(verified.password);
   const user = await User.create({
+    name: verified.name,
+    surname: verified.surname,
     username: verified.username,
     password: encryptedPassword,
     email: verified.email,
   });
+  console.log(user)
   res.send(user);
 };
+
+// solicitar validacion de mail para cambio de contraseña
+userFunction.requestChangePassword = async (req, res, next) => {
+  const { email } = req.body;
+  // const user = await User.findOne({ where: email })
+  // if (user) {
+    const template = getTemplateChangePassword(email);
+    await sendEmail(email, "Confirmar cambio de contraseña", template);
+    res.send("email enviado");
+  // }
+}
+
+// para cuando ya esta validado el mail
+userFunction.changePassword = async (req, res, next) => {
+  const { email, password } = req.body;
+  const user = await User.findOne({ where: { email } });
+  const newPasswordEncrypted = await encryptPassword(password);
+  user.password = newPasswordEncrypted;
+  res.send("nueva contraseña guardada");
+};
+
 userFunction.login = async (req, res, next) => {
   const { email, password } = req.body;
   const emailFind = await User.findOne({ where: { email } });
@@ -63,13 +90,7 @@ userFunction.login = async (req, res, next) => {
   }
   return res.send("password incorrecta");
 };
-userFunction.changePassword = async (req, res, next) => {
-  const { email, password } = req.body;
-  const user = await User.findOne({ where: { email } });
-  const newPasswordEncrypted = await encryptPassword(password);
-  user.password = newPasswordEncrypted;
-  res.send("nueva contraseña guardada");
-};
+
 userFunction.getAll = async (req, res, next) => {
   const users = await User.findAll();
   try {
