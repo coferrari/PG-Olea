@@ -70,6 +70,10 @@ class OrderModel extends Modelo {
       }
     }
   };
+
+  createOrder = async (req, res, next) => {
+    const { price, products } = req.body;
+  };
 }
 
 const OrderControllers = new OrderModel(Order);
