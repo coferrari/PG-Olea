@@ -41,3 +41,6 @@ export const registerGoogle = async (response) => {
   });
 };
 
+export const confirmRegister = async (data) => {
+  const res = await axios.post(`${baseUrl}/confirmregister`, { token: data });
+};

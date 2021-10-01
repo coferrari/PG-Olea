@@ -10,25 +10,28 @@ const { getTemplate, sendEmail, getTemplateChangePassword } = require("../helper
 const userFunction = {};
 
 userFunction.register = async (req, res, next) => {
-  const { name, surname, username, password, email } = req.body;
+  const { username, password, email, name, surname } = req.body;
   try {
     const userFind = await User.findOne({ where: { username } });
-    // esto manda un mail de confirmacion, todavia no se guarda la informacion en la db
+    const encryptedPassword = await encryptPassword(password);
+
     if (!userFind) {
       const token = jwt.sign(
         {
           name: name,
           surname: surname,
           username: username,
-          password: password,
+          password: encryptedPassword,
           email: email,
+          name: name,
+          surname: surname,
+          admin: false,
         },
         process.env.TOKEN_SECRET
       );
       const template = getTemplate(username, token);
       await sendEmail(email, "Confirmar registro", template);
       res.send("email enviado");
-
     }
     if (userFind) res.status(304).send("este email ya esta registrado");
   } catch (err) {
@@ -39,13 +42,15 @@ userFunction.register = async (req, res, next) => {
 userFunction.confirmRegister = async (req, res, next) => {
   const { token } = req.body;
   const verified = jwt.verify(token, process.env.TOKEN_SECRET);
-  const encryptedPassword = await encryptPassword(verified.password);
+
   const user = await User.create({
     name: verified.name,
     surname: verified.surname,
     username: verified.username,
-    password: encryptedPassword,
+    password: verified.password,
     email: verified.email,
+    name: verified.name,
+    surname: verified.surname,
   });
   console.log(user)
   res.send(user);
@@ -83,6 +88,8 @@ userFunction.login = async (req, res, next) => {
   if (compared === true) {
     const token = jwt.sign(
       {
+        name: emailFind.name,
+        surname: emailFind.surname,
         username: emailFind.username,
       },
       process.env.TOKEN_SECRET
@@ -149,5 +156,4 @@ userFunction.googleLogin = async (req, res, next) => {
 };
 
 userFunction.googleRegister = async (req, res, next) => {};
-
 module.exports = userFunction;
