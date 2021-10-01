@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getProductDetail } from "../../redux/actions/index";
-import styles from "./ProductDetail.module.css";
+import { Card, ListGroup, ListGroupItem } from "react-bootstrap";
+import Carousel from "../../components/Carousel/Carousel";
 
 export function ProductDetail() {
   const dispatch = useDispatch();
@@ -10,33 +11,27 @@ export function ProductDetail() {
   const product = useSelector(
     (state) => state.productDetailReducer.productDetail
   );
-
-  const [numOfImg, setNumOfImg] = useState(0);
+  const imgs = useSelector(
+    (state) => state.productDetailReducer.productDetail.image
+  );
 
   useEffect(() => {
     dispatch(getProductDetail(id));
   }, [dispatch, id]);
-  console.log(product);
-  function imgNext() {
-    if (product.image[numOfImg + 1]) {
-      setNumOfImg(numOfImg + 1);
-    }
-  }
-  function imgPrev() {
-    if (product.image[numOfImg - 1]) {
-      setNumOfImg(numOfImg - 1);
-    }
-  }
-  console.log(numOfImg);
+
   return (
-    <div className={styles.container}>
-      <button onClick={() => imgPrev()}>-</button>
-      <img src={product.image?.[numOfImg]} alt="imagenproducto" />
-      <button onClick={() => imgNext()}>+</button>
-      <h1>{product?.name}</h1>
-      <span>{product?.price}</span> <br />
-      <span>{product?.description}</span> <br />
-      <span>{product?.rating}</span> <br />
+    <div className="container">
+      <Card style={{ width: "18rem" }}>
+        <Card.Body>
+          <Card.Img variant="top" src={imgs?.[0]} />
+          <Card.Title>{product?.name}</Card.Title>
+          <Card.Text>{product?.description}</Card.Text>
+        </Card.Body>
+        <ListGroup className="list-group-flush">
+          <ListGroupItem>Precio: {product?.price} $ </ListGroupItem>
+          <ListGroupItem>Reviews: {product?.rating} </ListGroupItem>
+        </ListGroup>
+      </Card>
     </div>
   );
 }

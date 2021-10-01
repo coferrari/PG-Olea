@@ -8,6 +8,7 @@ import Profile from "./components/Profile/Profile";
 import Navbar from "./components/Navbar/Navbar";
 import Register from "./components/Register/Register";
 import { ProductDetail } from "./components/ProductDetail/ProductDetail";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   return (
