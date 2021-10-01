@@ -13,7 +13,6 @@ userFunction.register = async (req, res, next) => {
   const { name, surname, username, password, email } = req.body;
   try {
     const userFind = await User.findOne({ where: { username } });
-
     // esto manda un mail de confirmacion, todavia no se guarda la informacion en la db
     if (!userFind) {
       const token = jwt.sign(
@@ -36,6 +35,7 @@ userFunction.register = async (req, res, next) => {
     next(err);
   }
 };
+
 userFunction.confirmRegister = async (req, res, next) => {
   const { token } = req.body;
   const verified = jwt.verify(token, process.env.TOKEN_SECRET);
@@ -65,9 +65,13 @@ userFunction.requestChangePassword = async (req, res, next) => {
 // para cuando ya esta validado el mail
 userFunction.changePassword = async (req, res, next) => {
   const { email, password } = req.body;
-  const user = await User.findOne({ where: { email } });
+  console.log(req.body)
+
+  // const user = await User.findOne({ where: { email } });
   const newPasswordEncrypted = await encryptPassword(password);
-  user.password = newPasswordEncrypted;
+  console.log(newPasswordEncrypted)
+
+  // user.password = newPasswordEncrypted;
   res.send("nueva contraseña guardada");
 };
 
@@ -99,6 +103,7 @@ userFunction.getAll = async (req, res, next) => {
     res.status(400).send(err.message);
   }
 };
+
 userFunction.googleLogin = async (req, res, next) => {
   const { token } = req.body;
   const ticket = await client.verifyIdToken({
@@ -142,6 +147,7 @@ userFunction.googleLogin = async (req, res, next) => {
     });
   }
 };
+
 userFunction.googleRegister = async (req, res, next) => {};
 
 module.exports = userFunction;
