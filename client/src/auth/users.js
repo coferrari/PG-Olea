@@ -6,15 +6,24 @@ export const register = async (user) => {
   console.log("entre");
   return await axios.post(`${baseUrl}/register`, user);
 };
+
+export const requestChangePassword = async (email) => {
+  console.log("entre a requeschangepassword");
+  console.log('email', email)
+  return await axios.post(`${baseUrl}/requestchangepassword`, email);
+};
+
 export const logIn = async (user) => {
   const token = await axios.post(`${baseUrl}/login`, user);
   localStorage.setItem("token", token.data.data.token);
 
   return token.data;
 };
+
 export const logOut = () => {
   window.localStorage.removeItem("token");
 };
+
 export const logInGoogle = async (response) => {
   const res = await axios.post(`${baseUrl}/googlelogin`, {
     token: response.tokenId,
@@ -23,8 +32,10 @@ export const logInGoogle = async (response) => {
   console.log(res.data.data.token);
   return res.data;
 };
+
 export const registerGoogle = async (response) => {
   const res = await axios.post(`${baseUrl}/googleregister`, {
     token: response.tokenId,
   });
 };
+
