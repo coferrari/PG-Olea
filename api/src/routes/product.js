@@ -13,6 +13,7 @@ router.get("/orderByPrice/:price", productControllers.orderByPrice);
 router.get("/orderByName/:name", productControllers.orderByName);
 router.get("/orderByRating/:rating", productControllers.orderByRating);
 router.post("/", productControllers.create);
+router.post("/add/carrito", productControllers.addProduct);
 router.put("/:id", productControllers.update);
 router.delete("/:id", productControllers.delete);
 
