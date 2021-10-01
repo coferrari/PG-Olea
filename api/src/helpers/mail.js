@@ -44,7 +44,26 @@ const getTemplate = (name, token) => {
     `;
 };
 
+const getTemplateChangePassword = (name) => {
+  return `
+      <head>
+          <link rel="stylesheet" href="./style.css">
+      </head>
+      
+      <div id="email___content">
+          <img src="https://i.imgur.com/eboNR82.png" alt="">
+          <h2>Hola ${name}</h2>
+          <p>Para cambiar la contraseña, ingresa al siguiente enlace</p>
+          <a
+              href="http://localhost:3000/api/user/requestchangepassword"
+              target="_blank"
+          >Confirmar Cuenta</a>
+      </div>
+    `;
+};
+
 module.exports = {
   sendEmail,
   getTemplate,
+  getTemplateChangePassword
 };
