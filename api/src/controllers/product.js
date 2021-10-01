@@ -1,4 +1,3 @@
-
 const { Product, Category, User, Carrito } = require("../db.js");
 
 const Modelo = require("./index.js");
@@ -107,10 +106,8 @@ class ProductModel extends Modelo {
     }
   };
 
- 
-
   getAll = (req, res, next) => {
-    const Users = this.model.findAll({
+    const product = this.model.findAll({
       include: {
         model: Category,
       },
@@ -140,7 +137,6 @@ class ProductModel extends Modelo {
     Users.then((results) => {
       res.send(results);
     }).catch((error) => next(error));
-
   };
 }
 
