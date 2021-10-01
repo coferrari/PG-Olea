@@ -1,4 +1,4 @@
-const { User } = require("../db.js");
+const { User, Carrito } = require("../db.js");
 const { encryptPassword, comparePassword } = require("../helpers/index");
 const jwt = require("jsonwebtoken");
 const { OAuth2Client } = require("google-auth-library");
@@ -13,11 +13,13 @@ userFunction.register = async (req, res, next) => {
     const encryptedPassword = await encryptPassword(password);
     const userFind = await User.findOne({ where: { username } });
     if (userFind === null) {
+      const carritocreado = await Carrito.create({});
       const newUser = await User.create({
         username,
         password: encryptedPassword,
         email,
       });
+      newUser.setCarrito(carritocreado.dataValues.id);
       return res.send(`${newUser.username} created`);
     }
     return res.send("Este usuario existe en la base de datos");
@@ -52,7 +54,9 @@ userFunction.changePassword = async (req, res, next) => {
   res.send("nueva contraseña guardada");
 };
 userFunction.getAll = async (req, res, next) => {
-  const users = await User.findAll();
+  const users = await User.findAll({
+    include: Carrito,
+  });
   try {
     res.send(users);
   } catch (err) {

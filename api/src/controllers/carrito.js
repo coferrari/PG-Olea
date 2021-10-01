@@ -9,4 +9,4 @@ class CarritoModel extends Modelo {
 
 const carritoControllers = new CarritoModel(Carrito);
 
-module.exports = brandControllers;
+module.exports = carritoControllers;
