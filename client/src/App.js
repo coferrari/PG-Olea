@@ -16,30 +16,30 @@ function App() {
   return (
     <div>
       <Navbar />
-      <Switch>
-        <Route exact path="/" component={Landing} />
-        <Route exact path="/login">
-          <LoginButton />
-        </Route>
-        <Route exact path="/register">
-          <Register />
-        </Route>
-        <Route exact path="/logout">
-          <LogoutButton />
-        </Route>
-        <Route exact path="/home">
-          <Home />
-        </Route>
-        <Route path="/home/:attribute/:order">
-          <Home />
-        </Route>
-        <Route path="/category/:id">
-          <CategoryProduct />
-        </Route>
-        <Route path="/product/:id">
-          <ProductDetail />
-        </Route>
-      </Switch>
+          <Switch>
+      <Route exact path="/" component={Landing} />
+      <Route exact path="/login">
+        <LoginButton />
+      </Route>
+      <Route exact path="/register">
+        <Register />
+      </Route>
+      <Route exact path="/logout">
+        <LogoutButton />
+      </Route>
+      <Route exact path="/home">
+        <Home />
+      </Route>
+      <Route path="/home/:attribute/:order">
+        <Home />
+      </Route>
+      <Route path="/category/:nameCategory">
+        <CategoryProduct />
+      </Route>
+      <Route path="/product/:id">
+        <ProductDetail />
+      </Route>
+</Switch>
     </div>
   );
 }
