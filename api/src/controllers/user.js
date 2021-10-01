@@ -2,6 +2,7 @@ const { User } = require("../db.js");
 const { encryptPassword, comparePassword } = require("../helpers/index");
 const jwt = require("jsonwebtoken");
 const userFunction = {};
+const nodemailer = require("nodemailer");
 
 userFunction.register = async (req, res, next) => {
   try {
@@ -14,12 +15,6 @@ userFunction.register = async (req, res, next) => {
         password: encryptedPassword,
         email,
       });
-      return res.send(`${newUser.username} created`);
-    }
-    return res.send("Este usuario existe en la base de datos");
-  } catch (err) {
-    next(err);
-  }
 };
 userFunction.login = async (req, res, next) => {
   const { email, password } = req.body;
