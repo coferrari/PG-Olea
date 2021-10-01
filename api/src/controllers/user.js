@@ -23,8 +23,6 @@ userFunction.register = async (req, res, next) => {
           username: username,
           password: encryptedPassword,
           email: email,
-          name: name,
-          surname: surname,
           admin: false,
         },
         process.env.TOKEN_SECRET
@@ -49,22 +47,26 @@ userFunction.confirmRegister = async (req, res, next) => {
     username: verified.username,
     password: verified.password,
     email: verified.email,
-    name: verified.name,
-    surname: verified.surname,
+    admin: false
   });
   console.log(user)
   res.send(user);
 };
 
-// solicitar validacion de mail para cambio de contraseña
+// solicitar validacion de mail para cambio de contraseña 
 userFunction.requestChangePassword = async (req, res, next) => {
   const { email } = req.body;
-  // const user = await User.findOne({ where: email })
-  // if (user) {
-    const template = getTemplateChangePassword(email);
-    await sendEmail(email, "Confirmar cambio de contraseña", template);
-    res.send("email enviado");
-  // }
+  console.log(email, 'email change password')
+  try {
+    const user = await User.findOne({ where: {email} })
+    if (user) {
+      const template = getTemplateChangePassword(email);
+      await sendEmail(email, "Confirmar cambio de contraseña", template);
+      res.send("email enviado");
+    }
+  } catch(err) {
+    console.log(err)
+  }
 }
 
 // para cuando ya esta validado el mail
@@ -72,11 +74,12 @@ userFunction.changePassword = async (req, res, next) => {
   const { email, password } = req.body;
   console.log(req.body)
 
-  // const user = await User.findOne({ where: { email } });
+  const user = await User.findOne({ where: {email} });
+  console.log(user, 'user')
   const newPasswordEncrypted = await encryptPassword(password);
   console.log(newPasswordEncrypted)
 
-  // user.password = newPasswordEncrypted;
+  user.password = newPasswordEncrypted;
   res.send("nueva contraseña guardada");
 };
 
