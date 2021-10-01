@@ -1,4 +1,4 @@
-const { Order } = require("../db.js");
+const { Order, OrderDetail } = require("../db.js");
 const Modelo = require("./index.js");
 
 class OrderModel extends Modelo {
@@ -69,10 +69,6 @@ class OrderModel extends Modelo {
         next(err);
       }
     }
-  };
-
-  createOrder = async (req, res, next) => {
-    const { price, products } = req.body;
   };
 }
 
