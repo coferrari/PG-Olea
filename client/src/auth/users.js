@@ -3,15 +3,17 @@ import { getToken } from "../utils";
 const baseUrl = "http://localhost:3001/api/user";
 
 export const register = async (user) => {
-  console.log("entre");
   return await axios.post(`${baseUrl}/register`, user);
 };
 
 export const requestChangePassword = async (email) => {
-  console.log("entre a requeschangepassword");
-  console.log('email', email)
-  return await axios.post(`${baseUrl}/requestchangepassword`, email);
+  return await axios.post(`${baseUrl}/requestchangepassword`, {email: email});
 };
+
+export const changePassword = async (email, password) => {
+  console.log(email, password)
+  return await axios.put(`${baseUrl}/changepassword`, {email:email , password: password})
+}
 
 export const logIn = async (user) => {
   const token = await axios.post(`${baseUrl}/login`, user);
