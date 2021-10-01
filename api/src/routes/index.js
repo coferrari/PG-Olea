@@ -10,6 +10,7 @@ const productRoutes = require("./product");
 const orderRoutes = require("./order");
 const brandRoutes = require("./brand");
 const categoryRoutes = require("./category");
+const carritodetailRoutes = require("./carrito");
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 router.use("/user", userRoutes);
@@ -17,5 +18,6 @@ router.use("/product", productRoutes);
 router.use("/order", orderRoutes);
 router.use("/brand", brandRoutes);
 router.use("/category", categoryRoutes);
+router.use("/carrito", carritodetailRoutes);
 
 module.exports = router;
