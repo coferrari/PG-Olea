@@ -1,10 +1,22 @@
+
 const { Product, Category } = require("../db.js");
 const Modelo = require("./index.js");
-
 class CategoryModel extends Modelo {
   constructor(model) {
     super(model);
   }
+
+  getAll = (req, res, next) => {
+    const Users = this.model.findAll({
+      include: {
+        model: Product,
+      },
+    });
+    Users.then((results) => {
+      res.send(results);
+    }).catch((error) => next(error));
+  };
+
   filterByCategory = async (req, res, next) => {
     try {
       let productsFiltered = await Product.findAll({
@@ -19,6 +31,7 @@ class CategoryModel extends Modelo {
       next(error);
     }
   }
+
 }
 
 const categoryControllers = new CategoryModel(Category);

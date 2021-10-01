@@ -1,4 +1,5 @@
-import React from "react";
+
+
 import { Link } from "react-router-dom";
 import Register from "../Register/Register";
 import { isAuthorized, decodeToken } from "../../utils/index";
@@ -32,6 +33,7 @@ const Navbar = () => {
           <li>Logout</li>
         </Link>
       </ul>
+
     </div>
   );
 };

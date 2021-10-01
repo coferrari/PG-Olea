@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getProductDetail } from "../../redux/actions/index";
+import styles from "./ProductDetail.module.css";
 
 export function ProductDetail() {
   const dispatch = useDispatch();
@@ -10,13 +11,28 @@ export function ProductDetail() {
     (state) => state.productDetailReducer.productDetail
   );
 
+  const [numOfImg, setNumOfImg] = useState(0);
+
   useEffect(() => {
     dispatch(getProductDetail(id));
   }, [dispatch, id]);
   console.log(product);
+  function imgNext() {
+    if (product.image[numOfImg + 1]) {
+      setNumOfImg(numOfImg + 1);
+    }
+  }
+  function imgPrev() {
+    if (product.image[numOfImg - 1]) {
+      setNumOfImg(numOfImg - 1);
+    }
+  }
+  console.log(numOfImg);
   return (
-    <div>
-      <img src={product?.image?.[0]} alt="imagenproducto" />
+    <div className={styles.container}>
+      <button onClick={() => imgPrev()}>-</button>
+      <img src={product.image?.[numOfImg]} alt="imagenproducto" />
+      <button onClick={() => imgNext()}>+</button>
       <h1>{product?.name}</h1>
       <span>{product?.price}</span> <br />
       <span>{product?.description}</span> <br />

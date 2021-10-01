@@ -59,7 +59,6 @@ Product.belongsTo(Brand);
 Category.belongsToMany(Product, { through: "Product_Category" });
 Product.belongsToMany(Category, { through: "Product_Category" });
 
-
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
   conn: sequelize, // para importart la conexión { conn } = require('./db.js');
