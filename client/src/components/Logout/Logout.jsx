@@ -1,33 +1,26 @@
 import React from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { logOut } from "../../auth/users";
-import { GoogleLogout, useGoogleLogout } from "react-google-login";
-const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+import { Button } from "react-bootstrap";
+
 const LogoutButton = () => {
   const history = useHistory();
   const handleClick = (e) => {
     e.preventDefault();
     logOut();
+    console.log('logout ok')
     history.push("/");
   };
-  const onSuccess = (response) => {
-    alert("Logout ok");
-    history.push("/");
-  };
+
   return (
     <div>
-      <button
+      <Button variant="dark" type="submit"
         onClick={(e) => {
           handleClick(e);
         }}
       >
         Log Out
-      </button>
-      <GoogleLogout
-        clientId={clientId}
-        buttonText="Logout"
-        onLogoutSuccess={onSuccess}
-      ></GoogleLogout>
+      </Button>
     </div>
   );
 };
