@@ -15,6 +15,7 @@ import { ProductDetail } from "./components/ProductDetail/ProductDetail";
 
 import Landing from "./components/Landing/Landing";
 import "bootstrap/dist/css/bootstrap.min.css";
+import ChangePassword from "./components/ChangePassword/ChangePassword";
 
 function App() {
   return (
@@ -29,6 +30,9 @@ function App() {
       </Route>
       <Route exact path="/logout">
         <LogoutButton />
+      </Route>
+      <Route exact path="/changepassword">
+        <ChangePassword />
       </Route>
       <Route exact path="/home">
         <Home />
