@@ -8,9 +8,10 @@ const router = Router();
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 router.get("/", categoryControllers.getAll);
-router.get("/:id", categoryControllers.getByID);
+router.get("/:category", categoryControllers.filterByCategory);
 router.post("/", categoryControllers.create);
 router.put("/:id", categoryControllers.update);
 router.delete("/:id", categoryControllers.delete);
+// router.get("/:category", categoryControllers.filterByCategory);
 
 module.exports = router;
