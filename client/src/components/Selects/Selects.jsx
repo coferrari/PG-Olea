@@ -12,8 +12,8 @@ export default function Selects() {
     dispatch(getCategories());
   }, [dispatch]);
 
-  function handleCategorySelect(id) {
-    history.push(`/category/${id}`);
+  function handleCategorySelect(name) {
+    history.push(`/category/${name}`);
   }
 
   const handleOrderSelect = function (order) {
@@ -28,7 +28,7 @@ export default function Selects() {
           Category...
         </option>
         {categories?.map((c) => (
-          <option value={c.id}>{c.nameCategory}</option>
+          <option value={c.nameCategory}>{c.nameCategory}</option>
         ))}
       </select>
       <select onChange={(e) => handleOrderSelect(e.target.value)}>
@@ -41,8 +41,7 @@ export default function Selects() {
           value={"price desc"}
           onChange={(e) => handleOrderSelect(e.target.name, e.target.value)}
         >
-
-        Order by price: highest to lowest
+          Order by price: highest to lowest
         </option>
         <option value={"price asc"}>Order by price: lowest to highest</option>
       </select>
