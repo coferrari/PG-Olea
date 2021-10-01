@@ -2,6 +2,8 @@ import React from "react";
 import { confirmRegister } from "../../auth/users";
 import { useParams } from "react-router";
 import { useHistory } from "react-router-dom";
+import { Button } from "react-bootstrap";
+
 const ConfirmRegister = () => {
   const history = useHistory();
   const { token } = useParams();
@@ -11,9 +13,9 @@ const ConfirmRegister = () => {
   };
   return (
     <div>
-      <button type="submit" onClick={handleSubmit}>
+      <Button variant="dark" type="submit" onClick={handleSubmit}>
         Confirmar registro
-      </button>
+      </Button>
     </div>
   );
 };
