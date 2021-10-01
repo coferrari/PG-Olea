@@ -1,5 +1,5 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import Home from "./components/Home/Home";
 import CategoryProduct from "./components/CategoryProduct/CategoryProduct";
 
@@ -16,6 +16,7 @@ function App() {
   return (
     <div>
       <Navbar />
+          <Switch>
       <Route exact path="/" component={Landing} />
       <Route exact path="/login">
         <LoginButton />
@@ -38,6 +39,7 @@ function App() {
       <Route path="/product/:id">
         <ProductDetail />
       </Route>
+</Switch>
     </div>
   );
 }
