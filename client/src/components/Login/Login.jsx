@@ -51,7 +51,7 @@ const LoginButton = () => {
       await logIn(input);
       history.push("/");
     } catch (err) {
-      throw new Error(err);
+      console.log(err);
     }
   };
 
@@ -113,14 +113,16 @@ const LoginButton = () => {
             <Link to="/requestchangepassword">
               <Form.Label>¿Olvidaste tu contraseña?</Form.Label>
             </Link>
-            {input.email &&
-              !errors.email &&
-              input.password &&
-              !errors.password && (
-                <Button variant="dark" type="submit">
-                  Ingresa
-                </Button>
-              )}
+            <div>
+              {input.email &&
+                !errors.email &&
+                input.password &&
+                !errors.password && (
+                  <Button variant="dark" type="submit">
+                    Ingresa
+                  </Button>
+                )}
+            </div>
           </Form>
           <div className={style.googleLogin}>
             <GoogleLogin

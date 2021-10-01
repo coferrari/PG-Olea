@@ -15,7 +15,7 @@ router.post("/login", userFunction.login);
 router.put("/", verifyToken, userFunction.changePassword);
 router.put("/changepassword", userFunction.changePassword);
 router.post("/googlelogin", userFunction.googleLogin);
-router.post("/googleregister", userFunction.googleRegister);
+// router.post("/googleregister", userFunction.googleRegister);
 router.post("/confirmregister", userFunction.confirmRegister);
 router.post("/requestchangepassword", userFunction.requestChangePassword);
 // router.delete("/:id", userControllers.delete);
