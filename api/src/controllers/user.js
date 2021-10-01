@@ -82,24 +82,28 @@ userFunction.changePassword = async (req, res, next) => {
 
 userFunction.login = async (req, res, next) => {
   const { email, password } = req.body;
-  const emailFind = await User.findOne({ where: { email } });
-  if (emailFind === null) return res.send("email no encontrado");
-  const compared = await comparePassword(password, emailFind.password);
-  if (compared === true) {
-    const token = jwt.sign(
-      {
-        name: emailFind.name,
-        surname: emailFind.surname,
-        username: emailFind.username,
-      },
-      process.env.TOKEN_SECRET
-    );
-    return res.header("auth-token", token).json({
-      error: null,
-      data: { token },
-    });
+  try {
+    const emailFind = await User.findOne({ where: { email } });
+    if (emailFind === null) return res.status(404).send("email no encontrado");
+    const compared = await comparePassword(password, emailFind.password);
+    if (compared === true) {
+      const token = jwt.sign(
+        {
+          name: emailFind.name,
+          surname: emailFind.surname,
+          username: emailFind.username,
+        },
+        process.env.TOKEN_SECRET
+        );
+      return res.header("auth-token", token).json({
+        error: null,
+        data: { token },
+      });
+    }
+    return res.send("password incorrecta");
+  } catch(err) {
+    next(err)
   }
-  return res.send("password incorrecta");
 };
 
 userFunction.getAll = async (req, res, next) => {
