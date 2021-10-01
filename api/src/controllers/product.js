@@ -96,14 +96,16 @@ class ProductModel extends Modelo {
     }
   };
   getAll = (req, res, next) => {
-    const Users = this.model.findAll({
+    const product = this.model.findAll({
       include: {
         model: Category,
       },
     });
-    Users.then((results) => {
-      res.send(results);
-    }).catch((error) => next(error));
+    product
+      .then((results) => {
+        res.send(results);
+      })
+      .catch((error) => next(error));
   };
 }
 
