@@ -33,11 +33,10 @@ const getTemplate = (name, token) => {
       </head>
       
       <div id="email___content">
-          <img src="https://i.imgur.com/eboNR82.png" alt="">
           <h2>Hola ${name}</h2>
           <p>Para confirmar tu cuenta, ingresa al siguiente enlace</p>
           <a
-              href="http://localhost:3000/api/user/confirm/${token}"
+              href="http://localhost:3000/auth/confirmregister/${token}"
               target="_blank"
           >Confirmar Cuenta</a>
       </div>
