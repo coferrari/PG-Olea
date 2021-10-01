@@ -53,6 +53,9 @@ Carrito.belongsTo(User);
 Brand.hasMany(Product);
 Product.belongsTo(Brand);
 //
+Carrito.belongsToMany(Product, { through: "Carrito_Products" });
+Product.belongsToMany(Carrito, { through: "Carrito_Products" });
+//
 Order.belongsToMany(Product, { through: "Order_Product" });
 Product.belongsToMany(Order, { through: "Order_Product" });
 //
