@@ -1,7 +1,7 @@
 const nodemailer = require("nodemailer");
 const mail = {
-  user: "oleaproyecto@gmail.com",
-  pass: "Henry2021",
+  user: process.env.EMAIL,
+  pass: process.env.PASSWORD_EMAIL,
 };
 var transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
@@ -43,7 +43,26 @@ const getTemplate = (name, token) => {
     `;
 };
 
+const getTemplateChangePassword = (email) => {
+  return `
+      <head>
+          <link rel="stylesheet" href="./style.css">
+      </head>
+      
+      <div id="email___content">
+          <img src="https://i.imgur.com/eboNR82.png" alt="">
+          <h2>Hola ${email}</h2>
+          <p>Para cambiar la contraseña, ingresa al siguiente enlace</p>
+          <a
+              href="http://localhost:3000/changepassword"
+              target="_blank"
+          >Cambiar contraseña</a>
+      </div>
+    `;
+};
+
 module.exports = {
   sendEmail,
   getTemplate,
+  getTemplateChangePassword
 };

@@ -24,7 +24,6 @@ export function validate(input) {
   ) {
     errors.password = "Password is invalid";
   }
-
   return errors;
 }
 
