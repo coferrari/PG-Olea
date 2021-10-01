@@ -4,14 +4,14 @@ import { combineReducers } from "redux";
 import productsReducer from "./productsReducer";
 import searchProductsReducer from "./searchProductsReducer";
 import productDetailReducer from "./productDetailReducer";
-import categoryFilter from "./categoryReducer";
+import categoryReducer from "./categoryReducer";
 
 const rootReducer = combineReducers({
   // aca irian los nombres de los reducers
   productsReducer,
   searchProductsReducer,
   productDetailReducer,
-  categoryFilter,
+  categoryReducer,
 });
 
 export default rootReducer;

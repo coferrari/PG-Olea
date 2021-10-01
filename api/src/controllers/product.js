@@ -1,4 +1,6 @@
+
 const { Product, Category, User, Carrito } = require("../db.js");
+
 const Modelo = require("./index.js");
 
 let id = 0;
@@ -10,9 +12,17 @@ class ProductModel extends Modelo {
 
   create = async (req, res, next) => {
     try {
-      const { name, price, image, description, rating, stock, category } =
-        req.body;
-      let newProduct = await this.model.create({
+      const {
+        name,
+        price,
+        image,
+        description,
+        rating,
+        stock,
+        categoryID,
+        newItem,
+      } = req.body;
+      var newItemProduct = await this.model.create({
         name,
         price,
         image,
@@ -20,9 +30,10 @@ class ProductModel extends Modelo {
         rating,
         id: id,
         stock,
+        newItem,
       });
-      await newProduct.addCategory(category);
-      res.send(newProduct);
+      await newItemProduct.addCategory(categoryID);
+      return res.send("done");
     } catch (error) {
       next(error);
     }
@@ -95,12 +106,16 @@ class ProductModel extends Modelo {
       }
     }
   };
-  getAll = async (req, res, next) => {
-    const product = await this.model.findAll({
+
+ 
+
+  getAll = (req, res, next) => {
+    const Users = this.model.findAll({
       include: {
         model: Category,
       },
     });
+
     product
       .then((results) => {
         res.send(results);
@@ -121,6 +136,11 @@ class ProductModel extends Modelo {
     );
     carritoUser.addProduct(producto.id);
     res.status(200).send("done");
+
+    Users.then((results) => {
+      res.send(results);
+    }).catch((error) => next(error));
+
   };
 }
 

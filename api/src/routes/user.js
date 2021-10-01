@@ -15,6 +15,7 @@ router.post("/login", userFunction.login);
 router.put("/", verifyToken, userFunction.changePassword);
 router.post("/googlelogin", userFunction.googleLogin);
 router.post("/googleregister", userFunction.googleRegister);
+router.post("/confirmregister", userFunction.confirmRegister);
 // router.delete("/:id", userControllers.delete);
 
 module.exports = router;

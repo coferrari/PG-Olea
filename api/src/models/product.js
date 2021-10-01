@@ -15,7 +15,7 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
 
-    new: {
+    newItem: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: true,
