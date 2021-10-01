@@ -4,16 +4,7 @@ import { getProducts } from "../../redux/actions/index";
 import { Product } from "../Product/Product";
 import styles from "./Products.module.css";
 
-export default function Products() {
-  const dispatch = useDispatch();
-  const products = useSelector((state) => state.productsReducer.products);
-
-  useEffect(() => {
-    dispatch(getProducts());
-  }, []);
-
-  console.log(products);
-
+export default function Products({ products }) {
   return (
     <div className={styles.container}>
       {products?.map((p) => {
