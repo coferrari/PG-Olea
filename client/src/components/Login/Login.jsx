@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { logIn, logInGoogle } from "../../auth/users";
@@ -15,9 +15,7 @@ export function validate(input) {
   } else if (!input.password) {
     errors.password = "Password is required";
   } else if (
-    !/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/.test(
-      input.password
-    )
+    !/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/.test(input.password)
   ) {
     errors.password = "Password is invalid";
   }
@@ -47,7 +45,7 @@ const LoginButton = () => {
   };
 
   const handleSubmit = async (e) => {
-    console.log('entra al submit')
+    console.log("entra al submit");
     e.preventDefault();
     try {
       await logIn(input);
@@ -112,6 +110,9 @@ const LoginButton = () => {
                 <div className={style.errors}>{errors.password}</div>
               )}
             </Form.Group>
+            <Link to="/changepassword">
+              <Form.Label>¿Olvidaste tu contraseña?</Form.Label>
+            </Link>
             {input.email &&
               !errors.email &&
               input.password &&
