@@ -9,8 +9,13 @@ import LogoutButton from "./components/Logout/Logout";
 import Navbar from "./components/Navbar/Navbar";
 import Register from "./components/Register/Register";
 import { ProductDetail } from "./components/ProductDetail/ProductDetail";
+
+
+
+
 import Landing from "./components/Landing/Landing";
 import "bootstrap/dist/css/bootstrap.min.css";
+
 function App() {
   return (
     <div>

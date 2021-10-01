@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../../redux/actions/index";
 import { Product } from "../Product/Product";
 
-export default function Carousel() {
+export default function Carousel({ img }) {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.productsReducer.products);
 
@@ -13,9 +13,9 @@ export default function Carousel() {
     dispatch(getProducts());
   }, []);
 
-  const newItemProducts = products.filter(
-    (products) => products.newItem === true
-  );
+  const newItemProducts = img
+    ? img
+    : products.filter((products) => products.newItem === true);
 
   function productNext() {
     if (product < newItemProducts.length - 1) {
