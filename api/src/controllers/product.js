@@ -1,4 +1,4 @@
-const { Product, category } = require("../db.js");
+const { Product, Category, User, Carrito } = require("../db.js");
 const Modelo = require("./index.js");
 
 let id = 0;
@@ -95,8 +95,8 @@ class ProductModel extends Modelo {
       }
     }
   };
-  getAll = (req, res, next) => {
-    const product = this.model.findAll({
+  getAll = async (req, res, next) => {
+    const product = await this.model.findAll({
       include: {
         model: Category,
       },
@@ -106,6 +106,21 @@ class ProductModel extends Modelo {
         res.send(results);
       })
       .catch((error) => next(error));
+  };
+
+  addProduct = async (req, res, next) => {
+    const { productID, userID } = req.body;
+    const producto = await this.model.findByPk(productID);
+    const user = await User.findOne({
+      where: { id: userID },
+      include: Carrito,
+    });
+    console.log(producto.id);
+    const carritoUser = await Carrito.findByPk(
+      user.dataValues.carrito.dataValues.id
+    );
+    carritoUser.addProduct(producto.id);
+    res.status(200).send("done");
   };
 }
 

@@ -1,4 +1,4 @@
-const { User, Carrito } = require("../db.js");
+const { User, Carrito, Product } = require("../db.js");
 const { encryptPassword, comparePassword } = require("../helpers/index");
 const jwt = require("jsonwebtoken");
 const { OAuth2Client } = require("google-auth-library");
