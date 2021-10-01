@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Route } from "react-router-dom";
 import Home from "./components/Home/Home";
@@ -10,9 +9,7 @@ import Navbar from "./components/Navbar/Navbar";
 import Register from "./components/Register/Register";
 import { ProductDetail } from "./components/ProductDetail/ProductDetail";
 
-
-
-
+import ConfirmRegister from "./components/ConfirmRegister/ConfirmRegister";
 import Landing from "./components/Landing/Landing";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -41,6 +38,9 @@ function App() {
       </Route>
       <Route path="/product/:id">
         <ProductDetail />
+      </Route>
+      <Route path="/auth/confirmregister/:token">
+        <ConfirmRegister />
       </Route>
     </div>
   );

@@ -56,12 +56,8 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      await register(input);
-      history.push("/");
-    } catch (err) {
-      throw new Error(err);
-    }
+    history.push("/");
+    await register(input);
   };
   const responseSuccessGoogle = async (response) => {
     await registerGoogle(response);
