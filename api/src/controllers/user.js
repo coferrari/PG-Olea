@@ -162,5 +162,6 @@ userFunction.googleLogin = async (req, res, next) => {
   }
 };
 
-userFunction.googleRegister = async (req, res, next) => {};
+
 module.exports = userFunction;
+

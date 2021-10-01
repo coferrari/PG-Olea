@@ -1,5 +1,5 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import Home from "./components/Home/Home";
 import CategoryProduct from "./components/CategoryProduct/CategoryProduct";
 
@@ -8,7 +8,6 @@ import LogoutButton from "./components/Logout/Logout";
 import Navbar from "./components/Navbar/Navbar";
 import Register from "./components/Register/Register";
 import { ProductDetail } from "./components/ProductDetail/ProductDetail";
-
 import ConfirmRegister from "./components/ConfirmRegister/ConfirmRegister";
 import Landing from "./components/Landing/Landing";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -19,6 +18,7 @@ function App() {
   return (
     <div>
       <Navbar />
+          <Switch>
       <Route exact path="/" component={Landing} />
       <Route exact path="/login">
         <LoginButton />
@@ -41,7 +41,7 @@ function App() {
       <Route path="/home/:attribute/:order">
         <Home />
       </Route>
-      <Route path="/category/:id">
+      <Route path="/category/:nameCategory">
         <CategoryProduct />
       </Route>
       <Route path="/product/:id">
@@ -50,6 +50,7 @@ function App() {
       <Route path="/auth/confirmregister/:token">
         <ConfirmRegister />
       </Route>
+</Switch>
     </div>
   );
 }
