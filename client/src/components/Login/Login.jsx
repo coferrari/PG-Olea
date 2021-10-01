@@ -110,7 +110,7 @@ const LoginButton = () => {
                 <div className={style.errors}>{errors.password}</div>
               )}
             </Form.Group>
-            <Link to="/changepassword">
+            <Link to="/requestchangepassword">
               <Form.Label>¿Olvidaste tu contraseña?</Form.Label>
             </Link>
             {input.email &&
