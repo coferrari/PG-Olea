@@ -5,25 +5,42 @@ const { OAuth2Client } = require("google-auth-library");
 const client = new OAuth2Client(
   "699731210579-fq1sd4ijgh6ph842rlc3f0rf86eftdgh.apps.googleusercontent.com"
 );
+const nodemailer = require("nodemailer");
+const { getTemplate, sendEmail } = require("../helpers/mail");
 const userFunction = {};
 
 userFunction.register = async (req, res, next) => {
+  const { username, password, email } = req.body;
   try {
-    const { username, password, email } = req.body;
-    const encryptedPassword = await encryptPassword(password);
     const userFind = await User.findOne({ where: { username } });
-    if (userFind === null) {
-      const newUser = await User.create({
-        username,
-        password: encryptedPassword,
-        email,
-      });
-      return res.send(`${newUser.username} created`);
+    if (!userFind) {
+      const token = jwt.sign(
+        {
+          username: username,
+          password: password,
+          email: email,
+        },
+        process.env.TOKEN_SECRET
+      );
+      const template = getTemplate(username, token);
+      await sendEmail(email, "Confirmar registro", template);
+      res.send("email enviado");
     }
-    return res.send("Este usuario existe en la base de datos");
+    if (userFind) res.status(304).send("este email ya esta registrado");
   } catch (err) {
     next(err);
   }
+};
+userFunction.confirmRegister = async (req, res, next) => {
+  const { token } = req.body;
+  const verified = jwt.verify(token, process.env.TOKEN_SECRET);
+  const encryptedPassword = await encryptPassword(verified.password);
+  const user = await User.create({
+    username: verified.username,
+    password: encryptedPassword,
+    email: verified.email,
+  });
+  res.send(user);
 };
 userFunction.login = async (req, res, next) => {
   const { email, password } = req.body;
