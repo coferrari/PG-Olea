@@ -3,7 +3,7 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const routes = require("./routes/index.js");
-
+const cors = require("cors");
 const errorHandler = require("./utils/middlewares/errorHandler");
 const setHeaders = require("./utils/middlewares/setHeaders");
 require("./db.js");
@@ -17,7 +17,7 @@ server.use(bodyParser.json({ limit: "50mb" }));
 server.use(cookieParser());
 server.use(morgan("dev"));
 server.use(setHeaders);
-
+server.use(cors());
 server.use("/api", routes);
 
 // Error catching endware.
