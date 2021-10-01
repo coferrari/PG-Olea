@@ -5,7 +5,8 @@ const initialState = {
     productsByCategory: []
 }
 
-export default function categoryFilter(state = initialState, action){
+export default function categoryReducer(state = initialState, action){
+    console.log(action.payload);
     switch(action.type){
         case CATEGORY_FILTER:
             return {

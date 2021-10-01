@@ -29,6 +29,7 @@ const axios = require("axios");
 // Syncing all the models at once.
 conn.sync({ force: true }).then(() => {
   //Posteo todas las marcas y categorias
+
   for (let i = 0; i < marcas.length; i++) {
     const post = axios.post("http://localhost:3001/api/brand", marcas[i]);
     post.then();
@@ -41,7 +42,7 @@ conn.sync({ force: true }).then(() => {
     post.then();
   }
 
-  for (let i = 0; i < 5; i++) {
+  for (let j = 0; j < 5; j++) {
     for (let i = 0; i < productos.length; i++) {
       const post = axios.post(
         "http://localhost:3001/api/product",
