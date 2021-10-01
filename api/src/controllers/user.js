@@ -6,7 +6,11 @@ const client = new OAuth2Client(
   "699731210579-fq1sd4ijgh6ph842rlc3f0rf86eftdgh.apps.googleusercontent.com"
 );
 const nodemailer = require("nodemailer");
-const { getTemplate, sendEmail, getTemplateChangePassword } = require("../helpers/mail");
+const {
+  getTemplate,
+  sendEmail,
+  getTemplateChangePassword,
+} = require("../helpers/mail");
 const userFunction = {};
 
 userFunction.register = async (req, res, next) => {
@@ -14,17 +18,6 @@ userFunction.register = async (req, res, next) => {
   try {
     const userFind = await User.findOne({ where: { username } });
     const encryptedPassword = await encryptPassword(password);
-
-    if (userFind === null) {
-      const carritocreado = await Carrito.create({});
-      const newUser = await User.create({
-        username,
-        password: encryptedPassword,
-        email,
-      });
-      newUser.setCarrito(carritocreado.dataValues.id);
-      return res.send(`${newUser.username} created`);
-
 
     if (!userFind) {
       const token = jwt.sign(
@@ -42,7 +35,7 @@ userFunction.register = async (req, res, next) => {
       );
       const template = getTemplate(username, token);
       await sendEmail(email, "Confirmar registro", template);
-      res.send("email enviado");
+      return res.send("email enviado");
     }
     if (userFind) res.status(304).send("este email ya esta registrado");
   } catch (err) {
@@ -53,7 +46,7 @@ userFunction.register = async (req, res, next) => {
 userFunction.confirmRegister = async (req, res, next) => {
   const { token } = req.body;
   const verified = jwt.verify(token, process.env.TOKEN_SECRET);
-
+  const carritocreado = await Carrito.create({});
   const user = await User.create({
     name: verified.name,
     surname: verified.surname,
@@ -63,7 +56,8 @@ userFunction.confirmRegister = async (req, res, next) => {
     name: verified.name,
     surname: verified.surname,
   });
-  console.log(user)
+  console.log(user);
+  user.setCarrito(carritocreado.dataValues.id);
   res.send(user);
 };
 
@@ -72,20 +66,20 @@ userFunction.requestChangePassword = async (req, res, next) => {
   const { email } = req.body;
   // const user = await User.findOne({ where: email })
   // if (user) {
-    const template = getTemplateChangePassword(email);
-    await sendEmail(email, "Confirmar cambio de contraseña", template);
-    res.send("email enviado");
+  const template = getTemplateChangePassword(email);
+  await sendEmail(email, "Confirmar cambio de contraseña", template);
+  res.send("email enviado");
   // }
-}
+};
 
 // para cuando ya esta validado el mail
 userFunction.changePassword = async (req, res, next) => {
   const { email, password } = req.body;
-  console.log(req.body)
+  console.log(req.body);
 
   // const user = await User.findOne({ where: { email } });
   const newPasswordEncrypted = await encryptPassword(password);
-  console.log(newPasswordEncrypted)
+  console.log(newPasswordEncrypted);
 
   // user.password = newPasswordEncrypted;
   res.send("nueva contraseña guardada");
@@ -168,6 +162,4 @@ userFunction.googleLogin = async (req, res, next) => {
   }
 };
 
-
 module.exports = userFunction;
-

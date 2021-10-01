@@ -61,8 +61,6 @@ Order.belongsToMany(Product, { through: "Order_Product" });
 Product.belongsToMany(Order, { through: "Order_Product" });
 //
 
-
-
 Category.belongsToMany(Product, { through: "Product_Category" });
 Product.belongsToMany(Category, { through: "Product_Category" });
 
