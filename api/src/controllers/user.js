@@ -32,7 +32,6 @@ userFunction.register = async (req, res, next) => {
     const template = getTemplate(username, token);
     await sendEmail(email, "Confirmar registro", template);
     return res.send("email enviado");
-
   } catch (err) {
     next(err);
   }
@@ -48,16 +47,15 @@ userFunction.confirmRegister = async (req, res, next) => {
     username: verified.username,
     password: verified.password,
     email: verified.email,
-    admin: false
+    admin: false,
   });
   user.setCarrito(carritocreado.dataValues.id);
   res.send(user);
 };
 
-// solicitar validacion de mail para cambio de contraseña 
+// solicitar validacion de mail para cambio de contraseña
 userFunction.requestChangePassword = async (req, res, next) => {
   const { email } = req.body;
-
   try {
     const user = await User.findOne({ where: { email } });
     if (user) {
@@ -65,22 +63,15 @@ userFunction.requestChangePassword = async (req, res, next) => {
       await sendEmail(email, "Confirmar cambio de contraseña", template);
       res.send("email enviado");
     }
-  } catch(err) {
-    console.log(err)
+  } catch (err) {
+    console.log(err);
   }
-}
-
-
+};
 // para cuando ya esta validado el mail
 userFunction.changePassword = async (req, res, next) => {
   const { email, password } = req.body;
-  console.log(req.body);
-
-  const user = await User.findOne({ where: {email} });
-  console.log(user, 'user')
+  const user = await User.findOne({ where: { email } });
   const newPasswordEncrypted = await encryptPassword(password);
-  console.log(newPasswordEncrypted);
-
   user.password = newPasswordEncrypted;
   res.send("nueva contraseña guardada");
 };
@@ -89,29 +80,30 @@ userFunction.login = async (req, res, next) => {
   const { email, password } = req.body;
   try {
     const emailFind = await User.findOne({ where: { email } });
-      const token = jwt.sign(
-        {
-          name: emailFind.name,
-          surname: emailFind.surname,
-          username: emailFind.username,
-        },
-        process.env.TOKEN_SECRET
-      );
-      return res.header("auth-token", token).json({
-        error: null,
-        data: { token },
-      });
+    const token = jwt.sign(
+      {
+        name: emailFind.name,
+        surname: emailFind.surname,
+        username: emailFind.username,
+        admin: emailFind.admin,
+      },
+      process.env.TOKEN_SECRET
+    );
+    return res.header("auth-token", token).json({
+      error: null,
+      data: { token },
+    });
   } catch (err) {
     next(err);
   }
 };
+
 userFunction.getAll = async (req, res, next) => {
   console.log("llegue");
   const users = await User.findAll({
     include: Carrito,
   });
   try {
-    console.log("devuelta");
     res.send(users);
   } catch (err) {
     res.status(400).send(err.message);
@@ -160,6 +152,17 @@ userFunction.googleLogin = async (req, res, next) => {
       },
     });
   }
+};
+userFunction.createAdmin = async (req, res, next) => {
+  const { username, password, admin, email } = req.body;
+  const newPassword = await encryptPassword(password);
+  User.create({
+    username,
+    password,
+    email,
+    password: newPassword,
+    admin,
+  });
 };
 
 module.exports = userFunction;
