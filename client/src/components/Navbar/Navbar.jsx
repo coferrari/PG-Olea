@@ -41,7 +41,6 @@ const NavResponsive = () => {
                 <Nav.Link>
                   <Link to="/logout" className={style.linkssesion}>
                     <li>Cerrar sesión</li>
-
                   </Link>
                 </Nav.Link>
               </Nav>
@@ -64,13 +63,13 @@ const NavResponsive = () => {
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
               <Nav.Link>
-                <Link to="/category/1" className={style.links}>Almacén</Link>
+                <Link to="/category/Almacen" className={style.links}>Almacén</Link>
               </Nav.Link>
               <Nav.Link>
-                <Link to="/category/2" className={style.links}>Cosmética</Link>
+                <Link to="/category/Cosmetica" className={style.links}>Cosmética</Link>
               </Nav.Link>
               <Nav.Link>
-                <Link to="/category/3" className={style.links}>Decoración</Link>
+                <Link to="/category/Decoracion" className={style.links}>Decoración</Link>
               </Nav.Link>
             </Nav>
             <Nav>
