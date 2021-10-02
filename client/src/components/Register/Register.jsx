@@ -61,8 +61,8 @@ const Register = () => {
 
 
   return (
-    <div>
-      <h3>Registrate</h3>
+    <div className={style.container}>
+      <h3 className={style.title}>Registrate</h3>
       <div className="container">
         <div className="col-lg-4 mx-auto text-center">
           <Form

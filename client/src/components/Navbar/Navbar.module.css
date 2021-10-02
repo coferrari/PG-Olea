@@ -1,3 +1,35 @@
-.user {
-    color: white
+.links {
+    text-decoration: none;
+    color: white;
+    text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+.links:hover {
+    color:cornflowerblue;
+}
+
+.linkssesion {
+    text-decoration: none;
+    color: white;
+    text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+.linkssesion:hover {
+    color:cornflowerblue;
+}
+
+.containersession {
+    display: flex;
+    align-items: center;
+}
+
+.username {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
 }
