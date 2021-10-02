@@ -58,15 +58,7 @@ const Register = () => {
     history.push("/");
     await register(input);
   };
-  // const responseSuccessGoogle = async (response) => {
-  //   await registerGoogle(response);
-  //   history.push("/");
-  // };
-  // const responseErrorGoogle = (response) => {
-  //   console.log(response);
-  //   console.log(response.profileObj);
-  //   history.push("/");
-  // };
+
 
   return (
     <div>
@@ -171,16 +163,7 @@ const Register = () => {
                 </Button>
               )}
           </Form>
-          <div className={style.googleLogin}>
-            {/* <GoogleLogin
-              clientId={clientId}
-              buttonText="Registrarse con Google"
-              onSuccess={responseSuccessGoogle}
-              onFailure={responseErrorGoogle}
-              cookiePolicy={"single_host_origin"}
-              isSignedIn={true}
-            /> */}
-          </div>
+
         </div>
       </div>
     </div>

@@ -21,11 +21,11 @@ const RequestChangePassword = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      alert ('revisa tu mail')
+      // alert ('revisa tu mail')
       await requestChangePassword(email);
       history.push('/')
     } catch (err) {
-      throw new Error(err);
+      console.log(err);
     }
 
   };
