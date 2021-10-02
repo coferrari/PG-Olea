@@ -19,11 +19,10 @@ const ConfirmRegister = () => {
     <div>
       <Button variant="dark" type="submit" onClick={handleSubmit}>
         Confirmar registro
-
-      </button>
-      <button onClick={handleSubmitPrueba}>Prueba</button>
       </Button>
-
+      <Button variant="dark" type="submit" onClick={handleSubmitPrueba}>
+        Prueba
+      </Button>
     </div>
   );
 };

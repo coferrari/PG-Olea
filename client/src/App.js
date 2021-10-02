@@ -13,44 +13,48 @@ import Landing from "./components/Landing/Landing";
 import "bootstrap/dist/css/bootstrap.min.css";
 import RequestChangePassword from "./components/RequestChangePassword/RequestChangePassword";
 import ChangePassword from "./components/ChangePassword/ChangePassword";
+import UserInfo from "./components/UserInfo/UserInfo";
 
 function App() {
   return (
     <div>
       <Navbar />
-          <Switch>
-      <Route exact path="/" component={Landing} />
-      <Route exact path="/login">
-        <LoginButton />
-      </Route>
-      <Route exact path="/register">
-        <Register />
-      </Route>
-      <Route exact path="/logout">
-        <LogoutButton />
-      </Route>
-      <Route exact path="/requestchangepassword">
-        <RequestChangePassword />
-      </Route>
-      <Route exact path="/changepassword">
-        <ChangePassword />
-      </Route>
-      <Route exact path="/home">
-        <Home />
-      </Route>
-      <Route path="/home/:attribute/:order">
-        <Home />
-      </Route>
-      <Route path="/category/:nameCategory">
-        <CategoryProduct />
-      </Route>
-      <Route path="/product/:id">
-        <ProductDetail />
-      </Route>
-      <Route path="/auth/confirmregister/:token">
-        <ConfirmRegister />
-      </Route>
-</Switch>
+      <Switch>
+        <Route exact path="/" component={Landing} />
+        <Route exact path="/login">
+          <LoginButton />
+        </Route>
+        <Route exact path="/register">
+          <Register />
+        </Route>
+        <Route exact path="/logout">
+          <LogoutButton />
+        </Route>
+        <Route exact path="/requestchangepassword">
+          <RequestChangePassword />
+        </Route>
+        <Route exact path="/changepassword">
+          <ChangePassword />
+        </Route>
+        <Route exact path="/home">
+          <Home />
+        </Route>
+        <Route path="/home/:attribute/:order">
+          <Home />
+        </Route>
+        <Route path="/category/:nameCategory">
+          <CategoryProduct />
+        </Route>
+        <Route path="/product/:id">
+          <ProductDetail />
+        </Route>
+        <Route path="/auth/confirmregister/:token">
+          <ConfirmRegister />
+        </Route>
+        <Route exact path="/user/">
+          <UserInfo />
+        </Route>
+      </Switch>
     </div>
   );
 }
