@@ -5,12 +5,15 @@ import {
   GET_PRODUCT_DETAIL,
   CATEGORY_FILTER,
   ALL_CATEGORIES,
+  ADD_TO_CHART,
+  REMOVE_FROM_CHART,
 } from "./types";
 import {
   GET_PRODUCTS_URL,
   SEARCH_PRODUCTS_URL,
   GET_PRODUCT_DETAIL_URL,
   CATEGORY_URL,
+  //AGREGAR RUTAS BACK
 } from "../../consts";
 
 export function getProducts() {
@@ -67,3 +70,19 @@ export function getCategories() {
     });
   };
 }
+
+export function addProductsToChart(product) {
+  return {
+    type: ADD_TO_CHART,
+    payload: product,
+  };
+}
+
+export function removeProductsFromChart(id) {
+  return {
+    type: REMOVE_FROM_CHART,
+    payload: id,
+  };
+}
+
+
