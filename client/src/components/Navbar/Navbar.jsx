@@ -21,19 +21,25 @@ const NavResponsive = () => {
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="me-auto">
-                <Nav.Link>Almacén</Nav.Link>
-                <Nav.Link>Cosmética</Nav.Link>
-                <Nav.Link>Decoración</Nav.Link>
-              </Nav>
-              <Nav>
-                <Nav.Link>{user.username}</Nav.Link>
                 <Nav.Link>
-                  <Link to="/account">
+                  <Link to="/category/Almacen" className={style.links}>Almacén</Link>
+                </Nav.Link>
+                <Nav.Link>
+                  <Link to="/category/Cosmetica" className={style.links}>Cosmética</Link>
+                </Nav.Link>
+                <Nav.Link>
+                  <Link to="/category/Decoracion" className={style.links}>Decoración</Link>
+                </Nav.Link>
+              </Nav>
+              <Nav className={style.containersession}>
+                <Nav.Link className={style.username}>{user.username}</Nav.Link>
+                <Nav.Link>
+                  <Link to="/account" className={style.linkssesion}>
                     <li>Mi cuenta</li>
                   </Link>
                 </Nav.Link>
                 <Nav.Link>
-                  <Link to="/logout">
+                  <Link to="/logout" className={style.linkssesion}>
                     <li>Cerrar sesión</li>
                   </Link>
                 </Nav.Link>
@@ -56,21 +62,28 @@ const NavResponsive = () => {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link>Almacén</Nav.Link>
-              <Nav.Link>Cosmética</Nav.Link>
-              <Nav.Link>Decoración</Nav.Link>
+              <Nav.Link>
+                <Link to="/category/Almacen" className={style.links}>Almacén</Link>
+              </Nav.Link>
+              <Nav.Link>
+                <Link to="/category/Cosmetica" className={style.links}>Cosmética</Link>
+              </Nav.Link>
+              <Nav.Link>
+                <Link to="/category/Decoracion" className={style.links}>Decoración</Link>
+              </Nav.Link>
             </Nav>
             <Nav>
               <Nav.Link>
-                <Link to="/login">
+                <Link to="/login" className={style.linkssesion}>
                   <li>Iniciar sesión</li>
                 </Link>
               </Nav.Link>
               <Nav.Link>
-                <Link to="/register">
+                <Link to="/register" className={style.linkssesion}>
                   <li>Registrarse</li>
                 </Link>
               </Nav.Link>
+
             </Nav>
           </Navbar.Collapse>
         </Container>

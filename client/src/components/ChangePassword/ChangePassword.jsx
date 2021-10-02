@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { changePassword } from "../../auth/users";
 import style from "./ChangePassword.module.css";
+import { useHistory } from "react-router-dom";
 
 export function validate(input) {
   let errors = {};
@@ -31,12 +32,14 @@ const ChangePassword = () => {
   });
 
   const [errors, setErrors] = useState({});
+  const history = useHistory();
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("entra al submit de cambio de contraseña");
-    changePassword(input.email, input.passwordTwo);
-  };
+      e.preventDefault()
+      changePassword(input.email, input.passwordTwo);
+      history.push('/login')
+  }
+
 
   const handleChange = (e) => {
     setInput({
