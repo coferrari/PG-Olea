@@ -1,4 +1,3 @@
-
 const { Product, Category } = require("../db.js");
 const Modelo = require("./index.js");
 class CategoryModel extends Modelo {
@@ -21,17 +20,17 @@ class CategoryModel extends Modelo {
     try {
       let productsFiltered = await Product.findAll({
         include: {
-         model: Category, 
+          model: Category,
         },
-      }) 
-      productsFiltered = productsFiltered.filter(p => p.categories[0].nameCategory === req.params.category);
+      });
+      productsFiltered = productsFiltered.filter(
+        (p) => p.categories[0].nameCategory === req.params.category
+      );
       res.send(productsFiltered);
-    }
-    catch(error){
+    } catch (error) {
       next(error);
     }
-  }
-
+  };
 }
 
 const categoryControllers = new CategoryModel(Category);
