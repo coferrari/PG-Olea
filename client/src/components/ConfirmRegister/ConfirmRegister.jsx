@@ -1,5 +1,5 @@
 import React from "react";
-import { confirmRegister } from "../../auth/users";
+import { confirmRegister, getUsers } from "../../auth/users";
 import { useParams } from "react-router";
 import { useHistory } from "react-router-dom";
 const ConfirmRegister = () => {
@@ -9,11 +9,16 @@ const ConfirmRegister = () => {
     await confirmRegister(token);
     history.push("/");
   };
+  const handleSubmitPrueba = async () => {
+    const users = await getUsers(token);
+    console.log(users);
+  };
   return (
     <div>
       <button type="submit" onClick={handleSubmit}>
         Confirmar registro
       </button>
+      <button onClick={handleSubmitPrueba}>Prueba</button>
     </div>
   );
 };
