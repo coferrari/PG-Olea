@@ -6,12 +6,8 @@ import { Button } from "react-bootstrap";
 import { getToken, decodeToken } from "../../utils/index";
 import CreateProduct from "../CreateProduct/CreateProduct";
 
-export default function UserInfo() {
+export default function Admin() {
   const loggedIn = decodeToken();
-  return (
-    <div>
-      <h1>Users</h1>
-      <CreateProduct />
-    </div>
-  );
+  console.log(loggedIn);
+  return <div></div>;
 }

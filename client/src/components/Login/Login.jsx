@@ -67,8 +67,8 @@ const LoginButton = () => {
   };
 
   return (
-    <div>
-      <h3>Iniciar sesión</h3>
+    <div className={style.container}>
+      <h3 className={style.title}>Iniciar sesión</h3>
       <div className="container">
         <div className="col-lg-4 mx-auto text-center">
           <Form
