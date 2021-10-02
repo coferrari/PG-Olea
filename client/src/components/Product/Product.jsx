@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Product.module.css";
 import { Card, Button } from "react-bootstrap";
-import Spinner from "react-bootstrap/Spinner";
 import {
   addProductsToChart,
   removeProductsFromChart,
@@ -14,24 +13,25 @@ export function Product({ id, name, image, price }) {
     (state) => state.carritoReducer.productsCarrito
   );
 
-  const isInChart = productsChart.find((product) => product.id === id);
+  const nameItemStorage = localStorage.getItem(name);
 
   const dispatch = useDispatch();
 
   const handleAddToChart = (e) => {
     e.preventDefault();
     dispatch(addProductsToChart({ id }));
+    localStorage.setItem(name, id);
   };
 
   const handleRemoveFromChart = (e) => {
     e.preventDefault();
     dispatch(removeProductsFromChart(id));
+    localStorage.removeItem(name);
   };
 
   return (
     // definir qué info mostrar
     <div className={styles.container}>
-      {image ? (
         <Card style={{ width: "30rem" }}>
           <Card.Img variant="top" src={image ? image : ""} alt="producto" />
           <Card.Body>
@@ -40,16 +40,7 @@ export function Product({ id, name, image, price }) {
             </Link>
             <Card.Text>{price}</Card.Text>
           </Card.Body>
-
-          {isInChart ? (
-            <Button
-              variant="secondary"
-              type="submit"
-              onClick={(e) => handleRemoveFromChart(e)}
-            >
-              Eliminar del carrito
-            </Button>
-          ) : (
+          {!nameItemStorage && (
             <Button
               variant="dark"
               type="submit"
@@ -58,10 +49,16 @@ export function Product({ id, name, image, price }) {
               Agregar al carrito
             </Button>
           )}
+          {nameItemStorage && (
+            <Button
+              variant="secondary"
+              type="submit"
+              onClick={(e) => handleRemoveFromChart(e)}
+            >
+              Eliminar del carrito
+            </Button>
+          )}
         </Card>
-      ) : (
-        <Spinner animation="border" />
-      )}
     </div>
   );
 }
