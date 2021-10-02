@@ -25,7 +25,7 @@ const categorias = require("./json/categorias");
 const productos = require("./json/productos");
 const admin = require("./json/admins");
 const axios = require("axios");
-const { UserRefreshClient } = require("google-auth-library");
+const { encryptPassword } = require("./src/helpers/index");
 const { User } = require("./src/db");
 // Syncing all the models at once.
 conn.sync({ force: true }).then(() => {
@@ -53,7 +53,11 @@ conn.sync({ force: true }).then(() => {
     }
   }
   for (let i = 0; i < admin.length; i++) {
-    User.create(admin[i]);
+    const post = axios.post(
+      "http://localhost:3001/api/user/createadmin",
+      admin[i]
+    );
+    post.then();
   }
   server.listen(3001, () => {
     console.log("%s listening at 3001"); // eslint-disable-line no-console
