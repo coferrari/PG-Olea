@@ -34,7 +34,7 @@ const NavResponsive = () => {
                 </Nav.Link>
                 <Nav.Link>
                   <Link to="/logout">
-                    <li>Logout</li>
+                    <li>Cerrar sesión</li>
                   </Link>
                 </Nav.Link>
               </Nav>
@@ -63,12 +63,12 @@ const NavResponsive = () => {
             <Nav>
               <Nav.Link>
                 <Link to="/login">
-                  <li>Login</li>
+                  <li>Iniciar sesión</li>
                 </Link>
               </Nav.Link>
               <Nav.Link>
                 <Link to="/register">
-                  <li>Register</li>
+                  <li>Registrarse</li>
                 </Link>
               </Nav.Link>
             </Nav>
