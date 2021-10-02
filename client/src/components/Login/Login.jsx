@@ -60,7 +60,7 @@ const LoginButton = () => {
     await logInGoogle(response);
     history.push("/");
   };
-  const responseErrorGoogle = (response) => {
+  const responseErrorGoogle = async (response) => {
     console.log(response);
     console.log(response.profileObj);
     history.push("/");
@@ -131,7 +131,7 @@ const LoginButton = () => {
               onSuccess={responseSuccessGoogle}
               onFailure={responseErrorGoogle}
               cookiePolicy={"single_host_origin"}
-              // isSignedIn={true}
+              isSignedIn={true}
             />
           </div>
         </div>
