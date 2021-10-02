@@ -9,7 +9,7 @@ const {
   checkEmailAndPassword,
 } = require("../utils/middlewares/checkDuplicate");
 const isAdmin = require("../utils/middlewares/isAdmin");
-router.get("/", isAdmin, verifyToken, userFunction.getAll);
+router.get("/", verifyToken, userFunction.getAll);
 router.post("/register", checkDuplicate, userFunction.register);
 router.post("/login", checkEmailAndPassword, userFunction.login);
 router.put("/", verifyToken, userFunction.changePassword);
