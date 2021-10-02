@@ -9,11 +9,10 @@ const ConfirmRegister = () => {
   const { token } = useParams();
   const handleSubmit = async () => {
     await confirmRegister(token);
-    history.push("/");
+    history.push("/login");
   };
   const handleSubmitPrueba = async () => {
     const users = await getUsers(token);
-    console.log(users);
   };
   return (
     <div>
