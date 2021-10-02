@@ -15,7 +15,7 @@ const NavResponsive = () => {
           <Container>
             <Link to="/">
               <Navbar.Brand>
-                <img height="120px" src={Logo} alt="Olea" />
+                <img height="140px" src={Logo} alt="Olea" />
               </Navbar.Brand>
             </Link>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
