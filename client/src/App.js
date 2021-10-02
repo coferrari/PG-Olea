@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import Home from "./components/Home/Home";
 import CategoryProduct from "./components/CategoryProduct/CategoryProduct";
 
@@ -13,9 +13,13 @@ import Landing from "./components/Landing/Landing";
 import "bootstrap/dist/css/bootstrap.min.css";
 import RequestChangePassword from "./components/RequestChangePassword/RequestChangePassword";
 import ChangePassword from "./components/ChangePassword/ChangePassword";
-import UserInfo from "./components/UserInfo/UserInfo";
+import User from "./components/User/User";
+import { decodeToken } from "./utils/index";
+import CreateProduct from "./components/CreateProduct/CreateProduct";
+import UsersTable from "./components/UsersTable/UsersTable";
 
 function App() {
+  const loggedIn = decodeToken();
   return (
     <div>
       <Navbar />
@@ -51,8 +55,11 @@ function App() {
         <Route path="/auth/confirmregister/:token">
           <ConfirmRegister />
         </Route>
-        <Route exact path="/user/">
-          <UserInfo />
+        <Route exact path="/admin/createproduct">
+          {loggedIn.admin ? <CreateProduct /> : <Redirect to="/home" />}
+        </Route>
+        <Route exact path="/admin/userstable">
+          {loggedIn.admin ? <UsersTable /> : <Redirect to="/home" />}
         </Route>
       </Switch>
     </div>

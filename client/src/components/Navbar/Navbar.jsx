@@ -22,13 +22,19 @@ const NavResponsive = () => {
             <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="me-auto">
                 <Nav.Link>
-                  <Link to="/category/Almacen" className={style.links}>Almacén</Link>
+                  <Link to="/category/Almacen" className={style.links}>
+                    Almacén
+                  </Link>
                 </Nav.Link>
                 <Nav.Link>
-                  <Link to="/category/Cosmetica" className={style.links}>Cosmética</Link>
+                  <Link to="/category/Cosmetica" className={style.links}>
+                    Cosmética
+                  </Link>
                 </Nav.Link>
                 <Nav.Link>
-                  <Link to="/category/Decoracion" className={style.links}>Decoración</Link>
+                  <Link to="/category/Decoracion" className={style.links}>
+                    Decoración
+                  </Link>
                 </Nav.Link>
               </Nav>
               <Nav className={style.containersession}>
@@ -63,13 +69,19 @@ const NavResponsive = () => {
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
               <Nav.Link>
-                <Link to="/category/Almacen" className={style.links}>Almacén</Link>
+                <Link to="/category/Almacen" className={style.links}>
+                  Almacén
+                </Link>
               </Nav.Link>
               <Nav.Link>
-                <Link to="/category/Cosmetica" className={style.links}>Cosmética</Link>
+                <Link to="/category/Cosmetica" className={style.links}>
+                  Cosmética
+                </Link>
               </Nav.Link>
               <Nav.Link>
-                <Link to="/category/Decoracion" className={style.links}>Decoración</Link>
+                <Link to="/category/Decoracion" className={style.links}>
+                  Decoración
+                </Link>
               </Nav.Link>
             </Nav>
             <Nav>
@@ -83,7 +95,6 @@ const NavResponsive = () => {
                   <li>Registrarse</li>
                 </Link>
               </Nav.Link>
-
             </Nav>
           </Navbar.Collapse>
         </Container>
