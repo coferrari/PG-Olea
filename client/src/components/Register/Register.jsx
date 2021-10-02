@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
-import { register, registerGoogle } from "../../auth/users";
+import { register } from "../../auth/users";
 import { useHistory } from "react-router-dom";
 import GoogleLogin from "react-google-login";
 import style from "./Register.module.css";
@@ -58,6 +58,7 @@ const Register = () => {
     history.push("/");
     await register(input);
   };
+
 
   return (
     <div className={style.container}>
@@ -162,6 +163,7 @@ const Register = () => {
                 </Button>
               )}
           </Form>
+
         </div>
       </div>
     </div>
