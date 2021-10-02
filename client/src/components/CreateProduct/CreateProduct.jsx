@@ -9,8 +9,6 @@ import axios from "axios";
 import { GET_PRODUCTS_URL } from "../../consts";
 
 export default function CreateProduct() {
-  const user = getToken();
-  console.log(user);
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.categoryReducer.categories);
   const [newProduct, setNewProduct] = useState({

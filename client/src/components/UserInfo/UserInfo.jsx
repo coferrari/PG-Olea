@@ -8,11 +8,10 @@ import CreateProduct from "../CreateProduct/CreateProduct";
 
 export default function UserInfo() {
   const loggedIn = decodeToken();
-  console.log(loggedIn);
   return (
     <div>
       <h1>Users</h1>
-      {loggedIn.admin ? <CreateProduct /> : <Redirect to="/home" />}
+      <CreateProduct />
     </div>
   );
 }

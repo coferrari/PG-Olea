@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import Home from "./components/Home/Home";
 import CategoryProduct from "./components/CategoryProduct/CategoryProduct";
 
@@ -14,8 +14,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import RequestChangePassword from "./components/RequestChangePassword/RequestChangePassword";
 import ChangePassword from "./components/ChangePassword/ChangePassword";
 import UserInfo from "./components/UserInfo/UserInfo";
-
+import { getToken, decodeToken } from "./utils/index";
 function App() {
+  const loggedIn = decodeToken();
   return (
     <div>
       <Navbar />
@@ -52,7 +53,7 @@ function App() {
           <ConfirmRegister />
         </Route>
         <Route exact path="/user/">
-          <UserInfo />
+          <UserInfo /> {loggedIn.admin ? <UserInfo /> : <Redirect to="/home" />}
         </Route>
       </Switch>
     </div>
