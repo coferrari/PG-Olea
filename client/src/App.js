@@ -17,6 +17,7 @@ import User from "./components/User/User";
 import { decodeToken } from "./utils/index";
 import CreateProduct from "./components/CreateProduct/CreateProduct";
 import UsersTable from "./components/UsersTable/UsersTable";
+import ProductsList from "./components/ProductsList/ProductsList";
 
 function App() {
   const loggedIn = decodeToken();
@@ -60,6 +61,9 @@ function App() {
         </Route>
         <Route exact path="/admin/userstable">
           {loggedIn.admin ? <UsersTable /> : <Redirect to="/home" />}
+        </Route>
+        <Route exact path="/admin/productslist">
+          {loggedIn.admin ? <ProductsList /> : <Redirect to="/home" />}
         </Route>
       </Switch>
     </div>
