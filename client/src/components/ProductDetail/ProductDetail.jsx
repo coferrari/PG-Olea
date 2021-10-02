@@ -23,7 +23,7 @@ export function ProductDetail() {
     <div className="container">
       <Card style={{ width: "18rem" }}>
         <Card.Body>
-          <Card.Img variant="top" src={imgs?.[0]} />
+          <Carousel img={imgs} />
           <Card.Title>{product?.name}</Card.Title>
           <Card.Text>{product?.description}</Card.Text>
         </Card.Body>

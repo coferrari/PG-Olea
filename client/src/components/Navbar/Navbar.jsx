@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import Register from "../Register/Register";
 import { isAuthorized, decodeToken } from "../../utils/index";
 import { Navbar, Container, Nav } from "react-bootstrap";
-// import Logo from "../../img/OLEA marca de agua-07.png";
+import Logo from "../../img/OLEA marca de agua-07.png";
 import style from "./Navbar.module.css";
 
 const NavResponsive = () => {
@@ -15,7 +15,7 @@ const NavResponsive = () => {
           <Container>
             <Link to="/">
               <Navbar.Brand>
-                {/* <img height="140px" src={Logo} alt="Olea" /> */}
+                <img height="140px" src={Logo} alt="Olea" />
               </Navbar.Brand>
             </Link>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -50,7 +50,7 @@ const NavResponsive = () => {
         <Container>
           <Link to="/">
             <Navbar.Brand>
-              {/* <img height="140px" src={Logo} alt="Olea" /> */}
+              <img height="140px" src={Logo} alt="Olea" />
             </Navbar.Brand>
           </Link>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />

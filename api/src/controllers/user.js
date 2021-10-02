@@ -1,4 +1,4 @@
-const { User } = require("../db.js");
+const { User, Carrito, Product } = require("../db.js");
 const { encryptPassword, comparePassword } = require("../helpers/index");
 const jwt = require("jsonwebtoken");
 const { OAuth2Client } = require("google-auth-library");
@@ -6,7 +6,11 @@ const client = new OAuth2Client(
   "699731210579-fq1sd4ijgh6ph842rlc3f0rf86eftdgh.apps.googleusercontent.com"
 );
 const nodemailer = require("nodemailer");
-const { getTemplate, sendEmail, getTemplateChangePassword } = require("../helpers/mail");
+const {
+  getTemplate,
+  sendEmail,
+  getTemplateChangePassword,
+} = require("../helpers/mail");
 const userFunction = {};
 
 userFunction.register = async (req, res, next) => {
@@ -29,7 +33,7 @@ userFunction.register = async (req, res, next) => {
       );
       const template = getTemplate(username, token);
       await sendEmail(email, "Confirmar registro", template);
-      res.send("email enviado");
+      return res.send("email enviado");
     }
     if (userFind) res.status(304).send("este email ya esta registrado");
   } catch (err) {
@@ -40,7 +44,7 @@ userFunction.register = async (req, res, next) => {
 userFunction.confirmRegister = async (req, res, next) => {
   const { token } = req.body;
   const verified = jwt.verify(token, process.env.TOKEN_SECRET);
-
+  const carritocreado = await Carrito.create({});
   const user = await User.create({
     name: verified.name,
     surname: verified.surname,
@@ -49,13 +53,15 @@ userFunction.confirmRegister = async (req, res, next) => {
     email: verified.email,
     admin: false
   });
-  console.log(user)
+  console.log(user);
+  user.setCarrito(carritocreado.dataValues.id);
   res.send(user);
 };
 
 // solicitar validacion de mail para cambio de contraseña 
 userFunction.requestChangePassword = async (req, res, next) => {
   const { email } = req.body;
+
   console.log(email, 'email change password')
   try {
     const user = await User.findOne({ where: {email} })
@@ -69,15 +75,16 @@ userFunction.requestChangePassword = async (req, res, next) => {
   }
 }
 
+
 // para cuando ya esta validado el mail
 userFunction.changePassword = async (req, res, next) => {
   const { email, password } = req.body;
-  console.log(req.body)
+  console.log(req.body);
 
   const user = await User.findOne({ where: {email} });
   console.log(user, 'user')
   const newPasswordEncrypted = await encryptPassword(password);
-  console.log(newPasswordEncrypted)
+  console.log(newPasswordEncrypted);
 
   user.password = newPasswordEncrypted;
   res.send("nueva contraseña guardada");
@@ -110,7 +117,9 @@ userFunction.login = async (req, res, next) => {
 };
 
 userFunction.getAll = async (req, res, next) => {
-  const users = await User.findAll();
+  const users = await User.findAll({
+    include: Carrito,
+  });
   try {
     res.send(users);
   } catch (err) {
@@ -162,5 +171,4 @@ userFunction.googleLogin = async (req, res, next) => {
   }
 };
 
-userFunction.googleRegister = async (req, res, next) => {};
 module.exports = userFunction;
