@@ -17,5 +17,5 @@ router.put("/changepassword", userFunction.changePassword);
 router.post("/googlelogin", userFunction.googleLogin);
 router.post("/confirmregister", userFunction.confirmRegister);
 router.post("/requestchangepassword", userFunction.requestChangePassword);
-
+router.post("/createadmin", userFunction.createAdmin);
 module.exports = router;
