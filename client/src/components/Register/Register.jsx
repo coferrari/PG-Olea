@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
-import { register, registerGoogle } from "../../auth/users";
+import { register } from "../../auth/users";
 import { useHistory } from "react-router-dom";
 import GoogleLogin from "react-google-login";
 import style from "./Register.module.css";
@@ -58,15 +58,15 @@ const Register = () => {
     history.push("/");
     await register(input);
   };
-  const responseSuccessGoogle = async (response) => {
-    await registerGoogle(response);
-    history.push("/");
-  };
-  const responseErrorGoogle = (response) => {
-    console.log(response);
-    console.log(response.profileObj);
-    history.push("/");
-  };
+  // const responseSuccessGoogle = async (response) => {
+  //   await registerGoogle(response);
+  //   history.push("/");
+  // };
+  // const responseErrorGoogle = (response) => {
+  //   console.log(response);
+  //   console.log(response.profileObj);
+  //   history.push("/");
+  // };
 
   return (
     <div>
@@ -172,14 +172,14 @@ const Register = () => {
               )}
           </Form>
           <div className={style.googleLogin}>
-            <GoogleLogin
+            {/* <GoogleLogin
               clientId={clientId}
               buttonText="Registrarse con Google"
               onSuccess={responseSuccessGoogle}
               onFailure={responseErrorGoogle}
               cookiePolicy={"single_host_origin"}
               isSignedIn={true}
-            />
+            /> */}
           </div>
         </div>
       </div>
