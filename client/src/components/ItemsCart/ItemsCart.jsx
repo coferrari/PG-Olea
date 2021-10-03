@@ -1,6 +1,7 @@
 import React, {useEffect} from "react";
 import { useSelector } from "react-redux";
 import ItemCart from "../ItemCart/ItemCart";
+import style from "./ItemsCart.module.css";
 
 const ItemsCart = () => {
   const productsCart = useSelector(
@@ -12,7 +13,7 @@ const ItemsCart = () => {
   }, [productsCart]);
 
   return (
-    <div>
+    <div className={style.container}>
       {productsCart?.map((product) => (
         <div key={product.id}>
           <ItemCart

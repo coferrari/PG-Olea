@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 import { removeProductsFromChart } from "../../redux/actions/index";
 import { useDispatch } from "react-redux";
+import style from "./ItemCart.module.css";
+import { Button } from "react-bootstrap";
 
 const ItemCart = ({ id, name, image, price, quantity }) => {
   const [q, setQ] = useState(quantity);
-  const [disable, setDisable] = useState(true)
+  const [disable, setDisable] = useState(true);
   const dispatch = useDispatch();
 
   const handleAddOne = (e) => {
     e.preventDefault();
     setQ(q + 1);
-    setDisable(false)
+    setDisable(false);
   };
 
   const handleRemoveOne = (e) => {
@@ -25,16 +27,53 @@ const ItemCart = ({ id, name, image, price, quantity }) => {
   };
 
   return (
-    <div>
-      {Array.isArray(image) ? <img src={image[0]} /> : <img src={image} />}
-      <h4>{name}</h4>
-      <p>{price}</p>
+    <div className={style.container}>
       <div>
-        <button disabled={q === 1 ? true : false} onClick={(e) => handleRemoveOne(e)}>-</button>
-        <button>{q}</button>
-        <button onClick={(e) => handleAddOne(e)}>+</button>
+        {Array.isArray(image) ? (
+          <div className={style.containerimg}>
+            <img className={style.img} src={image[0]} />
+          </div>
+        ) : (
+          <div className={style.containerimg}>
+            <img className={style.img} src={image} />
+          </div>
+        )}
       </div>
-      <button onClick={(e) => handleRemoveItem(e)}>eliminar del carrito</button>
+      <div className={style.details}>
+        <h4 className={style.name}>{name}</h4>
+        <p className={style.price}>$ {price}</p>
+        <div className={style.btncontainer}>
+          <Button
+            className={style.btn}
+            variant="dark"
+            type="submit"
+            disabled={q === 1 ? true : false}
+            onClick={(e) => handleRemoveOne(e)}
+          >
+            -
+          </Button>
+          <Button className={style.btn} variant="dark" type="submit">
+            {q}
+          </Button>
+          <Button
+            className={style.btn}
+            variant="dark"
+            type="submit"
+            onClick={(e) => handleAddOne(e)}
+          >
+            +
+          </Button>
+          <div>
+            <button
+              onClick={(e) => handleRemoveItem(e)}
+              className={style.delete}
+            >
+              eliminar
+            </button>
+          </div>
+        </div>
+        
+      </div>
     </div>
   );
 };
