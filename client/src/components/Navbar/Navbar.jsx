@@ -76,21 +76,18 @@ const NavResponsive = () => {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link>
-                <Link to="/category/Almacen" className={style.links}>
-                  Almacén
-                </Link>
-              </Nav.Link>
-              <Nav.Link>
-                <Link to="/category/Cosmetica" className={style.links}>
-                  Cosmética
-                </Link>
-              </Nav.Link>
-              <Nav.Link>
-                <Link to="/category/Decoracion" className={style.links}>
-                  Decoración
-                </Link>
-              </Nav.Link>
+              {categories?.map((category) => {
+                return (
+                  <Nav.Link>
+                    <Link
+                      to={`/category/${category.nameCategory}`}
+                      className={style.links}
+                    >
+                      {category.nameCategory}
+                    </Link>
+                  </Nav.Link>
+                );
+              })}
             </Nav>
             <Nav>
               <Nav.Link>
