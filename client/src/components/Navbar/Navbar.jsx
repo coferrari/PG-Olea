@@ -1,14 +1,25 @@
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Register from "../Register/Register";
 import { isAuthorized, decodeToken } from "../../utils/index";
 import { Navbar, Container, Nav } from "react-bootstrap";
 import Logo from "../../img/OLEA marca de agua-07.png";
 import style from "./Navbar.module.css";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getCategories } from "../../redux/actions";
 
 const NavResponsive = () => {
   const validate = isAuthorized();
+  const dispatch = useDispatch();
+  const categories = useSelector((state) => state.categoryReducer.categories);
+
+  useEffect(() => {
+    dispatch(getCategories());
+  }, [dispatch]);
+
   if (validate) {
     const user = decodeToken();
+    console.log(categories);
     return (
       <div>
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -21,15 +32,18 @@ const NavResponsive = () => {
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="me-auto">
-                <Nav.Link>
-                  <Link to="/category/Almacen" className={style.links}>Almacén</Link>
-                </Nav.Link>
-                <Nav.Link>
-                  <Link to="/category/Cosmetica" className={style.links}>Cosmética</Link>
-                </Nav.Link>
-                <Nav.Link>
-                  <Link to="/category/Decoracion" className={style.links}>Decoración</Link>
-                </Nav.Link>
+                {categories?.map((category) => {
+                  return (
+                    <Nav.Link>
+                      <Link
+                        to={`/category/${category.nameCategory}`}
+                        className={style.links}
+                      >
+                        {category.nameCategory}
+                      </Link>
+                    </Nav.Link>
+                  );
+                })}
               </Nav>
               <Nav className={style.containersession}>
                 <Nav.Link className={style.username}>{user.username}</Nav.Link>
@@ -63,13 +77,19 @@ const NavResponsive = () => {
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
               <Nav.Link>
-                <Link to="/category/Almacen" className={style.links}>Almacén</Link>
+                <Link to="/category/Almacen" className={style.links}>
+                  Almacén
+                </Link>
               </Nav.Link>
               <Nav.Link>
-                <Link to="/category/Cosmetica" className={style.links}>Cosmética</Link>
+                <Link to="/category/Cosmetica" className={style.links}>
+                  Cosmética
+                </Link>
               </Nav.Link>
               <Nav.Link>
-                <Link to="/category/Decoracion" className={style.links}>Decoración</Link>
+                <Link to="/category/Decoracion" className={style.links}>
+                  Decoración
+                </Link>
               </Nav.Link>
             </Nav>
             <Nav>
@@ -83,7 +103,6 @@ const NavResponsive = () => {
                   <li>Registrarse</li>
                 </Link>
               </Nav.Link>
-
             </Nav>
           </Navbar.Collapse>
         </Container>
