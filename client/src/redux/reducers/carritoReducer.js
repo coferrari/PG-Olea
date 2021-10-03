@@ -1,7 +1,9 @@
 import { ADD_TO_CHART, REMOVE_FROM_CHART } from "../actions/types";
 
+const cartFromLocalStorage = JSON.parse(localStorage.getItem("cart") || "[]");
+
 const initialState = {
-  productsCarrito: [],
+  productsCarrito: cartFromLocalStorage,
 };
 
 export default function carritoReducer(state = initialState, action) {
