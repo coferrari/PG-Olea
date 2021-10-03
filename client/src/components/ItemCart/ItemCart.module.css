@@ -1,0 +1,57 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 50px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+}
+
+.containerimg {
+  height: 150px;
+}
+
+.img {
+  height: 100%;
+}
+
+.details {
+  padding-top: 20px;
+}
+
+.name {
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 2px;
+}
+
+.price {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.btncontainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.btn {
+  border-radius: 0;
+  font-size: 13px;
+}
+
+.btn:disabled {
+  background-color: #000;
+}
+
+.delete {
+  padding-left: 30px;
+  background-color: white;
+  border: none;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
