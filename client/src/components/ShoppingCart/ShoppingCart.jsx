@@ -5,6 +5,7 @@ import ItemsCart from "../ItemsCart/ItemsCart";
 import { clearCart } from "../../redux/actions/index";
 import style from "./ShoppingCart.module.css";
 import carrito from "../../img/iconshoppingcart.png";
+import { useHistory } from "react-router";
 
 const cartFromLocalStorage = JSON.parse(localStorage.getItem("cart") || "[]");
 
@@ -17,6 +18,7 @@ const ShoppingCart = () => {
   const [cart, setCart] = useState(cartFromLocalStorage);
 
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const productsCart = useSelector(
     (state) => state.carritoReducer.productsCarrito
@@ -31,6 +33,11 @@ const ShoppingCart = () => {
     localStorage.clear();
     dispatch(clearCart());
   };
+
+  const handleCheckout = (e) =>{
+    e.preventDefault()
+    history.push("/checkout")
+  }
   const total = productsCart?.reduce((acc, curr) => {
     return acc + parseInt(curr.price);
   }, 0);
@@ -88,7 +95,7 @@ const ShoppingCart = () => {
               </div>
 
               <div>
-                <Button className={style.checkout} variant="dark" type="submit">
+                <Button className={style.checkout} variant="dark" type="submit" onClick={ e=> {handleCheckout(e)}} >
                   Checkout
                 </Button>
               </div>

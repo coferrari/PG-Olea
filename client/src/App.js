@@ -14,6 +14,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import RequestChangePassword from "./components/RequestChangePassword/RequestChangePassword";
 import ChangePassword from "./components/ChangePassword/ChangePassword";
 import ShoppingCart from "./components/ShoppingCart/ShoppingCart";
+import Checkout from "./components/Checkout/Checkout";
 
 function App() {
   return (
@@ -51,6 +52,9 @@ function App() {
         </Route>
         <Route path="/auth/confirmregister/:token">
           <ConfirmRegister />
+        </Route>
+        <Route path="/checkout">
+          <Checkout />
         </Route>
       </Switch>
     </div>
