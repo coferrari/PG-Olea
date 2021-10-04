@@ -13,16 +13,14 @@ import Landing from "./components/Landing/Landing";
 import "bootstrap/dist/css/bootstrap.min.css";
 import RequestChangePassword from "./components/RequestChangePassword/RequestChangePassword";
 import ChangePassword from "./components/ChangePassword/ChangePassword";
-
-import { decodeToken, getToken } from "./utils/index";
+import { decodeToken, getToken, tokens } from "./utils/index";
 import CreateProduct from "./components/Admin/CreateProduct/CreateProduct";
 import UsersTable from "./components/Admin/Tables/UsersTable/UsersTable";
 import ProductTable from "./components/Admin/Tables/ProductTable/ProductTable";
-
+import CategoriasTable from "./components/Admin/Tables/CategoriasTable/CategoriasTable";
 function App() {
   const loggedIn = decodeToken();
-  const token = getToken();
-  console.log(token);
+
   return (
     <div>
       <Navbar />
@@ -66,6 +64,9 @@ function App() {
         </Route>
         <Route exact path="/admin/productslist">
           {loggedIn.admin ? <ProductTable /> : <Redirect to="/home" />}
+        </Route>
+        <Route exact path="/admin/categoriestable">
+          {loggedIn.admin ? <CategoriasTable /> : <Redirect to="/home" />}
         </Route>
       </Switch>
     </div>

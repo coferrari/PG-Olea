@@ -11,8 +11,6 @@ export default function CategoryProduct() {
     (state) => state.categoryReducer.productsByCategory
   );
 
-  console.log(productsByCategory);
-
   useEffect(() => {
     dispatch(getProductsByCategory(nameCategory));
   }, [dispatch]);

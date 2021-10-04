@@ -6,7 +6,6 @@ const isAdmin = (req, res, next) => {
     ? req.headers["authorization"].replace("Bearer ", "")
     : undefined;
   if (!token) return res.status(401).json({ error: "Acceso denegado" });
-
   try {
     const verified = jwt.verify(token, process.env.TOKEN_SECRET);
     if (!verified.admin) {
