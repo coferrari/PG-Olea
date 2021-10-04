@@ -139,7 +139,7 @@ class ProductModel extends Modelo {
         include: Product,
       });
       if (!carritoUser.dataValues) {
-        return res.status(404).send("User not found");
+        return res.status(404).send("este usuario no tiene un carrito");
       } else if (carritoUser.dataValues) {
         await carritoUser.addProduct(producto.id);
         if (quantity) {
