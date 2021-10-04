@@ -46,9 +46,9 @@ export function getProductDetail(id) {
   };
 }
 
-export function getProductsByCategory(id) {
+export function getProductsByCategory(name) {
   return function (dispatch) {
-    return axios.get(CATEGORY_URL + id).then((products) => {
+    return axios.get(CATEGORY_URL + name).then((products) => {
       dispatch({
         type: CATEGORY_FILTER,
         payload: products.data,
