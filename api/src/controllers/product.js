@@ -1,5 +1,5 @@
 const { Product, Category, User, Carrito } = require("../db.js");
-
+const { Op } = require("sequelize");
 const Modelo = require("./index.js");
 
 let id = 0;
@@ -40,7 +40,7 @@ class ProductModel extends Modelo {
 
   orderByPrice = async (req, res, next) => {
     const { price } = req.params;
-    console.log(price);
+
     if (price === "ASC") {
       try {
         const orderPrice = await this.model.findAll({
@@ -127,16 +127,49 @@ class ProductModel extends Modelo {
       where: { id: userID },
       include: Carrito,
     });
-    console.log(producto.id);
     const carritoUser = await Carrito.findByPk(
       user.dataValues.carrito.dataValues.id
     );
     carritoUser.addProduct(producto.id);
     res.status(200).send("done");
+  };
 
-    Users.then((results) => {
-      res.send(results);
-    }).catch((error) => next(error));
+  deleteProduct = async (req, res, next) => {
+    try {
+      const { productID, userID } = req.body;
+      const user = await User.findOne({
+        where: { id: userID },
+        include: Carrito,
+      });
+      const carritoUser = await Carrito.findOne({
+        where: {
+          id: user.dataValues.carrito.dataValues.id,
+        },
+        include: { model: Product },
+      });
+      Carrito_Product.destroy({
+        where: {
+          carritoId: 1,
+          productId: 3,
+        },
+      });
+
+      res.status(200).send(carritoUser);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  searchName = async (req, res, next) => {
+    const { name } = req.query;
+    if (name) {
+      const result = await this.model.findAll({
+        where: {
+          name: { [Op.iLike]: `%${name}%` },
+        },
+      });
+      res.status(200).json(result);
+    }
   };
 }
 

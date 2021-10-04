@@ -23,14 +23,14 @@ export default function Selects() {
 
   return (
     <div>
-      <select onChange={(e) => handleCategorySelect(e.target.value)}>
+      {/* <select onChange={(e) => handleCategorySelect(e.target.value)}>
         <option disabled selected hidden>
           Category...
         </option>
         {categories?.map((c) => (
           <option value={c.nameCategory}>{c.nameCategory}</option>
         ))}
-      </select>
+      </select> */}
       <select onChange={(e) => handleOrderSelect(e.target.value)}>
         <option disabled selected hidden>
           Select order...
