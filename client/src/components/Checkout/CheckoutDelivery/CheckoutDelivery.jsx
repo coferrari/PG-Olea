@@ -1,34 +1,44 @@
-import React from "react";
-import { Card, Nav } from "react-bootstrap";
+import React, { useState } from "react";
+import { Card, Nav, Button } from "react-bootstrap";
 
 
 const Delivery = () => {
+
+    const [delivery, setDelivery] = useState(true)
+
+    const handleSelected = (selectedKey) => {
+        if (selectedKey === "Envío") {
+            setDelivery(true)
+        } else {
+            setDelivery(false)
+        }
+    }
+
+
     return <div>
         <Card>
             <Card.Header>
-                <Nav variant="pills" defaultActiveKey="#envio">
+                <Nav variant="pills" defaultActiveKey="#envio" onSelect={(e) => handleSelected(e)}>
                     <Nav.Item>
-                        <Nav.Link href="#envio" key="301" >Envío</Nav.Link>
+                        <Nav.Link href="#envio" eventKey="Envío" >Envío</Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
-                        <Nav.Link href="#link" key="302">Retiro</Nav.Link>
+                        <Nav.Link href="#retiro" eventKey="Retiro">Retiro</Nav.Link>
                     </Nav.Item>
-                    {/* <Nav.Item>
-        <Nav.Link href="#disabled" disabled>
-          Disabled
-        </Nav.Link>
-      </Nav.Item> */}
                 </Nav>
             </Card.Header>
-            <div>
-                
-            </div>
-
-            <Card.Body>
-                <Card.Title>Special title treatment</Card.Title>
-                <Card.Text>
-                    With supporting text below as a natural lead-in to additional content.
-                </Card.Text>
+            <Card.Body eventKey={delivery}>
+                {delivery === true ? (
+                    <div>
+                        <Card.Title>Envío</Card.Title>
+                        <Card.Text>Envio card component</Card.Text>
+                    </div>
+                ) : (
+                    <div>
+                        <Card.Title>Retiro</Card.Title>
+                        <Card.Text>Retiro card component</Card.Text>
+                    </div>
+                )}
                 {/* <Button variant="primary">Go somewhere</Button> */}
             </Card.Body>
         </Card>

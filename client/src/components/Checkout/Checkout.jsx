@@ -1,4 +1,6 @@
 import React from "react";
+import ItemsCart from "../ItemsCart/ItemsCart";
+import ShoppingCart from "../ShoppingCart/ShoppingCart";
 import Data from "./CheckoutData/CheckoutData";
 import Delivery from "./CheckoutDelivery/CheckoutDelivery";
 import Payment from "./CheckoutPayment/CheckoutPayment";
@@ -8,7 +10,7 @@ const Checkout = ()=>{
         <Data />
         <Delivery/>
         <Payment/>
-        <div>Detalle del carrito</div>
+        <div><ShoppingCart /></div>
     </div>
 
 }
