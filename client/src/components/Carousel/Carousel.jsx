@@ -3,7 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../../redux/actions/index";
 import { Product } from "../Product/Product";
 import { Link } from "react-router-dom";
-import { Card } from "react-bootstrap";
+import { Card, Container } from "react-bootstrap";
+import styles from "./Carousel.module.css";
+
 import CarosuelBoots from "react-bootstrap/Carousel";
 
 export default function Carousel({ img }) {
@@ -32,9 +34,9 @@ export default function Carousel({ img }) {
   }
 
   return (
-    <div>
+    <Container>
       {img ? (
-        <div className="container">
+        <div className={styles.contenedor}>
           .<button onClick={() => productPrev()}>-</button>
           <button onClick={() => productNext()}>+</button>
           {img?.map((p, i) => {
@@ -44,28 +46,26 @@ export default function Carousel({ img }) {
           })}
         </div>
       ) : (
-        <div>
-          <CarosuelBoots variant="dark" desvanecerse="true">
+        <Container>
+          <CarosuelBoots
+            variant="dark"
+            desvanecerse="true"
+            className={styles.carruselcontainer}
+          >
             {newItemProducts?.map((p, i) => {
               return (
-                <CarosuelBoots.Item>
-                  <Link to={`/product/${p.id}`}>
-                    <img
-                      className="d-block w-100"
-                      src={p.image[0]}
-                      alt="First slide"
-                    />
-                  </Link>
-                  <CarosuelBoots.Caption>
-                    <h5>{p.className}</h5>
-                    <p>{p.price} $</p>
-                  </CarosuelBoots.Caption>
+                <CarosuelBoots.Item className={styles.contenedorimg}>
+                  <img
+                    className={styles.img}
+                    src={p.image[0]}
+                    alt="First slide"
+                  />
                 </CarosuelBoots.Item>
               );
             })}
           </CarosuelBoots>
-        </div>
+        </Container>
       )}
-    </div>
+    </Container>
   );
 }

@@ -1,7 +1,9 @@
 import React from "react";
 import logo from "../../img/OLEA marca de agua-08.png";
-import { Link } from "react-router-dom";
+
 import style from "./Footer.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 import { Container } from "react-bootstrap";
 
 function Footer() {
@@ -29,20 +31,20 @@ function Footer() {
               </li>
             </ul>
             <div className={style.footer__socialmediasecondary}>
-              <Link to="https://www.instagram.com/somos.olea/" target="_BLANK">
+              <a
+                href="https://www.instagram.com/somos.olea/"
+                target="_BLANK"
+                className={style.somosolea}
+              >
                 @somosolea
-              </Link>
-              <div>
-                <Link
-                  to="https://www.instagram.com/somos.olea/"
-                  target="_BLANK"
-                >
-                  <img
-                    className={style.footerimg}
-                    src="./img/icon_instagram.png"
-                    alt="Instagram"
+              </a>
+              <div className={style.containericon}>
+                <a href="https://www.instagram.com/somos.olea/" target="_BLANK">
+                  <FontAwesomeIcon
+                    icon={faInstagram}
+                    className={style.igicon}
                   />
-                </Link>
+                </a>
               </div>
             </div>
           </div>
