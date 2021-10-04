@@ -1,8 +1,14 @@
-const { Product, Category, User, Carrito } = require("../db.js");
+const {
+  Product,
+  Category,
+  User,
+  Carrito,
+  Carrito_Products,
+} = require("../db.js");
 const { Op } = require("sequelize");
 const Modelo = require("./index.js");
 
-let id = 0;
+var id = 0;
 
 class ProductModel extends Modelo {
   constructor(model) {
@@ -121,17 +127,36 @@ class ProductModel extends Modelo {
   };
 
   addProduct = async (req, res, next) => {
-    const { productID, userID } = req.body;
+    const { productID, userID, quantity } = req.body;
     const producto = await this.model.findByPk(productID);
     const user = await User.findOne({
       where: { id: userID },
       include: Carrito,
     });
-    const carritoUser = await Carrito.findByPk(
-      user.dataValues.carrito.dataValues.id
-    );
-    carritoUser.addProduct(producto.id);
-    res.status(200).send("done");
+    if (user.dataValues.carrito !== null && producto) {
+      const carritoUser = await Carrito.findOne({
+        where: { id: user.dataValues.carrito.dataValues.id },
+        include: Product,
+      });
+      if (!carritoUser.dataValues) {
+        return res.status(404).send("User not found");
+      } else if (carritoUser.dataValues) {
+        await carritoUser.addProduct(producto.id);
+        if (quantity) {
+          await Carrito_Products.update(
+            { quantity: quantity },
+            {
+              where: {
+                productId: producto.id,
+                carritoId: user.dataValues.carrito.dataValues.id,
+              },
+            }
+          );
+        }
+        return res.status(200).send(carritoUser);
+      }
+    }
+    return res.status(404).send("Este usuario no tiene un carrito");
   };
 
   deleteProduct = async (req, res, next) => {
@@ -147,12 +172,7 @@ class ProductModel extends Modelo {
         },
         include: { model: Product },
       });
-      Carrito_Product.destroy({
-        where: {
-          carritoId: 1,
-          productId: 3,
-        },
-      });
+      carritoUser.removeProducts([productID]);
 
       res.status(200).send(carritoUser);
     } catch (error) {
