@@ -55,7 +55,7 @@ let productos = [
     stock: 1,
     description:
       "Nutre y ayuda a corregir naturalmente las marcas de estrías. La planta de Caléndula contiene una sustancia altamente cicatrizante y emoliente llamada “Calendulina”, encargada de producir la epitelización, acción natural de curación dérmica. El Coco posee propiedades que promueven la regeneración y rehidratación de los tejidos ayudando y complementando las propiedades correctoras de la Caléndula. El extracto Orgánico de Oliva ayuda a suavizar y reforzar la hidratación de la piel. Modo de Uso: Aplicar sobre la piel dando masajes circulares cubriendo todas las zonas con estrías. Para optimizar los resultados realizar este procedimiento dos veces al día o más si así lo desea. Envase con 500 g Cosmética Sustentable",
-    categoryID: 3,
+    categoryID: 2,
     rating: 0,
     brand: 3,
   },
@@ -155,7 +155,7 @@ let productos = [
     price: "2100",
     newItem: true,
     image: [
-      "https://d3ugyf2ht6aenh.cloudfront.net/stores/845/679/products/0e7ac9e5-f4c3-489e-945a-e80e93570f6111-bf409684e9ea462db216254981703589-1024-1024.jpeg"
+      "https://d3ugyf2ht6aenh.cloudfront.net/stores/845/679/products/0e7ac9e5-f4c3-489e-945a-e80e93570f6111-bf409684e9ea462db216254981703589-1024-1024.jpeg",
     ],
     stock: 8,
     description:
