@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Modal } from "react-bootstrap";
 import { register, registerGoogle } from "../../auth/users";
 import { useHistory } from "react-router-dom";
 import GoogleLogin from "react-google-login";
@@ -37,9 +37,18 @@ const Register = () => {
   });
   const [errors, setErrors] = useState({});
 
-  const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+  //POP UP
+  const [show, setShow] = useState(false);
 
+  const handleClose = () => {
+    history.push("/")
+    //setShow(false)
+  };
+  // const handleShow = () => setShow(true);
+
+  const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
   const history = useHistory();
+
   const handleChange = (e) => {
     setInput({
       ...input,
@@ -55,7 +64,8 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    history.push("/");
+    setShow(true)
+    //history.push("/");
     await register(input);
   };
 
@@ -162,6 +172,17 @@ const Register = () => {
                 </Button>
               )}
           </Form>
+          <Modal show={show} onHide={handleClose}>
+            <Modal.Header closeButton>
+              <Modal.Title>Confirmación por e-mail</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>Te enviamos un e-mail de confirmación a la casilla de correo {input.email}</Modal.Body>
+            <Modal.Footer>
+              <Button type="button" variant="primary" onClick={handleClose}>
+                Volver al incio
+              </Button>
+            </Modal.Footer>
+          </Modal>
         </div>
       </div>
     </div>
