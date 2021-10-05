@@ -38,9 +38,10 @@ const Register = () => {
   });
   const [errors, setErrors] = useState({});
 
-  const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
+  const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
   const history = useHistory();
+
   const handleChange = (e) => {
     setInput({
       ...input,
@@ -181,6 +182,7 @@ const Register = () => {
                 </Button>
               )}
           </Form>
+   
         </div>
       </div>
     </div>
