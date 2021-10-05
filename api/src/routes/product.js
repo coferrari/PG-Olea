@@ -8,7 +8,7 @@ const router = Router();
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 router.get("/", productControllers.getAll);
-router.get("/search/:id", productControllers.getByID);
+router.get("/search/:id", productControllers.searchById);
 router.get("/orderByPrice/:price", productControllers.orderByPrice);
 router.get("/orderByName/:name", productControllers.orderByName);
 router.get("/orderByRating/:rating", productControllers.orderByRating);

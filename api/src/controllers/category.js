@@ -31,6 +31,29 @@ class CategoryModel extends Modelo {
       next(error);
     }
   };
+
+  addCategories = async (req, res, next) => {
+    const { categoriesID, productID } = req.body;
+    try {
+      if (categoriesID.length > 1) {
+        const producto = await Product.findByPk(productID);
+        if (producto) {
+          return res.json(await producto.addCategories(categoriesID));
+        } else {
+          res.status(404).send("No hay un producto con ese ID");
+        }
+      } else if (categoriesID.length === 1) {
+        const producto = await Product.findByPk(productID);
+        if (producto) {
+          res.json(await producto.addCategory(categoriesID));
+        } else {
+          res.status(404).send("No hay un producto con ese ID");
+        }
+      }
+    } catch (err) {
+      next(err);
+    }
+  };
 }
 
 const categoryControllers = new CategoryModel(Category);
