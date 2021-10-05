@@ -1,22 +1,24 @@
 const { Router } = require("express");
-// Importar todos los routers;
-// Ejemplo: const authRouter = require('./auth.js');const { Router } = require("express");
 const router = Router();
 const validate = require("../utils/middlewares/validateSchemaModel");
 const userFunction = require("../controllers/user");
 const schema = require("../utils/schemas/user.joi");
 const verifyToken = require("../utils/middlewares/validateToken");
-// Configurar los routers
-// Ejemplo: router.use('/auth', authRouter);
-router.get("/", verifyToken, userFunction.getAll);
-// router.get("/:id", userControllers.getByID);
-router.post("/register", userFunction.register);
-router.post("/login", userFunction.login);
+const {
+  checkDuplicate,
+  checkEmailAndPassword,
+} = require("../utils/middlewares/checkDuplicate");
+const isAdmin = require("../utils/middlewares/isAdmin");
+const adminFunction = require("../controllers/admin");
+router.get("/", isAdmin, userFunction.getAll);
+router.post("/register", checkDuplicate, userFunction.register);
+router.post("/login", checkEmailAndPassword, userFunction.login);
 router.put("/", verifyToken, userFunction.changePassword);
 router.put("/changepassword", userFunction.changePassword);
 router.post("/googlelogin", userFunction.googleLogin);
 router.post("/confirmregister", userFunction.confirmRegister);
 router.post("/requestchangepassword", userFunction.requestChangePassword);
-// router.delete("/:id", userControllers.delete);
-
+router.post("/createadmin", userFunction.createAdmin);
+router.post("/changepasswordadmin", isAdmin, adminFunction.changePassword);
+router.delete("/deleteuser/:username", adminFunction.deleteUser);
 module.exports = router;

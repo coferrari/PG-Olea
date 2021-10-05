@@ -30,7 +30,7 @@ const LoginButton = () => {
     password: "",
   });
   const [errors, setErrors] = useState({});
-
+  const [errorLogin, setErrorLogin] = useState("");
   const handleChange = (e) => {
     setInput({
       ...input,
@@ -48,27 +48,27 @@ const LoginButton = () => {
     console.log("entra al submit");
     e.preventDefault();
     try {
-      await logIn(input);
+      const x = await logIn(input);
+      console.log(x);
       history.push("/");
     } catch (err) {
-      console.log(err);
+      setErrorLogin("Contraseña o usuario incorrecto");
+      console.log(err.message);
     }
   };
-
+  console.log(errorLogin);
   const responseSuccessGoogle = async (response) => {
-    console.log(response);
     await logInGoogle(response);
     history.push("/");
   };
-  const responseErrorGoogle = (response) => {
-    console.log(response);
+  const responseErrorGoogle = async (response) => {
     console.log(response.profileObj);
     history.push("/");
   };
 
   return (
-    <div>
-      <h3>Iniciar sesión</h3>
+    <div className={style.container}>
+      <h3 className={style.title}>Iniciar sesión</h3>
       <div className="container">
         <div className="col-lg-4 mx-auto text-center">
           <Form
@@ -131,9 +131,9 @@ const LoginButton = () => {
               onSuccess={responseSuccessGoogle}
               onFailure={responseErrorGoogle}
               cookiePolicy={"single_host_origin"}
-              // isSignedIn={true}
             />
           </div>
+          <div className={style.errors}>{errorLogin ? errorLogin : ""}</div>
         </div>
       </div>
     </div>

@@ -1,18 +1,19 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getProductDetail } from "../../redux/actions/index";
 import { Card, ListGroup, ListGroupItem, Button } from "react-bootstrap";
 import Carousel from "../../components/Carousel/Carousel";
-import {
-  addProductsToChart,
-  removeProductsFromChart,
-} from "../../redux/actions/index";
+import { updateCart } from "../../redux/actions/index";
+import { isAuthorized, decodeToken } from "../../utils/index";
+import { addOrEditCart, removeProductCart } from "../../cart/index";
 
 export function ProductDetail() {
   const dispatch = useDispatch();
   const { idParams } = useParams();
-
+  const [add, setAdd] = useState(false);
+  const [remove, setRemove] = useState(false);
+  const validate = isAuthorized();
   const product = useSelector(
     (state) => state.productDetailReducer.productDetail
   );
@@ -21,26 +22,59 @@ export function ProductDetail() {
     (state) => state.productDetailReducer.productDetail
   );
 
-  const productsCart = useSelector(
-    (state) => state.carritoReducer.productsCarrito
-  );
-
-  const isInStore = productsCart?.filter((product) => product.id == id);
+  const { productsCarrito } = useSelector((state) => state.carritoReducer);
 
   const quantity = 1;
 
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(productsCart));
-  }, [productsCart]);
+    if (add) {
+      const cartFromLocalStorage = JSON.parse(localStorage.getItem("cart"));
+      const cartAdded = [
+        ...cartFromLocalStorage,
+        { id, name, image, price, quantity },
+      ];
+      localStorage.setItem("cart", JSON.stringify(cartAdded));
+      dispatch(updateCart(cartAdded));
+      setAdd(false);
+    }
+    if (remove) {
+      const cartFromLocalStorage = JSON.parse(localStorage.getItem("cart"));
+      const cartRemoved = cartFromLocalStorage.filter(
+        (product) => product.id !== id
+      );
+      localStorage.setItem("cart", JSON.stringify(cartRemoved));
+      dispatch(updateCart(cartRemoved));
+      setRemove(false);
+    }
+  }, [add, remove]);
 
-  const handleAddToChart = (e) => {
+  const isInStore = productsCarrito.filter((product) => product.id === id);
+
+  const handleAddToCart = (e) => {
     e.preventDefault();
-    dispatch(addProductsToChart({ id, image, name, price, quantity }));
+    setAdd(true);
+    if (validate) {
+      const user = decodeToken();
+      const username = user.username;
+      addOrEditCart({
+        productID: id,
+        quantity: quantity,
+        username: username,
+      });
+    }
   };
 
-  const handleRemoveFromChart = (e) => {
+  const handleRemoveFromCart = (e) => {
     e.preventDefault();
-    dispatch(removeProductsFromChart(parseInt(id)));
+    setRemove(true);
+    if (validate) {
+      const user = decodeToken();
+      const username = user.username;
+      removeProductCart({
+        productID: id,
+        username: username,
+      });
+    }
   };
 
   useEffect(() => {
@@ -59,22 +93,23 @@ export function ProductDetail() {
           <ListGroupItem>Precio: ${product?.price} </ListGroupItem>
           <ListGroupItem>Reviews: {product?.rating} </ListGroupItem>
         </ListGroup>
-        {!isInStore.length ? (
-        <Button
-          variant="dark"
-          type="submit"
-          onClick={(e) => handleAddToChart(e)}
-        >
-          Agregar al carrito
-        </Button>
-        ):(
-        <Button
-          variant="secondary"
-          type="submit"
-          onClick={(e) => handleRemoveFromChart(e)}
-        >
-          Eliminar del carrito
-        </Button>
+        {isInStore.length === 0 && (
+          <Button
+            variant="dark"
+            type="submit"
+            onClick={(e) => handleAddToCart(e)}
+          >
+            Agregar al carrito
+          </Button>
+        )}
+        {isInStore.length > 0 && (
+          <Button
+            variant="secondary"
+            type="submit"
+            onClick={(e) => handleRemoveFromCart(e)}
+          >
+            Eliminar del carrito
+          </Button>
         )}
       </Card>
     </div>

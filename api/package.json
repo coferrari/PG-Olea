@@ -14,6 +14,7 @@
     "npm": ">=6.14.6"
   },
   "dependencies": {
+    "@fortawesome/free-brands-svg-icons": "^5.15.4",
     "@hapi/boom": "^9.1.4",
     "@hapi/joi": "^17.1.1",
     "axios": "^0.21.4",

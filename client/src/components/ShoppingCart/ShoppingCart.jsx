@@ -2,21 +2,18 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Offcanvas } from "react-bootstrap";
 import ItemsCart from "../ItemsCart/ItemsCart";
-import { clearCart } from "../../redux/actions/index";
+import { clearCart, updateCart } from "../../redux/actions/index";
 import style from "./ShoppingCart.module.css";
 import carrito from "../../img/iconshoppingcart.png";
 import { useHistory } from "react-router";
 
-const cartFromLocalStorage = JSON.parse(localStorage.getItem("cart") || "[]");
-
 const ShoppingCart = () => {
   const [show, setShow] = useState(false);
-
   const handleClose = () => setShow(false);
   const toggleShow = () => setShow((s) => !s);
 
-  const [cart, setCart] = useState(cartFromLocalStorage);
-
+  const cartFromLocalStorage = JSON.parse(localStorage.getItem("cart") || "[]");
+  const [clear, setClear] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -25,21 +22,37 @@ const ShoppingCart = () => {
   );
 
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
+    localStorage.setItem("cart", JSON.stringify(cartFromLocalStorage));
+  }, []);
+
+  useEffect(() => {
+    if (clear) {
+      localStorage.setItem("cart", JSON.stringify([]));
+      dispatch(updateCart([]));
+    }
+    return () => {
+      setClear(false);
+      localStorage.setItem("cart", JSON.stringify([]));
+    };
+  }, [clear]);
 
   const handleClearCart = (e) => {
     e.preventDefault();
-    localStorage.clear();
     dispatch(clearCart());
+    setClear(true);
   };
 
   const handleCheckout = (e) =>{
     e.preventDefault()
     history.push("/checkout")
   }
-  const total = productsCart?.reduce((acc, curr) => {
-    return acc + parseInt(curr.price);
+
+  const totalSum = productsCart?.reduce((acc, curr) => {
+    return acc + parseInt(curr.price) * curr.quantity;
+  }, 0);
+
+  const totalQuantity = productsCart?.reduce((acc, curr) => {
+    return acc + curr.quantity;
   }, 0);
 
   const format = (num) => {
@@ -62,7 +75,7 @@ const ShoppingCart = () => {
       </button>
       {productsCart.length !== 0 && (
         <div className={style.itemcarrito}>
-          <div className={style.qitems}>{productsCart.length}</div>
+          <div className={style.qitems}>{totalQuantity}</div>
         </div>
       )}
       <Offcanvas
@@ -77,11 +90,20 @@ const ShoppingCart = () => {
         </Offcanvas.Header>
         <Offcanvas.Body>
           <ItemsCart />
-          {productsCart.length !== 0 ? (
+          {cartFromLocalStorage.length !== 0 ? (
             <div className={style.container}>
-              <div className={style.continue}>Seguir comprando</div>
+              <div className={style.continue}>
+                <Button
+                  className={style.shop}
+                  variant="dark"
+                  type="submit"
+                  onClick={() => handleClose()}
+                >
+                  Seguir comprando
+                </Button>
+              </div>
               <div className={style.bntcontainer}>
-                <div className={style.total}>total ${format(total)}</div>
+                <div className={style.total}>total ${format(totalSum)}</div>
                 <div>
                   <Button
                     className={style.vaciar}
@@ -95,14 +117,23 @@ const ShoppingCart = () => {
               </div>
 
               <div>
+
                 <Button className={style.checkout} variant="dark" type="submit" onClick={ e=> {handleCheckout(e)}} >
-                  Checkout
+                  terminar compra
                 </Button>
               </div>
             </div>
           ) : (
             <div className={style.add}>
-              Agrega items al carrito! (boton para cerrar)
+              el carrito esta vacio
+              <Button
+                className={style.shop}
+                variant="dark"
+                type="submit"
+                onClick={() => handleClose()}
+              >
+                agregar productos
+              </Button>
             </div>
           )}
         </Offcanvas.Body>
