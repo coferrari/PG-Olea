@@ -7,19 +7,10 @@ import axios from "axios";
 import { GET_PRODUCTS_URL } from "../../../consts";
 import swal from "sweetalert";
 
-export default function CreateProduct() {
+export default function EditProduct() {
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.categoryReducer.categories);
-  const [newProduct, setNewProduct] = useState({
-    name: "",
-    price: 0,
-    newItem: true,
-    image: [],
-    stock: 0,
-    description: "",
-    categoryID: [],
-    brand: 1,
-  });
+  const [newProduct, setNewProduct] = useState({});
 
   useEffect(() => {
     dispatch(getCategories());
@@ -33,33 +24,21 @@ export default function CreateProduct() {
       },
     });
 
-    return swal("Este producto ha sido creado exitosamente");
+    return swal("Este producto ha sido modificado");
   };
 
   const onChangeInput = (e) => {
+    console.log(newProduct);
     setNewProduct({ ...newProduct, [e.target.name]: e.target.value });
   };
   const onChangeImage = (e) => {
     setNewProduct((previous) => {
+      console.log(newProduct);
       return {
         ...previous,
         image: [e.target.value],
       };
     });
-  };
-  const categoris = (catID) => {
-    if (!newProduct.categoryID.includes(catID)) {
-      setNewProduct({
-        ...newProduct,
-        categoryID: [...newProduct.categoryID, catID],
-      });
-    } else if (newProduct.categoryID.includes(catID)) {
-      setNewProduct({
-        ...newProduct,
-        categoryID: newProduct.categoryID.filter((e) => e != catID),
-      });
-    }
-    console.log(newProduct.categoryID);
   };
 
   return (
@@ -112,25 +91,23 @@ export default function CreateProduct() {
             />
           </Form.Group>
           <Form.Group className="mb-3">
-            <Form.Label>Seleccione las Categorias</Form.Label>
-            <div>
+            <Form.Label>Categorias</Form.Label>
+            <Form.Select
+              name="categoryID"
+              aria-label="Default select example"
+              onChange={(e) => {
+                onChangeInput(e);
+              }}
+            >
+              <option>Seleccione una categoria</option>
               {categories?.map((cat) => {
                 return (
-                  <a>
-                    <Button
-                      variant={
-                        newProduct.categoryID.includes(cat.id)
-                          ? "dark"
-                          : "secondary"
-                      } // variant="outline-dark"
-                      onClick={() => categoris(cat.id)}
-                    >
-                      {cat.nameCategory}
-                    </Button>{" "}
-                  </a>
+                  <option name="categoryID" value={cat.id}>
+                    {cat.nameCategory}
+                  </option>
                 );
               })}
-            </div>
+            </Form.Select>
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Stock</Form.Label>
@@ -144,7 +121,7 @@ export default function CreateProduct() {
             />
           </Form.Group>
           <Button variant="dark" type="submit">
-            Agregar Producto
+            Confirmar
           </Button>
         </Form>
       </div>{" "}
