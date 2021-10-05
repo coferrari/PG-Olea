@@ -64,6 +64,7 @@ function App() {
         </Route>
         <Route path="/checkout">
           <Checkout />
+        </Route>
         <Route exact path="/admin/createproduct">
           {loggedIn.admin ? <CreateProduct /> : <Redirect to="/home" />}
         </Route>
