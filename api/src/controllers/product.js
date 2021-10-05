@@ -123,7 +123,7 @@ class ProductModel extends Modelo {
       })
       .catch((error) => next(error));
   };
-  addProduct = async (req, res, next) => {
+  addOrEditProduct = async (req, res, next) => {
     const { productID, userID, quantity } = req.body;
     const producto = await this.model.findByPk(productID);
     const user = await User.findOne({

@@ -14,7 +14,7 @@ router.get("/orderByName/:name", productControllers.orderByName);
 router.get("/orderByRating/:rating", productControllers.orderByRating);
 router.get("/searchby/name", productControllers.searchName);
 router.post("/", productControllers.create);
-router.post("/add/carrito", productControllers.addProduct);
+router.post("/add/carrito", productControllers.addOrEditProduct);
 router.put("/:id", productControllers.update);
 router.delete("/:id", productControllers.delete);
 router.delete("/delete/carrito", productControllers.deleteProduct);
