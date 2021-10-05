@@ -78,7 +78,6 @@ export function clearCart() {
 }
 
 export function updateCart(products) {
-  console.log(products)
   return {
     type: UPDATE_CART,
     payload: products

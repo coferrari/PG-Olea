@@ -59,6 +59,7 @@ export function Product({ id, name, image, price }) {
         </Card.Body>
         {isInStore === -1 && (
           <Button
+            className={styles.btn}
             variant="dark"
             type="submit"
             onClick={(e) => handleAddToCart(e)}
@@ -68,6 +69,7 @@ export function Product({ id, name, image, price }) {
         )}
         {isInStore >= 0 && (
           <Button
+            className={styles.btn}
             variant="secondary"
             type="submit"
             onClick={(e) => handleRemoveFromCart(e)}

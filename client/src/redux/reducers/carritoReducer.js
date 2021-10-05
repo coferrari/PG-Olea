@@ -5,14 +5,6 @@ import {
 
 const cartFromLocalStorage = JSON.parse(localStorage.getItem("cart") || "[]");
 
-// const price = cartFromLocalStorage?.reduce((acc, curr) => {
-//   return acc + parseInt(curr.price) * parseInt(curr.quantity);
-// }, 0);
-
-// const quantity = cartFromLocalStorage?.reduce((acc, curr) => {
-//   return acc + parseInt(curr.quantity);
-// }, 0);
-
 const initialState = {
   productsCarrito: cartFromLocalStorage,
 };

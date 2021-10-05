@@ -35,6 +35,13 @@
   bottom: 0;
   background-color: white;
 }
+.shop {
+  margin-top: 30px;
+  border-radius: 0;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 14px;
+}
 
 .checkout {
   border-radius: 0;
@@ -42,6 +49,7 @@
   letter-spacing: 2px;
   width: 365px;
   margin-bottom: 20px;
+  font-size: 14px;
 }
 
 .add {
@@ -51,6 +59,7 @@
   letter-spacing: 1px;
   position: fixed;
   top: 150px;
+  padding: 20px 0px;
 }
 
 .bntcontainer {

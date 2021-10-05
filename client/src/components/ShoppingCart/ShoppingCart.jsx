@@ -10,9 +10,9 @@ const ShoppingCart = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const toggleShow = () => setShow((s) => !s);
-  
-  const cartFromLocalStorage = JSON.parse(localStorage.getItem("cart") || '[]');
-  const [clear, setClear] = useState(false)
+
+  const cartFromLocalStorage = JSON.parse(localStorage.getItem("cart") || "[]");
+  const [clear, setClear] = useState(false);
   const dispatch = useDispatch();
   const productsCart = useSelector(
     (state) => state.carritoReducer.productsCarrito
@@ -24,23 +24,27 @@ const ShoppingCart = () => {
 
   useEffect(() => {
     if (clear) {
-      console.log('clear')
       localStorage.setItem("cart", JSON.stringify([]));
-      dispatch(updateCart([]))
+      dispatch(updateCart([]));
     }
     return () => {
-      setClear(false)
+      setClear(false);
       localStorage.setItem("cart", JSON.stringify([]));
-    }
-  }, [clear])
+    };
+  }, [clear]);
 
   const handleClearCart = (e) => {
     e.preventDefault();
-    dispatch(clearCart())
-    setClear(true)
+    dispatch(clearCart());
+    setClear(true);
   };
-  const total = productsCart?.reduce((acc, curr) => {
-    return acc + parseInt(curr.price);
+
+  const totalSum = productsCart?.reduce((acc, curr) => {
+    return acc + parseInt(curr.price) * curr.quantity;
+  }, 0);
+
+  const totalQuantity = productsCart?.reduce((acc, curr) => {
+    return acc + curr.quantity;
   }, 0);
 
   const format = (num) => {
@@ -63,7 +67,7 @@ const ShoppingCart = () => {
       </button>
       {productsCart.length !== 0 && (
         <div className={style.itemcarrito}>
-          <div className={style.qitems}>{productsCart.length}</div>
+          <div className={style.qitems}>{totalQuantity}</div>
         </div>
       )}
       <Offcanvas
@@ -80,9 +84,18 @@ const ShoppingCart = () => {
           <ItemsCart />
           {cartFromLocalStorage.length !== 0 ? (
             <div className={style.container}>
-              <div className={style.continue}>Seguir comprando</div>
+              <div className={style.continue}>
+                <Button
+                  className={style.shop}
+                  variant="dark"
+                  type="submit"
+                  onClick={() => handleClose()}
+                >
+                  Seguir comprando
+                </Button>
+              </div>
               <div className={style.bntcontainer}>
-                <div className={style.total}>total ${format(total)}</div>
+                <div className={style.total}>total ${format(totalSum)}</div>
                 <div>
                   <Button
                     className={style.vaciar}
@@ -97,13 +110,21 @@ const ShoppingCart = () => {
 
               <div>
                 <Button className={style.checkout} variant="dark" type="submit">
-                  Checkout
+                  terminar compra
                 </Button>
               </div>
             </div>
           ) : (
             <div className={style.add}>
-              Agrega items al carrito! (boton para cerrar)
+              el carrito esta vacio
+              <Button
+                className={style.shop}
+                variant="dark"
+                type="submit"
+                onClick={() => handleClose()}
+              >
+                agregar productos
+              </Button>
             </div>
           )}
         </Offcanvas.Body>

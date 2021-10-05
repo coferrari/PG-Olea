@@ -20,7 +20,6 @@ const ItemCart = ({ id, name, image, price, quantity }) => {
 
   // me va actualizando las cantidades del carrito
   useEffect(() => {
-    console.log("entra al useefect Q");
     localStorage.setItem("cart", JSON.stringify(cartFromLocalStorage));
     dispatch(updateCart(cartFromLocalStorage));
     return () => {};
@@ -57,6 +56,19 @@ const ItemCart = ({ id, name, image, price, quantity }) => {
     setRemove(true);
   };
 
+  const format = (num) => {
+    num = num + "";
+    var str = "";
+    for (var i = num.length - 1, j = 1; i >= 0; i--, j++) {
+      if (j % 3 === 0 && i !== 0) {
+        str += num[i] + ".";
+        continue;
+      }
+      str += num[i];
+    }
+    return str.split("").reverse().join("");
+  };
+
   return (
     <div className={style.container}>
       <div>
@@ -72,7 +84,7 @@ const ItemCart = ({ id, name, image, price, quantity }) => {
       </div>
       <div className={style.details}>
         <h4 className={style.name}>{name}</h4>
-        <p className={style.price}>$ {price}</p>
+        <p className={style.price}>$ {format(price*q)}</p>
         <div className={style.btncontainer}>
           <Button
             className={style.btn}
