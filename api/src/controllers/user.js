@@ -102,6 +102,7 @@ userFunction.login = async (req, res, next) => {
           name: emailFind.name,
           surname: emailFind.surname,
           username: emailFind.username,
+          email: emailFind.email
         },
         process.env.TOKEN_SECRET
         );
@@ -151,7 +152,10 @@ userFunction.googleLogin = async (req, res, next) => {
     });
     const token = jwt.sign(
       {
+        name: given_name,
         username: email,
+        email: email,
+        surname: family_name,
       },
       process.env.TOKEN_SECRET
     );

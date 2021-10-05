@@ -1,9 +1,26 @@
 import React from "react";
+import { Card, ListGroup, Nav, Button } from "react-bootstrap";
 
 const Payment = ()=>{
     return <div>
-        Payment: acá va Mercado Pago
-    </div>
+    <Card style={{ width: '18rem' }}>
+        <Card.Header> 3 - Pago</Card.Header>
+        <ListGroup variant="flush">
+            <ListGroup.Item>
+                <input type="text" placeholder = "Nombre"  />
+            </ListGroup.Item>
+            {/* <ListGroup.Item>
+                <input type="text" placeholder = "Apellido" />
+            </ListGroup.Item>
+            <ListGroup.Item>
+                <input type="text" placeholder = "Mail" />
+            </ListGroup.Item>
+            <ListGroup.Item>
+                <input type="text" placeholder = "Teléfono" />
+            </ListGroup.Item> */}
+        </ListGroup>
+    </Card>
+</div>
 
 }
 export default Payment;

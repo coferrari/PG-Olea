@@ -17,6 +17,7 @@ const Delivery = () => {
 
     return <div>
         <Card>
+            <Card.Header> 2 - Datos de Envío</Card.Header>
             <Card.Header>
                 <Nav variant="pills" defaultActiveKey="#envio" onSelect={(e) => handleSelected(e)}>
                     <Nav.Item>
