@@ -2,7 +2,8 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import Home from "./components/Home/Home";
 import CategoryProduct from "./components/CategoryProduct/CategoryProduct";
-
+import { Search } from "./components/Search/Search";
+import Selects from "./components/Selects/Selects";
 import LoginButton from "./components/Login/Login";
 import LogoutButton from "./components/Logout/Logout";
 import Navbar from "./components/Navbar/Navbar";
@@ -14,6 +15,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import RequestChangePassword from "./components/RequestChangePassword/RequestChangePassword";
 import ChangePassword from "./components/ChangePassword/ChangePassword";
 import ShoppingCart from "./components/ShoppingCart/ShoppingCart";
+import UserInfo from "./components/UserInfo/UserInfo";
+import ProductsByName from "./components/ProductsByName/ProductsByName";
 
 function App() {
   return (
@@ -51,6 +54,14 @@ function App() {
         </Route>
         <Route path="/auth/confirmregister/:token">
           <ConfirmRegister />
+        </Route>
+        <Route exact path="/user/">
+          <UserInfo />
+        </Route>
+        <Route exact path="/search/:name">
+          <Search />
+          <Selects />
+          <ProductsByName />
         </Route>
       </Switch>
     </div>

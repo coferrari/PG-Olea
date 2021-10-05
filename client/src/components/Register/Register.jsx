@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
-import { register, registerGoogle } from "../../auth/users";
+import { register } from "../../auth/users";
 import { useHistory } from "react-router-dom";
 import GoogleLogin from "react-google-login";
 import style from "./Register.module.css";
@@ -59,9 +59,10 @@ const Register = () => {
     await register(input);
   };
 
+
   return (
-    <div>
-      <h3>Registrate</h3>
+    <div className={style.container}>
+      <h3 className={style.title}>Registrate</h3>
       <div className="container">
         <div className="col-lg-4 mx-auto text-center">
           <Form
@@ -162,6 +163,7 @@ const Register = () => {
                 </Button>
               )}
           </Form>
+
         </div>
       </div>
     </div>
