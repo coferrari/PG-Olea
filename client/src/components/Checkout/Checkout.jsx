@@ -1,13 +1,16 @@
 import React from "react";
 import ItemsCart from "../ItemsCart/ItemsCart";
-import ShoppingCart from "../ShoppingCart/ShoppingCart";
 import Data from "./CheckoutData/CheckoutData";
 import Delivery from "./CheckoutDelivery/CheckoutDelivery";
 import Payment from "./CheckoutPayment/CheckoutPayment";
 import { decodeToken, isAuthorized } from "../../utils";
 import Button from "@restart/ui/esm/Button";
+import { confirmAlert } from "react-confirm-alert"; // Import
+import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
+import { useHistory } from "react-router";
 
 const Checkout = () => {
+    const history = useHistory();
     const sesionIniciada = isAuthorized();
     const datosLogin = decodeToken();
     return <div>
@@ -19,7 +22,20 @@ const Checkout = () => {
                 <ItemsCart />
                 <Button>Finalizar Compra</Button>
             </div>
-        ) : <h2>Para seguir con la compra debes Iniciar Sesion</h2>}
-        </div>
+        ) : <div>{confirmAlert ({
+            title: "No iniciaste sesión",
+            message: "Para continuar con tu compra debes registrarte o iniciar sesión, si ya lo hiciste",
+            buttons: [
+                {
+                  label: "Iniciar Sesión",
+                  onClick: () => history.push("/login")
+                },
+                {
+                  label: "Registrarse",
+                  onClick: () => history.push("/register"),
+                },
+              ],})}
+        </div>}
+    </div>
 }
 export default Checkout;

@@ -45,6 +45,7 @@ const ShoppingCart = () => {
   const handleCheckout = (e) =>{
     e.preventDefault()
     history.push("/checkout")
+    handleClose();
   }
 
   const totalSum = productsCart?.reduce((acc, curr) => {
