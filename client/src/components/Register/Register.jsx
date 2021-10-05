@@ -4,7 +4,8 @@ import { register } from "../../auth/users";
 import { useHistory } from "react-router-dom";
 import GoogleLogin from "react-google-login";
 import style from "./Register.module.css";
-
+import { confirmAlert } from "react-confirm-alert"; // Import
+import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 export function validate(input) {
   let errors = {};
   if (!input.name) {
@@ -53,12 +54,28 @@ const Register = () => {
     );
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    history.push("/");
-    await register(input);
+  const submit = (e) => {
+    confirmAlert({
+      title: "Confirmar registro",
+      message: "Desea confirmar su registro?",
+      buttons: [
+        {
+          label: "Yes",
+          onClick: async () => {
+            alert(
+              "Revise su bandeja de entrada para continuar con el registro"
+            );
+            await register(input);
+            history.push("/");
+          },
+        },
+        {
+          label: "No",
+          onClick: () => history.push("/home"),
+        },
+      ],
+    });
   };
-
 
   return (
     <div className={style.container}>
@@ -67,7 +84,8 @@ const Register = () => {
         <div className="col-lg-4 mx-auto text-center">
           <Form
             onSubmit={(e) => {
-              handleSubmit(e);
+              e.preventDefault();
+              submit(e);
             }}
           >
             <Form.Group className="mb-3">
@@ -163,7 +181,6 @@ const Register = () => {
                 </Button>
               )}
           </Form>
-
         </div>
       </div>
     </div>

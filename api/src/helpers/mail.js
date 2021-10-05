@@ -19,7 +19,7 @@ const sendEmail = async (email, subject, html) => {
       from: `Olea <${mail.user}>`,
       to: email,
       subject,
-      text: "Hola amigos, suscríbance para más videos",
+      text: "",
       html,
     });
   } catch (error) {
@@ -60,9 +60,26 @@ const getTemplateChangePassword = (email) => {
       </div>
     `;
 };
+const getTemplateAdminChangePassword = (name) => {
+  return `
+  <head>
+      <link rel="stylesheet" href="./style.css">
+  </head>
+  
+  <div id="email___content">
+      <h2>Hola ${name}</h2>
+      <p>Es necesario que reestablezca su contraseña</p>
+      <a
+          href="http://localhost:3000/changepassword"
+          target="_blank"
+      >Confirmar Cuenta</a>
+  </div>
+`;
+};
 
 module.exports = {
   sendEmail,
   getTemplate,
-  getTemplateChangePassword
+  getTemplateChangePassword,
+  getTemplateAdminChangePassword,
 };

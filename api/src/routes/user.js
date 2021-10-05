@@ -9,7 +9,8 @@ const {
   checkEmailAndPassword,
 } = require("../utils/middlewares/checkDuplicate");
 const isAdmin = require("../utils/middlewares/isAdmin");
-router.get("/", verifyToken, userFunction.getAll);
+const adminFunction = require("../controllers/admin");
+router.get("/", isAdmin, userFunction.getAll);
 router.post("/register", checkDuplicate, userFunction.register);
 router.post("/login", checkEmailAndPassword, userFunction.login);
 router.put("/", verifyToken, userFunction.changePassword);
@@ -18,4 +19,6 @@ router.post("/googlelogin", userFunction.googleLogin);
 router.post("/confirmregister", userFunction.confirmRegister);
 router.post("/requestchangepassword", userFunction.requestChangePassword);
 router.post("/createadmin", userFunction.createAdmin);
+router.post("/changepasswordadmin", isAdmin, adminFunction.changePassword);
+router.delete("/deleteuser/:username", adminFunction.deleteUser);
 module.exports = router;
