@@ -49,34 +49,43 @@ export function Product({ id, name, image, price }) {
 
   return (
     <div className={styles.container}>
-      <Card style={{ width: "30rem" }}>
-        <Card.Img variant="top" src={image ? image : ""} alt="producto" />
+      <Card className={styles.card}>
+        <Card>
+          <Card.Img
+            className={styles.img}
+            variant="top"
+            src={image ? image : ""}
+            alt="producto"
+          />{" "}
+        </Card>
         <Card.Body>
-          <Link to={`/product/${id}`}>
-            <Card.Title>{name}</Card.Title>
-          </Link>
-          <Card.Text>{price}</Card.Text>
+          <div className={styles.cardbody}>
+            <Link className={styles.link} to={`/product/${id}`}>
+              <Card.Title className={styles.titlecard}>{name}</Card.Title>
+            </Link>
+            <Card.Text className={styles.subtitlecard}>{price}</Card.Text>
+          </div>
+          {isInStore === -1 && (
+            <Button
+              className={styles.btn}
+              variant="dark"
+              type="submit"
+              onClick={(e) => handleAddToCart(e)}
+            >
+              Agregar al carrito
+            </Button>
+          )}
+          {isInStore >= 0 && (
+            <Button
+              className={styles.btn}
+              variant="secondary"
+              type="submit"
+              onClick={(e) => handleRemoveFromCart(e)}
+            >
+              Eliminar del carrito
+            </Button>
+          )}
         </Card.Body>
-        {isInStore === -1 && (
-          <Button
-            className={styles.btn}
-            variant="dark"
-            type="submit"
-            onClick={(e) => handleAddToCart(e)}
-          >
-            Agregar al carrito
-          </Button>
-        )}
-        {isInStore >= 0 && (
-          <Button
-            className={styles.btn}
-            variant="secondary"
-            type="submit"
-            onClick={(e) => handleRemoveFromCart(e)}
-          >
-            Eliminar del carrito
-          </Button>
-        )}
       </Card>
     </div>
   );
