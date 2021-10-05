@@ -4,13 +4,15 @@ import styles from "./Product.module.css";
 import { Card, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCart } from "../../redux/actions/index";
+import { isAuthorized, decodeToken } from "../../utils/index";
+import { addOrEditCart, removeProductCart } from "../../cart/index";
 
 export function Product({ id, name, image, price }) {
   const [add, setAdd] = useState(false);
   const [remove, setRemove] = useState(false);
   const dispatch = useDispatch();
   const quantity = 1;
-
+  const validate = isAuthorized();
   const { productsCarrito } = useSelector((state) => state.carritoReducer);
 
   useEffect(() => {
@@ -40,11 +42,28 @@ export function Product({ id, name, image, price }) {
   const handleAddToCart = (e) => {
     e.preventDefault();
     setAdd(true);
+    if (validate) {
+      const user = decodeToken();
+      const username = user.username;
+      addOrEditCart({
+        productID: id,
+        quantity: quantity,
+        username: username,
+      });
+    }
   };
 
   const handleRemoveFromCart = (e) => {
     e.preventDefault();
     setRemove(true);
+    if (validate) {
+      const user = decodeToken();
+      const username = user.username;
+      removeProductCart({
+        productID: id,
+        username: username,
+      });
+    }
   };
 
   return (

@@ -4,3 +4,5 @@ export const SEARCH_PRODUCTS_URL =
   "http://localhost:3001/api/product/searchby/name?name=";
 export const GET_PRODUCT_DETAIL_URL =
   "http://localhost:3001/api/product/search/";
+export const ADD_OR_EDIT_CART = "http://localhost:3001/api/product/add/carrito";
+export const REMOVE_CART = "http://localhost:3001/api/product/delete/carrito";

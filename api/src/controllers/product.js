@@ -124,15 +124,16 @@ class ProductModel extends Modelo {
       .catch((error) => next(error));
   };
   addOrEditProduct = async (req, res, next) => {
-    const { productID, userID, quantity } = req.body;
+    const { productID, username, quantity } = req.body;
+    console.log(productID, username, quantity, "cantidad");
     const producto = await this.model.findByPk(productID);
     const user = await User.findOne({
-      where: { id: userID },
+      where: { username: username },
       include: Carrito,
     });
     if (user.dataValues.carrito !== null && producto) {
       await user.dataValues.carrito.addProduct(producto.id);
-      if (quantity) {
+      if (quantity >= 1) {
         await Carrito_Products.update(
           { quantity: quantity },
           {
@@ -145,15 +146,14 @@ class ProductModel extends Modelo {
       }
       return res.status(200).send(user.dataValues.carrito);
     }
-    if (!user.dataValues.carrito.dataValues) {
-      return res.status(404).send("este usuario no tiene un carrito");
-    }
+    return res.status(404).send("este usuario no tiene un carrito");
   };
   deleteProduct = async (req, res, next) => {
+    const { productID, username } = req.body;
+
     try {
-      const { productID, userID } = req.body;
       const user = await User.findOne({
-        where: { id: userID },
+        where: { username: username },
         include: Carrito,
       });
       const carritoUser = await Carrito.findOne({

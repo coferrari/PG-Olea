@@ -23,7 +23,6 @@ export const changePasswordAdmin = async (email) => {
   return res.data;
 };
 export const removeUserDB = async (username) => {
-  console.log(username);
   const res = await axios.delete(`${usersUrl}/deleteuser/${username}`, {
     headers: {
       authorization: getToken(),

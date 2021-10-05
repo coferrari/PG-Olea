@@ -13,7 +13,6 @@ module.exports = (sequelize) => {
     quantity: {
       type: DataTypes.INTEGER,
       allowNull: true,
-      defaultValue: 1,
     },
   });
 };

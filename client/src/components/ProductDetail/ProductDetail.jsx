@@ -5,13 +5,15 @@ import { getProductDetail } from "../../redux/actions/index";
 import { Card, ListGroup, ListGroupItem, Button } from "react-bootstrap";
 import Carousel from "../../components/Carousel/Carousel";
 import { updateCart } from "../../redux/actions/index";
+import { isAuthorized, decodeToken } from "../../utils/index";
+import { addOrEditCart, removeProductCart } from "../../cart/index";
 
 export function ProductDetail() {
   const dispatch = useDispatch();
   const { idParams } = useParams();
   const [add, setAdd] = useState(false);
   const [remove, setRemove] = useState(false);
-
+  const validate = isAuthorized();
   const product = useSelector(
     (state) => state.productDetailReducer.productDetail
   );
@@ -51,11 +53,28 @@ export function ProductDetail() {
   const handleAddToCart = (e) => {
     e.preventDefault();
     setAdd(true);
+    if (validate) {
+      const user = decodeToken();
+      const username = user.username;
+      addOrEditCart({
+        productID: id,
+        quantity: quantity,
+        username: username,
+      });
+    }
   };
 
   const handleRemoveFromCart = (e) => {
     e.preventDefault();
     setRemove(true);
+    if (validate) {
+      const user = decodeToken();
+      const username = user.username;
+      removeProductCart({
+        productID: id,
+        username: username,
+      });
+    }
   };
 
   useEffect(() => {
