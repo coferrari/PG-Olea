@@ -131,29 +131,23 @@ class ProductModel extends Modelo {
       include: Carrito,
     });
     if (user.dataValues.carrito !== null && producto) {
-      const carritoUser = await Carrito.findOne({
-        where: { id: user.dataValues.carrito.dataValues.id },
-        include: Product,
-      });
-      if (!carritoUser.dataValues) {
-        return res.status(404).send("este usuario no tiene un carrito");
-      } else if (carritoUser.dataValues) {
-        await carritoUser.addProduct(producto.id);
-        if (quantity) {
-          await Carrito_Products.update(
-            { quantity: quantity },
-            {
-              where: {
-                productId: producto.id,
-                carritoId: user.dataValues.carrito.dataValues.id,
-              },
-            }
-          );
-        }
-        return res.status(200).send(carritoUser);
+      await user.dataValues.carrito.addProduct(producto.id);
+      if (quantity) {
+        await Carrito_Products.update(
+          { quantity: quantity },
+          {
+            where: {
+              productId: producto.id,
+              carritoId: user.dataValues.carrito.dataValues.id,
+            },
+          }
+        );
       }
+      return res.status(200).send(user.dataValues.carrito);
     }
-    return res.status(404).send("Este usuario no tiene un carrito");
+    if (!user.dataValues.carrito.dataValues) {
+      return res.status(404).send("este usuario no tiene un carrito");
+    }
   };
   deleteProduct = async (req, res, next) => {
     try {
@@ -175,6 +169,7 @@ class ProductModel extends Modelo {
       next(error);
     }
   };
+  editQuantity = async (req, res, next) => {};
   searchName = async (req, res, next) => {
     const { name } = req.query;
     if (name) {
@@ -186,7 +181,6 @@ class ProductModel extends Modelo {
       res.status(200).json(result);
     }
   };
-
   searchById = async (req, res, next) => {
     const { id } = req.params;
 
