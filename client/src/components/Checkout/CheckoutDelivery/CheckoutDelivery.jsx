@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Nav, Button } from "react-bootstrap";
+import { Card, Nav, Form } from "react-bootstrap";
 
 
 const Delivery = () => {
@@ -32,12 +32,37 @@ const Delivery = () => {
                 {delivery === true ? (
                     <div>
                         <Card.Title>Envío</Card.Title>
-                        <Card.Text>Envio card component</Card.Text>
+                        <Form.Group className="mb-3" controlId="formBasicPassword">
+                            <Form.Label>Localidad</Form.Label>
+                            <Form.Control
+                                // onChange={(e) => {
+                                //     handleChange(e);
+                                // }}
+                                type="text"
+                                placeholder="Localidad"
+                                name="localidad"
+                            // value={input.password}
+                            />
+                            <Form.Label>Domicilio de envío</Form.Label>
+                            <Form.Control
+                                // onChange={(e) => {
+                                //     handleChange(e);
+                                // }}
+                                type="text"
+                                placeholder="Domicilio de Envío"
+                                name="domicilio"
+                            // value={input.password}
+                            />
+
+                        </Form.Group>
+                        {/* <Card.Text>Envio card component</Card.Text> */}
                     </div>
                 ) : (
                     <div>
                         <Card.Title>Retiro</Card.Title>
-                        <Card.Text>Retiro card component</Card.Text>
+                        <Card.Text>Pasá a retirar tu pedido por Garibaldi 283, Coronel Suárez 
+                            <br/>
+                            Horario : Lu a Vi 9: 30-12: 30, 17: 30-19: 30 y Sa 10-12: 30</Card.Text>
                     </div>
                 )}
                 {/* <Button variant="primary">Go somewhere</Button> */}
