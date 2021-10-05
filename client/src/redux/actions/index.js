@@ -5,9 +5,8 @@ import {
   GET_PRODUCT_DETAIL,
   CATEGORY_FILTER,
   ALL_CATEGORIES,
-  ADD_TO_CART,
-  REMOVE_FROM_CART,
-  CLEAR_CART
+  CLEAR_CART,
+  UPDATE_CART
 } from "./types";
 import {
   GET_PRODUCTS_URL,
@@ -72,24 +71,16 @@ export function getCategories() {
   };
 }
 
-export function addProductsToChart(product) {
-  return {
-    type: ADD_TO_CART,
-    payload: product,
-  };
-}
-
-export function removeProductsFromChart(id) {
-  return {
-    type: REMOVE_FROM_CART,
-    payload: id,
-  };
-}
-
 export function clearCart() {
   return {
-    type: CLEAR_CART
+    type: CLEAR_CART,
   };
 }
 
-
+export function updateCart(products) {
+  console.log(products)
+  return {
+    type: UPDATE_CART,
+    payload: products
+  }
+}

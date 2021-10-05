@@ -1,18 +1,49 @@
-import React, { useState } from "react";
-import { removeProductsFromChart } from "../../redux/actions/index";
+import React, { useState, useEffect } from "react";
+import { updateCart } from "../../redux/actions/index";
 import { useDispatch } from "react-redux";
 import style from "./ItemCart.module.css";
 import { Button } from "react-bootstrap";
 
 const ItemCart = ({ id, name, image, price, quantity }) => {
   const [q, setQ] = useState(quantity);
-  const [disable, setDisable] = useState(true);
   const dispatch = useDispatch();
+  const [remove, setRemove] = useState(false);
+
+  const cartFromLocalStorage = JSON.parse(localStorage.getItem("cart"));
+
+  const index = cartFromLocalStorage?.findIndex(
+    (product) => product.id === parseInt(id)
+  );
+  if (index >= 0) {
+    cartFromLocalStorage[index].quantity = q;
+  }
+
+  // me va actualizando las cantidades del carrito
+  useEffect(() => {
+    console.log("entra al useefect Q");
+    localStorage.setItem("cart", JSON.stringify(cartFromLocalStorage));
+    dispatch(updateCart(cartFromLocalStorage));
+    return () => {};
+  }, [q]);
+
+  useEffect(() => {
+    if (remove) {
+      const cartFromLocalStorage = JSON.parse(localStorage.getItem("cart"));
+      const cartRemoved = cartFromLocalStorage.filter(
+        (product) => product.id !== id
+      );
+      localStorage.setItem("cart", JSON.stringify(cartRemoved));
+      dispatch(updateCart(cartRemoved));
+      return () => {
+        localStorage.setItem("cart", JSON.stringify(cartRemoved));
+        setRemove(false);
+      };
+    }
+  }, [remove]);
 
   const handleAddOne = (e) => {
     e.preventDefault();
     setQ(q + 1);
-    setDisable(false);
   };
 
   const handleRemoveOne = (e) => {
@@ -23,7 +54,7 @@ const ItemCart = ({ id, name, image, price, quantity }) => {
   // controlar stock??
   const handleRemoveItem = (e) => {
     e.preventDefault();
-    dispatch(removeProductsFromChart(id));
+    setRemove(true);
   };
 
   return (
@@ -72,7 +103,6 @@ const ItemCart = ({ id, name, image, price, quantity }) => {
             </button>
           </div>
         </div>
-        
       </div>
     </div>
   );

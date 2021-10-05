@@ -2,34 +2,42 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Offcanvas } from "react-bootstrap";
 import ItemsCart from "../ItemsCart/ItemsCart";
-import { clearCart } from "../../redux/actions/index";
+import { clearCart, updateCart } from "../../redux/actions/index";
 import style from "./ShoppingCart.module.css";
 import carrito from "../../img/iconshoppingcart.png";
 
-const cartFromLocalStorage = JSON.parse(localStorage.getItem("cart") || "[]");
-
 const ShoppingCart = () => {
   const [show, setShow] = useState(false);
-
   const handleClose = () => setShow(false);
   const toggleShow = () => setShow((s) => !s);
-
-  const [cart, setCart] = useState(cartFromLocalStorage);
-
+  
+  const cartFromLocalStorage = JSON.parse(localStorage.getItem("cart") || '[]');
+  const [clear, setClear] = useState(false)
   const dispatch = useDispatch();
-
   const productsCart = useSelector(
     (state) => state.carritoReducer.productsCarrito
   );
 
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
+    localStorage.setItem("cart", JSON.stringify(cartFromLocalStorage));
+  }, []);
+
+  useEffect(() => {
+    if (clear) {
+      console.log('clear')
+      localStorage.setItem("cart", JSON.stringify([]));
+      dispatch(updateCart([]))
+    }
+    return () => {
+      setClear(false)
+      localStorage.setItem("cart", JSON.stringify([]));
+    }
+  }, [clear])
 
   const handleClearCart = (e) => {
     e.preventDefault();
-    localStorage.clear();
-    dispatch(clearCart());
+    dispatch(clearCart())
+    setClear(true)
   };
   const total = productsCart?.reduce((acc, curr) => {
     return acc + parseInt(curr.price);
@@ -70,7 +78,7 @@ const ShoppingCart = () => {
         </Offcanvas.Header>
         <Offcanvas.Body>
           <ItemsCart />
-          {productsCart.length !== 0 ? (
+          {cartFromLocalStorage.length !== 0 ? (
             <div className={style.container}>
               <div className={style.continue}>Seguir comprando</div>
               <div className={style.bntcontainer}>

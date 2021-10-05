@@ -2,39 +2,52 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Product.module.css";
 import { Card, Button } from "react-bootstrap";
-import {
-  addProductsToChart,
-  removeProductsFromChart,
-} from "../../redux/actions/index";
 import { useDispatch, useSelector } from "react-redux";
+import { updateCart } from "../../redux/actions/index";
 
 export function Product({ id, name, image, price }) {
-  const productsCart = useSelector(
-    (state) => state.carritoReducer.productsCarrito
-  );
-
-  const isInStore = productsCart?.filter((product) => product.id == id);
-
+  const [add, setAdd] = useState(false);
+  const [remove, setRemove] = useState(false);
+  const dispatch = useDispatch();
   const quantity = 1;
 
-  const dispatch = useDispatch();
+  const { productsCarrito } = useSelector((state) => state.carritoReducer);
 
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(productsCart));
-  }, [productsCart]);
+    if (add) {
+      const cartFromLocalStorage = JSON.parse(localStorage.getItem("cart"));
+      const cartAdded = [
+        ...cartFromLocalStorage,
+        { id, name, image, price, quantity },
+      ];
+      localStorage.setItem("cart", JSON.stringify(cartAdded));
+      dispatch(updateCart(cartAdded));
+      setAdd(false);
+    }
+    if (remove) {
+      const cartFromLocalStorage = JSON.parse(localStorage.getItem("cart"));
+      const cartRemoved = cartFromLocalStorage.filter(
+        (product) => product.id !== id
+      );
+      localStorage.setItem("cart", JSON.stringify(cartRemoved));
+      dispatch(updateCart(cartRemoved));
+      setRemove(false);
+    }
+  }, [add, remove]);
 
-  const handleAddToChart = (e) => {
+  const isInStore = productsCarrito.findIndex((product) => product.id === id);
+
+  const handleAddToCart = (e) => {
     e.preventDefault();
-    dispatch(addProductsToChart({ id, name, image, price, quantity }));
+    setAdd(true);
   };
 
-  const handleRemoveFromChart = (e) => {
+  const handleRemoveFromCart = (e) => {
     e.preventDefault();
-    dispatch(removeProductsFromChart(id));
+    setRemove(true);
   };
 
   return (
-    // definir qué info mostrar
     <div className={styles.container}>
       <Card style={{ width: "30rem" }}>
         <Card.Img variant="top" src={image ? image : ""} alt="producto" />
@@ -44,19 +57,20 @@ export function Product({ id, name, image, price }) {
           </Link>
           <Card.Text>{price}</Card.Text>
         </Card.Body>
-        {!isInStore.length ? (
+        {isInStore === -1 && (
           <Button
             variant="dark"
             type="submit"
-            onClick={(e) => handleAddToChart(e)}
+            onClick={(e) => handleAddToCart(e)}
           >
             Agregar al carrito
           </Button>
-        ) : (
+        )}
+        {isInStore >= 0 && (
           <Button
             variant="secondary"
             type="submit"
-            onClick={(e) => handleRemoveFromChart(e)}
+            onClick={(e) => handleRemoveFromCart(e)}
           >
             Eliminar del carrito
           </Button>
