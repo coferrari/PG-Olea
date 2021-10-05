@@ -2,6 +2,14 @@
   padding: 20px
 }
 
+.btn {
+  border-radius: 0;
+  font-family: "Montserrat", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+  font-size: 10px;
+
 .container:hover {
   transform: scale(1.03);
   opacity: .95;

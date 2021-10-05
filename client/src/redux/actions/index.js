@@ -5,12 +5,15 @@ import {
   GET_PRODUCT_DETAIL,
   CATEGORY_FILTER,
   ALL_CATEGORIES,
+  CLEAR_CART,
+  UPDATE_CART
 } from "./types";
 import {
   GET_PRODUCTS_URL,
   SEARCH_PRODUCTS_URL,
   GET_PRODUCT_DETAIL_URL,
   CATEGORY_URL,
+  //AGREGAR RUTAS BACK
 } from "../../consts";
 
 export function getProducts() {
@@ -66,4 +69,17 @@ export function getCategories() {
       });
     });
   };
+}
+
+export function clearCart() {
+  return {
+    type: CLEAR_CART,
+  };
+}
+
+export function updateCart(products) {
+  return {
+    type: UPDATE_CART,
+    payload: products
+  }
 }

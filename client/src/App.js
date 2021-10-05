@@ -14,6 +14,7 @@ import Landing from "./components/Landing/Landing";
 import "bootstrap/dist/css/bootstrap.min.css";
 import RequestChangePassword from "./components/RequestChangePassword/RequestChangePassword";
 import ChangePassword from "./components/ChangePassword/ChangePassword";
+import ShoppingCart from "./components/ShoppingCart/ShoppingCart";
 import UserInfo from "./components/UserInfo/UserInfo";
 import ProductsByName from "./components/ProductsByName/ProductsByName";
 
@@ -21,6 +22,7 @@ function App() {
   return (
     <div>
       <Navbar />
+      <ShoppingCart />
       <Switch>
         <Route exact path="/" component={Landing} />
         <Route exact path="/login">
@@ -47,7 +49,7 @@ function App() {
         <Route path="/category/:nameCategory">
           <CategoryProduct />
         </Route>
-        <Route path="/product/:id">
+        <Route path="/product/:idParams">
           <ProductDetail />
         </Route>
         <Route path="/auth/confirmregister/:token">
