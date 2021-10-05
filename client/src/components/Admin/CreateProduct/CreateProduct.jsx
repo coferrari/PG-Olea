@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router";
-import { useHistory } from "react-router-dom";
 import { Button, Form } from "react-bootstrap";
-import { getCategories } from "../../redux/actions";
-import { getToken } from "../../utils/index";
+import { getCategories } from "../../../redux/actions";
+import { getToken } from "../../../utils/index";
 import axios from "axios";
-import { GET_PRODUCTS_URL } from "../../consts";
+import { GET_PRODUCTS_URL } from "../../../consts";
 
 export default function CreateProduct() {
-  const user = getToken();
-  console.log(user);
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.categoryReducer.categories);
   const [newProduct, setNewProduct] = useState({
@@ -30,14 +26,17 @@ export default function CreateProduct() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.post(GET_PRODUCTS_URL, newProduct);
+    await axios.post(`${GET_PRODUCTS_URL}/create`, newProduct, {
+      headers: {
+        authorization: getToken(),
+      },
+    });
 
     return alert("done");
   };
 
   const onChangeInput = (e) => {
     console.log(newProduct);
-
     setNewProduct({ ...newProduct, [e.target.name]: e.target.value });
   };
   const onChangeImage = (e) => {
