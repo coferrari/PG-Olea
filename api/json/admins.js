@@ -11,5 +11,11 @@ const admins = [
     password: "123Joaco",
     admin: true,
   },
+  {
+    username: "olea2021",
+    email: "oleaproyecto@gmail.com",
+    password: "Henry2021",
+    admin: true,
+  },
 ];
 module.exports = admins;
