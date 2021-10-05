@@ -2,6 +2,7 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { logOut } from "../../auth/users";
 import { Button } from "react-bootstrap";
+import style from "./Logout.module.css";
 
 const LogoutButton = () => {
   const history = useHistory();
@@ -13,7 +14,8 @@ const LogoutButton = () => {
   };
 
   return (
-    <div>
+    <div className={style.container}>
+     <h3 className={style.title}>¿seguro que deseas salir?</h3>
       <Button variant="dark" type="submit"
         onClick={(e) => {
           handleClick(e);

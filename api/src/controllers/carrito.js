@@ -8,7 +8,7 @@ class CarritoModel extends Modelo {
   getByID = async (req, res, next) => {
     try {
       const { carritoId } = req.params; 
-      const product = await Carrito_products.findAll({
+      const product = await Carrito_Products.findAll({
         where : {
           carritoId
         }
