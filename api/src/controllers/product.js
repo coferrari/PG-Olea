@@ -1,4 +1,5 @@
-const { Product, Category, User, Carrito } = require("../db.js");
+const { Product, Category, User, Carrito, Carrito_Product } = require("../db.js");
+const { dbUser } = require("../utils/config/index.js");
 
 const Modelo = require("./index.js");
 
@@ -121,17 +122,50 @@ class ProductModel extends Modelo {
   };
 
   addProduct = async (req, res, next) => {
-    const { productID, userID } = req.body;
+ try {    
+   const { productID, userID } = req.body;
     const producto = await this.model.findByPk(productID);
     const user = await User.findOne({
       where: { id: userID },
       include: Carrito,
     });
     console.log(producto.id);
-    const carritoUser = await Carrito.findByPk(
+    let carritoUser = await Carrito.findByPk(
       user.dataValues.carrito.dataValues.id
     );
-    carritoUser.addProduct(producto.id);
+    res.status(200).send("done");
+  } catch (error) {
+    next(error);
+  }
+
+    // User.then((results) => {
+    //   res.send(results);
+    // }).catch((error) => next(error));
+  };
+
+  deleteProduct = async (req, res, next) => {
+  try{
+    const { productID, userID } = req.body;
+    // const producto = await this.model.findByPk(productID);
+    const user = await User.findOne({
+      where: { id: userID },
+      include: Carrito, 
+    });
+    // console.log(user);
+    const carritoUser = await Carrito.findOne(
+      {where: {
+        id: user.dataValues.carrito.dataValues.id
+      }, include: {Product}}
+      );
+      console.log(carritoUser);
+      res.status(200).send("done");
+  } catch (error){
+    res.send(error);
+  }
+
+    // const elementoABorrar = await Carrito_Product.findOne({where: {productId, carritoId: user.dataValues.carrito.dataValues.id }})
+    // Carrito_Product.delete(elementoABorrar);
+    // carritoUser.delete({where: {idProduct: productID}});
     res.status(200).send("done");
 
     Users.then((results) => {
