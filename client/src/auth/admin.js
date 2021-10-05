@@ -23,11 +23,23 @@ export const changePasswordAdmin = async (email) => {
   return res.data;
 };
 export const removeUserDB = async (username) => {
-  console.log(username);
   const res = await axios.delete(`${usersUrl}/deleteuser/${username}`, {
     headers: {
       authorization: getToken(),
     },
   });
+  return res.data;
+};
+export const generateAdminDB = async (username) => {
+  console.log(getToken());
+  const res = await axios.put(
+    `${usersUrl}/generateadmin`,
+    { username },
+    {
+      headers: {
+        authorization: getToken(),
+      },
+    }
+  );
   return res.data;
 };

@@ -20,5 +20,6 @@ router.post("/confirmregister", userFunction.confirmRegister);
 router.post("/requestchangepassword", userFunction.requestChangePassword);
 router.post("/createadmin", userFunction.createAdmin);
 router.post("/changepasswordadmin", isAdmin, adminFunction.changePassword);
-router.delete("/deleteuser/:username", adminFunction.deleteUser);
+router.delete("/deleteuser/:username", isAdmin, adminFunction.deleteUser);
+router.put("/generateadmin", isAdmin, adminFunction.generateAdmin);
 module.exports = router;
