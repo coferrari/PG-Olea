@@ -38,14 +38,6 @@ const Register = () => {
   });
   const [errors, setErrors] = useState({});
 
-  //POP UP
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => {
-    history.push("/")
-    //setShow(false)
-  };
-  // const handleShow = () => setShow(true);
 
   const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
   const history = useHistory();
