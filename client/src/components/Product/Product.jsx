@@ -6,7 +6,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateCart } from "../../redux/actions/index";
 import { isAuthorized, decodeToken } from "../../utils/index";
 import { addOrEditCart, removeProductCart } from "../../cart/index";
+import { addToWishlist, removeFromWishlist } from "../../wishlist/index";
 import { BsBag, BsBagCheckFill, BsHeart, BsHeartFill } from "react-icons/bs";
+
 export function Product({ id, name, image, price }) {
   const [add, setAdd] = useState(false);
   const [remove, setRemove] = useState(false);
@@ -43,7 +45,7 @@ export function Product({ id, name, image, price }) {
 
   const handleAddToCart = (e) => {
     e.preventDefault();
-    setAdd(true);
+    setFavorite(true);
     if (validate) {
       const user = decodeToken();
       const username = user.username;
@@ -57,7 +59,7 @@ export function Product({ id, name, image, price }) {
 
   const handleRemoveFromCart = (e) => {
     e.preventDefault();
-    setRemove(true);
+    setFavorite(false);
     if (validate) {
       const user = decodeToken();
       const username = user.username;
@@ -73,17 +75,31 @@ export function Product({ id, name, image, price }) {
   const handleAddFavorite = (e) => {
     e.preventDefault();
     setFavorite(true);
+    const user = decodeToken();
+    const username = user.username;
+    console.log("se dispara el handle add");
+    addToWishlist({
+      username,
+      productId: id
+    })
   };
   const handleRemoveFavorite = (e) => {
     e.preventDefault();
     setFavorite(false);
+    const user = decodeToken();
+    const username = user.username;
+    console.log("se dispara el handle remove");
+    removeFromWishlist({
+      username,
+      productId: id
+    })
   };
 
   return (
     <div className={styles.container}>
       <Card className={styles.card}>
         {/* favorite */}
-        {favorite && (
+        {validate && favorite && (
           <button
             className={styles.fav}
             className={styles.fav}
@@ -92,7 +108,7 @@ export function Product({ id, name, image, price }) {
             <BsHeartFill className={styles.removefav} />
           </button>
         )}
-        {!favorite && (
+        {validate && !favorite && (
           <button className={styles.fav} onClick={(e) => handleAddFavorite(e)}>
             <BsHeart className={styles.addfav} />
           </button>

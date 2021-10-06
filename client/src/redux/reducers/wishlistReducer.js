@@ -13,7 +13,7 @@ import {
         console.log(action.payload);
         return {
           ...state,
-          wishlist: [...state.wishlist, action.payload]
+          wishlist: action.payload
         };
 
       default:

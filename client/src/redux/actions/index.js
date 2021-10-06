@@ -6,13 +6,16 @@ import {
   CATEGORY_FILTER,
   ALL_CATEGORIES,
   CLEAR_CART,
-  UPDATE_CART
+  UPDATE_CART,
+  GET_WISHLIST
 } from "./types";
 import {
   GET_PRODUCTS_URL,
   SEARCH_PRODUCTS_URL,
   GET_PRODUCT_DETAIL_URL,
   CATEGORY_URL,
+  GET_WISHLIST_URL,
+  BASEURL
   //AGREGAR RUTAS BACK
 } from "../../consts";
 
@@ -82,4 +85,14 @@ export function updateCart(products) {
     type: UPDATE_CART,
     payload: products
   }
+}
+export function getWishlist(payload) {
+  return function (dispatch) {
+    return axios.get(GET_WISHLIST_URL, {params: payload}).then((wishlist) => {
+      dispatch({
+        type: GET_WISHLIST,
+        payload: wishlist.data,
+      });
+    });
+  };
 }

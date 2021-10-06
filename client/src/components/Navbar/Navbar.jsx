@@ -53,6 +53,11 @@ const NavResponsive = () => {
                   </Link>
                 </Nav.Link>
                 <Nav.Link>
+                  <Link to="/wishlist" className={style.linkssesion}>
+                    <li>Favoritos</li>
+                  </Link>
+                </Nav.Link>
+                <Nav.Link>
                   <Link to="/logout" className={style.linkssesion}>
                     <li>Cerrar sesión</li>
                   </Link>

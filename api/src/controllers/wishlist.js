@@ -7,8 +7,9 @@ class WishlistModel extends Modelo {
   }
   getWishlist = async (req, res, next) => {
     try {
-      const { username } = req.body; 
-      const wishlist = await Wishlist.findAll({
+      const { username } = req.query; 
+      console.log("el handler", username);
+      const wishlist = await Wishlist.findOne({
         where : {
           userUsername: username
         }, include: Product,
@@ -20,7 +21,7 @@ class WishlistModel extends Modelo {
   };
   addProductToWishlist = async (req, res, next) => {
     try {
-      const { username, productId } = req.body; 
+      const { username, productId } = req.body.data; 
       const wishlist = await Wishlist.findOne({
         where : {
           userUsername : username
@@ -35,6 +36,7 @@ class WishlistModel extends Modelo {
   removeProductToWishlist = async (req, res, next) => {
     try {
       const { username, productId } = req.body; 
+      console.log(req.body);
       const wishlist = await Wishlist.findOne({
         where : {
           userUsername : username

@@ -1,27 +1,27 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { getWishlist } from "../../redux/actions/index";
+import { decodeToken } from "../../utils/index";
+import Products  from "../Products/Products";
 
 const Wishlist = () => {
     const dispatch = useDispatch();
-    
-    const { wishlistId } = useParams(); 
     const { wishlist } = useSelector((state) => state.wishlistReducer);
+
+    const user = decodeToken();
+    const username = user.username;
+
     
     useEffect(() => {
-        dispatch(getWishlist(wishlistId));
+        dispatch(getWishlist({username}));
         }, [dispatch]);
-    
-    console.log(wishlist);
+
+    console.log("esta es la wishlist", wishlist);
 
     return (
-        <div>
-            {wishlist?.map(p => {
-                return <div>{p.name}</div>
-            })}
-        </div>
+        <Products products={wishlist[0]?.products}/>
     );
 }
 
