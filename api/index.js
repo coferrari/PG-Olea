@@ -43,7 +43,7 @@ conn.sync({ force: true }).then(() => {
   for (let j = 0; j < 5; j++) {
     for (let i = 0; i < productos.length; i++) {
       const post = axios.post(
-        "http://localhost:3001/api/product",
+        "http://localhost:3001/api/product/create",
         productos[i]
       );
       post.then();
