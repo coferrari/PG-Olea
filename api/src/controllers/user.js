@@ -67,12 +67,13 @@ userFunction.requestChangePassword = async (req, res, next) => {
     console.log(err);
   }
 };
-// para cuando ya esta validado el mail
+
 userFunction.changePassword = async (req, res, next) => {
   const { email, password } = req.body;
   const user = await User.findOne({ where: { email } });
   const newPasswordEncrypted = await encryptPassword(password);
   user.password = newPasswordEncrypted;
+  await user.save();
   res.send("nueva contraseña guardada");
 };
 
