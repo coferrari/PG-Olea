@@ -7,12 +7,12 @@ const { dbUser, dbPassword, dbHost, dbName } = require("./utils/config");
 let sequelize =
   process.env.NODE_ENV === "production"
     ? new Sequelize({
-        database: DB_NAME,
+        database: dbName,
         dialect: "postgres",
-        host: DB_HOST,
+        host: dbHost,
         port: 5432,
-        username: DB_USER,
-        password: DB_PASSWORD,
+        username: dbUser,
+        password: dbPassword,
         pool: {
           max: 3,
           min: 1,
