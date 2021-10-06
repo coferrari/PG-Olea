@@ -2,7 +2,7 @@ import React from "react";
 import ItemsCart from "../ItemsCart/ItemsCart";
 import Data from "./CheckoutData/CheckoutData";
 import Delivery from "./CheckoutDelivery/CheckoutDelivery";
-import Payment from "./CheckoutPayment/CheckoutPayment";
+import Details from "./CheckoutDetail/CheckoutDetail";
 import { decodeToken, isAuthorized } from "../../utils";
 import Button from "@restart/ui/esm/Button";
 import { confirmAlert } from "react-confirm-alert"; // Import
@@ -31,7 +31,7 @@ const Checkout = () => {
             <div>
                 <Data datosLogin={datosLogin} />
                 <Delivery />
-                <ItemsCart />
+                <Details/>
                 <Button onClick={e => handlePay(e)}>Pagar</Button>
             </div>
         ) : <div>{confirmAlert ({
