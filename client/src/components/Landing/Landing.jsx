@@ -3,15 +3,21 @@ import Carousel from "../Carousel/Carousel";
 import { Button } from "react-bootstrap";
 import styles from "./Landing.module.css";
 import Footer from "../Footer/Footer";
+import { Link } from "react-router-dom";
 function Landing() {
   return (
     <div className={styles.container}>
-      <h1>NEW</h1>
-      <Carousel />
-      <Button variant="outline-dark" style={{ width: "30rem" }}>
-        Ver más
-      </Button>
-      <Footer />
+      <div>
+        <Carousel />
+      </div>
+      <div>
+        <Link to="/home">
+          <Button variant="outline-dark">Ver más productos</Button>
+        </Link>
+      </div>
+      <div>
+        <Footer />
+      </div>
     </div>
   );
 }

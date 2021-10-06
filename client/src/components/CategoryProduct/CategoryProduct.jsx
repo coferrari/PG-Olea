@@ -13,7 +13,7 @@ export default function CategoryProduct() {
 
   useEffect(() => {
     dispatch(getProductsByCategory(nameCategory));
-  }, [dispatch]);
+  }, [dispatch, nameCategory]);
 
   return <Products products={productsByCategory} />;
 }

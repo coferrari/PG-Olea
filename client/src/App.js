@@ -2,7 +2,8 @@ import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import Home from "./components/Home/Home";
 import CategoryProduct from "./components/CategoryProduct/CategoryProduct";
-
+import { Search } from "./components/Search/Search";
+import Selects from "./components/Selects/Selects";
 import LoginButton from "./components/Login/Login";
 import LogoutButton from "./components/Logout/Logout";
 import Navbar from "./components/Navbar/Navbar";
@@ -13,17 +14,21 @@ import Landing from "./components/Landing/Landing";
 import "bootstrap/dist/css/bootstrap.min.css";
 import RequestChangePassword from "./components/RequestChangePassword/RequestChangePassword";
 import ChangePassword from "./components/ChangePassword/ChangePassword";
+import ShoppingCart from "./components/ShoppingCart/ShoppingCart";
+import ProductsByName from "./components/ProductsByName/ProductsByName";
 import { decodeToken, getToken, tokens } from "./utils/index";
 import CreateProduct from "./components/Admin/CreateProduct/CreateProduct";
 import UsersTable from "./components/Admin/Tables/UsersTable/UsersTable";
 import ProductTable from "./components/Admin/Tables/ProductTable/ProductTable";
 import CategoriasTable from "./components/Admin/Tables/CategoriasTable/CategoriasTable";
+
 function App() {
   const loggedIn = decodeToken();
 
   return (
     <div>
       <Navbar />
+      <ShoppingCart />
       <Switch>
         <Route exact path="/" component={Landing} />
         <Route exact path="/login">
@@ -50,7 +55,7 @@ function App() {
         <Route path="/category/:nameCategory">
           <CategoryProduct />
         </Route>
-        <Route path="/product/:id">
+        <Route path="/product/:idParams">
           <ProductDetail />
         </Route>
         <Route path="/auth/confirmregister/:token">
@@ -67,6 +72,11 @@ function App() {
         </Route>
         <Route exact path="/admin/categoriestable">
           {loggedIn.admin ? <CategoriasTable /> : <Redirect to="/home" />}
+        </Route>
+        <Route exact path="/search/:name">
+          <Search />
+          <Selects />
+          <ProductsByName />
         </Route>
       </Switch>
     </div>

@@ -122,7 +122,8 @@ userFunction.googleLogin = async (req, res, next) => {
   const user = await User.findOne({
     where: { email },
   });
-  console.log(ticket);
+  const carritocreado = await Carrito.create({});
+
   if (user === null) {
     const newPasswordEncrypted = await encryptPassword(at_hash);
     const newUser = await User.create({
@@ -133,6 +134,7 @@ userFunction.googleLogin = async (req, res, next) => {
       surname: family_name,
       picture,
     });
+    newUser.setCarrito(carritocreado.dataValues.id);
     const token = jwt.sign(
       {
         username: email,

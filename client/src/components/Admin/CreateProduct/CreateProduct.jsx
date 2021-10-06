@@ -1,10 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Form } from "react-bootstrap";
+import {
+  Button,
+  Form,
+  InputGroup,
+  Row,
+  Col,
+  Container,
+  Image,
+} from "react-bootstrap";
 import { getCategories } from "../../../redux/actions";
 import { getToken } from "../../../utils/index";
 import axios from "axios";
 import { GET_PRODUCTS_URL } from "../../../consts";
+import swal from "sweetalert";
 
 export default function CreateProduct() {
   const dispatch = useDispatch();
@@ -16,9 +25,10 @@ export default function CreateProduct() {
     image: [],
     stock: 0,
     description: "",
-    categoryID: 0,
+    categoryID: [],
     brand: 1,
   });
+  const [image, setImage] = useState();
 
   useEffect(() => {
     dispatch(getCategories());
@@ -32,21 +42,42 @@ export default function CreateProduct() {
       },
     });
 
-    return alert("done");
+    return swal("Este producto ha sido creado exitosamente");
   };
 
   const onChangeInput = (e) => {
-    console.log(newProduct);
     setNewProduct({ ...newProduct, [e.target.name]: e.target.value });
   };
   const onChangeImage = (e) => {
-    setNewProduct((previous) => {
-      console.log(newProduct);
-      return {
-        ...previous,
-        image: [e.target.value],
-      };
-    });
+    setImage(e.target.value);
+  };
+  const onAddImage = (image) => {
+    if (!newProduct.image.includes(image)) {
+      setNewProduct({
+        ...newProduct,
+        image: [...newProduct.image, image],
+      });
+    } else if (newProduct.image.includes(image)) {
+      setNewProduct({
+        ...newProduct,
+        image: newProduct.image.filter((e) => e != image),
+      });
+    }
+    console.log(newProduct.image);
+  };
+  const categoris = (catID) => {
+    if (!newProduct.categoryID.includes(catID)) {
+      setNewProduct({
+        ...newProduct,
+        categoryID: [...newProduct.categoryID, catID],
+      });
+    } else if (newProduct.categoryID.includes(catID)) {
+      setNewProduct({
+        ...newProduct,
+        categoryID: newProduct.categoryID.filter((e) => e != catID),
+      });
+    }
+    console.log(newProduct.categoryID);
   };
 
   return (
@@ -77,19 +108,51 @@ export default function CreateProduct() {
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Imagenes</Form.Label>
-            <Form.Control
-              type="imagenes"
-              placeholder="Ingrese Imagenes"
-              name="imagenes"
-              onChange={(e) => {
-                onChangeImage(e);
-              }}
-            />
+            <InputGroup className="mb-3">
+              <Form.Control
+                type="imagenes"
+                placeholder="Ingrese Imagenes"
+                name="imagenes"
+                onChange={(e) => {
+                  onChangeImage(e);
+                }}
+              />
+              <Button
+                onClick={() => onAddImage(image)}
+                variant="outline-secondary"
+              >
+                Añadir
+              </Button>
+            </InputGroup>
+            <Form.Group className="mb-3">
+              <Form.Label>Imagenes Cargadas</Form.Label>
+              <Container>
+                {newProduct.image?.map((e) => (
+                  <Row>
+                    <Col xs={6} md={4}>
+                      <Button
+                        onClick={() =>
+                          setNewProduct({
+                            ...newProduct,
+                            image: newProduct.image.filter((j) => j != e),
+                          })
+                        }
+                      >
+                        x
+                      </Button>
+                      <Image src={e} rounded />
+                    </Col>
+                  </Row>
+                ))}
+              </Container>
+            </Form.Group>
           </Form.Group>
 
           <Form.Group className="mb-3">
             <Form.Label>Descripcion</Form.Label>
             <Form.Control
+              as="textarea"
+              style={{ height: "100px" }}
               type="descripcion"
               placeholder="Ingrese Descripcion"
               name="description"
@@ -99,23 +162,25 @@ export default function CreateProduct() {
             />
           </Form.Group>
           <Form.Group className="mb-3">
-            <Form.Label>Categorias</Form.Label>
-            <Form.Select
-              name="categoryID"
-              aria-label="Default select example"
-              onChange={(e) => {
-                onChangeInput(e);
-              }}
-            >
-              <option>Seleccione una categoria</option>
+            <Form.Label>Seleccione las Categorias</Form.Label>
+            <div>
               {categories?.map((cat) => {
                 return (
-                  <option name="categoryID" value={cat.id}>
-                    {cat.nameCategory}
-                  </option>
+                  <a>
+                    <Button
+                      variant={
+                        newProduct.categoryID.includes(cat.id)
+                          ? "dark"
+                          : "secondary"
+                      } // variant="outline-dark"
+                      onClick={() => categoris(cat.id)}
+                    >
+                      {cat.nameCategory}
+                    </Button>{" "}
+                  </a>
                 );
               })}
-            </Form.Select>
+            </div>
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Stock</Form.Label>
