@@ -8,9 +8,8 @@ const router = Router();
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 router.get("/", reviewsControllers.getAll);
-router.get("/", reviewsControllers.getByID);
 router.post("/", reviewsControllers.create);
 router.put("/:id", reviewsControllers.update);
 router.delete("/:id", reviewsControllers.delete);
-
+router.get("/:id", reviewsControllers.getByProduct);
 module.exports = router;
