@@ -49,6 +49,7 @@ conn.sync({ force: true }).then(() => {
       post.then();
     }
   }
+  
   for (let i = 0; i < admin.length; i++) {
     const post = axios.post(
       "http://localhost:3001/api/user/createadmin",
