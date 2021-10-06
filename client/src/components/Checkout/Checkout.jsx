@@ -12,46 +12,55 @@ import { useDispatch, useSelector } from "react-redux";
 import { checkoutMercadoPago } from "../../redux/actions";
 
 const Checkout = () => {
-    const history = useHistory();
-    const sesionIniciada = isAuthorized();
-    const datosLogin = decodeToken();
-    const dispatch = useDispatch();
+  const history = useHistory();
+  const sesionIniciada = isAuthorized();
+  const datosLogin = decodeToken();
+  const dispatch = useDispatch();
 
-    const itemsCheckout = useSelector(state => state.carritoReducer.productsCarrito)
-    console.log(itemsCheckout)
+  const itemsCheckout = useSelector(
+    (state) => state.carritoReducer.productsCarrito
+  );
+  console.log(itemsCheckout);
 
-    const handlePay = (e) => {
-      e.preventDefault()
-      dispatch(checkoutMercadoPago(itemsCheckout))
-      //acá va la action de pagar
-    }
+  const handlePay = (e) => {
+    e.preventDefault();
+    dispatch(checkoutMercadoPago(itemsCheckout));
+    //acá va la action de pagar
+  };
 
-    return <div>
-        {sesionIniciada === true ? (
-            <div>
-                <Data datosLogin={datosLogin} />
-                <Delivery />
-                <Details/>
-                <Button onClick={e => handlePay(e)}>Pagar</Button>
-            </div>
-        ) : <div>{confirmAlert ({
+  return (
+    <div>
+      {sesionIniciada === true ? (
+        <div>
+          <Data datosLogin={datosLogin} />
+          <Delivery />
+          <Details />
+          <Button onClick={(e) => handlePay(e)}>Pagar</Button>
+        </div>
+      ) : (
+        <div>
+          {confirmAlert({
             title: "No iniciaste sesión",
-            message: "Para continuar con tu compra debes registrarte o iniciar sesión",
+            message:
+              "Para continuar con tu compra debes registrarte o iniciar sesión",
             buttons: [
-                {
-                  label: "Iniciar Sesión",
-                  onClick: () => history.push("/login")
-                },
-                {
-                  label: "Registrarse",
-                  onClick: () => history.push("/register"),
-                },
-                {
-                  label: "Inicio",
-                  onClick: () => history.push("/"),
-                },
-              ],})}
-        </div>}
+              {
+                label: "Iniciar Sesión",
+                onClick: () => history.push("/login"),
+              },
+              {
+                label: "Registrarse",
+                onClick: () => history.push("/register"),
+              },
+              {
+                label: "Inicio",
+                onClick: () => history.push("/"),
+              },
+            ],
+          })}
+        </div>
+      )}
     </div>
-}
+  );
+};
 export default Checkout;
