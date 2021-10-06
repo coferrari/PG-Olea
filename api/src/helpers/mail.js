@@ -72,7 +72,7 @@ const getTemplateAdminChangePassword = (name) => {
       <a
           href="http://localhost:3000/changepassword"
           target="_blank"
-      >Confirmar Cuenta</a>
+      >Cambiar contraseña</a>
   </div>
 `;
 };
