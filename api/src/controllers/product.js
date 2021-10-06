@@ -1,4 +1,5 @@
 const {
+  Reviews,
   Product,
   Category,
   User,
@@ -112,9 +113,12 @@ class ProductModel extends Modelo {
   };
   getAll = (req, res, next) => {
     const product = this.model.findAll({
-      include: {
-        model: Category,
-      },
+      include: [
+        {
+          model: Category,
+        },
+        { model: Reviews },
+      ],
     });
 
     product
