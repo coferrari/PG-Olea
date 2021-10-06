@@ -53,27 +53,43 @@ userFunction.confirmRegister = async (req, res, next) => {
   res.send(user);
 };
 
-// solicitar validacion de mail para cambio de contraseña
 userFunction.requestChangePassword = async (req, res, next) => {
   const { email } = req.body;
   try {
     const user = await User.findOne({ where: { email } });
+    const token = jwt.sign(
+      {
+        email: user.email,
+      },
+      process.env.TOKEN_SECRET
+    );
     if (user) {
-      const template = getTemplateChangePassword(email);
+      const template = getTemplateChangePassword(email, token);
       await sendEmail(email, "Confirmar cambio de contraseña", template);
       res.send("email enviado");
     }
   } catch (err) {
-    console.log(err);
+    next(err);
   }
 };
-// para cuando ya esta validado el mail
+
 userFunction.changePassword = async (req, res, next) => {
-  const { email, password } = req.body;
-  const user = await User.findOne({ where: { email } });
-  const newPasswordEncrypted = await encryptPassword(password);
-  user.password = newPasswordEncrypted;
-  res.send("nueva contraseña guardada");
+  const { email, password, token } = req.body;
+  try {
+    const verified = jwt.verify(token, process.env.TOKEN_SECRET);
+    const user = await User.findOne({ where: { email } });
+    if (user.email === verified.email) {
+      const newPasswordEncrypted = await encryptPassword(password);
+      user.password = newPasswordEncrypted;
+      console.log("entre");
+      await user.save();
+      return res.send("nueva contraseña guardada");
+    }
+    res.status(404).send("err");
+  } catch (err) {
+    console.log("entre al error");
+    next(err);
+  }
 };
 
 userFunction.login = async (req, res, next) => {
