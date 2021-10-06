@@ -138,11 +138,14 @@ userFunction.googleLogin = async (req, res, next) => {
     ticket.getPayload();
   const user = await User.findOne({
     where: { email },
+    include: Carrito,
   });
+
   const carritocreado = await Carrito.create({});
   const wishlistCreada = await Wishlist.create({});
 
   if (user === null) {
+    const carritocreado = await Carrito.create({});
     const newPasswordEncrypted = await encryptPassword(at_hash);
     const newUser = await User.create({
       name: given_name,

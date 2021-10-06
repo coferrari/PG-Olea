@@ -36,11 +36,12 @@
   background-color: white;
 }
 .shop {
-  margin-top: 30px;
+  /* margin-top: 30px; */
   border-radius: 0;
   text-transform: uppercase;
   letter-spacing: 2px;
   font-size: 14px;
+  background-color: none;
 }
 
 .checkout {

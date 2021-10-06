@@ -125,7 +125,6 @@ class ProductModel extends Modelo {
   };
   addOrEditProduct = async (req, res, next) => {
     const { productID, username, quantity } = req.body;
-    console.log(productID, username, quantity, "cantidad");
     const producto = await this.model.findByPk(productID);
     const user = await User.findOne({
       where: { username: username },
@@ -148,9 +147,36 @@ class ProductModel extends Modelo {
     }
     return res.status(404).send("este usuario no tiene un carrito");
   };
+
+  // guardar precios
+
+  createCartLogin = async (req, res, next) => {
+    const { username, products } = req.body;
+    const user = await User.findOne({
+      where: { username: username },
+      include: Carrito,
+    });
+    if (user.dataValues.carrito !== null && products.length) {
+      for (let i = 0; i <= products.length - 1; i++) {
+        const result = await this.model.findByPk(products[i].id);
+        await user.dataValues.carrito.addProduct(products[i].id);
+        await Carrito_Products.update(
+          { quantity: products[i].quantity },
+          {
+            where: {
+              productId: products[i].id,
+              carritoId: user.dataValues.carrito.dataValues.id,
+            },
+          }
+        );
+      }
+      return res.status(200).send(user.dataValues.carrito);
+    }
+    return res.status(404).send("este usuario no tiene un carrito");
+  };
+
   deleteProduct = async (req, res, next) => {
     const { productID, username } = req.body;
-
     try {
       const user = await User.findOne({
         where: { username: username },
@@ -163,13 +189,12 @@ class ProductModel extends Modelo {
         include: { model: Product },
       });
       carritoUser.removeProducts([productID]);
-
       res.status(200).send(carritoUser);
     } catch (error) {
       next(error);
     }
   };
-  editQuantity = async (req, res, next) => {};
+
   searchName = async (req, res, next) => {
     const { name } = req.query;
     if (name) {
