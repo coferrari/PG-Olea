@@ -15,7 +15,7 @@ export function validate(email) {
 const RequestChangePassword = () => {
   const [email, setEmail] = useState();
   const [errors, setErrors] = useState();
-
+  const [emailError, setEmailError] = useState("");
   const history = useHistory();
 
   const handleSubmit = async (e) => {
@@ -25,7 +25,7 @@ const RequestChangePassword = () => {
       await requestChangePassword(email);
       history.push("/");
     } catch (err) {
-      console.log(err);
+      setEmailError("Este email no esta registrado");
     }
   };
 
@@ -64,6 +64,7 @@ const RequestChangePassword = () => {
                 Solicitar cambio de contraseña
               </Button>
             )}
+            <div className={style.errors}>{emailError ? emailError : ""}</div>
           </Form>
         </div>
       </div>
