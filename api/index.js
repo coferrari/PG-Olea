@@ -33,13 +33,13 @@ conn.sync({ force: true }).then(() => {
   //   const post = axios.post("http://localhost:3001/api/brand", marcas[i]);
   //   post.then();
   // }
-  // for (let i = 0; i < categorias.length; i++) {
-  //   const post = axios.post(
-  //     "http://localhost:3001/api/category",
-  //     categorias[i]
-  //   );
-  //   post.then();
-  // }
+  for (let i = 0; i < categorias.length; i++) {
+    const post = axios.post(
+      "http://localhost:3001/api/category",
+      categorias[i]
+    );
+    post.then();
+  }
   // for (let j = 0; j < 5; j++) {
   //   for (let i = 0; i < productos.length; i++) {
   //     const post = axios.post(

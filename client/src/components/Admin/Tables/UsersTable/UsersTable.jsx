@@ -12,9 +12,87 @@ import { confirmAlert } from "react-confirm-alert"; // Import
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 export default function UsersTable() {
   const [users, setUsers] = useState();
+  const [az, setAz] = useState(false);
+  const [email, setEmail] = useState(false);
+  const [order, setOrder] = useState(false);
   const getAll = async () => {
     const users = await getUsers();
     setUsers(users);
+  };
+  const orderById = () => {
+    az ? setAz(false) : setAz(true);
+    let aux = [...users];
+    console.log(aux);
+    if (az === true) {
+      aux.sort((a, b) => {
+        if (a.id > b.id) {
+          return 1;
+        } else {
+          return -1;
+        }
+      });
+      setUsers([...aux]);
+    }
+    if (az === false) {
+      aux.sort((a, b) => {
+        if (a.id < b.id) {
+          return 1;
+        } else {
+          return -1;
+        }
+      });
+      setUsers([...aux]);
+    }
+  };
+  const orderByUser = () => {
+    order ? setOrder(false) : setOrder(true);
+    let aux = [...users];
+    console.log(aux);
+    if (order === true) {
+      aux.sort((a, b) => {
+        if (a.username > b.username) {
+          return 1;
+        } else {
+          return -1;
+        }
+      });
+      setUsers([...aux]);
+    }
+    if (order === false) {
+      aux.sort((a, b) => {
+        if (a.username < b.username) {
+          return 1;
+        } else {
+          return -1;
+        }
+      });
+      setUsers([...aux]);
+    }
+  };
+  const orderByEmail = () => {
+    email ? setEmail(false) : setEmail(true);
+    let aux = [...users];
+    console.log(aux);
+    if (email === true) {
+      aux.sort((a, b) => {
+        if (a.username > b.username) {
+          return 1;
+        } else {
+          return -1;
+        }
+      });
+      setUsers([...aux]);
+    }
+    if (email === false) {
+      aux.sort((a, b) => {
+        if (a.username < b.username) {
+          return 1;
+        } else {
+          return -1;
+        }
+      });
+      setUsers([...aux]);
+    }
   };
   const changePass = (email) => {
     confirmAlert({
@@ -83,12 +161,13 @@ export default function UsersTable() {
       <Table striped bordered hover>
         <thead>
           <tr>
-            <th>Id</th>
-            <th>Nombre</th>
-            <th>Email</th>
+            <th onClick={orderById}>Id</th>
+            <th onClick={orderByUser}>Nombre</th>
+            <th onClick={orderByEmail}>Email</th>
             <th>Admin</th>
-            <th>Reset password</th>
+            <th>Forzar contraseña</th>
             <th>Eliminar usuario</th>
+            <th>Fecha de registro</th>
           </tr>
         </thead>
         <tbody>
@@ -114,7 +193,7 @@ export default function UsersTable() {
                       changePass(user.email);
                     }}
                   >
-                    Cambiar password
+                    Cambiar contraseña
                   </td>
                 )}
                 {user.admin ? (
@@ -128,6 +207,7 @@ export default function UsersTable() {
                     Eliminar usuario
                   </td>
                 )}
+                <td>{user.createdAt.slice(0, 10)}</td>
               </tr>
             );
           })}
