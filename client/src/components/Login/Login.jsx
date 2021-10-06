@@ -5,6 +5,8 @@ import { Form, Button } from "react-bootstrap";
 import { logIn, logInGoogle } from "../../auth/users";
 import GoogleLogin from "react-google-login";
 import style from "./Login.module.css";
+import { createCartLogin } from "../../cart/index";
+import { isAuthorized, decodeToken } from "../../utils/index";
 
 export function validate(input) {
   let errors = {};
@@ -23,6 +25,7 @@ export function validate(input) {
 }
 
 const LoginButton = () => {
+  const cartFromLocalStorage = JSON.parse(localStorage.getItem("cart") || "[]");
   const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
   const history = useHistory();
   const [input, setInput] = useState({
@@ -44,25 +47,45 @@ const LoginButton = () => {
     );
   };
 
+
+
   const handleSubmit = async (e) => {
     console.log("entra al submit");
     e.preventDefault();
     try {
       const x = await logIn(input);
-      console.log(x);
-      history.push("/");
+      const validate = isAuthorized();
+      if (validate) {
+        const user = decodeToken();
+        const username = user.username;
+        createCartLogin({
+          products: cartFromLocalStorage,
+          username: username,
+        });
+      }
+      history.push("/home");
     } catch (err) {
       setErrorLogin("Contraseña o usuario incorrecto");
-      console.log(err.message);
     }
   };
-  console.log(errorLogin);
+
   const responseSuccessGoogle = async (response) => {
     await logInGoogle(response);
+    const validate = isAuthorized();
+    console.log(validate, "validate google")
+    if (validate) {
+      const user = decodeToken();
+      console.log('entra al if google')
+      const username = user.username;
+      createCartLogin({
+        products: cartFromLocalStorage,
+        username: username,
+      });
+    }
     history.push("/");
   };
+
   const responseErrorGoogle = async (response) => {
-    console.log(response.profileObj);
     history.push("/");
   };
 
