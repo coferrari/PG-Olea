@@ -6,13 +6,15 @@ import {
   CATEGORY_FILTER,
   ALL_CATEGORIES,
   CLEAR_CART,
-  UPDATE_CART
+  UPDATE_CART,
+  PAY_MERCADOPAGO
 } from "./types";
 import {
   GET_PRODUCTS_URL,
   SEARCH_PRODUCTS_URL,
   GET_PRODUCT_DETAIL_URL,
   CATEGORY_URL,
+  PAY_MERCADOPAGO_URL
   //AGREGAR RUTAS BACK
 } from "../../consts";
 
@@ -81,5 +83,12 @@ export function updateCart(products) {
   return {
     type: UPDATE_CART,
     payload: products
+  }
+}
+
+export function checkoutMercadoPago(itemsCheckout) {
+  return async function(dispatch) {
+    const items = await axios.post(PAY_MERCADOPAGO_URL, itemsCheckout)
+      return items
   }
 }
