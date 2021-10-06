@@ -7,7 +7,6 @@ import { isAuthorized, decodeToken } from "../../utils/index";
 import { addOrEditCart, removeProductCart } from "../../cart/index";
 
 const ItemCart = ({ id, name, image, price, quantity }) => {
-  const [q, setQ] = useState(quantity);
   const dispatch = useDispatch();
   const [remove, setRemove] = useState(false);
   const validate = isAuthorized();
@@ -16,6 +15,7 @@ const ItemCart = ({ id, name, image, price, quantity }) => {
   const index = cartFromLocalStorage?.findIndex(
     (product) => product.id === parseInt(id)
   );
+  const [q, setQ] = useState(quantity || cartFromLocalStorage[index].Carrito_Products.quantity);
   if (index >= 0) {
     cartFromLocalStorage[index].quantity = q;
   }
@@ -113,7 +113,7 @@ const ItemCart = ({ id, name, image, price, quantity }) => {
       </div>
       <div className={style.details}>
         <h4 className={style.name}>{name}</h4>
-        <p className={style.price}>$ {format(price * q)}</p>
+        <p className={style.price}>$ {q ? format(price * q) : format(price * cartFromLocalStorage[index].Carrito_Products.quantity)}</p>
         <div className={style.btncontainer}>
           <Button
             className={style.btn}
@@ -125,7 +125,7 @@ const ItemCart = ({ id, name, image, price, quantity }) => {
             -
           </Button>
           <Button className={style.btn} variant="dark" type="submit">
-            {q}
+            {q ? q : cartFromLocalStorage[index].Carrito_Products.quantity}
           </Button>
           <Button
             className={style.btn}

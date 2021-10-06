@@ -52,7 +52,8 @@ const ShoppingCart = () => {
   }, 0);
 
   const totalQuantity = productsCart?.reduce((acc, curr) => {
-    return acc + curr.quantity;
+    const result = curr.Carrito_Products ? acc + curr.Carrito_Products.quantity : acc + curr.quantity;
+    return result;
   }, 0);
 
   const format = (num) => {

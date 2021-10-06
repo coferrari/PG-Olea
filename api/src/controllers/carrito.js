@@ -1,4 +1,4 @@
-const { Carrito, Carrito_Products, User } = require("../db.js");
+const { Carrito, Carrito_Products, User, Product } = require("../db.js");
 const Modelo = require("./index.js");
 
 class CarritoModel extends Modelo {
@@ -12,6 +12,20 @@ class CarritoModel extends Modelo {
         where : {
           carritoId
         }
+      });
+      return res.json(product);
+    } catch (error) {
+      next(error);
+    }
+  };
+  getByUsername = async (req, res, next) => {
+    const { username } = req.query;
+    try {
+      const product = await Carrito.findOne({
+        where : {
+          userUsername: username
+        },
+        include: Product
       });
       return res.json(product);
     } catch (error) {
