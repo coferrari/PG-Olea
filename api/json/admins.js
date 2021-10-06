@@ -17,5 +17,18 @@ const admins = [
     password: "Henry2021",
     admin: true,
   },
+
+  {
+    username: "prueba1",
+    email: "prueba1@gmail.com",
+    password: "Henry2021",
+    admin: false,
+  },
+  {
+    username: "prueba2",
+    email: "prueba2@gmail.com",
+    password: "Henry2021",
+    admin: false,
+  },
 ];
 module.exports = admins;

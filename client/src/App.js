@@ -43,7 +43,7 @@ function App() {
         <Route exact path="/requestchangepassword">
           <RequestChangePassword />
         </Route>
-        <Route exact path="/changepassword">
+        <Route exact path="/changepassword/:token">
           <ChangePassword />
         </Route>
         <Route exact path="/home">

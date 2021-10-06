@@ -8,10 +8,11 @@ export const register = async (user) => {
 export const requestChangePassword = async (email) => {
   return await axios.post(`${baseUrl}/requestchangepassword`, { email: email });
 };
-export const changePassword = async (email, password) => {
+export const changePassword = async (email, password, token) => {
   return await axios.put(`${baseUrl}/changepassword`, {
     email: email,
     password: password,
+    token: token,
   });
 };
 export const logIn = async (user) => {

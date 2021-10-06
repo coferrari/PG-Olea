@@ -1,18 +1,98 @@
 import React, { useEffect, useState } from "react";
 import { Route } from "react-router-dom";
 import { Button, Table } from "react-bootstrap";
+import swal from "sweetalert";
 import {
   getUsers,
   changePasswordAdmin,
   removeUserDB,
+  generateAdminDB,
 } from "../../../../auth/admin";
 import { confirmAlert } from "react-confirm-alert"; // Import
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 export default function UsersTable() {
   const [users, setUsers] = useState();
+  const [az, setAz] = useState(false);
+  const [email, setEmail] = useState(false);
+  const [order, setOrder] = useState(false);
   const getAll = async () => {
     const users = await getUsers();
     setUsers(users);
+  };
+  const orderById = () => {
+    az ? setAz(false) : setAz(true);
+    let aux = [...users];
+    console.log(aux);
+    if (az === true) {
+      aux.sort((a, b) => {
+        if (a.id > b.id) {
+          return 1;
+        } else {
+          return -1;
+        }
+      });
+      setUsers([...aux]);
+    }
+    if (az === false) {
+      aux.sort((a, b) => {
+        if (a.id < b.id) {
+          return 1;
+        } else {
+          return -1;
+        }
+      });
+      setUsers([...aux]);
+    }
+  };
+  const orderByUser = () => {
+    order ? setOrder(false) : setOrder(true);
+    let aux = [...users];
+    console.log(aux);
+    if (order === true) {
+      aux.sort((a, b) => {
+        if (a.username > b.username) {
+          return 1;
+        } else {
+          return -1;
+        }
+      });
+      setUsers([...aux]);
+    }
+    if (order === false) {
+      aux.sort((a, b) => {
+        if (a.username < b.username) {
+          return 1;
+        } else {
+          return -1;
+        }
+      });
+      setUsers([...aux]);
+    }
+  };
+  const orderByEmail = () => {
+    email ? setEmail(false) : setEmail(true);
+    let aux = [...users];
+    console.log(aux);
+    if (email === true) {
+      aux.sort((a, b) => {
+        if (a.username > b.username) {
+          return 1;
+        } else {
+          return -1;
+        }
+      });
+      setUsers([...aux]);
+    }
+    if (email === false) {
+      aux.sort((a, b) => {
+        if (a.username < b.username) {
+          return 1;
+        } else {
+          return -1;
+        }
+      });
+      setUsers([...aux]);
+    }
   };
   const changePass = (email) => {
     confirmAlert({
@@ -22,7 +102,7 @@ export default function UsersTable() {
         {
           label: "Yes",
           onClick: async () => {
-            alert("Se le enviara un email al usuario");
+            swal("Se le enviara un email al usuario");
             await changePasswordAdmin(email);
           },
         },
@@ -39,10 +119,30 @@ export default function UsersTable() {
       message: `Desea eliminar a ${user}`,
       buttons: [
         {
-          label: "Yes",
+          label: "Si",
           onClick: async () => {
-            alert("Este usuario ha sido eliminado");
+            swal("Este usuario ha sido eliminado");
             await removeUserDB(user);
+            window.location.reload(false);
+          },
+        },
+        {
+          label: "No",
+          onClick: () => console.log("zs"),
+        },
+      ],
+    });
+  };
+  const generateAdmin = (user) => {
+    confirmAlert({
+      title: "Promover a administrador",
+      message: `Desea darle rango administador a ${user}`,
+      buttons: [
+        {
+          label: "Si",
+          onClick: async () => {
+            swal("Este usuario ahora es admin");
+            await generateAdminDB(user);
             window.location.reload(false);
           },
         },
@@ -61,11 +161,13 @@ export default function UsersTable() {
       <Table striped bordered hover>
         <thead>
           <tr>
-            <th>Id</th>
-            <th>Nombre</th>
-            <th>Email</th>
+            <th onClick={orderById}>Id</th>
+            <th onClick={orderByUser}>Nombre</th>
+            <th onClick={orderByEmail}>Email</th>
             <th>Admin</th>
-            <th>Reset password</th>
+            <th>Forzar contraseña</th>
+            <th>Eliminar usuario</th>
+            <th>Fecha de registro</th>
           </tr>
         </thead>
         <tbody>
@@ -75,16 +177,27 @@ export default function UsersTable() {
                 <td>{user.id}</td>
                 <td>{user.username}</td>
                 <td>{user.email}</td>
-                <td>{user.admin ? "Si" : "No"}</td>
-                <td
-                  onClick={() => {
-                    changePass(user.email);
-                  }}
-                >
-                  Cambiar password
-                </td>
                 {user.admin ? (
-                  ""
+                  <td> Si</td>
+                ) : (
+                  <td onClick={() => generateAdmin(user.username)}>
+                    {" "}
+                    Dar admin
+                  </td>
+                )}
+                {user.admin ? (
+                  <td></td>
+                ) : (
+                  <td
+                    onClick={() => {
+                      changePass(user.email);
+                    }}
+                  >
+                    Cambiar contraseña
+                  </td>
+                )}
+                {user.admin ? (
+                  <td></td>
                 ) : (
                   <td
                     onClick={() => {
@@ -94,6 +207,7 @@ export default function UsersTable() {
                     Eliminar usuario
                   </td>
                 )}
+                <td>{user.createdAt.slice(0, 10)}</td>
               </tr>
             );
           })}

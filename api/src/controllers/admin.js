@@ -23,8 +23,24 @@ adminFunction.deleteUser = async (req, res, next) => {
   const { username } = req.params;
   try {
     const user = await User.destroy({ where: { username } });
-    console.log(user);
+
     res.send("usuario eliminado correctamente");
+  } catch (err) {
+    next(err);
+  }
+};
+adminFunction.generateAdmin = async (req, res, next) => {
+  const { username } = req.body;
+  try {
+    const user = await User.update(
+      { admin: true },
+      {
+        where: {
+          username,
+        },
+      }
+    );
+    res.send("este usuario ahora es admin");
   } catch (err) {
     next(err);
   }

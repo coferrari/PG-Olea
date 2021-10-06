@@ -4,13 +4,43 @@ import { Button, Table } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { getToken, decodeToken } from "../../../../utils/index";
 import { getProducts } from "../../../../redux/actions";
+import swal from "sweetalert";
+import { confirmAlert } from "react-confirm-alert"; // Import
+import { GET_PRODUCTS_URL } from "../../../../consts";
+import axios from "axios";
+
 export default function ProductTable() {
   const dispatch = useDispatch();
   let products = useSelector((state) => state.productsReducer.products);
   useEffect(() => {
     dispatch(getProducts());
-  }, []);
-  console.log(products);
+  }, [dispatch]);
+  const remove = (name, id) => {
+    confirmAlert({
+      title: "Eliminar usuario",
+      message: `Desea eliminar ${name}`,
+      buttons: [
+        {
+          label: "Si",
+          onClick: async () => {
+            swal("Este producto ha sido eliminado");
+            await axios.delete(GET_PRODUCTS_URL + id, {
+              headers: {
+                authorization: getToken(),
+              },
+            });
+
+            window.location.reload(false);
+          },
+        },
+        {
+          label: "No",
+          onClick: () => console.log("zs"),
+        },
+      ],
+    });
+  };
+
   return (
     <div>
       <Table striped bordered hover>
@@ -35,7 +65,9 @@ export default function ProductTable() {
                 <td>{e.stock}</td>
                 <td>{e.description}</td>
                 <td>Update</td>
-                <td>Remove</td>
+                <td>
+                  <Button onClick={() => remove(e.name, e.id)}>Remove</Button>
+                </td>
               </tr>
             );
           })}
