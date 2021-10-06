@@ -3,6 +3,7 @@ const {
   Category,
   User,
   Carrito,
+  Reviews,
   Carrito_Products,
 } = require("../db.js");
 const { Op } = require("sequelize");
@@ -112,9 +113,12 @@ class ProductModel extends Modelo {
   };
   getAll = (req, res, next) => {
     const product = this.model.findAll({
-      include: {
-        model: Category,
-      },
+      include: [
+        {
+          model: Category,
+        },
+        { model: Reviews },
+      ],
     });
 
     product
