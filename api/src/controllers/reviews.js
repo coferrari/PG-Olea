@@ -13,9 +13,9 @@ class ReviewsModel extends Modelo {
         {
           model: Product,
         },
-
         {
           model: User,
+          attributes: ["username", "name"],
         },
       ],
     });
@@ -26,19 +26,31 @@ class ReviewsModel extends Modelo {
 
   create = async (req, res, next) => {
     try {
-      const { userId, productId, comment, rating } = req.body;
+      const { username, productId, comment, rating } = req.body;
       var newReview = await this.model.create({
         id: id,
-        userId,
+        username,
         productId,
         comment,
         rating,
       });
-      await newReview.setUser(userId);
-      await newReview.setProduct(productId);
-      return res.send("done");
+      await newReview.setUser(username);
+
+      return res.send(newReview);
     } catch (error) {
       next(error);
+    }
+  };
+  getByProduct = async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      console.log(id);
+      const reviews = await this.model.findAll({
+        where: { productId: id },
+      });
+      res.send(reviews);
+    } catch (err) {
+      next(err);
     }
   };
 }
