@@ -21,7 +21,7 @@ const Wishlist = () => {
     console.log("esta es la wishlist", wishlist);
 
     return (
-        <Products products={wishlist[0]?.products}/>
+        <Products products={wishlist.products}/>
     );
 }
 
