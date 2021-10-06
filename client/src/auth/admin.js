@@ -1,9 +1,8 @@
 import axios from "axios";
 import { getToken } from "../utils";
-const baseUrl = "http://localhost:3001/api/admin";
-const usersUrl = "http://localhost:3001/api/user";
+
 export const getUsers = async () => {
-  const res = await axios.get(`${usersUrl}`, {
+  const res = await axios.get(`/api/user`, {
     headers: {
       authorization: getToken(),
     },
@@ -12,7 +11,7 @@ export const getUsers = async () => {
 };
 export const changePasswordAdmin = async (email) => {
   const res = await axios.post(
-    `${usersUrl}/changepasswordadmin`,
+    `/api/user/changepasswordadmin`,
     { email },
     {
       headers: {
@@ -23,7 +22,7 @@ export const changePasswordAdmin = async (email) => {
   return res.data;
 };
 export const removeUserDB = async (username) => {
-  const res = await axios.delete(`${usersUrl}/deleteuser/${username}`, {
+  const res = await axios.delete(`/api/user/deleteuser/${username}`, {
     headers: {
       authorization: getToken(),
     },
@@ -33,7 +32,7 @@ export const removeUserDB = async (username) => {
 export const generateAdminDB = async (username) => {
   console.log(getToken());
   const res = await axios.put(
-    `${usersUrl}/generateadmin`,
+    `/api/user/generateadmin`,
     { username },
     {
       headers: {
