@@ -28,7 +28,7 @@ let sequelize =
         },
         ssl: true,
       })
-    : new Sequelize(`postgres://${dbUser}:${dbPassword}@${dbHost}/${dbName}`, {
+    : new Sequelize(`postgres://${dbUser}:${dbPassword}@${dbHost}/olea`, {
         logging: false,
         native: false,
       });
