@@ -30,7 +30,6 @@ const { DB_URL } = process.env;
 // Syncing all the models at once.
 conn.sync({ force: true }).then(() => {
   //Posteo todas las marcas y categorias
-
   for (let i = 0; i < marcas.length; i++) {
     const post = axios.post(`${DB_URL}/api/brand`, marcas[i]);
     post.then();
