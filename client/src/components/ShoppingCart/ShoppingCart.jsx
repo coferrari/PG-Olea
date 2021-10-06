@@ -48,11 +48,16 @@ const ShoppingCart = () => {
   };
 
   const totalSum = productsCart?.reduce((acc, curr) => {
-    return acc + parseInt(curr.price) * curr.quantity;
+    const result = curr.Carrito_Products
+      ? acc + parseInt(curr.price) * curr.Carrito_Products.quantity
+      : acc + parseInt(curr.price) * curr.quantity;
+    return result;
   }, 0);
 
   const totalQuantity = productsCart?.reduce((acc, curr) => {
-    const result = curr.Carrito_Products ? acc + curr.Carrito_Products.quantity : acc + curr.quantity;
+    const result = curr.Carrito_Products
+      ? acc + curr.Carrito_Products.quantity
+      : acc + curr.quantity;
     return result;
   }, 0);
 
