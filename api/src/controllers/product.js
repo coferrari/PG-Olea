@@ -1,8 +1,14 @@
-const { Product, Category, User, Carrito } = require("../db.js");
-
+const {
+  Product,
+  Category,
+  User,
+  Carrito,
+  Carrito_Products,
+} = require("../db.js");
+const { Op } = require("sequelize");
 const Modelo = require("./index.js");
 
-let id = 0;
+var id = 0;
 
 class ProductModel extends Modelo {
   constructor(model) {
@@ -37,10 +43,9 @@ class ProductModel extends Modelo {
       next(error);
     }
   };
-
   orderByPrice = async (req, res, next) => {
     const { price } = req.params;
-    console.log(price);
+
     if (price === "ASC") {
       try {
         const orderPrice = await this.model.findAll({
@@ -105,7 +110,6 @@ class ProductModel extends Modelo {
       }
     }
   };
-
   getAll = (req, res, next) => {
     const product = this.model.findAll({
       include: {
@@ -119,24 +123,78 @@ class ProductModel extends Modelo {
       })
       .catch((error) => next(error));
   };
-
-  addProduct = async (req, res, next) => {
-    const { productID, userID } = req.body;
+  addOrEditProduct = async (req, res, next) => {
+    const { productID, username, quantity } = req.body;
+    console.log(productID, username, quantity, "cantidad");
     const producto = await this.model.findByPk(productID);
     const user = await User.findOne({
-      where: { id: userID },
+      where: { username: username },
       include: Carrito,
     });
-    console.log(producto.id);
-    const carritoUser = await Carrito.findByPk(
-      user.dataValues.carrito.dataValues.id
-    );
-    carritoUser.addProduct(producto.id);
-    res.status(200).send("done");
+    if (user.dataValues.carrito !== null && producto) {
+      await user.dataValues.carrito.addProduct(producto.id);
+      if (quantity >= 1) {
+        await Carrito_Products.update(
+          { quantity: quantity },
+          {
+            where: {
+              productId: producto.id,
+              carritoId: user.dataValues.carrito.dataValues.id,
+            },
+          }
+        );
+      }
+      return res.status(200).send(user.dataValues.carrito);
+    }
+    return res.status(404).send("este usuario no tiene un carrito");
+  };
+  deleteProduct = async (req, res, next) => {
+    const { productID, username } = req.body;
 
-    Users.then((results) => {
-      res.send(results);
-    }).catch((error) => next(error));
+    try {
+      const user = await User.findOne({
+        where: { username: username },
+        include: Carrito,
+      });
+      const carritoUser = await Carrito.findOne({
+        where: {
+          id: user.dataValues.carrito.dataValues.id,
+        },
+        include: { model: Product },
+      });
+      carritoUser.removeProducts([productID]);
+
+      res.status(200).send(carritoUser);
+    } catch (error) {
+      next(error);
+    }
+  };
+  editQuantity = async (req, res, next) => {};
+  searchName = async (req, res, next) => {
+    const { name } = req.query;
+    if (name) {
+      const result = await this.model.findAll({
+        where: {
+          name: { [Op.iLike]: `%${name}%` },
+        },
+      });
+      res.status(200).json(result);
+    }
+  };
+  searchById = async (req, res, next) => {
+    const { id } = req.params;
+
+    try {
+      const product = await Product.findByPk(id, { include: Category });
+
+      if (product) {
+        res.status(200).send(product);
+      } else if (!product) {
+        res.status(404).send("no hay un producto con ese id");
+      }
+    } catch (err) {
+      next(err);
+    }
   };
 }
 
