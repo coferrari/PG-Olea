@@ -5,6 +5,8 @@ import ItemsCart from "../ItemsCart/ItemsCart";
 import { clearCart, updateCart } from "../../redux/actions/index";
 import style from "./ShoppingCart.module.css";
 import carrito from "../../img/iconshoppingcart.png";
+import { emptyCart } from "../../cart/index";
+import { isAuthorized, decodeToken } from "../../utils/index";
 
 const ShoppingCart = () => {
   const [show, setShow] = useState(false);
@@ -37,6 +39,12 @@ const ShoppingCart = () => {
     e.preventDefault();
     dispatch(clearCart());
     setClear(true);
+    const validate = isAuthorized();
+    if (validate) {
+      const user = decodeToken();
+      const username = user.username;
+      emptyCart({ username: username });
+    }
   };
 
   const totalSum = productsCart?.reduce((acc, curr) => {
@@ -44,7 +52,8 @@ const ShoppingCart = () => {
   }, 0);
 
   const totalQuantity = productsCart?.reduce((acc, curr) => {
-    return acc + curr.quantity;
+    const result = curr.Carrito_Products ? acc + curr.Carrito_Products.quantity : acc + curr.quantity;
+    return result;
   }, 0);
 
   const format = (num) => {
