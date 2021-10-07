@@ -35,7 +35,6 @@ export default function ProductTable() {
         },
         {
           label: "No",
-          onClick: () => console.log("zs"),
         },
       ],
     });

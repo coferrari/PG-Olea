@@ -16,7 +16,7 @@ export default function ProductList() {
   useEffect(() => {
     get();
   }, []);
-  console.log(users);
+
   return (
     <div>
       <Table striped bordered hover>

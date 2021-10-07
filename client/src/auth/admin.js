@@ -30,7 +30,6 @@ export const removeUserDB = async (username) => {
   return res.data;
 };
 export const generateAdminDB = async (username) => {
-  console.log(getToken());
   const res = await axios.put(
     `/api/user/generateadmin`,
     { username },

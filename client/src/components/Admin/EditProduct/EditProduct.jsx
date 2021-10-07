@@ -28,12 +28,10 @@ export default function EditProduct() {
   };
 
   const onChangeInput = (e) => {
-    console.log(newProduct);
     setNewProduct({ ...newProduct, [e.target.name]: e.target.value });
   };
   const onChangeImage = (e) => {
     setNewProduct((previous) => {
-      console.log(newProduct);
       return {
         ...previous,
         image: [e.target.value],

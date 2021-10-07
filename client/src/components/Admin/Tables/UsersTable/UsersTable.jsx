@@ -22,7 +22,6 @@ export default function UsersTable() {
   const orderById = () => {
     az ? setAz(false) : setAz(true);
     let aux = [...users];
-    console.log(aux);
     if (az === true) {
       aux.sort((a, b) => {
         if (a.id > b.id) {
@@ -47,7 +46,6 @@ export default function UsersTable() {
   const orderByUser = () => {
     order ? setOrder(false) : setOrder(true);
     let aux = [...users];
-    console.log(aux);
     if (order === true) {
       aux.sort((a, b) => {
         if (a.username > b.username) {
@@ -72,7 +70,6 @@ export default function UsersTable() {
   const orderByEmail = () => {
     email ? setEmail(false) : setEmail(true);
     let aux = [...users];
-    console.log(aux);
     if (email === true) {
       aux.sort((a, b) => {
         if (a.username > b.username) {
@@ -108,7 +105,6 @@ export default function UsersTable() {
         },
         {
           label: "No",
-          onClick: () => console.log("zs"),
         },
       ],
     });
@@ -128,7 +124,6 @@ export default function UsersTable() {
         },
         {
           label: "No",
-          onClick: () => console.log("zs"),
         },
       ],
     });
@@ -148,7 +143,6 @@ export default function UsersTable() {
         },
         {
           label: "No",
-          onClick: () => console.log("zs"),
         },
       ],
     });
