@@ -32,9 +32,10 @@ export default function Selects() {
         ))}
       </select> */}
       <select onChange={(e) => handleOrderSelect(e.target.value)}>
-        <option disabled selected hidden>
-          Select order...
-        </option>
+        {/* <option disabled selected hidden> */}
+        {/* <option disabled defaultValue="Ordernar">
+        Ordernar
+        </option> */}
         <option value={"name asc"}>Order by name: A-Z</option>
         <option value={"name desc"}>Order by name: Z-A</option>
         <option
