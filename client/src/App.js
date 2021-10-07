@@ -21,66 +21,68 @@ import CreateProduct from "./components/Admin/CreateProduct/CreateProduct";
 import UsersTable from "./components/Admin/Tables/UsersTable/UsersTable";
 import ProductTable from "./components/Admin/Tables/ProductTable/ProductTable";
 import CategoriasTable from "./components/Admin/Tables/CategoriasTable/CategoriasTable";
-
+import { BrowserRouter } from "react-router-dom";
 function App() {
   const loggedIn = decodeToken();
 
   return (
     <div>
-      <Navbar />
-      <ShoppingCart />
-      <Switch>
-        <Route exact path="/">
-          <Landing />
-        </Route>
-        <Route exact path="/login">
-          <LoginButton />
-        </Route>
-        <Route exact path="/register">
-          <Register />
-        </Route>
-        <Route exact path="/logout">
-          <LogoutButton />
-        </Route>
-        <Route exact path="/requestchangepassword">
-          <RequestChangePassword />
-        </Route>
-        <Route exact path="/changepassword/:token">
-          <ChangePassword />
-        </Route>
-        <Route exact path="/home">
-          <Home />
-        </Route>
-        <Route path="/home/:attribute/:order">
-          <Home />
-        </Route>
-        <Route path="/category/:nameCategory">
-          <CategoryProduct />
-        </Route>
-        <Route path="/product/:idParams">
-          <ProductDetail />
-        </Route>
-        <Route path="/auth/confirmregister/:token">
-          <ConfirmRegister />
-        </Route>
-        <Route exact path="/admin/createproduct">
-          {loggedIn.admin ? <CreateProduct /> : <Redirect to="/home" />}
-        </Route>
-        <Route exact path="/admin/userstable">
-          {loggedIn.admin ? <UsersTable /> : <Redirect to="/home" />}
-        </Route>
-        <Route exact path="/admin/productslist">
-          {loggedIn.admin ? <ProductTable /> : <Redirect to="/home" />}
-        </Route>
-        <Route exact path="/admin/categoriestable">
-          {loggedIn.admin ? <CategoriasTable /> : <Redirect to="/home" />}
-        </Route>
-        <Route exact path="/search/:name">
-          <Search />
-          <Selects />
-          <ProductsByName />
-        </Route>
-      </Switch>
+      <BrowserRouter>
+        <Navbar />
+        <ShoppingCart />
+        <Switch>
+          <Route exact path="/">
+            <Landing />
+          </Route>
+          <Route exact path="/login">
+            <LoginButton />
+          </Route>
+          <Route exact path="/register">
+            <Register />
+          </Route>
+          <Route exact path="/logout">
+            <LogoutButton />
+          </Route>
+          <Route exact path="/requestchangepassword">
+            <RequestChangePassword />
+          </Route>
+          <Route exact path="/changepassword/:token">
+            <ChangePassword />
+          </Route>
+          <Route exact path="/home">
+            <Home />
+          </Route>
+          <Route path="/home/:attribute/:order">
+            <Home />
+          </Route>
+          <Route path="/category/:nameCategory">
+            <CategoryProduct />
+          </Route>
+          <Route path="/product/:idParams">
+            <ProductDetail />
+          </Route>
+          <Route path="/auth/confirmregister/:token">
+            <ConfirmRegister />
+          </Route>
+          <Route exact path="/admin/createproduct">
+            {loggedIn.admin ? <CreateProduct /> : <Redirect to="/home" />}
+          </Route>
+          <Route exact path="/admin/userstable">
+            {loggedIn.admin ? <UsersTable /> : <Redirect to="/home" />}
+          </Route>
+          <Route exact path="/admin/productslist">
+            {loggedIn.admin ? <ProductTable /> : <Redirect to="/home" />}
+          </Route>
+          <Route exact path="/admin/categoriestable">
+            {loggedIn.admin ? <CategoriasTable /> : <Redirect to="/home" />}
+          </Route>
+          <Route exact path="/search/:name">
+            <Search />
+            <Selects />
+            <ProductsByName />
+          </Route>
+        </Switch>
+      </BrowserRouter>
     </div>
   );
 }
