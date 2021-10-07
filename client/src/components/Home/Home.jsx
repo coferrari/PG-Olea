@@ -48,7 +48,7 @@ export default function Home() {
 
   return (
     <div>
-      <Search />
+      {/* <Search /> */}
       {/* <Selects /> */}
       <Products products={products} />
     </div>
