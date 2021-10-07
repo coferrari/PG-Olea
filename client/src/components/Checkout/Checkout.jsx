@@ -15,7 +15,7 @@ const Checkout = () => {
   const sesionIniciada = isAuthorized();
   const datosLogin = decodeToken();
   const dispatch = useDispatch();
-  const linkDePago = useSelector((state) => state.carritoReducer.linkPago)
+  let linkDePago = useSelector((state) => state.carritoReducer.linkPago)
 
   const itemsCheckout = useSelector(
     (state) => state.carritoReducer.productsCarrito
@@ -37,22 +37,23 @@ const Checkout = () => {
           <Delivery />
           <Details />
           <Button onClick={(e) => handleConfirmOrder(e)}>Confirmar la compra</Button>
-          {linkDePago && (confirmAlert({
+          {linkDePago && ((confirmAlert({
             title: "Atención",
             message: "Usted será redirigido al checkout de Mercado Pago",
             buttons: [
               {
                 label: "Aceptar",
                 onClick: () => {
-                  window.location.href = linkDePago
+                  window.open(linkDePago)
+                  window.location.href=""
                 },
               },
               {
                 label: "Volver",
-                onClick: () => history.push("/checkout"),
+                onClick: () => {window.location.href=""},
               },
             ],
-          }))}
+          })))}
         </div>
       ) : (
         <div>
