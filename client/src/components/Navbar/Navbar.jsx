@@ -1,10 +1,9 @@
-import { Link, useHistory } from "react-router-dom";
-import Register from "../Register/Register";
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { isAuthorized, decodeToken } from "../../utils/index";
 import { Navbar, Container, Nav } from "react-bootstrap";
 import Logo from "../../img/OLEA marca de agua-07.png";
 import style from "./Navbar.module.css";
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCategories } from "../../redux/actions";
 
@@ -33,7 +32,7 @@ const NavResponsive = () => {
               <Nav className="me-auto">
                 {categories?.map((category) => {
                   return (
-                    <Nav.Link>
+                    <Nav.Link key={category.nameCategory}>
                       <Link
                         to={`/category/${category.nameCategory}`}
                         className={style.links}
@@ -77,7 +76,7 @@ const NavResponsive = () => {
             <Nav className="me-auto">
               {categories?.map((category) => {
                 return (
-                  <Nav.Link>
+                  <Nav.Link key={category.nameCategory}>
                     <Link
                       to={`/category/${category.nameCategory}`}
                       className={style.links}

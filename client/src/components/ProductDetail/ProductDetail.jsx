@@ -46,7 +46,7 @@ export function ProductDetail() {
       dispatch(updateCart(cartRemoved));
       setRemove(false);
     }
-  }, [add, remove]);
+  }, [dispatch, add, remove, id, image, name, price]);
 
   const isInStore = productsCarrito.filter((product) => product.id === id);
 

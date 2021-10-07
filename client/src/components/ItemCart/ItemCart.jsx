@@ -26,7 +26,7 @@ const ItemCart = ({ id, name, image, price, quantity }) => {
     dispatch(updateCart(cartFromLocalStorage));
 
     return () => {};
-  }, [q]);
+  }, [dispatch, q, cartFromLocalStorage]);
 
   useEffect(() => {
     if (remove) {
@@ -41,7 +41,7 @@ const ItemCart = ({ id, name, image, price, quantity }) => {
         setRemove(false);
       };
     }
-  }, [remove]);
+  }, [dispatch, id, remove]);
 
   const handleAddOne = async (e) => {
     e.preventDefault();
@@ -103,11 +103,11 @@ const ItemCart = ({ id, name, image, price, quantity }) => {
       <div>
         {Array.isArray(image) ? (
           <div className={style.containerimg}>
-            <img className={style.img} src={image[0]} />
+            <img className={style.img} src={image[0]} alt={image[0]} />
           </div>
         ) : (
           <div className={style.containerimg}>
-            <img className={style.img} src={image} />
+            <img className={style.img} src={image} alt={image} />
           </div>
         )}
       </div>
