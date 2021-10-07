@@ -16,6 +16,7 @@ const NavResponsive = () => {
     dispatch(getCategories());
   }, [dispatch]);
 
+  
   if (validate) {
     const user = decodeToken();
     return (
