@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Redirect, Switch } from "react-router-dom";
+import { Route, Redirect, Switch, Router } from "react-router-dom";
 import Home from "./components/Home/Home";
 import CategoryProduct from "./components/CategoryProduct/CategoryProduct";
 import { Search } from "./components/Search/Search";
@@ -27,61 +27,63 @@ function App() {
 
   return (
     <div>
-      <Navbar />
-      <ShoppingCart />
-      <Switch>
-        <Route exact path="/">
-          <Landing />
-        </Route>
-        <Route exact path="/login">
-          <LoginButton />
-        </Route>
-        <Route exact path="/register">
-          <Register />
-        </Route>
-        <Route exact path="/logout">
-          <LogoutButton />
-        </Route>
-        <Route exact path="/requestchangepassword">
-          <RequestChangePassword />
-        </Route>
-        <Route exact path="/changepassword/:token">
-          <ChangePassword />
-        </Route>
-        <Route exact path="/home">
-          {" "}
-          <Home />
-        </Route>
-        <Route path="/home/:attribute/:order">
-          <Home />
-        </Route>
-        <Route path="/category/:nameCategory">
-          <CategoryProduct />
-        </Route>
-        <Route path="/product/:idParams">
-          <ProductDetail />
-        </Route>
-        <Route path="/auth/confirmregister/:token">
-          <ConfirmRegister />
-        </Route>
-        <Route exact path="/admin/createproduct">
-          {loggedIn.admin ? <CreateProduct /> : <Redirect to="/home" />}
-        </Route>
-        <Route exact path="/admin/userstable">
-          {loggedIn.admin ? <UsersTable /> : <Redirect to="/home" />}
-        </Route>
-        <Route exact path="/admin/productslist">
-          {loggedIn.admin ? <ProductTable /> : <Redirect to="/home" />}
-        </Route>
-        <Route exact path="/admin/categoriestable">
-          {loggedIn.admin ? <CategoriasTable /> : <Redirect to="/home" />}
-        </Route>
-        <Route exact path="/search/:name">
-          <Search />
-          <Selects />
-          <ProductsByName />
-        </Route>
-      </Switch>
+      <Router>
+        <Navbar />
+        <ShoppingCart />
+        <Switch>
+          <Route exact path="/">
+            <Landing />
+          </Route>
+          <Route exact path="/login">
+            <LoginButton />
+          </Route>
+          <Route exact path="/register">
+            <Register />
+          </Route>
+          <Route exact path="/logout">
+            <LogoutButton />
+          </Route>
+          <Route exact path="/requestchangepassword">
+            <RequestChangePassword />
+          </Route>
+          <Route exact path="/changepassword/:token">
+            <ChangePassword />
+          </Route>
+          <Route exact path="/home">
+            {" "}
+            <Home />
+          </Route>
+          <Route path="/home/:attribute/:order">
+            <Home />
+          </Route>
+          <Route path="/category/:nameCategory">
+            <CategoryProduct />
+          </Route>
+          <Route path="/product/:idParams">
+            <ProductDetail />
+          </Route>
+          <Route path="/auth/confirmregister/:token">
+            <ConfirmRegister />
+          </Route>
+          <Route exact path="/admin/createproduct">
+            {loggedIn.admin ? <CreateProduct /> : <Redirect to="/home" />}
+          </Route>
+          <Route exact path="/admin/userstable">
+            {loggedIn.admin ? <UsersTable /> : <Redirect to="/home" />}
+          </Route>
+          <Route exact path="/admin/productslist">
+            {loggedIn.admin ? <ProductTable /> : <Redirect to="/home" />}
+          </Route>
+          <Route exact path="/admin/categoriestable">
+            {loggedIn.admin ? <CategoriasTable /> : <Redirect to="/home" />}
+          </Route>
+          <Route exact path="/search/:name">
+            <Search />
+            <Selects />
+            <ProductsByName />
+          </Route>
+        </Switch>
+      </Router>
     </div>
   );
 }
