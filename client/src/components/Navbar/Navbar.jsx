@@ -43,7 +43,7 @@ const NavResponsive = () => {
                     </Nav.Link>
                   );
                 })}
-                </Nav>
+              </Nav>
               <Nav className={style.containersession}>
                 <Nav.Link className={style.username}>{user.username}</Nav.Link>
                 <Nav.Link>
@@ -75,7 +75,6 @@ const NavResponsive = () => {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
-
               {categories?.map((category) => {
                 return (
                   <Nav.Link>
@@ -88,7 +87,6 @@ const NavResponsive = () => {
                   </Nav.Link>
                 );
               })}
-
             </Nav>
             <Nav>
               <Nav.Link>

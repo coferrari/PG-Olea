@@ -1,5 +1,4 @@
 import axios from "axios";
-import { getToken } from "../utils";
 
 export const register = async (user) => {
   return await axios.post(`/api/user/register`, user);
@@ -30,7 +29,7 @@ export const logInGoogle = async (response) => {
   return res.data;
 };
 export const confirmRegister = async (data) => {
-  const res = await axios.post(`/api/user/confirmregister`, { token: data });
+  return await axios.post(`/api/user/confirmregister`, { token: data });
 };
 export const getUsers = async (token) => {
   const res = await axios.get(`/api/user`, {

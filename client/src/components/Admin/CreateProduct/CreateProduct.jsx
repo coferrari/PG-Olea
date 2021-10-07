@@ -164,7 +164,7 @@ export default function CreateProduct() {
             <div>
               {categories?.map((cat) => {
                 return (
-                  <a>
+                  <span key={cat.id}>
                     <Button
                       variant={
                         newProduct.categoryID.includes(cat.id)
@@ -175,7 +175,7 @@ export default function CreateProduct() {
                     >
                       {cat.nameCategory}
                     </Button>{" "}
-                  </a>
+                  </span>
                 );
               })}
             </div>

@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { useHistory, Redirect, Link } from "react-router-dom";
+import React, { useEffect } from "react";
 import { Button, Table } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
-import { getToken, decodeToken } from "../../../../utils/index";
+import { getToken } from "../../../../utils/index";
 import { getProducts } from "../../../../redux/actions";
 import swal from "sweetalert";
 import { confirmAlert } from "react-confirm-alert"; // Import
