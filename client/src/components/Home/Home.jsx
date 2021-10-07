@@ -9,7 +9,7 @@ import { useParams } from "react-router-dom";
 export default function Home() {
   const dispatch = useDispatch();
   let products = useSelector((state) => state.productsReducer.products);
-  const { attribute, order } = useParams();
+  var { attribute, order } = useParams();
 
   useEffect(() => {
     dispatch(getProducts());
