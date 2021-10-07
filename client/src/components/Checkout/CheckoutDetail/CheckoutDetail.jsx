@@ -11,7 +11,7 @@ const Details = () => {
           {" "}
           3 - Detalle de tu Compra
         </Card.Header>
-        <ItemsCart />
+        <ItemsCart className={style.details} />
       </Card>
     </div>
   );

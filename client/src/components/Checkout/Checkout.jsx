@@ -1,5 +1,4 @@
 import React from "react";
-import ItemsCart from "../ItemsCart/ItemsCart";
 import Data from "./CheckoutData/CheckoutData";
 import Delivery from "./CheckoutDelivery/CheckoutDelivery";
 import Details from "./CheckoutDetail/CheckoutDetail";
@@ -16,16 +15,18 @@ const Checkout = () => {
   const sesionIniciada = isAuthorized();
   const datosLogin = decodeToken();
   const dispatch = useDispatch();
+  const linkDePago = useSelector((state) => state.carritoReducer.linkPago)
 
   const itemsCheckout = useSelector(
     (state) => state.carritoReducer.productsCarrito
   );
-  console.log(itemsCheckout);
 
-  const handlePay = (e) => {
+  const handleConfirmOrder = async (e) => {
     e.preventDefault();
     dispatch(checkoutMercadoPago(itemsCheckout));
-    //acá va la action de pagar
+    console.log(linkDePago)
+
+    //este handler nos llena el estado de link de pago (no redirecciona)
   };
 
   return (
@@ -35,7 +36,23 @@ const Checkout = () => {
           <Data datosLogin={datosLogin} />
           <Delivery />
           <Details />
-          <Button onClick={(e) => handlePay(e)}>Pagar</Button>
+          <Button onClick={(e) => handleConfirmOrder(e)}>Confirmar la compra</Button>
+          {linkDePago && (confirmAlert({
+            title: "Atención",
+            message: "Usted será redirigido al checkout de Mercado Pago",
+            buttons: [
+              {
+                label: "Aceptar",
+                onClick: () => {
+                  window.location.href = linkDePago
+                },
+              },
+              {
+                label: "Volver",
+                onClick: () => history.push("/checkout"),
+              },
+            ],
+          }))}
         </div>
       ) : (
         <div>

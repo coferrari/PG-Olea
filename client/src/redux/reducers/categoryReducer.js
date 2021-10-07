@@ -6,7 +6,6 @@ const initialState = {
 }
 
 export default function categoryReducer(state = initialState, action){
-    console.log(action.payload);
     switch(action.type){
         case CATEGORY_FILTER:
             return {

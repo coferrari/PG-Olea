@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { useHistory, Redirect, Link } from "react-router-dom";
-import { Button, Table } from "react-bootstrap";
+import React, { useEffect } from "react";
+import { Table } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
-import { getToken, decodeToken } from "../../../../utils/index";
 import { getProducts } from "../../../../redux/actions";
 export default function ProductTable() {
   const dispatch = useDispatch();
@@ -10,7 +8,6 @@ export default function ProductTable() {
   useEffect(() => {
     dispatch(getProducts());
   }, []);
-  console.log(products);
   return (
     <div>
       <Table striped bordered hover>

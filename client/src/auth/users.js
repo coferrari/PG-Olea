@@ -1,5 +1,4 @@
 import axios from "axios";
-import { getToken } from "../utils";
 const baseUrl = "http://localhost:3001/api/user";
 
 export const register = async (user) => {
@@ -30,7 +29,7 @@ export const logInGoogle = async (response) => {
   return res.data;
 };
 export const confirmRegister = async (data) => {
-  const res = await axios.post(`${baseUrl}/confirmregister`, { token: data });
+   await axios.post(`${baseUrl}/confirmregister`, { token: data });
 };
 export const getUsers = async (token) => {
   const res = await axios.get(`${baseUrl}`, {

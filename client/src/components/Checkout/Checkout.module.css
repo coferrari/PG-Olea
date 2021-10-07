@@ -18,3 +18,13 @@
   display: flex;
   justify-content: center;
 }
+
+.listgroup {
+  font-family: "Montserrat", sans-serif;
+  justify-content: center;
+}
+
+.input {
+  padding: 10px 2px;
+  margin: 10px 10px;;
+}

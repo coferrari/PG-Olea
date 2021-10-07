@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Route } from "react-router-dom";
-import { Button, Table } from "react-bootstrap";
+import { Table } from "react-bootstrap";
 import {
   getUsers,
   changePasswordAdmin,

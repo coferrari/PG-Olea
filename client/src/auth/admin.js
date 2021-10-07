@@ -1,6 +1,5 @@
 import axios from "axios";
 import { getToken } from "../utils";
-const baseUrl = "http://localhost:3001/api/admin";
 const usersUrl = "http://localhost:3001/api/user";
 export const getUsers = async () => {
   const res = await axios.get(`${usersUrl}`, {

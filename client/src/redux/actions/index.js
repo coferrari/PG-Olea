@@ -7,7 +7,7 @@ import {
   ALL_CATEGORIES,
   CLEAR_CART,
   UPDATE_CART,
-  PAY_MERCADOPAGO
+  PAY_MERCADOPAGO,
 } from "./types";
 import {
   GET_PRODUCTS_URL,
@@ -88,7 +88,12 @@ export function updateCart(products) {
 
 export function checkoutMercadoPago(itemsCheckout) {
   return async function(dispatch) {
-    const items = await axios.post(PAY_MERCADOPAGO_URL, itemsCheckout)
-      return items
+    axios.post(PAY_MERCADOPAGO_URL, itemsCheckout)
+      .then ((response) =>{
+        dispatch({
+          type: PAY_MERCADOPAGO,
+          payload: response.data
+        })
+      })
   }
 }

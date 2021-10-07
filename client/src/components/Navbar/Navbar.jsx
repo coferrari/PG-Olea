@@ -19,7 +19,6 @@ const NavResponsive = () => {
 
   if (validate) {
     const user = decodeToken();
-    console.log(categories);
     return (
       <div>
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
