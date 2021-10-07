@@ -30,7 +30,10 @@ const Comment = ({ reseñas }) => {
         </div>
         <div className={style.commentDiv}>
           <div className={style.opinion}>
-            {reseñas.opinion.charAt(0).toUpperCase() + reseñas.opinion.slice(1)}
+            <b>
+              {reseñas.opinion.charAt(0).toUpperCase() +
+                reseñas.opinion.slice(1)}
+            </b>
           </div>
           <p className={style.comment}>
             {reseñas.comment.charAt(0).toUpperCase() + reseñas.comment.slice(1)}

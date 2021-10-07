@@ -11,7 +11,7 @@ import {
   ProgressBar,
 } from "react-bootstrap";
 import Carousel from "../../components/Carousel/Carousel";
-import { AiFillStar } from "react-icons/ai";
+import { AiFillHtml5, AiFillStar } from "react-icons/ai";
 import { updateCart } from "../../redux/actions/index";
 import { isAuthorized, decodeToken } from "../../utils/index";
 import { addOrEditCart, removeProductCart } from "../../cart/index";
@@ -128,7 +128,17 @@ export function ProductDetail() {
         </Card.Body>
         <ListGroup className="list-group-flush">
           <ListGroupItem>Precio: ${product?.price} </ListGroupItem>
-          <ListGroupItem>Reviews: {product?.rating} </ListGroupItem>
+          <ListGroupItem>
+            {" "}
+            <Button
+              onClick={() => {
+                setLgShow(true);
+                tickets();
+              }}
+            >
+              Large modal
+            </Button>{" "}
+          </ListGroupItem>
         </ListGroup>
         {isInStore.length === 0 && (
           <Button
@@ -149,14 +159,6 @@ export function ProductDetail() {
           </Button>
         )}
       </Card>
-      <Button
-        onClick={() => {
-          setLgShow(true);
-          tickets();
-        }}
-      >
-        Large modal
-      </Button>
       <Modal
         size="lg"
         show={lgShow}
@@ -169,58 +171,65 @@ export function ProductDetail() {
           </Modal.Title>
         </Modal.Header>
         {reseñas?.length >= 1 ? (
-          <div>
-            <Modal.Body>
-              <h1 className={style.title}></h1>
-              <div className={style.h3}>
-                <h3 className={style.titleh3}>
-                  {rating.toString().slice(0, 4)}
-                </h3>
-                <div>
-                  <span>{puntuacion[4]}</span>{" "}
-                  <ProgressBar
-                    variant="success"
-                    now={(puntuacion[4] / reseñas?.length) * 100}
-                  />
-                  <span>{puntuacion[3]}</span>{" "}
-                  <ProgressBar
-                    variant="info"
-                    now={(puntuacion[3] / reseñas?.length) * 100}
-                  />
-                  <span>{puntuacion[2]}</span>{" "}
-                  <ProgressBar
-                    variant="warning"
-                    now={(puntuacion[2] / reseñas?.length) * 100}
-                  />
-                  <span>{puntuacion[1]}</span>{" "}
-                  <ProgressBar
-                    variant="danger"
-                    now={(puntuacion[1] / reseñas?.length) * 100}
-                  />
-                  <span>{puntuacion[0]}</span>{" "}
-                  <ProgressBar
-                    variant="danger"
-                    now={(puntuacion[0] / reseñas?.length) * 100}
-                  />
-                </div>
+          <Modal.Body>
+            <div className={style.h3}>
+              <h5 className={style.titleh3}>{rating.toString().slice(0, 4)}</h5>
+              <div className={style.barraspan}>
+                <span className={style.spanbarra}>
+                  <b>Votos por 5 estrellas</b>
+                </span>
+                <ProgressBar
+                  variant="success"
+                  className={style.barra}
+                  now={(puntuacion[4] / reseñas?.length) * 100}
+                />
+
+                <span>
+                  <b>Votos por 4 estrellas</b>
+                </span>
+                <ProgressBar
+                  className={style.barra}
+                  now={(puntuacion[3] / reseñas?.length) * 100}
+                />
+                <span>
+                  <b>Votos por 3 estrellas</b>
+                </span>
+                <ProgressBar
+                  className={style.barra}
+                  now={(puntuacion[2] / reseñas?.length) * 100}
+                />
+                <span>
+                  <b>Votos por 2 estrellas</b>
+                </span>
+                <ProgressBar
+                  className={style.barra}
+                  now={(puntuacion[1] / reseñas?.length) * 100}
+                />
+                <span>
+                  <b>Votos por 1 estrellas</b>
+                </span>
+                <ProgressBar
+                  className={style.barra}
+                  now={(puntuacion[0] / reseñas?.length) * 100}
+                />
               </div>
-              <div className={style.containerStars}>
-                <AiFillStar className={rating >= 1 ? style.gold : style.dark} />
-                <AiFillStar className={rating >= 2 ? style.gold : style.dark} />
-                <AiFillStar className={rating >= 3 ? style.gold : style.dark} />
-                <AiFillStar className={rating >= 4 ? style.gold : style.dark} />
-                <AiFillStar className={rating >= 5 ? style.gold : style.dark} />
-              </div>
-              <div className={style.reseñas}>
-                Promedio entre {reseñas.length} puntuaciones
-              </div>
-              <div>
-                {reseñas?.map((c) => {
-                  return <Comment reseñas={c} key={c.username} />;
-                })}
-              </div>
-            </Modal.Body>
-          </div>
+            </div>
+            <div className={style.containerStars}>
+              <AiFillStar className={rating >= 1 ? style.gold : style.dark} />
+              <AiFillStar className={rating >= 2 ? style.gold : style.dark} />
+              <AiFillStar className={rating >= 3 ? style.gold : style.dark} />
+              <AiFillStar className={rating >= 4 ? style.gold : style.dark} />
+              <AiFillStar className={rating >= 5 ? style.gold : style.dark} />
+            </div>
+            <div className={style.reseñas}>
+              Promedio entre {reseñas.length} puntuaciones
+            </div>
+            <div>
+              {reseñas?.map((c) => {
+                return <Comment reseñas={c} key={c.username} />;
+              })}
+            </div>
+          </Modal.Body>
         ) : (
           <div>
             <h1>Aun no hay reseñas</h1>
