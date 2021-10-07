@@ -11,7 +11,6 @@ const NavResponsive = () => {
   const validate = isAuthorized();
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.categoryReducer.categories);
-  console.log(categories);
 
   useEffect(() => {
     dispatch(getCategories());

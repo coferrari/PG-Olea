@@ -32,7 +32,10 @@
     "redux-thunk": "^2.3.0",
     "sweetalert": "^2.1.2",
     "sweetalert2": "^11.1.7",
-    "web-vitals": "^0.2.4"
+    "web-vitals": "^0.2.4",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "@babel/plugin-proposal-json-strings": "^7.14.5"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -58,9 +61,5 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "@babel/plugin-proposal-json-strings": "^7.14.5"
-  }
+  "devDependencies": {}
 }
