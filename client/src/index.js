@@ -9,15 +9,18 @@ import store from "./redux/store/index";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import dotenv from "dotenv";
+import { BrowserRouter } from "react-router-dom";
 dotenv.config();
 
 axios.defaults.baseURL = process.env.REACT_APP_API || "http://localhost:3001";
 
 ReactDOM.render(
   <Provider store={store}>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
+    <BrowserRouter>
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </BrowserRouter>
   </Provider>,
   document.getElementById("root")
 );
