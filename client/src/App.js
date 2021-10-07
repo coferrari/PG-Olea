@@ -56,7 +56,7 @@ function App() {
         <Route path="/category/:nameCategory">
           <CategoryProduct />
         </Route>
-        <Route path="/product/:idParams">
+        <Route exact path="/product/:idParams">
           <ProductDetail />
         </Route>
         <Route path="/auth/confirmregister/:token">
@@ -81,6 +81,9 @@ function App() {
         </Route>
         <Route exact path="/createreview/:productid">
           <Review />
+        </Route>
+        <Route exact path="/product/review/:productid">
+
         </Route>
       </Switch>
     </div>

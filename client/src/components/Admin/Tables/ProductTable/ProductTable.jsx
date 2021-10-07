@@ -53,6 +53,7 @@ export default function ProductTable() {
             <th>Descripción</th>
             <th>Edit</th>
             <th>Remove</th>
+            <th>Reviews</th>
           </tr>
         </thead>
         <tbody>
@@ -68,6 +69,9 @@ export default function ProductTable() {
                 <td>
                   <Button onClick={() => remove(e.name, e.id)}>Remove</Button>
                 </td>
+                <Link to={`/product/review/${e.id}`}>
+                  <td>Ver reviews</td>
+                </Link>
               </tr>
             );
           })}

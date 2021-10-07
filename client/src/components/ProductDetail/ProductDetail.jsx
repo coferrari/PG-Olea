@@ -2,30 +2,35 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getProductDetail } from "../../redux/actions/index";
-import { Card, ListGroup, ListGroupItem, Button } from "react-bootstrap";
+import { Card, ListGroup, ListGroupItem, Button, Modal } from "react-bootstrap";
 import Carousel from "../../components/Carousel/Carousel";
+import { AiFillStar } from "react-icons/ai";
 import { updateCart } from "../../redux/actions/index";
 import { isAuthorized, decodeToken } from "../../utils/index";
 import { addOrEditCart, removeProductCart } from "../../cart/index";
-
+import { reviewsByProduct } from "../../utils/reviews";
+import Comment from "./CommentReviews.jsx";
+import style from "./ProductReview.module.css";
 export function ProductDetail() {
   const dispatch = useDispatch();
   const { idParams } = useParams();
   const [add, setAdd] = useState(false);
   const [remove, setRemove] = useState(false);
+  const [reseñas, setReseñas] = useState();
+  const [lgShow, setLgShow] = useState(false);
   const validate = isAuthorized();
   const product = useSelector(
     (state) => state.productDetailReducer.productDetail
   );
-
   const { id, image, name, price } = useSelector(
     (state) => state.productDetailReducer.productDetail
   );
-
   const { productsCarrito } = useSelector((state) => state.carritoReducer);
-
   const quantity = 1;
-
+  const getReviews = async (id) => {
+    const reviews = await reviewsByProduct(id);
+    setReseñas(reviews);
+  };
   useEffect(() => {
     if (add) {
       const cartFromLocalStorage = JSON.parse(localStorage.getItem("cart"));
@@ -76,11 +81,18 @@ export function ProductDetail() {
       });
     }
   };
-
+  const Rating = () => {
+    const x = reseñas?.reduce((acc, el) => {
+      return acc + parseInt(el.rating);
+    }, 0);
+    return x / reseñas?.length;
+  };
+  const rating = Rating();
   useEffect(() => {
     dispatch(getProductDetail(idParams));
+    getReviews(idParams);
   }, [dispatch, idParams]);
-
+  console.log(reseñas);
   return (
     <div className="container">
       <Card style={{ width: "18rem" }}>
@@ -112,6 +124,48 @@ export function ProductDetail() {
           </Button>
         )}
       </Card>
+      <Button onClick={() => setLgShow(true)}>Large modal</Button>
+      <Modal
+        size="lg"
+        show={lgShow}
+        onHide={() => setLgShow(false)}
+        aria-labelledby="example-modal-sizes-title-lg"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="example-modal-sizes-title-lg">
+            Opiniones sobre el producto
+          </Modal.Title>
+        </Modal.Header>
+        {reseñas?.length >= 1 ? (
+          <div>
+            <Modal.Body>
+              <h1 className={style.title}></h1>
+              <div className={style.h3}>
+                <h3 className={style.titleh3}>{rating}</h3>
+              </div>
+              <div className={style.containerStars}>
+                <AiFillStar className={rating >= 1 ? style.gold : style.dark} />
+                <AiFillStar className={rating >= 2 ? style.gold : style.dark} />
+                <AiFillStar className={rating >= 3 ? style.gold : style.dark} />
+                <AiFillStar className={rating >= 4 ? style.gold : style.dark} />
+                <AiFillStar className={rating >= 5 ? style.gold : style.dark} />
+              </div>
+              <div className={style.reseñas}>
+                Promedio entre {reseñas.length} puntuaciones
+              </div>
+              <div>
+                {reseñas?.map((c) => {
+                  return <Comment reseñas={c} key={c.username} />;
+                })}
+              </div>
+            </Modal.Body>
+          </div>
+        ) : (
+          <div>
+            <h1>Aun no hay reseñas</h1>
+          </div>
+        )}
+      </Modal>
     </div>
   );
 }
