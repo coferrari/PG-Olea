@@ -11,11 +11,11 @@ const NavResponsive = () => {
   const validate = isAuthorized();
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.categoryReducer.categories);
+  console.log(categories);
 
   useEffect(() => {
     dispatch(getCategories());
   }, [dispatch]);
-
   if (validate) {
     const user = decodeToken();
     return (
@@ -36,7 +36,7 @@ const NavResponsive = () => {
                       as={Link}
                       to={`/category/${category.nameCategory}`}
                       className={style.links}
-                      key={category.nameCategory}
+                      key={category.id}
                     >
                       {category.nameCategory}
                     </Nav.Link>
