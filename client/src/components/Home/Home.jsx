@@ -11,7 +11,6 @@ export default function Home() {
   let products = useSelector((state) => state.productsReducer.products);
   const { attribute } = useParams();
   const { order } = useParams();
-  console.log(order, attribute);
   useEffect(() => {
     dispatch(getProducts());
   }, [dispatch]);
