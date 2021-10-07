@@ -28,7 +28,6 @@ function App() {
   return (
     <div>
       <Router>
-        <Home />
         <Navbar />
         <ShoppingCart />
         <Switch>
@@ -50,7 +49,10 @@ function App() {
           <Route exact path="/changepassword/:token">
             <ChangePassword />
           </Route>
-          <Route exact path="/home"></Route>
+          <Route exact path="/home">
+            {" "}
+            <Home />
+          </Route>
           <Route path="/home/:attribute/:order">
             <Home />
           </Route>
