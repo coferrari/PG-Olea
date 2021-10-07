@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { useHistory, Link } from "react-router-dom";
-import { useState } from "react";
+
 import { Form, Button } from "react-bootstrap";
 import { logIn, logInGoogle } from "../../auth/users";
 import GoogleLogin from "react-google-login";
