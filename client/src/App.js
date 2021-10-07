@@ -57,7 +57,7 @@ function App() {
         <Route path="/category/:nameCategory">
           <CategoryProduct />
         </Route>
-        <Route path="/product/:idParams">
+        <Route exact path="/product/:idParams">
           <ProductDetail />
         </Route>
         <Route path="/auth/confirmregister/:token">

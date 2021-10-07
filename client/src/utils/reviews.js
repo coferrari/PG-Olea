@@ -6,13 +6,19 @@ export const createReviews = async (
   username,
   productId,
   rating,
-  comentario
+  comentario,
+  opinion
 ) => {
   const review = await axios.post(baseUrl, {
     username: username,
     productId: productId,
     comment: comentario,
     rating: rating,
+    opinion: opinion,
   });
-  console.log(review.data);
+  return review;
+};
+export const reviewsByProduct = async (id) => {
+  const review = await axios.get(`${baseUrl}/${id}`);
+  return review.data;
 };
