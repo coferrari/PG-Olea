@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useHistory, Redirect, Link, useParams } from "react-router-dom";
-import { Button, Table } from "react-bootstrap";
-import { getToken, decodeToken } from "../../utils/index";
+import { Table } from "react-bootstrap";
+import { getToken } from "../../utils/index";
 import { getUsers } from "../../auth/users";
 
 export default function ProductList() {
