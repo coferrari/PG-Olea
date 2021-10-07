@@ -49,7 +49,7 @@ export default function Home() {
   return (
     <div>
       <Search />
-
+      <Selects />
       <Products products={products} />
     </div>
   );
