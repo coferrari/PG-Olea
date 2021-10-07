@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import Register from "../Register/Register";
 import { isAuthorized, decodeToken } from "../../utils/index";
 import { Navbar, Container, Nav } from "react-bootstrap";
 import Logo from "../../img/OLEA marca de agua-07.png";
 import style from "./Navbar.module.css";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCategories } from "../../redux/actions";
 
@@ -16,9 +17,9 @@ const NavResponsive = () => {
     dispatch(getCategories());
   }, [dispatch]);
 
-  
   if (validate) {
     const user = decodeToken();
+    console.log(categories);
     return (
       <div>
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -33,7 +34,7 @@ const NavResponsive = () => {
               <Nav className="me-auto">
                 {categories?.map((category) => {
                   return (
-                    <Nav.Link key={category.nameCategory}>
+                    <Nav.Link>
                       <Link
                         to={`/category/${category.nameCategory}`}
                         className={style.links}
@@ -49,6 +50,11 @@ const NavResponsive = () => {
                 <Nav.Link>
                   <Link to="/account" className={style.linkssesion}>
                     <li>Mi cuenta</li>
+                  </Link>
+                </Nav.Link>
+                <Nav.Link>
+                  <Link to="/wishlist" className={style.linkssesion}>
+                    <li>Favoritos</li>
                   </Link>
                 </Nav.Link>
                 <Nav.Link>
@@ -78,7 +84,7 @@ const NavResponsive = () => {
 
               {categories?.map((category) => {
                 return (
-                  <Nav.Link key={category.nameCategory}>
+                  <Nav.Link>
                     <Link
                       to={`/category/${category.nameCategory}`}
                       className={style.links}
@@ -110,4 +116,3 @@ const NavResponsive = () => {
 };
 
 export default NavResponsive;
-
