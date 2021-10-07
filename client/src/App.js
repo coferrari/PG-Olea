@@ -27,7 +27,6 @@ function App() {
 
   return (
     <div>
-      <BrowserRouter>
         <Navbar />
         <ShoppingCart />
         <Switch>
@@ -82,7 +81,6 @@ function App() {
             <ProductsByName />
           </Route>
         </Switch>
-      </BrowserRouter>
     </div>
   );
 }
