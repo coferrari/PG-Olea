@@ -1,15 +1,13 @@
 import React from "react";
-import logo from "../../img/OLEA marca de agua-08.png";
-
-import style from "./Footer.module.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faInstagram } from "@fortawesome/free-brands-svg-icons";
-import { Container } from "react-bootstrap";
+// import logo from "../../img/OLEA marca de agua-08.png";
+// import style from "./Footer.module.css";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 
 function Footer() {
   return (
     <div>
-      <footer className={style.footer}>
+      {/* <footer className={style.footer}>
         <div className={style.footer__flex}>
           <div className={style.footer__flexitem}>
             <h5 className={style.subtitles}>somos olea</h5>
@@ -34,12 +32,17 @@ function Footer() {
               <a
                 href="https://www.instagram.com/somos.olea/"
                 target="_BLANK"
+                rel="noreferrer"
                 className={style.somosolea}
               >
                 @somosolea
               </a>
               <div className={style.containericon}>
-                <a href="https://www.instagram.com/somos.olea/" target="_BLANK">
+                <a
+                  href="https://www.instagram.com/somos.olea/"
+                  target="_BLANK"
+                  rel="noreferrer"
+                >
                   <FontAwesomeIcon
                     icon={faInstagram}
                     className={style.igicon}
@@ -86,7 +89,7 @@ function Footer() {
             </div>
           </div>
         </div>
-      </footer>
+      </footer> */}
     </div>
   );
 }

@@ -22,7 +22,7 @@ const ShoppingCart = () => {
 
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cartFromLocalStorage));
-  }, []);
+  }, [cartFromLocalStorage]);
 
   useEffect(() => {
     if (clear) {
@@ -33,7 +33,7 @@ const ShoppingCart = () => {
       setClear(false);
       localStorage.setItem("cart", JSON.stringify([]));
     };
-  }, [clear]);
+  }, [dispatch, clear]);
 
   const handleClearCart = (e) => {
     e.preventDefault();
@@ -77,7 +77,7 @@ const ShoppingCart = () => {
   return (
     <>
       <button onClick={toggleShow} className={style.carrito}>
-        <img src={carrito} />
+        <img src={carrito} alt={carrito}/>
       </button>
       {productsCart.length !== 0 && (
         <div className={style.itemcarrito}>

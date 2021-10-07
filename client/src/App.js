@@ -16,7 +16,7 @@ import RequestChangePassword from "./components/RequestChangePassword/RequestCha
 import ChangePassword from "./components/ChangePassword/ChangePassword";
 import ShoppingCart from "./components/ShoppingCart/ShoppingCart";
 import ProductsByName from "./components/ProductsByName/ProductsByName";
-import { decodeToken, getToken, tokens } from "./utils/index";
+import { decodeToken } from "./utils/index";
 import CreateProduct from "./components/Admin/CreateProduct/CreateProduct";
 import UsersTable from "./components/Admin/Tables/UsersTable/UsersTable";
 import ProductTable from "./components/Admin/Tables/ProductTable/ProductTable";

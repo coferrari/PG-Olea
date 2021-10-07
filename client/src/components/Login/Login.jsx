@@ -54,7 +54,8 @@ const LoginButton = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const x = await logIn(input);
+      await logIn(input);
+      // const x = await logIn(input);
       const validate = isAuthorized();
       if (validate) {
         const user = decodeToken();

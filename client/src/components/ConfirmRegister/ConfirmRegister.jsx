@@ -1,5 +1,5 @@
 import React from "react";
-import { confirmRegister, getUsers } from "../../auth/users";
+import { confirmRegister } from "../../auth/users";
 import { useParams } from "react-router";
 import { useHistory } from "react-router-dom";
 import { Button } from "react-bootstrap";

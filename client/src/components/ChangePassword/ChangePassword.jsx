@@ -1,4 +1,4 @@
-import React, { useImperativeHandle, useState } from "react";
+import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { changePassword } from "../../auth/users";
 import style from "./ChangePassword.module.css";
@@ -37,7 +37,8 @@ const ChangePassword = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const x = await changePassword(input.email, input.passwordTwo, token);
+      await changePassword(input.email, input.passwordTwo, token);
+      // const x = await changePassword(input.email, input.passwordTwo, token);
       history.push("/login");
     } catch (err) {
       setErrorEmail(

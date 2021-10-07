@@ -1,20 +1,20 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { getCategories } from "../../redux/actions";
 
 export default function Selects() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const categories = useSelector((state) => state.categoryReducer.categories);
+  // const categories = useSelector((state) => state.categoryReducer.categories);
 
   useEffect(() => {
     dispatch(getCategories());
   }, [dispatch]);
 
-  function handleCategorySelect(name) {
-    history.push(`/category/${name}`);
-  }
+  // function handleCategorySelect(name) {
+  //   history.push(`/category/${name}`);
+  // }
 
   const handleOrderSelect = function (order) {
     order = order.split(" ");

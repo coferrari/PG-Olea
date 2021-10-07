@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Product.module.css";
-import { Card, Button } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCart } from "../../redux/actions/index";
 import { isAuthorized, decodeToken } from "../../utils/index";
@@ -37,7 +37,7 @@ export function Product({ id, name, image, price }) {
       dispatch(updateCart(cartRemoved));
       setRemove(false);
     }
-  }, [add, remove]);
+  }, [dispatch, add, remove, id, image, name, price]);
 
   const isInStore = productsCarrito.findIndex((product) => product.id === id);
 
@@ -85,7 +85,6 @@ export function Product({ id, name, image, price }) {
         {/* favorite */}
         {favorite && (
           <button
-            className={styles.fav}
             className={styles.fav}
             onClick={(e) => handleRemoveFavorite(e)}
           >
