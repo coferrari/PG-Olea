@@ -30,7 +30,9 @@ function App() {
       <Navbar />
       <ShoppingCart />
 
-      <Route exact path="/" component={Landing} />
+      <Route exact path="/">
+        <Landing />
+      </Route>
       <Route exact path="/login">
         <LoginButton />
       </Route>
