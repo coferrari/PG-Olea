@@ -29,7 +29,7 @@ function App() {
     <div>
       <Navbar />
       <ShoppingCart />
-      {/* <Switch> */}
+      <Switch>
         <Route exact path="/" component={Landing} />
         <Route exact path="/login">
           <LoginButton />
@@ -78,7 +78,7 @@ function App() {
           <Selects />
           <ProductsByName />
         </Route>
-      {/* </Switch> */}
+      </Switch>
     </div>
   );
 }
