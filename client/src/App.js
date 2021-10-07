@@ -22,6 +22,7 @@ import UsersTable from "./components/Admin/Tables/UsersTable/UsersTable";
 import ProductTable from "./components/Admin/Tables/ProductTable/ProductTable";
 import CategoriasTable from "./components/Admin/Tables/CategoriasTable/CategoriasTable";
 import Review from "./components/Review/Review";
+import ReviewsTable from "./components/Admin/Tables/ReviewsTable/ReviewsTable";
 
 function App() {
   const loggedIn = decodeToken();
@@ -82,8 +83,8 @@ function App() {
         <Route exact path="/createreview/:productid">
           <Review />
         </Route>
-        <Route exact path="/product/review/:productid">
-
+        <Route exact path="/reviews/:productid">
+         <ReviewsTable />
         </Route>
       </Switch>
     </div>
