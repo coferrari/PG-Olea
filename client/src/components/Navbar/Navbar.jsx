@@ -71,27 +71,23 @@ const NavResponsive = () => {
             <Nav className="me-auto">
               {categories?.map((category) => {
                 return (
-                  <Nav.Link key={category.nameCategory}>
-                    <Link
-                      to={`/category/${category.nameCategory}`}
-                      className={style.links}
-                    >
-                      {category.nameCategory}
-                    </Link>
+                  <Nav.Link
+                    as={Link}
+                    to={`/category/${category.nameCategory}`}
+                    className={style.links}
+                    key={category.id}
+                  >
+                    {category.nameCategory}
                   </Nav.Link>
                 );
               })}
             </Nav>
-            <Nav>
-              <Nav.Link>
-                <Link to="/login" className={style.linkssesion}>
-                  <li>Iniciar sesión</li>
-                </Link>
+            <Nav className={style.containersession}>
+              <Nav.Link as={Link} to="/login" className={style.linkssesion}>
+                <li>Iniciar sesión</li>
               </Nav.Link>
-              <Nav.Link>
-                <Link to="/register" className={style.linkssesion}>
-                  <li>Registrarse</li>
-                </Link>
+              <Nav.Link as={Link} to="/register" className={style.linkssesion}>
+                <li>Registrarse</li>
               </Nav.Link>
             </Nav>
           </Navbar.Collapse>
