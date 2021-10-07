@@ -52,7 +52,6 @@ const LoginButton = () => {
 
   // ingresa sesion normal
   const handleSubmit = async (e) => {
-    console.log("entra al submit");
     e.preventDefault();
     try {
       const x = await logIn(input);
@@ -66,7 +65,6 @@ const LoginButton = () => {
             username: username,
           });
         } else if (cartFromLocalStorage.length === 0) {
-          console.log("entra al else");
           const productsDB = await getByUsername({
             username: username,
           });
@@ -97,7 +95,6 @@ const LoginButton = () => {
           username: username,
         });
       } else if (cartFromLocalStorage.length === 0) {
-        console.log("entra al else");
         const productsDB = await getByUsername({
           username: username,
         });

@@ -60,10 +60,9 @@ export default function CreateProduct() {
     } else if (newProduct.image.includes(image)) {
       setNewProduct({
         ...newProduct,
-        image: newProduct.image.filter((e) => e != image),
+        image: newProduct.image.filter((e) => e !== image),
       });
     }
-    console.log(newProduct.image);
   };
   const categoris = (catID) => {
     if (!newProduct.categoryID.includes(catID)) {
@@ -74,10 +73,9 @@ export default function CreateProduct() {
     } else if (newProduct.categoryID.includes(catID)) {
       setNewProduct({
         ...newProduct,
-        categoryID: newProduct.categoryID.filter((e) => e != catID),
+        categoryID: newProduct.categoryID.filter((e) => e !== catID),
       });
     }
-    console.log(newProduct.categoryID);
   };
 
   return (
@@ -134,7 +132,7 @@ export default function CreateProduct() {
                         onClick={() =>
                           setNewProduct({
                             ...newProduct,
-                            image: newProduct.image.filter((j) => j != e),
+                            image: newProduct.image.filter((j) => j !== e),
                           })
                         }
                       >

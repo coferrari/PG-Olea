@@ -34,15 +34,12 @@ const ChangePassword = () => {
   const [errorEmail, setErrorEmail] = useState("");
   const [errors, setErrors] = useState({});
   const history = useHistory();
-  console.log(token);
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const x = await changePassword(input.email, input.passwordTwo, token);
-      console.log(x);
       history.push("/login");
     } catch (err) {
-      console.log("a");
       setErrorEmail(
         "Este email no pertenece al usuario que pidio el cambio de contraseña"
       );
