@@ -4,7 +4,6 @@ const {
   Category,
   User,
   Carrito,
-  Reviews,
   Carrito_Products,
 } = require("../db.js");
 const { Op } = require("sequelize");
