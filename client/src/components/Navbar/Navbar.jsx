@@ -1,10 +1,9 @@
-import { Link, useHistory } from "react-router-dom";
-import Register from "../Register/Register";
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { isAuthorized, decodeToken } from "../../utils/index";
 import { Navbar, Container, Nav } from "react-bootstrap";
 import Logo from "../../img/OLEA marca de agua-07.png";
 import style from "./Navbar.module.css";
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCategories } from "../../redux/actions";
 
@@ -16,10 +15,8 @@ const NavResponsive = () => {
   useEffect(() => {
     dispatch(getCategories());
   }, [dispatch]);
-
   if (validate) {
     const user = decodeToken();
-    console.log(categories);
     return (
       <div>
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -34,33 +31,24 @@ const NavResponsive = () => {
               <Nav className="me-auto">
                 {categories?.map((category) => {
                   return (
-                    <Nav.Link>
-                      <Link
-                        to={`/category/${category.nameCategory}`}
-                        className={style.links}
-                      >
-                        {category.nameCategory}
-                      </Link>
+                    <Nav.Link
+                      as={Link}
+                      to={`/category/${category.nameCategory}`}
+                      className={style.links}
+                      key={category.id}
+                    >
+                      {category.nameCategory}
                     </Nav.Link>
                   );
                 })}
-                </Nav>
+              </Nav>
               <Nav className={style.containersession}>
                 <Nav.Link className={style.username}>{user.username}</Nav.Link>
-                <Nav.Link>
-                  <Link to="/account" className={style.linkssesion}>
-                    <li>Mi cuenta</li>
-                  </Link>
+                <Nav.Link as={Link} to="/account" className={style.linkssesion}>
+                  <li>Mi cuenta</li>
                 </Nav.Link>
-                <Nav.Link>
-                  <Link to="/wishlist" className={style.linkssesion}>
-                    <li>Favoritos</li>
-                  </Link>
-                </Nav.Link>
-                <Nav.Link>
-                  <Link to="/logout" className={style.linkssesion}>
-                    <li>Cerrar sesión</li>
-                  </Link>
+                <Nav.Link as={Link} to="/logout" className={style.linkssesion}>
+                  <li>Cerrar sesión</li>
                 </Nav.Link>
               </Nav>
             </Navbar.Collapse>
@@ -81,31 +69,25 @@ const NavResponsive = () => {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
-
               {categories?.map((category) => {
                 return (
-                  <Nav.Link>
-                    <Link
-                      to={`/category/${category.nameCategory}`}
-                      className={style.links}
-                    >
-                      {category.nameCategory}
-                    </Link>
+                  <Nav.Link
+                    as={Link}
+                    to={`/category/${category.nameCategory}`}
+                    className={style.links}
+                    key={category.id}
+                  >
+                    {category.nameCategory}
                   </Nav.Link>
                 );
               })}
-
             </Nav>
-            <Nav>
-              <Nav.Link>
-                <Link to="/login" className={style.linkssesion}>
-                  <li>Iniciar sesión</li>
-                </Link>
+            <Nav className={style.containersession}>
+              <Nav.Link as={Link} to="/login" className={style.linkssesion}>
+                <li>Iniciar sesión</li>
               </Nav.Link>
-              <Nav.Link>
-                <Link to="/register" className={style.linkssesion}>
-                  <li>Registrarse</li>
-                </Link>
+              <Nav.Link as={Link} to="/register" className={style.linkssesion}>
+                <li>Registrarse</li>
               </Nav.Link>
             </Nav>
           </Navbar.Collapse>
