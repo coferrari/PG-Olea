@@ -50,7 +50,7 @@ conn.sync({ force: true }).then(() => {
     const post = axios.post(` ${DB_URL}/api/user/createadmin`, admin[i]);
     post.then();
   }
-  server.listen(process.env.PORT, () => {
+  server.listen(process.env.PORT || 3001, () => {
     console.log("%s listening at 3001"); // eslint-disable-line no-console
   });
 });
