@@ -1,5 +1,4 @@
 import axios from "axios";
-import { getToken } from "../utils";
 const baseUrl = "http://localhost:3001/api/reviews";
 
 export const createReviews = async (

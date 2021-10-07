@@ -7,11 +7,9 @@ export default function CategoriasTable() {
   const dispatch = useDispatch();
   const history = useHistory();
   const categories = useSelector((state) => state.categoryReducer.categories);
-
   useEffect(() => {
     dispatch(getCategories());
   }, [dispatch]);
-  console.log(categories);
   return (
     <div>
       <h1>hola</h1>
