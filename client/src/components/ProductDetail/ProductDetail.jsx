@@ -2,7 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getProductDetail } from "../../redux/actions/index";
-import { Card, ListGroup, ListGroupItem, Button, Modal } from "react-bootstrap";
+import {
+  Card,
+  ListGroup,
+  ListGroupItem,
+  Button,
+  Modal,
+  ProgressBar,
+} from "react-bootstrap";
 import Carousel from "../../components/Carousel/Carousel";
 import { AiFillStar } from "react-icons/ai";
 import { updateCart } from "../../redux/actions/index";
@@ -18,6 +25,7 @@ export function ProductDetail() {
   const [remove, setRemove] = useState(false);
   const [reseñas, setReseñas] = useState();
   const [lgShow, setLgShow] = useState(false);
+  const [puntuacion, setPuntuacion] = useState([0, 0, 0, 0, 0]);
   const validate = isAuthorized();
   const product = useSelector(
     (state) => state.productDetailReducer.productDetail
@@ -87,6 +95,23 @@ export function ProductDetail() {
     }, 0);
     return x / reseñas?.length;
   };
+  const tickets = () => {
+    let [$1, $2, $3, $4, $5] = [0, 0, 0, 0, 0];
+    reseñas?.forEach((el) => {
+      parseInt(el.rating) === 1
+        ? $1++
+        : parseInt(el.rating) === 2
+        ? $2++
+        : parseInt(el.rating) === 3
+        ? $3++
+        : parseInt(el.rating) === 4
+        ? $4++
+        : $5++;
+    });
+    setPuntuacion([$1, $2, $3, $4, $5]);
+  };
+
+  console.log(puntuacion);
   const rating = Rating();
   useEffect(() => {
     dispatch(getProductDetail(idParams));
@@ -124,7 +149,14 @@ export function ProductDetail() {
           </Button>
         )}
       </Card>
-      <Button onClick={() => setLgShow(true)}>Large modal</Button>
+      <Button
+        onClick={() => {
+          setLgShow(true);
+          tickets();
+        }}
+      >
+        Large modal
+      </Button>
       <Modal
         size="lg"
         show={lgShow}
@@ -141,7 +173,36 @@ export function ProductDetail() {
             <Modal.Body>
               <h1 className={style.title}></h1>
               <div className={style.h3}>
-                <h3 className={style.titleh3}>{rating}</h3>
+                <h3 className={style.titleh3}>
+                  {rating.toString().slice(0, 4)}
+                </h3>
+                <div>
+                  <span>{puntuacion[4]}</span>{" "}
+                  <ProgressBar
+                    variant="success"
+                    now={(puntuacion[4] / reseñas?.length) * 100}
+                  />
+                  <span>{puntuacion[3]}</span>{" "}
+                  <ProgressBar
+                    variant="info"
+                    now={(puntuacion[3] / reseñas?.length) * 100}
+                  />
+                  <span>{puntuacion[2]}</span>{" "}
+                  <ProgressBar
+                    variant="warning"
+                    now={(puntuacion[2] / reseñas?.length) * 100}
+                  />
+                  <span>{puntuacion[1]}</span>{" "}
+                  <ProgressBar
+                    variant="danger"
+                    now={(puntuacion[1] / reseñas?.length) * 100}
+                  />
+                  <span>{puntuacion[0]}</span>{" "}
+                  <ProgressBar
+                    variant="danger"
+                    now={(puntuacion[0] / reseñas?.length) * 100}
+                  />
+                </div>
               </div>
               <div className={style.containerStars}>
                 <AiFillStar className={rating >= 1 ? style.gold : style.dark} />

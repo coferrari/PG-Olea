@@ -82,9 +82,6 @@ function App() {
         <Route exact path="/createreview/:productid">
           <Review />
         </Route>
-        <Route exact path="/product/review/:productid">
-
-        </Route>
       </Switch>
     </div>
   );
