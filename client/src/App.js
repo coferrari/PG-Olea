@@ -64,13 +64,7 @@ function App() {
         <Route exact path="/changepassword/:token">
           <ChangePassword />
         </Route>
-        <Route
-          exact
-          path="/"
-          render={() => {
-            <Home />;
-          }}
-        />
+        <Route exact path="/" component={<Home />} />
         <Route path="/home/:attribute/:order">
           <Home />
         </Route>
