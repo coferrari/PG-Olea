@@ -52,7 +52,7 @@ function App() {
         <Route exact path="/changepassword/:token">
           <ChangePassword />
         </Route>
-        <Route exact path="/" children={() => <Home />} />
+        <Route exact path="/home" render={() => <Home />}></Route>
         <Route path="/home/:attribute/:order">
           <Home />
         </Route>
