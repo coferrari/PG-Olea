@@ -1,5 +1,5 @@
-import { Link, useHistory } from "react-router-dom";
-import Register from "../Register/Register";
+import { Link } from "react-router-dom";
+
 import { isAuthorized, decodeToken } from "../../utils/index";
 import { Navbar, Container, Nav } from "react-bootstrap";
 import Logo from "../../img/OLEA marca de agua-07.png";
