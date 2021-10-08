@@ -10,7 +10,6 @@ import axios from "axios";
 export default function ReviewsTable() {
   const [reviews, setReviews] = useState();
   const { productid } = useParams();
-
   const review = async () => {
     const res = await axios.get(GET_REVIEWS + productid, {
       headers: {
@@ -22,7 +21,7 @@ export default function ReviewsTable() {
   useEffect(() => {
     setReviews(review());
   }, [productid]);
-  console.log(productid, reviews);
+
   const remove = (id) => {
     confirmAlert({
       title: "Eliminar usuario",

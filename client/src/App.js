@@ -24,6 +24,8 @@ import CategoriasTable from "./components/Admin/Tables/CategoriasTable/Categoria
 import Review from "./components/Review/Review";
 import ReviewsTable from "./components/Admin/Tables/ReviewsTable/ReviewsTable";
 import EditProduct from "./components/Admin/EditProduct/EditProduct";
+import CreateCategory from "./components/Admin/CreateCategory/CreateCategory";
+
 
 function App() {
   const loggedIn = decodeToken();
@@ -58,7 +60,7 @@ function App() {
         <Route path="/category/:nameCategory">
           <CategoryProduct />
         </Route>
-        <Route path="/product/:idParams">
+        <Route exact path="/product/:idParams">
           <ProductDetail />
         </Route>
         <Route path="/auth/confirmregister/:token">
@@ -89,6 +91,9 @@ function App() {
         </Route>
         <Route exact path="/admin/editproduct/:productid">
           {loggedIn.admin ? <EditProduct /> : <Redirect to="/home" />}
+        </Route>
+        <Route exact path="/admin/categoriestable">
+          {loggedIn.admin ? <CategoriasTable /> : <Redirect to="/home" />}
         </Route>
       </Switch>
     </div>

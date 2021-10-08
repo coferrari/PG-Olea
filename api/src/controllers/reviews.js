@@ -26,8 +26,9 @@ class ReviewsModel extends Modelo {
 
   create = async (req, res, next) => {
     try {
-      const { username, productId, comment, rating } = req.body;
+      const { username, productId, comment, rating, opinion } = req.body;
       var newReview = await this.model.create({
+        opinion,
         id: id,
         username,
         productId,
@@ -35,8 +36,7 @@ class ReviewsModel extends Modelo {
         rating,
       });
       await newReview.setUser(username);
-
-      return res.send(newReview);
+      return res.send("done");
     } catch (error) {
       next(error);
     }
@@ -47,6 +47,12 @@ class ReviewsModel extends Modelo {
       console.log(id);
       const reviews = await this.model.findAll({
         where: { productId: id },
+        include: [
+          {
+            model: User,
+            attributes: ["username", "name", "picture"],
+          },
+        ],
       });
       res.send(reviews);
     } catch (err) {

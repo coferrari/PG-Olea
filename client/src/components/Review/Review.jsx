@@ -10,8 +10,12 @@ const Review = () => {
   const { productid } = useParams();
   const [stars, setStars] = useState("");
   const [text, setText] = useState("");
+  const [opinion, setOpinion] = useState("");
   const reviewStar = (number) => {
     setStars(number);
+  };
+  const handleOpinionChange = (e) => {
+    setOpinion(e.target.value);
   };
   const handleChange = (e) => {
     setText(e.target.value);
@@ -20,7 +24,7 @@ const Review = () => {
   const handleSubmit = async (e) => {
     console.log("adsads");
     e.preventDefault();
-    await createReviews(user.username, productid, stars, text);
+    await createReviews(user.username, productid, stars, text, opinion);
   };
   return (
     <div>
@@ -32,17 +36,27 @@ const Review = () => {
         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
           <Form.Label>Hola {user.username}</Form.Label>
         </Form.Group>
-        <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-          <Form.Label>Reseña del producto</Form.Label>
+        <Form.Group className="mb-3">
+          <Form.Label>Opinion</Form.Label>
           <Form.Control
             onChange={(e) => {
-              handleChange(e);
+              handleOpinionChange(e);
             }}
-            as="textarea"
-            rows={3}
+            type="text"
           />
         </Form.Group>
         <Form.Group>
+          <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+            <Form.Label>Reseña del producto</Form.Label>
+            <Form.Control
+              onChange={(e) => {
+                handleChange(e);
+              }}
+              as="textarea"
+              rows={3}
+            />
+          </Form.Group>
+
           <Form.Label>Puntuacion</Form.Label>
           <AiFillStar
             className={stars >= 1 ? style.gold : style.dark}

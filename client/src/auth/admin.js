@@ -2,6 +2,7 @@ import axios from "axios";
 import { getToken } from "../utils";
 const baseUrl = "http://localhost:3001/api/admin";
 const usersUrl = "http://localhost:3001/api/user";
+const productUrl = "http://localhost:3001/api/category";
 export const getUsers = async () => {
   const res = await axios.get(`${usersUrl}`, {
     headers: {
@@ -31,7 +32,6 @@ export const removeUserDB = async (username) => {
   return res.data;
 };
 export const generateAdminDB = async (username) => {
-  console.log(getToken());
   const res = await axios.put(
     `${usersUrl}/generateadmin`,
     { username },
@@ -41,5 +41,32 @@ export const generateAdminDB = async (username) => {
       },
     }
   );
+  return res.data;
+};
+export const createCategory = async (input) => {
+  const res = await axios.post(
+    `${productUrl}`,
+    { nameCategory: input.texto },
+    {
+      headers: {
+        authorization: getToken(),
+      },
+    }
+  );
+  return res.data;
+};
+export const deleteCategory = async (id) => {
+  const res = await axios.delete(`${productUrl}/${id}`, {
+    headers: {
+      authorization: getToken(),
+    },
+  });
+  return res.data;
+};
+export const updateCategory = async (id, nameCategory) => {
+  console.log(id, nameCategory);
+  const res = await axios.put(`${productUrl}/${id}`, {
+    nameCategory: nameCategory,
+  });
   return res.data;
 };
