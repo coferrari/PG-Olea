@@ -31,15 +31,30 @@ function App() {
       <ShoppingCart />
 
       <Switch>
-        <Route exact path="/">
-          <Landing />
-        </Route>
-        <Route exact path="/login">
-          <LoginButton />
-        </Route>
-        <Route exact path="/register">
-          <Register />
-        </Route>
+        <Route
+          exact
+          path="/"
+          render={() => {
+            <Landing />;
+          }}
+        />
+
+        <Route
+          exact
+          path="/login"
+          render={() => {
+            <LoginButton />;
+          }}
+        />
+
+        <Route
+          exact
+          path="/register"
+          render={() => {
+            <Register />;
+          }}
+        />
+
         <Route exact path="/logout">
           <LogoutButton />
         </Route>
@@ -55,7 +70,7 @@ function App() {
           render={() => {
             <Home />;
           }}
-        ></Route>
+        />
         <Route path="/home/:attribute/:order">
           <Home />
         </Route>
