@@ -6,12 +6,11 @@ import style from "../Checkout.module.css";
 const Details = () => {
   return (
     <div>
-      <Card style={{ width: "%100" }}>
+      <Card  style={{ width: "%100" }}>
         <Card.Header className={style.title}>
-          {" "}
           3 - Detalle de tu Compra
         </Card.Header>
-        <ItemsCart className={style.details} />
+        <ItemsCart/>
       </Card>
     </div>
   );

@@ -21,49 +21,43 @@ const Delivery = () => {
           <Nav
             justify
             variant="tabs"
-            className="me-auto"
+            className={style.tabsDelivery}
             defaultActiveKey="#envio"
             onSelect={(e) => handleSelected(e)}
           >
             <Nav.Item>
-              <Nav.Link href="#envio" eventKey="Envío">
+              <Nav.Link className={style.navLink}  href="#envio" eventKey="Envío">
                 Envío
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link href="#retiro" eventKey="Retiro">
+              <Nav.Link className={style.navLink} href="#retiro" eventKey="Retiro">
                 Retiro
               </Nav.Link>
             </Nav.Item>
           </Nav>
         </Card.Header>
-        <Card.Body eventKey={delivery}>
+        <Card.Body className={style.bodyDelivery} eventKey={delivery}>
           {delivery === true ? (
             <div>
               <Card.Title>Envío</Card.Title>
-              <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Form.Group className={style.datosEnvio} controlId="formBasicPassword">
                 <Form.Label>Localidad</Form.Label>
                 <Form.Control
-                  // onChange={(e) => {
-                  //     handleChange(e);
-                  // }}
                   type="text"
                   placeholder="Localidad"
                   name="localidad"
-                  // value={input.password}
+                  className={style.inputDatosEnvio}
                 />
                 <Form.Label>Domicilio de envío</Form.Label>
                 <Form.Control
-                  // onChange={(e) => {
-                  //     handleChange(e);
-                  // }}
                   type="text"
                   placeholder="Domicilio de Envío"
                   name="domicilio"
-                  // value={input.password}
+                  className={style.inputDatosEnvio}
+
                 />
               </Form.Group>
-              {/* <Card.Text>Envio card component</Card.Text> */}
             </div>
           ) : (
             <div>

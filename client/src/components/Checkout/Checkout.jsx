@@ -3,12 +3,14 @@ import Data from "./CheckoutData/CheckoutData";
 import Delivery from "./CheckoutDelivery/CheckoutDelivery";
 import Details from "./CheckoutDetail/CheckoutDetail";
 import { decodeToken, isAuthorized } from "../../utils";
-import Button from "@restart/ui/esm/Button";
+import{ Button} from "react-bootstrap";
 import { confirmAlert } from "react-confirm-alert"; // Import
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 import { useHistory } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { checkoutMercadoPago } from "../../redux/actions";
+import style from "./Checkout.module.css";
+
 
 const Checkout = () => {
   const history = useHistory();
@@ -32,11 +34,12 @@ const Checkout = () => {
   return (
     <div>
       {sesionIniciada === true ? (
-        <div>
+        <div className={style.checkoutContainer}>
           <Data datosLogin={datosLogin} />
           <Delivery />
           <Details />
-          <Button onClick={(e) => handleConfirmOrder(e)}>Confirmar la compra</Button>
+          <div className={style.buttonConfirmarCompra}>
+          <Button variant="dark" onClick={(e) => handleConfirmOrder(e)}>Confirmar la compra</Button>
           {linkDePago && ((confirmAlert({
             title: "Atención",
             message: "Usted será redirigido al checkout de Mercado Pago",
@@ -54,6 +57,7 @@ const Checkout = () => {
               },
             ],
           })))}
+          </div>
         </div>
       ) : (
         <div>

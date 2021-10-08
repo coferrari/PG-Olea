@@ -1,3 +1,7 @@
+.checkoutContainer{
+  width: auto;
+}
+
 .title {
   display: flex;
   background-color: #212529;
@@ -14,17 +18,65 @@
   letter-spacing: 1px;
 }
 
+.tabsDelivery{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.bodyDelivery{
+  height:  150px;
+  display: flex;
+  justify-content: center;
+}
+
 .card {
   display: flex;
   justify-content: center;
 }
 
+.checkoutItems{
+  display: flex;
+  flex-direction: row;
+}
+
 .listgroup {
   font-family: "Montserrat", sans-serif;
   justify-content: center;
+  border: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
 }
 
 .input {
-  padding: 10px 2px;
-  margin: 10px 10px;;
+  padding: 5px 2px;
+  margin: 10px 10px;
+  width: fit-content;
+}
+
+.navLink{
+  color: white;
+}
+
+.navLink:hover{
+ transition: color .5;
+ color: white;
+}
+
+.datosEnvio{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.inputDatosEnvio{
+  width: 500px;
+}
+
+.buttonConfirmarCompra{
+  display: flex;
+  justify-content: center;
+  margin: 40px 40px;
 }

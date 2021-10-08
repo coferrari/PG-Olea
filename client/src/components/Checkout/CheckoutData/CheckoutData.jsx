@@ -10,17 +10,17 @@ import style from "../Checkout.module.css";
     <div>
       <Card style={{ width: "%100" }}>
         <Card.Header className={style.title}> 1 - Datos Personales</Card.Header>
-        <ListGroup  horizontal className={style.listgroup  }>
-          <ListGroup.Item>
+        <ListGroup className={style.listgroup  }>
+          <ListGroup.Item className={style.listgroup}>
            <label> Nombre </label> <input className={style.input} type="text" defaultValue={nombre} />
           </ListGroup.Item>
-          <ListGroup.Item>
+          <ListGroup.Item className={style.listgroup}>
           <label> Apellido </label><input className={style.input} type="text" placeholder="Apellido" defaultValue={apellido} />
           </ListGroup.Item>
-          <ListGroup.Item>
+          <ListGroup.Item className={style.listgroup}>
           <label> E-mail </label> <input className={style.input} type="text" placeholder="Mail" defaultValue={mail} />
           </ListGroup.Item>
-          <ListGroup.Item>
+          <ListGroup.Item className={style.listgroup}>
           <label> Teléfono </label> <input className={style.input} type="text" placeholder="Teléfono" />
           </ListGroup.Item>
         </ListGroup>
