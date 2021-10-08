@@ -128,52 +128,67 @@ userFunction.getAll = async (req, res, next) => {
 
 userFunction.googleLogin = async (req, res, next) => {
   const { token } = req.body;
-  const ticket = await client.verifyIdToken({
-    idToken: token,
-    audience: process.env.CLIENT_ID,
-  });
-  const { name, given_name, family_name, email, picture, at_hash } =
-    ticket.getPayload();
-  const user = await User.findOne({
-    where: { email },
-    include: Carrito,
-  });
-  
-  if (user === null) {
-    const carritocreado = await Carrito.create({});
-    const newPasswordEncrypted = await encryptPassword(at_hash);
-    const newUser = await User.create({
-      name: given_name,
-      username: email,
-      password: newPasswordEncrypted,
-      email: email,
-      surname: family_name,
-      picture,
+  try {
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: process.env.CLIENT_ID,
     });
-    newUser.setCarrito(carritocreado.dataValues.id);
-    const token = jwt.sign(
-      {
+    const { given_name, family_name, email, picture, at_hash } =
+      ticket.getPayload();
+    const user = await User.findOne({
+      where: { email },
+      include: Carrito,
+    });
+
+    if (user === null) {
+      const carritocreado = await Carrito.create({});
+      const newPasswordEncrypted = await encryptPassword(at_hash);
+      const newUser = await User.create({
         name: given_name,
         username: email,
+        password: newPasswordEncrypted,
         email: email,
         surname: family_name,
         picture,
-      },
-      process.env.TOKEN_SECRET
-    );
-    return res.header("auth-token", token).json({
-      error: null,
-      data: { token },
-    });
-  }
-  if (user) {
-    const token = jwt.sign({ username: email }, process.env.TOKEN_SECRET);
-    return res.header("auth-token", token).json({
-      error: null,
-      data: {
-        token,
-      },
-    });
+      });
+      newUser.setCarrito(carritocreado.dataValues.id);
+      const token = jwt.sign(
+        {
+          name: given_name,
+          username: email,
+          email: email,
+          surname: family_name,
+          picture,
+        },
+        process.env.TOKEN_SECRET,
+        { expiresIn: "10m" }
+      );
+      return res.header("auth-token", token).json({
+        error: null,
+        data: { token },
+      });
+    }
+    if (user) {
+      const token = jwt.sign(
+        {
+          name: given_name,
+          username: email,
+          email: email,
+          surname: family_name,
+          picture,
+        },
+        process.env.TOKEN_SECRET,
+        { expiresIn: "10m" }
+      );
+      return res.header("auth-token", token).json({
+        error: null,
+        data: {
+          token,
+        },
+      });
+    }
+  } catch (err) {
+    next(err);
   }
 };
 userFunction.createAdmin = async (req, res, next) => {
@@ -187,5 +202,27 @@ userFunction.createAdmin = async (req, res, next) => {
     admin,
   });
 };
+userFunction.logOut = async (req, res, next) => {
+  try {
+    res.clearCookie("refreshtoken", { path: "/user/refresh_token" });
+    return res.json({ msg: "Logged out." });
+  } catch (err) {
+    return res.status(500).json({ msg: err.message });
+  }
+};
+userFunction.getAccessToken = async (req, res, next) => {
+  try {
+    const rf_token = req.cookies.refreshtoken;
+    if (!rf_token) return res.status(400).json({ msg: "Please login now!" });
 
+    jwt.verify(rf_token, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+      if (err) return res.status(400).json({ msg: "Please login now!" });
+
+      const access_token = createAccessToken({ id: user.id });
+      res.json({ access_token });
+    });
+  } catch (err) {
+    next(err);
+  }
+};
 module.exports = userFunction;

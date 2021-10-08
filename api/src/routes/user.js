@@ -23,8 +23,10 @@ router.post(
   checkEmail,
   userFunction.requestChangePassword
 );
+router.post("/refresh_token", userFunction.getAccessToken);
 router.post("/createadmin", userFunction.createAdmin);
 router.post("/changepasswordadmin", isAdmin, adminFunction.changePassword);
 router.delete("/deleteuser/:username", isAdmin, adminFunction.deleteUser);
 router.put("/generateadmin", isAdmin, adminFunction.generateAdmin);
+router.get("/logout", userFunction.logOut);
 module.exports = router;
