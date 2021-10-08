@@ -53,11 +53,11 @@ const LoginButton = () => {
   // ingresa sesion normal
   const handleSubmit = async (e) => {
     e.preventDefault();
+    await logIn(input);
     try {
-      history.push("/home");
-      await logIn(input);
       // const x = await logIn(input);
       const validate = isAuthorized();
+      history.push("/home");
       if (validate) {
         const user = decodeToken();
         const username = user.username;
