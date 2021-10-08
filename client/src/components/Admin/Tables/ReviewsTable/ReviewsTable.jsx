@@ -11,13 +11,16 @@ export default function ReviewsTable() {
   const [reviews, setReviews] = useState();
   const { productid } = useParams();
 
-  useEffect(async () => {
+  const review = async () => {
     const res = await axios.get(GET_REVIEWS + productid, {
       headers: {
         authorization: getToken(),
       },
     });
-    setReviews(res.data);
+    return res;
+  };
+  useEffect(() => {
+    setReviews(review());
   }, [productid]);
   console.log(productid, reviews);
   const remove = (id) => {

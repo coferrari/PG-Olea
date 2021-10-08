@@ -12,9 +12,11 @@ import {
 import { getCategories, getProductDetail } from "../../../redux/actions";
 import { getToken } from "../../../utils/index";
 import axios from "axios";
-import { GET_PRODUCT_DETAIL_URL } from "../../../consts";
+
 import swal from "sweetalert";
 import { useParams } from "react-router";
+import { GET_PRODUCTS } from "../../../redux/actions/types";
+import { GET_PRODUCTS_URL } from "../../../consts";
 
 export default function EditProduct() {
   const dispatch = useDispatch();
@@ -24,7 +26,8 @@ export default function EditProduct() {
   );
   const { productid } = useParams();
   const [newProduct, setNewProduct] = useState({});
-  const [edit, setEdit] = useState(false);
+  const [editCats, setEditCats] = useState(false);
+  const [image, setImage] = useState();
   const [verImagenes, setVerImagenes] = useState({ compr: false, click: 0 });
   useEffect(() => {
     dispatch(getCategories());
@@ -32,14 +35,16 @@ export default function EditProduct() {
   }, [dispatch]);
 
   const handleSubmit = async (e) => {
-   if(newProduct.image.length > 0 && newProduct.name.length > 0 && newProduct.description.length > 0 && newProduct.price > 0){ e.preventDefault();
-    await axios.put(`${GET_PRODUCT_DETAIL_URL}/`, newProduct, {
-      headers: {
-        authorization: getToken(),
-      },
-    });
+    {
+      e.preventDefault();
+      await axios.put(`${GET_PRODUCTS_URL}${productid}`, newProduct, {
+        headers: {
+          authorization: getToken(),
+        },
+      });
 
-    return swal("Este producto ha sido modificado");}else swal("Debe llenar los campos correctamente")
+      return swal("Este producto ha sido modificado");
+    }
   };
   const handleEdit = () => {
     if (verImagenes.click === 0) {
@@ -48,28 +53,57 @@ export default function EditProduct() {
     } else setVerImagenes({ ...verImagenes, compr: !verImagenes.compr });
     console.log(newProduct);
   };
-const onChangeInput = (e) => {
-e.preventDefault()
-setNewProduct({
-  ...newProduct,
-  [e.target.name]: e.target.value
-})
-
-}
+  const onChangeInput = (e) => {
+    e.preventDefault();
+    setNewProduct({
+      ...newProduct,
+      [e.target.name]: e.target.value,
+    });
+    console.log(newProduct);
+  };
+  const categoris = (catID) => {
+    if (!newProduct.categoryID.includes(catID)) {
+      setNewProduct({
+        ...newProduct,
+        categoryID: [...newProduct.categoryID, catID],
+      });
+    } else if (newProduct.categoryID.includes(catID)) {
+      setNewProduct({
+        ...newProduct,
+        categoryID: newProduct.categoryID.filter((e) => e != catID),
+      });
+    }
+  };
+  const onChangeImage = (e) => {
+    setImage(e.target.value);
+  };
+  const onAddImage = (image) => {
+    if (image.length < 10) {
+      swal("Ingrese un url valido");
+    } else if (!newProduct.image.includes(image)) {
+      setNewProduct({
+        ...newProduct,
+        image: [...newProduct.image, image],
+      });
+    } else if (newProduct.image.includes(image)) {
+      setNewProduct({
+        ...newProduct,
+        image: newProduct.image.filter((e) => e != image),
+      });
+    }
+  };
   return (
     <div className="container">
       <div className="col-lg-4 mx-auto text-center">
         <Form onSubmit={(e) => handleSubmit(e)}>
           <Form.Group className="mb-3">
             <Form.Label>Nombre</Form.Label>
-            
-              <Form.Control
-                type="nombre"
-                name="name"
-                defaultValue={product.name}
-                onChange={(e) => onChangeInput(e)}
-              />
-            ) 
+            <Form.Control
+              type="nombre"
+              name="name"
+              defaultValue={product.name}
+              onChange={(e) => onChangeInput(e)}
+            />
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Precio</Form.Label>
@@ -89,16 +123,32 @@ setNewProduct({
                 type="imagenes"
                 placeholder="Ingrese Imagenes"
                 name="imagenes"
+                onChange={(e) => {
+                  onChangeImage(e);
+                }}
               />
-              <Button variant="outline-secondary">Añadir</Button>
+              <Button
+                onClick={() => onAddImage(image)}
+                variant="outline-secondary"
+              >
+                Añadir
+              </Button>
             </InputGroup>
             <Form.Group className="mb-3">
               <Form.Label>Imagenes Cargadas</Form.Label>{" "}
               <span>
-                <Button onClick={(e) => handleEdit(setNewProduct({
-                  ...newProduct,
-                  image: [...newProduct.image,e.target.value]
-                }))}>Ver Imagenes</Button>
+                <Button
+                  onClick={(e) =>
+                    handleEdit(
+                      setNewProduct({
+                        ...newProduct,
+                        image: [...product.image, e.target.value],
+                      })
+                    )
+                  }
+                >
+                  Ver Imagenes
+                </Button>
               </span>
               {verImagenes.compr ? (
                 <Container>
@@ -138,27 +188,44 @@ setNewProduct({
               defaultValue={product.description}
             />
           </Form.Group>
-          <Form.Group className="mb-3">
+          {/* <Form.Group className="mb-3">
             <Form.Label>Seleccione las Categorias</Form.Label>
 
             <div>
-              {categories?.map((cat) => {
-                return (
-                  <span key={cat.id}>
-                    <Button
-                    // variant={
-                    //   newProduct.categoryID.includes(cat.id)
-                    //     ? "dark"
-                    //     : "secondary"
-                    // }
-                    >
-                      {cat.nameCategory}
-                    </Button>{" "}
-                  </span>
-                );
-              })}
-            </div>
-          </Form.Group>
+              {editCats ? (
+                categories?.map((cat) => {
+                  return (
+                    <span key={cat.id}>
+                      <Button
+                        variant={
+                          newProduct.categoryID?.includes(cat.id)
+                            ? "dark"
+                            : "secondary"
+                        }
+                        onClick={() => categoris(cat.id)}
+                      >
+                        {cat.nameCategory}
+                      </Button>{" "}
+                    </span>
+                  );
+                })
+              ) : (
+                <Button
+                  onClick={() => {
+                    console.log(product);
+                    setNewProduct({
+                      ...newProduct,
+                      categoryID: product.categories.map((e) => e.id),
+                    });
+                    console.log(newProduct);
+                    setEditCats(true);
+                  }}
+                >
+                  Editar Categorias
+                </Button>
+              )}
+            </div> 
+          </Form.Group>*/}
           <Form.Group className="mb-3">
             <Form.Label>Stock</Form.Label>
             <Form.Control
@@ -171,7 +238,7 @@ setNewProduct({
             />
           </Form.Group>
           <Button variant="dark" type="submit">
-            Agregar Producto
+            Completar Edicion
           </Button>
         </Form>
       </div>{" "}

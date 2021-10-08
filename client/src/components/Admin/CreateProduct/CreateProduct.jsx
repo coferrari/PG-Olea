@@ -19,7 +19,7 @@ export default function CreateProduct() {
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.categoryReducer.categories);
   const [newProduct, setNewProduct] = useState({
-    name: "",
+    name: undefined,
     price: 0,
     newItem: true,
     image: [],
@@ -35,29 +35,36 @@ export default function CreateProduct() {
   }, [dispatch]);
 
   const handleSubmit = async (e) => {
-  if(newProduct.name === ""){
-    swal("Ingrese un nombre al producto")
-  }
-  if(newProduct.price === 0){
-    swal("Ingrese un precio valido")
-  }
-  if(newProduct.image.length === 0){
-swal("Agregue una foto por lo menos")
-  }
-  if(newProduct.description.length < 50){
-    swal("Ingrese una descripcion con al menos 50 caracteres")
-  }
-  if(newProduct.categoryID.length>1){
-    swal("Ingrese una categoria al menos")
-  }
-    e.preventDefault();
-    await axios.post(`${GET_PRODUCTS_URL}/create`, newProduct, {
-      headers: {
-        authorization: getToken(),
-      },
-    });
+    if (newProduct.name === undefined) {
+      e.preventDefault();
+      swal("Ingrese un nombre al producto");
+    } else if (newProduct.price === 0) {
+      e.preventDefault();
+      swal("Ingrese un precio valido");
+    } else if (newProduct.image.length === 0) {
+      e.preventDefault();
+      swal("Agregue una foto por lo menos");
+    } else if (newProduct.description.length < 50) {
+      e.preventDefault();
+      swal("Ingrese una descripcion con al menos 50 caracteres");
+    } else if (newProduct.categoryID.length < 1) {
+      e.preventDefault();
+      swal("Ingrese una categoria al menos");
+    } else if (newProduct.stock < 1) {
+      e.preventDefault();
+      swal("Ingrese un stock");
+    } else {
+      console.log(newProduct, "", newProduct.categoryID.length);
 
-    return swal("Este producto ha sido creado exitosamente");
+      e.preventDefault();
+      await axios.post(`${GET_PRODUCTS_URL}create`, newProduct, {
+        headers: {
+          authorization: getToken(),
+        },
+      });
+
+      swal("Este producto ha sido creado exitosamente");
+    }
   };
 
   const onChangeInput = (e) => {
@@ -67,7 +74,9 @@ swal("Agregue una foto por lo menos")
     setImage(e.target.value);
   };
   const onAddImage = (image) => {
-    if (!newProduct.image.includes(image)) {
+    if (image.length < 10) {
+      swal("Ingrese un url valido");
+    } else if (!newProduct.image.includes(image)) {
       setNewProduct({
         ...newProduct,
         image: [...newProduct.image, image],
@@ -78,7 +87,6 @@ swal("Agregue una foto por lo menos")
         image: newProduct.image.filter((e) => e != image),
       });
     }
-    console.log(newProduct.image);
   };
   const categoris = (catID) => {
     if (!newProduct.categoryID.includes(catID)) {
@@ -92,7 +100,6 @@ swal("Agregue una foto por lo menos")
         categoryID: newProduct.categoryID.filter((e) => e != catID),
       });
     }
-    console.log(newProduct.categoryID);
   };
 
   return (
@@ -189,7 +196,7 @@ swal("Agregue una foto por lo menos")
                         newProduct.categoryID.includes(cat.id)
                           ? "dark"
                           : "secondary"
-                      } // variant="outline-dark"
+                      }
                       onClick={() => categoris(cat.id)}
                     >
                       {cat.nameCategory}
@@ -209,6 +216,7 @@ swal("Agregue una foto por lo menos")
                 onChangeInput(e);
               }}
               min="0"
+              defaultValue="0"
             />
           </Form.Group>
           <Button variant="dark" type="submit">
