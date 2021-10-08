@@ -11,8 +11,6 @@ import { addOrEditCart, removeProductCart } from "../../cart/index";
 export function ProductDetail() {
   const dispatch = useDispatch();
   const { idParams } = useParams();
-  const params = window.location.pathname;
-  const idParams = params.split("/").pop();
   const [add, setAdd] = useState(false);
   const [remove, setRemove] = useState(false);
   const validate = isAuthorized();
