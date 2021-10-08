@@ -51,7 +51,7 @@ function App() {
         <Route exact path="/changepassword/:token">
           <ChangePassword />
         </Route>
-        <Route exact path="/home" children={() => <Home />} />
+        <Route exact path="/home" children={<Home />} />
         <Route path="/home/:attribute/:order">
           <Home />
         </Route>
