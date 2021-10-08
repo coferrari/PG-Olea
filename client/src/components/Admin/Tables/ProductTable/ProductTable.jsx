@@ -70,7 +70,9 @@ export default function ProductTable() {
                     <Button>Ver Reviews</Button>
                   </Link>
                 </td>
-                <td>Editar</td>
+                <td> <Link to={`/admin/editproduct/${e.id}`}>
+                    <Button>Editar Producto</Button>
+                  </Link></td>
                 <td>
                   <Button onClick={() => remove(e.name, e.id)}>Eliminar</Button>
                 </td>
