@@ -29,7 +29,6 @@ export default function ProductTable() {
                 authorization: getToken(),
               },
             });
-
             window.location.reload(false);
           },
         },

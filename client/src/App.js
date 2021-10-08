@@ -24,6 +24,7 @@ import CategoriasTable from "./components/Admin/Tables/CategoriasTable/Categoria
 import Review from "./components/Review/Review";
 import ReviewsTable from "./components/Admin/Tables/ReviewsTable/ReviewsTable";
 import CreateCategory from "./components/Admin/CreateCategory/CreateCategory";
+
 function App() {
   const loggedIn = decodeToken();
 
@@ -86,7 +87,10 @@ function App() {
         <Route exact path="/reviews/:productid">
           <ReviewsTable />
         </Route>
-        <Route exact path="/createcategory">
+        <Route exact path="/admin/categoriestable">
+          {loggedIn.admin ? <CategoriasTable /> : <Redirect to="/home" />}
+        </Route>
+        <Route exact path="/admin/createcategory">
           {loggedIn.admin ? <CreateCategory /> : <Redirect to="/home" />}
         </Route>
       </Switch>

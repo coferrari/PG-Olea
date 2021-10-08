@@ -1,27 +1,42 @@
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import { Button, Form, Modal } from "react-bootstrap";
-import { createCategory } from "../../../auth/admin";
-const CreateCategory = () => {
+import { updateCategory } from "../../../../auth/admin";
+import { confirmAlert } from "react-confirm-alert"; // Import
+const CategoriasEdit = ({ id, nameCategory }) => {
   const [show, setShow] = useState(false);
   const [input, setInput] = useState("");
   const handleInputChange = (e) => {
     setInput(e.target.value);
   };
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    await createCategory(input);
-    try {
-      alert("Se creo la categoria");
-      setShow(false);
-    } catch (err) {
-      alert("a");
-    }
+  const update = () => {
+    confirmAlert({
+      title: "Modificar la categoria",
+      message: `Desea modificar ${nameCategory}`,
+      buttons: [
+        {
+          label: "Si",
+          onClick: async () => {
+            console.log("onlick", id);
+            await updateCat(id, input);
+            alert("Se a cambiado el nombre de la categoria");
+            window.location.reload(false);
+          },
+        },
+        {
+          label: "No",
+          onClick: () => console.log("zs"),
+        },
+      ],
+    });
+  };
+  const updateCat = async (id, name) => {
+    console.log("update", id);
+    await updateCategory(id, name);
   };
   return (
     <div>
       <Button variant="primary" onClick={() => setShow(true)}>
-        Crear una categoria
+        Editar nombre
       </Button>
       <Modal
         show={show}
@@ -31,13 +46,15 @@ const CreateCategory = () => {
       >
         <Modal.Header closeButton>
           <Modal.Title id="example-custom-modal-styling-title">
-            Crear una categoria
+            Editar nombre
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form
             onSubmit={(e) => {
-              handleSubmit(e);
+              e.preventDefault();
+              update();
+              setShow(false);
             }}
           >
             <Form.Group className="mb-3">
@@ -49,11 +66,11 @@ const CreateCategory = () => {
                 onChange={handleInputChange}
               />
             </Form.Group>
-            <Button type="submit">Crear</Button>
+            <Button type="submit">Cambiar</Button>
           </Form>
         </Modal.Body>
       </Modal>
     </div>
   );
 };
-export default CreateCategory;
+export default CategoriasEdit;

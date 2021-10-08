@@ -10,7 +10,7 @@ const router = Router();
 router.get("/", categoryControllers.getAll);
 router.get("/:category", categoryControllers.filterByCategory);
 router.post("/", categoryControllers.create);
-router.put("/:id", categoryControllers.update);
+router.put("/:id", categoryControllers.updateName);
 router.delete("/:id", categoryControllers.delete);
 router.post("/addCategories", categoryControllers.addCategories);
 // router.get("/:category", categoryControllers.filterByCategory);
