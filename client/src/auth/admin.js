@@ -43,7 +43,7 @@ export const generateAdminDB = async (username) => {
 };
 export const createCategory = async (input) => {
   const res = await axios.post(
-    `${productUrl}`,
+    `/api/category`,
     { nameCategory: input.texto },
     {
       headers: {

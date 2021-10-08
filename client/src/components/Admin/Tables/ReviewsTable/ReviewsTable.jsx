@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Button, Table } from "react-bootstrap";
-import { getToken, decodeToken } from "../../../../utils/index";
+import { getToken } from "../../../../utils/index";
 import swal from "sweetalert";
 import { confirmAlert } from "react-confirm-alert"; // Import
 import { GET_REVIEWS } from "../../../../consts";

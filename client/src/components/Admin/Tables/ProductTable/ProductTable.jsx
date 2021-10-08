@@ -6,8 +6,8 @@ import { getProducts } from "../../../../redux/actions";
 import swal from "sweetalert";
 import { confirmAlert } from "react-confirm-alert"; // Import
 import { GET_PRODUCTS_URL } from "../../../../consts";
+import { Link } from "react-router-dom";
 import axios from "axios";
-
 export default function ProductTable() {
   const dispatch = useDispatch();
   let products = useSelector((state) => state.productsReducer.products);
@@ -67,9 +67,12 @@ export default function ProductTable() {
                     <Button>Ver Reviews</Button>
                   </Link>
                 </td>
-                <td> <Link to={`/admin/editproduct/${e.id}`}>
+                <td>
+                  {" "}
+                  <Link to={`/admin/editproduct/${e.id}`}>
                     <Button>Editar Producto</Button>
-                  </Link></td>
+                  </Link>
+                </td>
                 <td>
                   <Button onClick={() => remove(e.name, e.id)}>Eliminar</Button>
                 </td>
