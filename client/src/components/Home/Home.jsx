@@ -9,8 +9,7 @@ import { getProducts } from "../../redux/actions/index";
 const Home = () => {
   const dispatch = useDispatch();
   let products = useSelector((state) => state.productsReducer.products);
-  // const params = useParams();
-  // console.log(params);
+  const params = useParams();
   useEffect(() => {
     dispatch(getProducts());
   }, [dispatch]);
@@ -48,8 +47,8 @@ const Home = () => {
 
   return (
     <div>
-      {/* <Search />
-      <Selects /> */}
+      <Search />
+      <Selects />
       <Products products={products} />
     </div>
   );
