@@ -1,52 +1,105 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Form } from "react-bootstrap";
+import {
+  Button,
+  Form,
+  InputGroup,
+  Row,
+  Col,
+  Container,
+  Image,
+} from "react-bootstrap";
 import { getCategories } from "../../../redux/actions";
 import { getToken } from "../../../utils/index";
 import axios from "axios";
 import { GET_PRODUCTS_URL } from "../../../consts";
+import swal from "sweetalert";
 
 export default function CreateProduct() {
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.categoryReducer.categories);
   const [newProduct, setNewProduct] = useState({
-    name: "",
+    name: undefined,
     price: 0,
     newItem: true,
     image: [],
     stock: 0,
     description: "",
-    categoryID: 0,
+    categoryID: [],
     brand: 1,
   });
+  const [image, setImage] = useState();
 
   useEffect(() => {
     dispatch(getCategories());
   }, [dispatch]);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    await axios.post(`${GET_PRODUCTS_URL}/create`, newProduct, {
-      headers: {
-        authorization: getToken(),
-      },
-    });
+    if (newProduct.name === undefined) {
+      e.preventDefault();
+      swal("Ingrese un nombre al producto");
+    } else if (newProduct.price === 0) {
+      e.preventDefault();
+      swal("Ingrese un precio valido");
+    } else if (newProduct.image.length === 0) {
+      e.preventDefault();
+      swal("Agregue una foto por lo menos");
+    } else if (newProduct.description.length < 50) {
+      e.preventDefault();
+      swal("Ingrese una descripcion con al menos 50 caracteres");
+    } else if (newProduct.categoryID.length < 1) {
+      e.preventDefault();
+      swal("Ingrese una categoria al menos");
+    } else if (newProduct.stock < 1) {
+      e.preventDefault();
+      swal("Ingrese un stock");
+    } else {
+      console.log(newProduct, "", newProduct.categoryID.length);
 
-    return alert("done");
+      e.preventDefault();
+      await axios.post(`${GET_PRODUCTS_URL}create`, newProduct, {
+        headers: {
+          authorization: getToken(),
+        },
+      });
+
+      swal("Este producto ha sido creado exitosamente");
+    }
   };
 
   const onChangeInput = (e) => {
-    console.log(newProduct);
     setNewProduct({ ...newProduct, [e.target.name]: e.target.value });
   };
   const onChangeImage = (e) => {
-    setNewProduct((previous) => {
-      console.log(newProduct);
-      return {
-        ...previous,
-        image: [e.target.value],
-      };
-    });
+    setImage(e.target.value);
+  };
+  const onAddImage = (image) => {
+    if (image.length < 10) {
+      swal("Ingrese un url valido");
+    } else if (!newProduct.image.includes(image)) {
+      setNewProduct({
+        ...newProduct,
+        image: [...newProduct.image, image],
+      });
+    } else if (newProduct.image.includes(image)) {
+      setNewProduct({
+        ...newProduct,
+        image: newProduct.image.filter((e) => e !== image),
+      });
+    }
+  };
+  const categoris = (catID) => {
+    if (!newProduct.categoryID.includes(catID)) {
+      setNewProduct({
+        ...newProduct,
+        categoryID: [...newProduct.categoryID, catID],
+      });
+    } else if (newProduct.categoryID.includes(catID)) {
+      setNewProduct({
+        ...newProduct,
+        categoryID: newProduct.categoryID.filter((e) => e !== catID),
+      });
+    }
   };
 
   return (
@@ -73,23 +126,57 @@ export default function CreateProduct() {
               onChange={(e) => {
                 onChangeInput(e);
               }}
+              min="0"
+              defaultValue="0"
             />
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Imagenes</Form.Label>
-            <Form.Control
-              type="imagenes"
-              placeholder="Ingrese Imagenes"
-              name="imagenes"
-              onChange={(e) => {
-                onChangeImage(e);
-              }}
-            />
+            <InputGroup className="mb-3">
+              <Form.Control
+                type="imagenes"
+                placeholder="Ingrese Imagenes"
+                name="imagenes"
+                onChange={(e) => {
+                  onChangeImage(e);
+                }}
+              />
+              <Button
+                onClick={() => onAddImage(image)}
+                variant="outline-secondary"
+              >
+                Añadir
+              </Button>
+            </InputGroup>
+            <Form.Group className="mb-3">
+              <Form.Label>Imagenes Cargadas</Form.Label>
+              <Container>
+                {newProduct.image?.map((e) => (
+                  <Row>
+                    <Col xs={6} md={4}>
+                      <Button
+                        onClick={() =>
+                          setNewProduct({
+                            ...newProduct,
+                            image: newProduct.image.filter((j) => j !== e),
+                          })
+                        }
+                      >
+                        x
+                      </Button>
+                      <Image src={e} rounded />
+                    </Col>
+                  </Row>
+                ))}
+              </Container>
+            </Form.Group>
           </Form.Group>
 
           <Form.Group className="mb-3">
             <Form.Label>Descripcion</Form.Label>
             <Form.Control
+              as="textarea"
+              style={{ height: "100px" }}
               type="descripcion"
               placeholder="Ingrese Descripcion"
               name="description"
@@ -99,23 +186,25 @@ export default function CreateProduct() {
             />
           </Form.Group>
           <Form.Group className="mb-3">
-            <Form.Label>Categorias</Form.Label>
-            <Form.Select
-              name="categoryID"
-              aria-label="Default select example"
-              onChange={(e) => {
-                onChangeInput(e);
-              }}
-            >
-              <option>Seleccione una categoria</option>
+            <Form.Label>Seleccione las Categorias</Form.Label>
+            <div>
               {categories?.map((cat) => {
                 return (
-                  <option name="categoryID" value={cat.id}>
-                    {cat.nameCategory}
-                  </option>
+                  <span key={cat.id}>
+                    <Button
+                      variant={
+                        newProduct.categoryID.includes(cat.id)
+                          ? "dark"
+                          : "secondary"
+                      }
+                      onClick={() => categoris(cat.id)}
+                    >
+                      {cat.nameCategory}
+                    </Button>{" "}
+                  </span>
                 );
               })}
-            </Form.Select>
+            </div>
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Stock</Form.Label>
@@ -126,6 +215,8 @@ export default function CreateProduct() {
               onChange={(e) => {
                 onChangeInput(e);
               }}
+              min="0"
+              defaultValue="0"
             />
           </Form.Group>
           <Button variant="dark" type="submit">

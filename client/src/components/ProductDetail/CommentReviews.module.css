@@ -1,0 +1,25 @@
+.container {
+  position: relative;
+
+  display: block;
+  padding: 0.3rem 2rem;
+}
+
+.span {
+  padding-right: 1rem;
+}
+.gold {
+  color: blue;
+  font-size: 18px;
+}
+.dark {
+  color: grey;
+  font-size: 18px;
+}
+.containerdata {
+  height: 100px;
+}
+.picture {
+  width: 4rem;
+  border: 50%;
+}

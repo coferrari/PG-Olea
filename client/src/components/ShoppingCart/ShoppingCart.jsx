@@ -5,7 +5,9 @@ import ItemsCart from "../ItemsCart/ItemsCart";
 import { clearCart, updateCart } from "../../redux/actions/index";
 import style from "./ShoppingCart.module.css";
 import carrito from "../../img/iconshoppingcart.png";
-import { useHistory } from "react-router";
+import { emptyCart } from "../../cart/index";
+import { isAuthorized, decodeToken } from "../../utils/index";
+
 
 const ShoppingCart = () => {
   const [show, setShow] = useState(false);
@@ -23,7 +25,7 @@ const ShoppingCart = () => {
 
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cartFromLocalStorage));
-  }, []);
+  }, [cartFromLocalStorage]);
 
   useEffect(() => {
     if (clear) {
@@ -34,12 +36,18 @@ const ShoppingCart = () => {
       setClear(false);
       localStorage.setItem("cart", JSON.stringify([]));
     };
-  }, [clear]);
+  }, [dispatch, clear]);
 
   const handleClearCart = (e) => {
     e.preventDefault();
     dispatch(clearCart());
     setClear(true);
+    const validate = isAuthorized();
+    if (validate) {
+      const user = decodeToken();
+      const username = user.username;
+      emptyCart({ username: username });
+    }
   };
 
   const handleCheckout = (e) =>{
@@ -49,11 +57,17 @@ const ShoppingCart = () => {
   }
 
   const totalSum = productsCart?.reduce((acc, curr) => {
-    return acc + parseInt(curr.price) * curr.quantity;
+    const result = curr.Carrito_Products
+      ? acc + parseInt(curr.price) * curr.Carrito_Products.quantity
+      : acc + parseInt(curr.price) * curr.quantity;
+    return result;
   }, 0);
 
   const totalQuantity = productsCart?.reduce((acc, curr) => {
-    return acc + curr.quantity;
+    const result = curr.Carrito_Products
+      ? acc + curr.Carrito_Products.quantity
+      : acc + curr.quantity;
+    return result;
   }, 0);
 
   const format = (num) => {
@@ -72,7 +86,7 @@ const ShoppingCart = () => {
   return (
     <>
       <button onClick={toggleShow} className={style.carrito}>
-        <img src={carrito} />
+        <img src={carrito} alt={carrito}/>
       </button>
       {productsCart.length !== 0 && (
         <div className={style.itemcarrito}>

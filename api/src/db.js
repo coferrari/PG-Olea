@@ -4,15 +4,34 @@ const fs = require("fs");
 const path = require("path");
 const { dbUser, dbPassword, dbHost, dbName } = require("./utils/config");
 
-const sequelize = dbPassword
-  ? new Sequelize(`postgres://${dbUser}:${dbPassword}@${dbHost}/${dbName}`, {
-      logging: false, // set to console.log to see the raw SQL queries
-      native: false, // lets Sequelize know we can use pg-native for ~30% more speed
-    })
-  : new Sequelize(`postgres://${dbUser}@${dbHost}/${dbName}`, {
-      logging: false,
-      native: false,
-    });
+let sequelize =
+  process.env.NODE_ENV === "production"
+    ? new Sequelize({
+        database: dbName,
+        dialect: "postgres",
+        host: dbHost,
+        port: 5432,
+        username: dbUser,
+        password: dbPassword,
+        pool: {
+          max: 3,
+          min: 1,
+          idle: 10000,
+        },
+        dialectOptions: {
+          ssl: {
+            require: true,
+            // Ref.: https://github.com/brianc/node-postgres/issues/2009
+            rejectUnauthorized: false,
+          },
+          keepAlive: true,
+        },
+        ssl: true,
+      })
+    : new Sequelize(`postgres://${dbUser}:${dbPassword}@${dbHost}/olea`, {
+        logging: false,
+        native: false,
+      });
 
 const basename = path.basename(__filename);
 
@@ -40,8 +59,16 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-const { Brand, Category, Order, Product, User, Carrito, Carrito_Products } =
-  sequelize.models;
+const {
+  Brand,
+  Category,
+  Order,
+  Product,
+  User,
+  Carrito,
+  Carrito_Products,
+  Reviews,
+} = sequelize.models;
 
 // Aca vendrian las relaciones
 
@@ -68,7 +95,11 @@ Product.belongsToMany(Order, { through: "Order_Product" });
 
 Category.belongsToMany(Product, { through: "Product_Category" });
 Product.belongsToMany(Category, { through: "Product_Category" });
-
+//
+Reviews.belongsTo(Product);
+Product.hasMany(Reviews);
+Reviews.belongsTo(User);
+User.hasMany(Reviews);
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
   conn: sequelize, // para importart la conexión { conn } = require('./db.js');

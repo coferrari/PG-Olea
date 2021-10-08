@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Route } from "react-router-dom";
-import { useParams } from "react-router";
-import { useHistory, Redirect, Link } from "react-router-dom";
-import { Button, Table } from "react-bootstrap";
-import { getToken, decodeToken } from "../../utils/index";
+import { Table } from "react-bootstrap";
+import { getToken } from "../../utils/index";
 import { getUsers } from "../../auth/users";
 
 export default function ProductList() {
@@ -16,7 +13,7 @@ export default function ProductList() {
   useEffect(() => {
     get();
   }, []);
-  console.log(users);
+
   return (
     <div>
       <Table striped bordered hover>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { changePassword } from "../../auth/users";
 import style from "./ChangePassword.module.css";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router";
 
 export function validate(input) {
   let errors = {};
@@ -25,21 +25,27 @@ export function validate(input) {
 }
 
 const ChangePassword = () => {
+  const { token } = useParams();
   const [input, setInput] = useState({
     email: "",
     passwordOne: "",
     passwordTwo: "",
   });
-
+  const [errorEmail, setErrorEmail] = useState("");
   const [errors, setErrors] = useState({});
   const history = useHistory();
-
-  const handleSubmit = (e) => {
-      e.preventDefault()
-      changePassword(input.email, input.passwordTwo);
-      history.push('/login')
-  }
-
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await changePassword(input.email, input.passwordTwo, token);
+      // const x = await changePassword(input.email, input.passwordTwo, token);
+      history.push("/login");
+    } catch (err) {
+      setErrorEmail(
+        "Este email no pertenece al usuario que pidio el cambio de contraseña"
+      );
+    }
+  };
 
   const handleChange = (e) => {
     setInput({
@@ -122,6 +128,7 @@ const ChangePassword = () => {
                   Confirmar cambio de contraseña
                 </Button>
               )}
+            <div className={style.errors}>{errorEmail ? errorEmail : ""}</div>
           </Form>
         </div>
       </div>
