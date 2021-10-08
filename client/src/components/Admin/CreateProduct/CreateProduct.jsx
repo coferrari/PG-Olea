@@ -35,6 +35,21 @@ export default function CreateProduct() {
   }, [dispatch]);
 
   const handleSubmit = async (e) => {
+  if(newProduct.name === ""){
+    swal("Ingrese un nombre al producto")
+  }
+  if(newProduct.price === 0){
+    swal("Ingrese un precio valido")
+  }
+  if(newProduct.image.length === 0){
+swal("Agregue una foto por lo menos")
+  }
+  if(newProduct.description.length < 50){
+    swal("Ingrese una descripcion con al menos 50 caracteres")
+  }
+  if(newProduct.categoryID.length>1){
+    swal("Ingrese una categoria al menos")
+  }
     e.preventDefault();
     await axios.post(`${GET_PRODUCTS_URL}/create`, newProduct, {
       headers: {
@@ -105,6 +120,7 @@ export default function CreateProduct() {
                 onChangeInput(e);
               }}
               min="0"
+              defaultValue="0"
             />
           </Form.Group>
           <Form.Group className="mb-3">

@@ -32,14 +32,14 @@ export default function EditProduct() {
   }, [dispatch]);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+   if(newProduct.image.length > 0 && newProduct.name.length > 0 && newProduct.description.length > 0 && newProduct.price > 0){ e.preventDefault();
     await axios.put(`${GET_PRODUCT_DETAIL_URL}/`, newProduct, {
       headers: {
         authorization: getToken(),
       },
     });
 
-    return swal("Este producto ha sido modificado");
+    return swal("Este producto ha sido modificado");}else swal("Debe llenar los campos correctamente")
   };
   const handleEdit = () => {
     if (verImagenes.click === 0) {
@@ -48,27 +48,28 @@ export default function EditProduct() {
     } else setVerImagenes({ ...verImagenes, compr: !verImagenes.compr });
     console.log(newProduct);
   };
+const onChangeInput = (e) => {
+e.preventDefault()
+setNewProduct({
+  ...newProduct,
+  [e.target.name]: e.target.value
+})
 
+}
   return (
     <div className="container">
       <div className="col-lg-4 mx-auto text-center">
         <Form onSubmit={(e) => handleSubmit(e)}>
           <Form.Group className="mb-3">
             <Form.Label>Nombre</Form.Label>
-            {edit ? (
+            
               <Form.Control
                 type="nombre"
                 name="name"
                 defaultValue={product.name}
+                onChange={(e) => onChangeInput(e)}
               />
-            ) : (
-              <Form.Control
-                type="nombre"
-                placeholder="Ingrese nombre"
-                name="name"
-                value={product.name}
-              />
-            )}
+            ) 
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Precio</Form.Label>
@@ -77,6 +78,8 @@ export default function EditProduct() {
               placeholder="Ingrese Precio"
               name="price"
               min="0"
+              onChange={(e) => onChangeInput(e)}
+              defaultValue={product.price}
             />
           </Form.Group>
           <Form.Group className="mb-3">
@@ -92,7 +95,10 @@ export default function EditProduct() {
             <Form.Group className="mb-3">
               <Form.Label>Imagenes Cargadas</Form.Label>{" "}
               <span>
-                <Button onClick={() => handleEdit()}>Ver Imagenes</Button>
+                <Button onClick={(e) => handleEdit(setNewProduct({
+                  ...newProduct,
+                  image: [...newProduct.image,e.target.value]
+                }))}>Ver Imagenes</Button>
               </span>
               {verImagenes.compr ? (
                 <Container>
@@ -128,6 +134,8 @@ export default function EditProduct() {
               type="descripcion"
               placeholder="Ingrese Descripcion"
               name="description"
+              onChange={(e) => onChangeInput(e)}
+              defaultValue={product.description}
             />
           </Form.Group>
           <Form.Group className="mb-3">
@@ -158,6 +166,8 @@ export default function EditProduct() {
               placeholder="Ingrese Stock"
               name="stock"
               min="0"
+              onChange={(e) => onChangeInput(e)}
+              defaultValue={product.stock}
             />
           </Form.Group>
           <Button variant="dark" type="submit">
