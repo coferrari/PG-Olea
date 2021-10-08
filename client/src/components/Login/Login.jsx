@@ -54,6 +54,7 @@ const LoginButton = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      history.push("/home");
       await logIn(input);
       // const x = await logIn(input);
       const validate = isAuthorized();
@@ -78,7 +79,6 @@ const LoginButton = () => {
           }
         }
       }
-      history.push("/home");
     } catch (err) {
       setErrorLogin("Contraseña o usuario incorrecto");
     }
@@ -87,6 +87,7 @@ const LoginButton = () => {
   const responseSuccessGoogle = async (response) => {
     await logInGoogle(response);
     const validate = isAuthorized();
+    history.push("/");
     if (validate) {
       const user = decodeToken();
       const username = user.username;
@@ -108,7 +109,6 @@ const LoginButton = () => {
         }
       }
     }
-    // history.push("/");
   };
 
   const responseErrorGoogle = async (response) => {
