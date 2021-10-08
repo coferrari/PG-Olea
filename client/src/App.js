@@ -51,7 +51,7 @@ function App() {
         <Route exact path="/changepassword/:token">
           <ChangePassword />
         </Route>
-        <Route exact path="/home" render={() => <Home />}></Route>
+        <Route exact path="/home" component={() => <Home />} />
         <Route path="/home/:attribute/:order">
           <Home />
         </Route>
