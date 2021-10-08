@@ -69,6 +69,9 @@ class OrderModel extends Modelo {
       }
     }
   };
+  create = async (req, res, next) => {
+    
+  }
 }
 
 const OrderControllers = new OrderModel(Order);
