@@ -151,9 +151,6 @@ class ProductModel extends Modelo {
     }
     return res.status(404).send("este usuario no tiene un carrito");
   };
-
-  // guardar precios
-
   createCartLogin = async (req, res, next) => {
     const { username, products } = req.body;
     const user = await User.findOne({
@@ -178,7 +175,6 @@ class ProductModel extends Modelo {
     }
     return res.status(404).send("este usuario no tiene un carrito");
   };
-
   deleteProduct = async (req, res, next) => {
     const { productID, username } = req.body;
     try {
@@ -198,7 +194,6 @@ class ProductModel extends Modelo {
       next(error);
     }
   };
-
   searchName = async (req, res, next) => {
     const { name } = req.query;
     if (name) {
@@ -221,6 +216,25 @@ class ProductModel extends Modelo {
       } else if (!product) {
         res.status(404).send("no hay un producto con ese id");
       }
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  editStock = async (req, res, next) => {
+    const { stock, productID } = req.body;
+    try {
+      this.model.update(
+        {
+          stock: stock,
+        },
+        {
+          where: {
+            id: productID,
+          },
+        }
+      );
+      res.status(200).send("updated");
     } catch (err) {
       next(err);
     }
