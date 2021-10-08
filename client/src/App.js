@@ -31,13 +31,7 @@ function App() {
       <ShoppingCart />
 
       <Switch>
-        <Route
-          exact
-          path="/"
-          render={() => {
-            <Landing />;
-          }}
-        />
+        <Route exact path="/" component={<Landing />} />
 
         <Route
           exact
