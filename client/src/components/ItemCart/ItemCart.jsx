@@ -6,7 +6,7 @@ import { Button } from "react-bootstrap";
 import { isAuthorized, decodeToken } from "../../utils/index";
 import { addOrEditCart, removeProductCart } from "../../cart/index";
 
-const ItemCart = ({ id, name, image, price, quantity }) => {
+const ItemCart = ({ id, name, image, price, quantity, stock }) => {
   const dispatch = useDispatch();
   const [remove, setRemove] = useState(false);
   const validate = isAuthorized();
@@ -21,7 +21,6 @@ const ItemCart = ({ id, name, image, price, quantity }) => {
   if (index >= 0) {
     cartFromLocalStorage[index].quantity = q;
   }
-
   // me va actualizando las cantidades del carrito
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cartFromLocalStorage));
@@ -140,6 +139,7 @@ const ItemCart = ({ id, name, image, price, quantity }) => {
             className={style.btn}
             variant="dark"
             type="submit"
+            disabled={q === stock ? true : false} 
             onClick={(e) => handleAddOne(e)}
           >
             +
