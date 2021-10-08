@@ -9,7 +9,7 @@ import { getProducts } from "../../redux/actions/index";
 const Home = () => {
   const dispatch = useDispatch();
   let products = useSelector((state) => state.productsReducer.products);
-  const params = useParams();
+  // const params = useParams();
   useEffect(() => {
     dispatch(getProducts());
   }, [dispatch]);
