@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
 import { Button, Table } from "react-bootstrap";
 import { getCategories } from "../../../../redux/actions";
 import swal from "sweetalert";
 import CategoriasEdit from "../CategoriasTable/CategoriasEdit";
 import { deleteCategory } from "../../../../auth/admin";
-import { confirmAlert } from "react-confirm-alert"; // Import
+import { confirmAlert } from "react-confirm-alert";
 import CreateCategory from "../../CreateCategory/CreateCategory";
 export default function CategoriasTable() {
   const dispatch = useDispatch();
@@ -51,7 +50,7 @@ export default function CategoriasTable() {
         <tbody>
           {categories?.map((e) => {
             return (
-              <tr>
+              <tr key={`${e.id}300`}>
                 <td>{e.id}</td>
                 <td>{e.nameCategory}</td>
                 <td>

@@ -90,9 +90,6 @@ function App() {
         <Route exact path="/admin/categoriestable">
           {loggedIn.admin ? <CategoriasTable /> : <Redirect to="/home" />}
         </Route>
-        <Route exact path="/admin/createcategory">
-          {loggedIn.admin ? <CreateCategory /> : <Redirect to="/home" />}
-        </Route>
       </Switch>
     </div>
   );

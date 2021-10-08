@@ -10,6 +10,6 @@ const router = Router();
 router.get("/", reviewsControllers.getAll);
 router.post("/", reviewsControllers.create);
 router.put("/:id", reviewsControllers.update);
-router.delete("/:id", reviewsControllers.delete);
+router.delete("/:id", isAdmin, reviewsControllers.delete);
 router.get("/:id", reviewsControllers.getByProduct);
 module.exports = router;
