@@ -1,17 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { searchProducts } from "../../redux/actions";
+import React, { useState } from "react";
+import { useHistory } from "react-router";
 
 export function Search() {
   const history = useHistory();
   const [input, setInput] = useState({
     name: "",
   });
-  const dispatch = useDispatch();
-  const { searchedProducts } = useSelector(
-    (state) => state.searchProductsReducer
-  );
+
   const handleChange = function (e) {
     setInput({
       ...input,

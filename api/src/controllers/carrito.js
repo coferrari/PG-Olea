@@ -1,4 +1,4 @@
-const { Carrito, Carrito_Products } = require("../db.js");
+const { Carrito, Carrito_Products, User, Product } = require("../db.js");
 const Modelo = require("./index.js");
 
 class CarritoModel extends Modelo {
@@ -18,7 +18,43 @@ class CarritoModel extends Modelo {
       next(error);
     }
   };
+  getByUsername = async (req, res, next) => {
+    const { username } = req.query;
+    try {
+      const product = await Carrito.findOne({
+        where : {
+          userUsername: username
+        },
+        include: Product
+      });
+      return res.json(product);
+    } catch (error) {
+      next(error);
+    }
+  };
+  emptyCart = async (req, res, next) => {
+    const { username } = req.body;
+    try {
+      const user = await User.findOne({
+        where: {
+          username: username
+        }
+      })
+      const carrito = await this.model.destroy({
+        where: {
+          userUsername: username
+        }
+      });
+      const newCarrito = await this.model.create()
+      user.setCarrito(newCarrito.dataValues.id)
+      res.status(200).send(newCarrito);
+    } catch (error) {
+      next(error);
+    }
+  };
 }
+
+
 
 const carritoControllers = new CarritoModel(Carrito);
 

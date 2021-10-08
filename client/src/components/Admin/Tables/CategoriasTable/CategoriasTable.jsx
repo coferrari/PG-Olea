@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
 import { Button, Table } from "react-bootstrap";
 import { getCategories } from "../../../../redux/actions";
 import swal from "sweetalert";
@@ -41,6 +42,7 @@ export default function CategoriasTable() {
       <Table striped bordered hover>
         <thead>
           <tr>
+
             <th>Id</th>
             <th>Nombre</th>
             <th>Editar</th>
@@ -61,6 +63,7 @@ export default function CategoriasTable() {
                     Eliminar
                   </Button>
                 </td>
+
               </tr>
             );
           })}

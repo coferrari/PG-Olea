@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Route, Redirect, Switch } from "react-router-dom";
 import Home from "./components/Home/Home";
 import CategoryProduct from "./components/CategoryProduct/CategoryProduct";
 import { Search } from "./components/Search/Search";
@@ -34,8 +34,11 @@ function App() {
     <div>
       <Navbar />
       <ShoppingCart />
+
       <Switch>
-        <Route exact path="/" component={Landing} />
+        <Route exact path="/">
+          <Landing />
+        </Route>
         <Route exact path="/login">
           <LoginButton />
         </Route>
@@ -48,7 +51,7 @@ function App() {
         <Route exact path="/requestchangepassword">
           <RequestChangePassword />
         </Route>
-        <Route exact path="/changepassword">
+        <Route exact path="/changepassword/:token">
           <ChangePassword />
         </Route>
         <Route exact path="/home">

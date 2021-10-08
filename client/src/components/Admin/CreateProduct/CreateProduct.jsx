@@ -84,7 +84,7 @@ export default function CreateProduct() {
     } else if (newProduct.image.includes(image)) {
       setNewProduct({
         ...newProduct,
-        image: newProduct.image.filter((e) => e != image),
+        image: newProduct.image.filter((e) => e !== image),
       });
     }
   };
@@ -97,7 +97,7 @@ export default function CreateProduct() {
     } else if (newProduct.categoryID.includes(catID)) {
       setNewProduct({
         ...newProduct,
-        categoryID: newProduct.categoryID.filter((e) => e != catID),
+        categoryID: newProduct.categoryID.filter((e) => e !== catID),
       });
     }
   };
@@ -158,7 +158,7 @@ export default function CreateProduct() {
                         onClick={() =>
                           setNewProduct({
                             ...newProduct,
-                            image: newProduct.image.filter((j) => j != e),
+                            image: newProduct.image.filter((j) => j !== e),
                           })
                         }
                       >

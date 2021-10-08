@@ -36,14 +36,14 @@ const getTemplate = (name, token) => {
           <h2>Hola ${name}</h2>
           <p>Para confirmar tu cuenta, ingresa al siguiente enlace</p>
           <a
-              href="http://localhost:3000/auth/confirmregister/${token}"
+              href="https://olea-iota.vercel.app/auth/confirmregister/${token}"
               target="_blank"
           >Confirmar Cuenta</a>
       </div>
     `;
 };
 
-const getTemplateChangePassword = (email) => {
+const getTemplateChangePassword = (email, token) => {
   return `
       <head>
           <link rel="stylesheet" href="./style.css">
@@ -54,13 +54,13 @@ const getTemplateChangePassword = (email) => {
           <h2>Hola ${email}</h2>
           <p>Para cambiar la contraseña, ingresa al siguiente enlace</p>
           <a
-              href="http://localhost:3000/changepassword"
+              href="https://olea-iota.vercel.app/changepassword/${token}"
               target="_blank"
           >Cambiar contraseña</a>
       </div>
     `;
 };
-const getTemplateAdminChangePassword = (name) => {
+const getTemplateAdminChangePassword = (name, token) => {
   return `
   <head>
       <link rel="stylesheet" href="./style.css">
@@ -70,7 +70,7 @@ const getTemplateAdminChangePassword = (name) => {
       <h2>Hola ${name}</h2>
       <p>Es necesario que reestablezca su contraseña</p>
       <a
-          href="http://localhost:3000/changepassword"
+          href="https://olea-iota.vercel.app/changepassword/${token}"
           target="_blank"
       >Cambiar contraseña</a>
   </div>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 import { getProductDetail } from "../../redux/actions/index";
 import {
   Card,
@@ -59,7 +59,7 @@ export function ProductDetail() {
       dispatch(updateCart(cartRemoved));
       setRemove(false);
     }
-  }, [add, remove]);
+  }, [dispatch, add, remove, id, image, name, price]);
 
   const isInStore = productsCarrito.filter((product) => product.id === id);
 
