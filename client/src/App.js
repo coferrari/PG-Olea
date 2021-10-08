@@ -42,8 +42,7 @@ function App() {
             <Register />;
           }}
         />
-
-        {/* <Route exact path="/logout">
+        <Route exact path="/logout">
           <LogoutButton />
         </Route>
         <Route exact path="/requestchangepassword">
@@ -51,9 +50,9 @@ function App() {
         </Route>
         <Route exact path="/changepassword/:token">
           <ChangePassword />
-        </Route> */}
+        </Route>
         <Route exact path="/home" render={() => <Home />}></Route>
-        {/* <Route path="/home/:attribute/:order">
+        <Route path="/home/:attribute/:order">
           <Home />
         </Route>
         <Route path="/category/:nameCategory">
@@ -81,7 +80,7 @@ function App() {
           <Search />
           <Selects />
           <ProductsByName />
-        </Route> */}
+        </Route>
       </Switch>
     </div>
   );
