@@ -136,7 +136,11 @@ userFunction.googleLogin = async (req, res, next) => {
     newUser.setCarrito(carritocreado.dataValues.id);
     const token = jwt.sign(
       {
+        name: given_name,
         username: email,
+        email: email,
+        surname: family_name,
+        picture,
       },
       process.env.TOKEN_SECRET
     );

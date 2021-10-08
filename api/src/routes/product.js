@@ -13,7 +13,7 @@ router.get("/orderByRating/:rating", productControllers.orderByRating);
 router.get("/searchby/name", productControllers.searchName);
 router.post("/add/carrito", productControllers.addOrEditProduct);
 router.delete("/delete/carrito", productControllers.deleteProduct);
-router.post("/create", isAdmin, productControllers.create);
+router.post("/create", productControllers.create);
 // router.post("/create", isAdmin, productControllers.create); tira error con el isAdmin
 router.post("/add/carrito", productControllers.addOrEditProduct);
 router.put("/:id", isAdmin, productControllers.update);

@@ -16,14 +16,14 @@ import RequestChangePassword from "./components/RequestChangePassword/RequestCha
 import ChangePassword from "./components/ChangePassword/ChangePassword";
 import ShoppingCart from "./components/ShoppingCart/ShoppingCart";
 import ProductsByName from "./components/ProductsByName/ProductsByName";
-import { decodeToken, getToken, tokens } from "./utils/index";
+import { decodeToken } from "./utils/index";
 import CreateProduct from "./components/Admin/CreateProduct/CreateProduct";
 import UsersTable from "./components/Admin/Tables/UsersTable/UsersTable";
 import ProductTable from "./components/Admin/Tables/ProductTable/ProductTable";
 import CategoriasTable from "./components/Admin/Tables/CategoriasTable/CategoriasTable";
 import Review from "./components/Review/Review";
 import ReviewsTable from "./components/Admin/Tables/ReviewsTable/ReviewsTable";
-import CreateCategory from "./components/Admin/CreateCategory/CreateCategory";
+import Profile from "./components/Profile/Profile";
 
 function App() {
   const loggedIn = decodeToken();
@@ -89,6 +89,9 @@ function App() {
         </Route>
         <Route exact path="/admin/categoriestable">
           {loggedIn.admin ? <CategoriasTable /> : <Redirect to="/home" />}
+        </Route>
+        <Route exact path="/account">
+          <Profile />
         </Route>
       </Switch>
     </div>
