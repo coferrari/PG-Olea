@@ -26,6 +26,7 @@ const productos = require("./json/productos");
 const admin = require("./json/admins");
 const axios = require("axios");
 const { User } = require("./src/db");
+
 // Syncing all the models at once.
 conn.sync({ force: true }).then(() => {
   //Posteo todas las marcas y categorias

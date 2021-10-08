@@ -58,7 +58,7 @@ export default function CategoriasTable() {
                 </td>
                 <td>
                   <Button onClick={() => remove(e.nameCategory, e.id)}>
-                    Remove
+                    Eliminar
                   </Button>
                 </td>
               </tr>

@@ -241,7 +241,7 @@ export default function EditProduct() {
             Completar Edicion
           </Button>
         </Form>
-      </div>{" "}
+      </div>
     </div>
   );
 }

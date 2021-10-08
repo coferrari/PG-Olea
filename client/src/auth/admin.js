@@ -1,8 +1,8 @@
 import axios from "axios";
 import { getToken } from "../utils";
-const baseUrl = "http://localhost:3001/api/admin";
-const usersUrl = "http://localhost:3001/api/user";
-const productUrl = "http://localhost:3001/api/category";
+const baseUrl = "/api/admin";
+const usersUrl = "/api/user";
+const productUrl = "/api/category";
 export const getUsers = async () => {
   const res = await axios.get(`${usersUrl}`, {
     headers: {
