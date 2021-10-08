@@ -1,5 +1,10 @@
 import React from "react";
-import { Route, Redirect, Switch, Router } from "react-router-dom";
+import {
+  Route,
+  Redirect,
+  Switch,
+  BrowserRouter as Router,
+} from "react-router-dom";
 import Home from "./components/Home/Home";
 import CategoryProduct from "./components/CategoryProduct/CategoryProduct";
 import { Search } from "./components/Search/Search";
