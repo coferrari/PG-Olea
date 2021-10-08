@@ -51,8 +51,9 @@ export default function ProductTable() {
             <th>Price</th>
             <th>Stock</th>
             <th>Descripción</th>
-            <th>Edit</th>
-            <th>Remove</th>
+            <th>Reviews</th>
+            <th>Editar</th>
+            <th>Eliminar</th>
           </tr>
         </thead>
         <tbody>
@@ -64,9 +65,14 @@ export default function ProductTable() {
                 <td>{e.price}</td>
                 <td>{e.stock}</td>
                 <td>{e.description}</td>
-                <td>Update</td>
                 <td>
-                  <Button onClick={() => remove(e.name, e.id)}>Remove</Button>
+                  <Link to={`/admin/reviews/${e.id}`}>
+                    <Button>Ver Reviews</Button>
+                  </Link>
+                </td>
+                <td>Editar</td>
+                <td>
+                  <Button onClick={() => remove(e.name, e.id)}>Eliminar</Button>
                 </td>
               </tr>
             );
