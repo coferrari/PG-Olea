@@ -16,14 +16,16 @@ import RequestChangePassword from "./components/RequestChangePassword/RequestCha
 import ChangePassword from "./components/ChangePassword/ChangePassword";
 import ShoppingCart from "./components/ShoppingCart/ShoppingCart";
 import ProductsByName from "./components/ProductsByName/ProductsByName";
-import { decodeToken, getToken, tokens } from "./utils/index";
+import { decodeToken } from "./utils/index";
 import CreateProduct from "./components/Admin/CreateProduct/CreateProduct";
 import UsersTable from "./components/Admin/Tables/UsersTable/UsersTable";
 import ProductTable from "./components/Admin/Tables/ProductTable/ProductTable";
 import CategoriasTable from "./components/Admin/Tables/CategoriasTable/CategoriasTable";
 import Review from "./components/Review/Review";
 import ReviewsTable from "./components/Admin/Tables/ReviewsTable/ReviewsTable";
+import EditProduct from "./components/Admin/EditProduct/EditProduct";
 import CreateCategory from "./components/Admin/CreateCategory/CreateCategory";
+
 
 function App() {
   const loggedIn = decodeToken();
@@ -84,8 +86,11 @@ function App() {
         <Route exact path="/createreview/:productid">
           <Review />
         </Route>
-        <Route exact path="/reviews/:productid">
-          <ReviewsTable />
+        <Route exact path="/admin/reviews/:productid">
+          {loggedIn.admin ? <ReviewsTable /> : <Redirect to="/home" />}
+        </Route>
+        <Route exact path="/admin/editproduct/:productid">
+          {loggedIn.admin ? <EditProduct /> : <Redirect to="/home" />}
         </Route>
         <Route exact path="/admin/categoriestable">
           {loggedIn.admin ? <CategoriasTable /> : <Redirect to="/home" />}
