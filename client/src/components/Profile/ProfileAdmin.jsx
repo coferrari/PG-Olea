@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import BarraAdmin from "./BarraAdmin";
 import { decodeToken } from "../../utils";
+import BarraAdmin from "./BarraAdmin";
 const Profile = () => {
   const [usuario, setUsuario] = useState();
   const profile = () => {

@@ -41,3 +41,30 @@ export const generateAdminDB = async (username) => {
   );
   return res.data;
 };
+export const createCategory = async (input) => {
+  const res = await axios.post(
+    `${productUrl}`,
+    { nameCategory: input.texto },
+    {
+      headers: {
+        authorization: getToken(),
+      },
+    }
+  );
+  return res.data;
+};
+export const deleteCategory = async (id) => {
+  const res = await axios.delete(`/api/category/${id}`, {
+    headers: {
+      authorization: getToken(),
+    },
+  });
+  return res.data;
+};
+export const updateCategory = async (id, nameCategory) => {
+  console.log(id, nameCategory);
+  const res = await axios.put(`/api/category/${id}`, {
+    nameCategory: nameCategory,
+  });
+  return res.data;
+};
