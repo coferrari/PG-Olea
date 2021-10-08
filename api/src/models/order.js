@@ -19,5 +19,9 @@ module.exports = (sequelize) => {
       allowNull: false,
       defaultValue: "creada",
     },
+    date: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    }
   });
 };

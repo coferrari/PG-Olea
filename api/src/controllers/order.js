@@ -1,4 +1,4 @@
-const { Order } = require("../db.js");
+const { Order, Order_Products,  } = require("../db.js");
 const Modelo = require("./index.js");
 class OrderModel extends Modelo {
   constructor(model) {
@@ -69,6 +69,32 @@ class OrderModel extends Modelo {
       }
     }
   };
+  createOrder = async (req, res, next)  => {
+    try {
+      const { username, price, products } = req.body; 
+      const ordenCreada = await this.model.create({
+        userUsername: username,
+        price,
+        date: Date().slice(0,10).replace(/-/g,'/'),
+      })
+      products.map(async (p) => {
+        ordenCreada.addProduct(p.id);
+        await Order_Products.update(
+          { quantity: p.quantity },
+          {
+            where: {
+              productId: p.id,
+              orderId: ordenCreada.id
+            },
+          }
+        );
+    })
+    res.json(ordenCreada);
+  } catch (error) {
+    console.log('entre al catch');
+    next(error);
+    };
+  }
 }
 
 const OrderControllers = new OrderModel(Order);
