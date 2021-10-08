@@ -6,11 +6,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../../redux/actions/index";
 import { useParams } from "react-router-dom";
 
-export default function Home() {
+const Home = () => {
   const dispatch = useDispatch();
   let products = useSelector((state) => state.productsReducer.products);
   const { attribute } = useParams();
   const { order } = useParams();
+  const params = useParams();
+  console.log(params, "pez");
   useEffect(() => {
     dispatch(getProducts());
   }, [dispatch]);
@@ -53,4 +55,5 @@ export default function Home() {
       <Products products={products} />
     </div>
   );
-}
+};
+export default Home;

@@ -34,7 +34,7 @@ const NavResponsive = () => {
               <Nav className="me-auto">
                 {categories?.map((category) => {
                   return (
-                    <Nav.Link>
+                    <Nav.Link key={category.id}>
                       <Link
                         to={`/category/${category.nameCategory}`}
                         className={style.links}
@@ -78,7 +78,7 @@ const NavResponsive = () => {
             <Nav className="me-auto">
               {categories?.map((category) => {
                 return (
-                  <Nav.Link>
+                  <Nav.Link key={category.id}>
                     <Link
                       to={`/category/${category.nameCategory}`}
                       className={style.links}
