@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter as Router, Switch } from "react-router-dom";
+import { HashRouter, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./redux/store/index";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -16,11 +16,11 @@ axios.defaults.baseURL = process.env.REACT_APP_API || "http://localhost:3001";
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router>
+    <HashRouter>
       <Switch>
         <App />
       </Switch>
-    </Router>
+    </HashRouter>
   </Provider>,
 
   document.getElementById("root")
