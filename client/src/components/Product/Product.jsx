@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import styles from "./Product.module.css";
 import { Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";

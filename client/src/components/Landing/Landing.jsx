@@ -3,7 +3,7 @@ import Carousel from "../Carousel/Carousel";
 import { Button } from "react-bootstrap";
 import styles from "./Landing.module.css";
 import Footer from "../Footer/Footer";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 function Landing() {
   return (
     <div className={styles.container}>

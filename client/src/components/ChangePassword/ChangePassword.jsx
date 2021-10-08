@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { changePassword } from "../../auth/users";
 import style from "./ChangePassword.module.css";
-import { useHistory, useParams } from "react-router";
+import { useHistory, useParams } from "react-router-dom";
 
 export function validate(input) {
   let errors = {};

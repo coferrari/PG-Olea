@@ -4,7 +4,7 @@ import Selects from "../Selects/Selects";
 import { Search } from "../Search/Search";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../../redux/actions/index";
-// import { useParams } from "react-router";
+// import { useParams } from "react-router-dom";
 
 const Home = () => {
   const dispatch = useDispatch();

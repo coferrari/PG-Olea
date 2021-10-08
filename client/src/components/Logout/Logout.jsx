@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 import { logOut } from "../../auth/users";
 import { Button } from "react-bootstrap";
 import style from "./Logout.module.css";
