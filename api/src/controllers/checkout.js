@@ -19,16 +19,14 @@ checkoutControllers.pago = (req, res) => {
             }
         })
     }
-    console.log(preference)
     mercadopago.preferences.create(preference)
         .then(function (respuesta) {
             // Este valor reemplazará el string "<%= global.id %>" en tu HTML
             //   global.id = response.body.id;
             const redireccion = respuesta.body.init_point
-            console.log(redireccion)
             res.send(redireccion)
         }).catch(function (error) {
-            console.log(error);
+            (error);
         });
 
 }
