@@ -129,7 +129,6 @@ class ProductModel extends Modelo {
   };
   addOrEditProduct = async (req, res, next) => {
     const { productID, username, quantity } = req.body;
-    console.log(productID, username, quantity, "cantidad");
     const producto = await this.model.findByPk(productID);
     const user = await User.findOne({
       where: { username: username },

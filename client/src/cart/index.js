@@ -6,6 +6,5 @@ export const addOrEditCart = async (payload) => {
   return res;
 };
 export const removeProductCart = async (payload) => {
-  console.log(payload);
   return await axios.delete(`${REMOVE_CART}`, { data: payload });
 };
