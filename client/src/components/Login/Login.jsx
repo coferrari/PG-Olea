@@ -108,11 +108,11 @@ const LoginButton = () => {
         }
       }
     }
-    history.push("/");
+    // history.push("/");
   };
 
   const responseErrorGoogle = async (response) => {
-    history.push("/");
+    // history.push("/");
   };
 
   return (

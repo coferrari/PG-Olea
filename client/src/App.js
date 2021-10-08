@@ -34,11 +34,9 @@ function App() {
         <Route exact path="/">
           <Landing />
         </Route>
-
         <Route exact path="/login">
           <LoginButton />
         </Route>
-
         <Route exact path="/register">
           <Register />
         </Route>
