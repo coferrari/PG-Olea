@@ -31,7 +31,7 @@ function App() {
       <ShoppingCart />
 
       <Switch>
-        <Route exact path="/" component={<Landing />} />
+        <Route exact path="/" children={<Landing />} />
 
         <Route
           exact
