@@ -31,17 +31,17 @@ function App() {
       <ShoppingCart />
 
       <Switch>
-        <Route exact path="/" children={<Landing />} />
+        <Route exact path="/">
+          <Landing />
+        </Route>
 
-        <Route exact path="/login" children={() => <LoginButton />} />
+        <Route exact path="/login">
+          <LoginButton />
+        </Route>
 
-        <Route
-          exact
-          path="/register"
-          render={() => {
-            <Register />;
-          }}
-        />
+        <Route exact path="/register">
+          <Register />
+        </Route>
         <Route exact path="/logout">
           <LogoutButton />
         </Route>
