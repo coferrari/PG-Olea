@@ -33,13 +33,7 @@ function App() {
       <Switch>
         <Route exact path="/" children={<Landing />} />
 
-        <Route
-          exact
-          path="/login"
-          render={() => {
-            <LoginButton />;
-          }}
-        />
+        <Route exact path="/login" children={<LoginButton />} />
 
         <Route
           exact
