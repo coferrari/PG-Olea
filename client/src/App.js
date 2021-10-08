@@ -55,7 +55,10 @@ function App() {
         <Route path="/home/:attribute/:order">
           <Home />
         </Route>
-        <Route path="/category/:nameCategory">
+        <Route exact path="/category/:nameCategory">
+          <CategoryProduct />
+        </Route>
+        <Route path="/category/:nameCategory/:attribute/:order">
           <CategoryProduct />
         </Route>
         <Route path="/product/:idParams">

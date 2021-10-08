@@ -9,6 +9,7 @@ export default function Selects() {
   useEffect(() => {
     dispatch(getCategories());
   }, [dispatch]);
+
   const handleOrderSelect = function (order) {
     order = order.split(" ");
     history.push(`/home/${order[0]}/${order[1]}`);
@@ -16,17 +17,18 @@ export default function Selects() {
 
   return (
     <div>
-      <select onChange={(e) => handleOrderSelect(e.target.value)}>
-        <option value={"name asc"}>Order by name: A-Z</option>
-        <option value={"name desc"}>Order by name: Z-A</option>
-        <option
-          value={"price desc"}
-          onChange={(e) => handleOrderSelect(e.target.name, e.target.value)}
-        >
-          Order by price: highest to lowest
-        </option>
-        <option value={"price asc"}>Order by price: lowest to highest</option>
-      </select>
+    <select onChange={(e) => handleOrderSelect(e.target.value)}>
+    <option value="" selected disabled hidden>Ordenar por...</option>
+      <option value={"name asc"}>Nombre: A-Z</option>
+      <option value={"name desc"}>Nombre: Z-A</option>
+      <option
+        value={"price desc"}
+        onChange={(e) => handleOrderSelect(e.target.name, e.target.value)}
+      >
+        Precio: más alto a más bajo
+      </option>
+      <option value={"price asc"}>Precio: más bajo a más alto</option>
+    </select>
     </div>
   );
 }
