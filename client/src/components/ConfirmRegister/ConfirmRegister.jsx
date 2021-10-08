@@ -1,7 +1,7 @@
 import React from "react";
 import { confirmRegister } from "../../auth/users";
 
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router";
 import { Button } from "react-bootstrap";
 
 const ConfirmRegister = () => {

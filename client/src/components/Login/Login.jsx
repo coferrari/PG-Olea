@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory, Link } from "react-router";
 
 import { Form, Button } from "react-bootstrap";
 import { logIn, logInGoogle } from "../../auth/users";

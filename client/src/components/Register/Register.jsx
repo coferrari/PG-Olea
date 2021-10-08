@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { register } from "../../auth/users";
-import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router";
 import style from "./Register.module.css";
-import { confirmAlert } from "react-confirm-alert"; 
-import "react-confirm-alert/src/react-confirm-alert.css"; 
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
 
 export function validate(input) {
   let errors = {};

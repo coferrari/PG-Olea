@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router";
 import { logOut } from "../../auth/users";
 import { Button } from "react-bootstrap";
 import style from "./Logout.module.css";
@@ -13,14 +13,16 @@ const LogoutButton = () => {
     e.preventDefault();
     logOut();
     localStorage.setItem("cart", JSON.stringify([]));
-    dispatch(clearCart([]))
+    dispatch(clearCart([]));
     history.push("/");
   };
 
   return (
     <div className={style.container}>
-     <h3 className={style.title}>¿seguro que deseas salir?</h3>
-      <Button variant="dark" type="submit"
+      <h3 className={style.title}>¿seguro que deseas salir?</h3>
+      <Button
+        variant="dark"
+        type="submit"
         onClick={(e) => {
           handleClick(e);
         }}
