@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductsByCategory } from "../../redux/actions";
 import Products from "../Products/Products";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 
 export default function CategoryProduct() {
   const dispatch = useDispatch();
