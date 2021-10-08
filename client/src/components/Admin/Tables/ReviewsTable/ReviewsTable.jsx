@@ -57,7 +57,7 @@ export default function ReviewsTable() {
             <th>Usuario</th>
             <th>Rating</th>
             <th>Comentario</th>
-            <th>Remove</th>
+            <th>Eliminar</th>
           </tr>
         </thead>
         <tbody>
@@ -69,7 +69,7 @@ export default function ReviewsTable() {
                 <td>{e.rating}</td>
                 <td>{e.comment}</td>
                 <td>
-                  <Button onClick={() => remove(e.id)}>Remove</Button>
+                  <Button onClick={() => remove(e.id)}>Eliminar</Button>
                 </td>
               </tr>
             );
