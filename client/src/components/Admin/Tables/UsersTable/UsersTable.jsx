@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Table } from "react-bootstrap";
+import { Table, Button } from "react-bootstrap";
 import swal from "sweetalert";
 import {
   getUsers,
@@ -173,31 +173,36 @@ export default function UsersTable() {
                 {user.admin ? (
                   <td> Si</td>
                 ) : (
-                  <td onClick={() => generateAdmin(user.username)}>
-                    {" "}
-                    Dar admin
+                  <td>
+                    <Button onClick={() => generateAdmin(user.username)}>
+                      Dar admin
+                    </Button>
                   </td>
                 )}
                 {user.admin ? (
                   <td></td>
                 ) : (
-                  <td
-                    onClick={() => {
-                      changePass(user.email);
-                    }}
-                  >
-                    Cambiar contraseña
+                  <td>
+                    <Button
+                      onClick={() => {
+                        changePass(user.email);
+                      }}
+                    >
+                      Cambiar contraseña
+                    </Button>
                   </td>
                 )}
                 {user.admin ? (
                   <td></td>
                 ) : (
-                  <td
-                    onClick={() => {
-                      removeUser(user.username);
-                    }}
-                  >
-                    Eliminar usuario
+                  <td>
+                    <Button
+                      onClick={() => {
+                        removeUser(user.username);
+                      }}
+                    >
+                      Eliminar usuario
+                    </Button>
                   </td>
                 )}
                 <td>{user.createdAt.slice(0, 10)}</td>

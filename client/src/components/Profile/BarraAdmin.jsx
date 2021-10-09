@@ -23,6 +23,7 @@ const BarraAdmin = () => {
           <h1>Perfil</h1>
         </Tab>
         <Tab eventKey="Productos" title="Productos">
+          <h1>Productos</h1>
           <ProductTable />
         </Tab>
 
