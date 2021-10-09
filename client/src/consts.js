@@ -7,3 +7,7 @@ export const GET_PRODUCT_DETAIL_URL =
 export const ADD_OR_EDIT_CART = "http://localhost:3001/api/product/add/carrito";
 export const REMOVE_CART = "http://localhost:3001/api/product/delete/carrito";
 export const GET_REVIEWS = "http://localhost:3001/api/reviews/";
+export const ADD_CATEGORY_PRODUCT =
+  "http://localhost:3001/api/category/product/addCategories";
+export const DELET_CATEGORY_PRODUCT =
+  "http://localhost:3001/api/category/product/deleteCategory";

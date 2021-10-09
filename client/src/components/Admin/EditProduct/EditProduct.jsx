@@ -16,7 +16,11 @@ import axios from "axios";
 import swal from "sweetalert";
 import { useParams } from "react-router";
 import { GET_PRODUCTS } from "../../../redux/actions/types";
-import { GET_PRODUCTS_URL } from "../../../consts";
+import {
+  GET_PRODUCTS_URL,
+  ADD_CATEGORY_PRODUCT,
+  DELET_CATEGORY_PRODUCT,
+} from "../../../consts";
 
 export default function EditProduct() {
   const dispatch = useDispatch();
@@ -54,6 +58,7 @@ export default function EditProduct() {
     console.log(newProduct);
   };
   const onChangeInput = (e) => {
+    console.log(product, "newProduct", newProduct);
     e.preventDefault();
     setNewProduct({
       ...newProduct,
@@ -61,13 +66,40 @@ export default function EditProduct() {
     });
     console.log(newProduct);
   };
-  const categoris = (catID) => {
+  const categoris = async (catID) => {
     if (!newProduct.categoryID.includes(catID)) {
+      await axios.post(
+        `${ADD_CATEGORY_PRODUCT}`,
+        {
+          categoriesID: [catID],
+          productID: productid,
+        },
+        {
+          headers: {
+            authorization: getToken(),
+          },
+        }
+      );
       setNewProduct({
         ...newProduct,
         categoryID: [...newProduct.categoryID, catID],
       });
     } else if (newProduct.categoryID.includes(catID)) {
+      await axios.delete(
+        `${DELET_CATEGORY_PRODUCT}`,
+        {
+          data: {
+            categoriesID: [catID],
+            productID: productid,
+          },
+        },
+        {
+          headers: {
+            authorization: getToken(),
+          },
+        }
+      );
+
       setNewProduct({
         ...newProduct,
         categoryID: newProduct.categoryID.filter((e) => e != catID),
@@ -92,6 +124,7 @@ export default function EditProduct() {
       });
     }
   };
+
   return (
     <div className="container">
       <div className="col-lg-4 mx-auto text-center">
@@ -202,7 +235,9 @@ export default function EditProduct() {
                             ? "dark"
                             : "secondary"
                         }
-                        onClick={() => categoris(cat.id)}
+                        onClick={() => {
+                          categoris(cat.id);
+                        }}
                       >
                         {cat.nameCategory}
                       </Button>{" "}
