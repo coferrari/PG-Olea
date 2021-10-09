@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Route, Redirect, Switch } from "react-router-dom";
 import Home from "./components/Home/Home";
 import CategoryProduct from "./components/CategoryProduct/CategoryProduct";
 import { Search } from "./components/Search/Search";
@@ -17,11 +17,15 @@ import ChangePassword from "./components/ChangePassword/ChangePassword";
 import ShoppingCart from "./components/ShoppingCart/ShoppingCart";
 import Checkout from "./components/Checkout/Checkout";
 import ProductsByName from "./components/ProductsByName/ProductsByName";
-import { decodeToken, getToken, tokens } from "./utils/index";
+import { decodeToken } from "./utils/index";
 import CreateProduct from "./components/Admin/CreateProduct/CreateProduct";
 import UsersTable from "./components/Admin/Tables/UsersTable/UsersTable";
 import ProductTable from "./components/Admin/Tables/ProductTable/ProductTable";
 import CategoriasTable from "./components/Admin/Tables/CategoriasTable/CategoriasTable";
+import Review from "./components/Review/Review";
+import ReviewsTable from "./components/Admin/Tables/ReviewsTable/ReviewsTable";
+import Profile from "./components/Profile/Profile";
+import EditProduct from "./components/Admin/EditProduct/EditProduct";
 
 function App() {
   const loggedIn = decodeToken();
@@ -30,8 +34,11 @@ function App() {
     <div>
       <Navbar />
       <ShoppingCart />
+
       <Switch>
-        <Route exact path="/" component={Landing} />
+        <Route exact path="/">
+          <Landing />
+        </Route>
         <Route exact path="/login">
           <LoginButton />
         </Route>
@@ -44,7 +51,7 @@ function App() {
         <Route exact path="/requestchangepassword">
           <RequestChangePassword />
         </Route>
-        <Route exact path="/changepassword">
+        <Route exact path="/changepassword/:token">
           <ChangePassword />
         </Route>
         <Route exact path="/home">
@@ -53,10 +60,13 @@ function App() {
         <Route path="/home/:attribute/:order">
           <Home />
         </Route>
-        <Route path="/category/:nameCategory">
+        <Route exact path="/category/:nameCategory">
           <CategoryProduct />
         </Route>
-        <Route path="/product/:idParams">
+        <Route path="/category/:nameCategory/:attribute/:order">
+          <CategoryProduct />
+        </Route>
+        <Route exact path="/product/:idParams">
           <ProductDetail />
         </Route>
         <Route path="/auth/confirmregister/:token">
@@ -81,6 +91,21 @@ function App() {
           <Search />
           <Selects />
           <ProductsByName />
+        </Route>
+        <Route exact path="/createreview/:productid">
+          <Review />
+        </Route>
+        <Route exact path="/admin/reviews/:productid">
+          {loggedIn.admin ? <ReviewsTable /> : <Redirect to="/home" />}
+        </Route>
+        <Route exact path="/admin/editproduct/:productid">
+          {loggedIn.admin ? <EditProduct /> : <Redirect to="/home" />}
+        </Route>
+        <Route exact path="/admin/categoriestable">
+          {loggedIn.admin ? <CategoriasTable /> : <Redirect to="/home" />}
+        </Route>
+        <Route exact path="/account">
+          <Profile />
         </Route>
       </Switch>
     </div>

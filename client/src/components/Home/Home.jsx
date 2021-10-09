@@ -4,13 +4,12 @@ import Selects from "../Selects/Selects";
 import { Search } from "../Search/Search";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../../redux/actions/index";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 
-export default function Home() {
+const Home = () => {
   const dispatch = useDispatch();
   let products = useSelector((state) => state.productsReducer.products);
   const { attribute, order } = useParams();
-
   useEffect(() => {
     dispatch(getProducts());
   }, [dispatch]);
@@ -53,4 +52,5 @@ export default function Home() {
       <Products products={products} />
     </div>
   );
-}
+};
+export default Home;

@@ -22,4 +22,12 @@ const checkEmailAndPassword = async (req, res, next) => {
   if (!compared) return res.status(401).send("contraseña incorrecta");
   next();
 };
-module.exports = { checkDuplicate, checkEmailAndPassword };
+const checkEmail = async (req, res, next) => {
+  const { email } = req.body;
+  const emailExiste = await User.findOne({ where: { email } });
+  if (!emailExiste) {
+    return res.status(404).send("este email no pertenece a ningun usuario");
+  }
+  next();
+};
+module.exports = { checkDuplicate, checkEmailAndPassword, checkEmail };

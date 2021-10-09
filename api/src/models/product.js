@@ -35,11 +35,6 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING(1234),
       allowNull: false,
     },
-    rating: {
-      type: DataTypes.DECIMAL,
-      allowNull: false,
-      defaultValue: 0,
-    },
     SKU: {
       type: DataTypes.STRING,
       allowNull: true,

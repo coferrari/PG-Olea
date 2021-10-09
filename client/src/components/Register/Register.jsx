@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { register } from "../../auth/users";
-import { useHistory } from "react-router-dom";
-import GoogleLogin from "react-google-login";
+import { useHistory } from "react-router";
 import style from "./Register.module.css";
-import { confirmAlert } from "react-confirm-alert"; // Import
-import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
+
 export function validate(input) {
   let errors = {};
   if (!input.name) {
@@ -39,7 +39,7 @@ const Register = () => {
   const [errors, setErrors] = useState({});
 
 
-  const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+
   const history = useHistory();
 
   const handleChange = (e) => {

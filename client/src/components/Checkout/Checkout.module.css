@@ -80,3 +80,11 @@
   justify-content: center;
   margin: 40px 40px;
 }
+.total {
+  font-size: 30px;
+  display: flex;
+  justify-content: center;
+  color: white;
+  background-color: black;
+  font-family: "Montserrat", sans-serif;
+}

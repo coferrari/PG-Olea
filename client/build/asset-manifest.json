@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/static/css/main.9f810f13.chunk.css",
+    "main.js": "/static/js/main.7ed6e7de.chunk.js",
+    "main.js.map": "/static/js/main.7ed6e7de.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.64d1dff3.js",
+    "runtime-main.js.map": "/static/js/runtime-main.64d1dff3.js.map",
+    "static/css/2.0145219a.chunk.css": "/static/css/2.0145219a.chunk.css",
+    "static/js/2.762a793a.chunk.js": "/static/js/2.762a793a.chunk.js",
+    "static/js/2.762a793a.chunk.js.map": "/static/js/2.762a793a.chunk.js.map",
+    "static/js/3.24b09066.chunk.js": "/static/js/3.24b09066.chunk.js",
+    "static/js/3.24b09066.chunk.js.map": "/static/js/3.24b09066.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/2.0145219a.chunk.css.map": "/static/css/2.0145219a.chunk.css.map",
+    "static/css/main.9f810f13.chunk.css.map": "/static/css/main.9f810f13.chunk.css.map",
+    "static/js/2.762a793a.chunk.js.LICENSE.txt": "/static/js/2.762a793a.chunk.js.LICENSE.txt",
+    "static/media/OLEA marca de agua-07.23ab2207.png": "/static/media/OLEA marca de agua-07.23ab2207.png",
+    "static/media/OLEA marca de agua-08.8c5153df.png": "/static/media/OLEA marca de agua-08.8c5153df.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.64d1dff3.js",
+    "static/css/2.0145219a.chunk.css",
+    "static/js/2.762a793a.chunk.js",
+    "static/css/main.9f810f13.chunk.css",
+    "static/js/main.7ed6e7de.chunk.js"
+  ]
+}

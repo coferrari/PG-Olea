@@ -17,9 +17,9 @@ import style from "../Checkout.module.css";
           <ListGroup.Item className={style.listgroup}>
           <label> Apellido </label><input className={style.input} type="text" placeholder="Apellido" defaultValue={apellido} />
           </ListGroup.Item>
-          <ListGroup.Item className={style.listgroup}>
+          {/* <ListGroup.Item className={style.listgroup}>
           <label> E-mail </label> <input className={style.input} type="text" placeholder="Mail" defaultValue={mail} />
-          </ListGroup.Item>
+          </ListGroup.Item> */}
           <ListGroup.Item className={style.listgroup}>
           <label> Teléfono </label> <input className={style.input} type="text" placeholder="Teléfono" />
           </ListGroup.Item>

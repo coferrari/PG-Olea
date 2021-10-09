@@ -23,6 +23,12 @@ const Checkout = () => {
     (state) => state.carritoReducer.productsCarrito
   );
 
+  let total= 0
+  for(var i=0; i<itemsCheckout.length; i++){
+   let totalPorUnidad = itemsCheckout[i].price * itemsCheckout[i].quantity;
+   total = total + totalPorUnidad;
+  }
+
   const handleConfirmOrder = async (e) => {
     e.preventDefault();
     dispatch(checkoutMercadoPago(itemsCheckout));
@@ -38,6 +44,7 @@ const Checkout = () => {
           <Data datosLogin={datosLogin} />
           <Delivery />
           <Details />
+          <p className={style.total}> Total= $ {total} </p>
           <div className={style.buttonConfirmarCompra}>
           <Button variant="dark" onClick={(e) => handleConfirmOrder(e)}>Confirmar la compra</Button>
           {linkDePago && ((confirmAlert({

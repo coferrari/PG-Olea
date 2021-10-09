@@ -7,6 +7,7 @@ const verifyToken = require("../utils/middlewares/validateToken");
 const {
   checkDuplicate,
   checkEmailAndPassword,
+  checkEmail,
 } = require("../utils/middlewares/checkDuplicate");
 const isAdmin = require("../utils/middlewares/isAdmin");
 const adminFunction = require("../controllers/admin");
@@ -14,11 +15,16 @@ router.get("/", isAdmin, userFunction.getAll);
 router.post("/register", checkDuplicate, userFunction.register);
 router.post("/login", checkEmailAndPassword, userFunction.login);
 router.put("/", verifyToken, userFunction.changePassword);
-router.put("/changepassword", userFunction.changePassword);
+router.put("/changepassword", checkEmail, userFunction.changePassword);
 router.post("/googlelogin", userFunction.googleLogin);
 router.post("/confirmregister", userFunction.confirmRegister);
-router.post("/requestchangepassword", userFunction.requestChangePassword);
+router.post(
+  "/requestchangepassword",
+  checkEmail,
+  userFunction.requestChangePassword
+);
 router.post("/createadmin", userFunction.createAdmin);
 router.post("/changepasswordadmin", isAdmin, adminFunction.changePassword);
-router.delete("/deleteuser/:username", adminFunction.deleteUser);
+router.delete("/deleteuser/:username", isAdmin, adminFunction.deleteUser);
+router.put("/generateadmin", isAdmin, adminFunction.generateAdmin);
 module.exports = router;
