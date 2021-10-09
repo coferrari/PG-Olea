@@ -10,17 +10,12 @@ const ProfileAdmin = () => {
   };
   useEffect(() => {
     profile();
-
   }, [UploadImg]);
-  return (
-    <div> 
-      <img src={usuario ? usuario.picture : null}></img>
-  console.log(usuario);
   return (
     <div>
       <h1>Admin</h1>
-     <UploadImg />
-     <BarraAdmin />
+      <UploadImg />
+      <BarraAdmin />
       <img src={usuario ? usuario.picture : null}></img>
     </div>
   );
