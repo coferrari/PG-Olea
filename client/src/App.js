@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Route, Redirect, Switch } from "react-router-dom";
 import Home from "./components/Home/Home";
 import CategoryProduct from "./components/CategoryProduct/CategoryProduct";
 import { Search } from "./components/Search/Search";
@@ -23,7 +23,9 @@ import ProductTable from "./components/Admin/Tables/ProductTable/ProductTable";
 import CategoriasTable from "./components/Admin/Tables/CategoriasTable/CategoriasTable";
 import Review from "./components/Review/Review";
 import ReviewsTable from "./components/Admin/Tables/ReviewsTable/ReviewsTable";
+import Profile from "./components/Profile/Profile";
 import EditProduct from "./components/Admin/EditProduct/EditProduct";
+import ProfileAdmin from "./components/Profile/ProfileAdmin";
 
 function App() {
   const loggedIn = decodeToken();
@@ -31,9 +33,10 @@ function App() {
   return (
     <div>
       <Navbar />
-      <ShoppingCart />
       <Switch>
-        <Route exact path="/" component={Landing} />
+        <Route exact path="/">
+          <Landing />
+        </Route>
         <Route exact path="/login">
           <LoginButton />
         </Route>
@@ -41,24 +44,28 @@ function App() {
           <Register />
         </Route>
         <Route exact path="/logout">
-          <LogoutButton />
+          {loggedIn ? <LogoutButton /> : <Redirect to="/home" />}
         </Route>
         <Route exact path="/requestchangepassword">
           <RequestChangePassword />
         </Route>
-        <Route exact path="/changepassword">
+        <Route exact path="/changepassword/:token">
           <ChangePassword />
         </Route>
         <Route exact path="/home">
+          <ShoppingCart />
           <Home />
         </Route>
         <Route path="/home/:attribute/:order">
+          <ShoppingCart />
           <Home />
         </Route>
         <Route path="/category/:nameCategory">
+          <ShoppingCart />
           <CategoryProduct />
         </Route>
-        <Route path="/product/:idParams">
+        <Route exact path="/product/:idParams">
+          <ShoppingCart />
           <ProductDetail />
         </Route>
         <Route path="/auth/confirmregister/:token">
@@ -77,6 +84,7 @@ function App() {
           {loggedIn.admin ? <CategoriasTable /> : <Redirect to="/home" />}
         </Route>
         <Route exact path="/search/:name">
+          <ShoppingCart />
           <Search />
           <Selects />
           <ProductsByName />
@@ -89,6 +97,18 @@ function App() {
         </Route>
         <Route exact path="/admin/editproduct/:productid">
           {loggedIn.admin ? <EditProduct /> : <Redirect to="/home" />}
+        </Route>
+        <Route exact path="/admin/categoriestable">
+          {loggedIn.admin ? <CategoriasTable /> : <Redirect to="/home" />}
+        </Route>
+        <Route exact path="/account">
+          {loggedIn.admin ? (
+            <ProfileAdmin />
+          ) : loggedIn ? (
+            <Profile />
+          ) : (
+            <Redirect to="/home" />
+          )}
         </Route>
       </Switch>
     </div>

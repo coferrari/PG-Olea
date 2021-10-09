@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../../redux/actions/index";
-import { Product } from "../Product/Product";
-import { Link } from "react-router-dom";
 import { Card, Container } from "react-bootstrap";
 import styles from "./Carousel.module.css";
 
@@ -16,7 +14,7 @@ export default function Carousel({ img }) {
 
   useEffect(() => {
     dispatch(getProducts());
-  }, []);
+  }, [dispatch]);
 
   const newItemProducts = img
     ? img
@@ -41,8 +39,9 @@ export default function Carousel({ img }) {
           <button onClick={() => productNext()}>+</button>
           {img?.map((p, i) => {
             if (product === i) {
-              return <Card.Img variant="top" src={p} />;
+              return <Card.Img key={i} variant="top" src={p} />;
             }
+            else return ""
           })}
         </div>
       ) : (
@@ -54,7 +53,7 @@ export default function Carousel({ img }) {
           >
             {newItemProducts?.map((p, i) => {
               return (
-                <CarosuelBoots.Item className={styles.contenedorimg}>
+                <CarosuelBoots.Item key={i} className={styles.contenedorimg}>
                   <img
                     className={styles.img}
                     src={p.image[0]}

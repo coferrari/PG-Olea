@@ -1,5 +1,5 @@
-import { Link, useHistory } from "react-router-dom";
-import Register from "../Register/Register";
+import { Link } from "react-router-dom";
+
 import { isAuthorized, decodeToken } from "../../utils/index";
 import { Navbar, Container, Nav } from "react-bootstrap";
 import Logo from "../../img/OLEA marca de agua-07.png";
@@ -34,7 +34,7 @@ const NavResponsive = () => {
               <Nav className="me-auto">
                 {categories?.map((category) => {
                   return (
-                    <Nav.Link>
+                    <Nav.Link key={category.id}>
                       <Link
                         to={`/category/${category.nameCategory}`}
                         className={style.links}
@@ -44,7 +44,7 @@ const NavResponsive = () => {
                     </Nav.Link>
                   );
                 })}
-                </Nav>
+              </Nav>
               <Nav className={style.containersession}>
                 <Nav.Link className={style.username}>{user.username}</Nav.Link>
                 <Nav.Link>
@@ -76,10 +76,9 @@ const NavResponsive = () => {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
-
               {categories?.map((category) => {
                 return (
-                  <Nav.Link>
+                  <Nav.Link key={category.id}>
                     <Link
                       to={`/category/${category.nameCategory}`}
                       className={style.links}
@@ -89,7 +88,6 @@ const NavResponsive = () => {
                   </Nav.Link>
                 );
               })}
-
             </Nav>
             <Nav>
               <Nav.Link>

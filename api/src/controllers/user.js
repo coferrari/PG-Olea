@@ -53,27 +53,43 @@ userFunction.confirmRegister = async (req, res, next) => {
   res.send(user);
 };
 
-// solicitar validacion de mail para cambio de contraseña
 userFunction.requestChangePassword = async (req, res, next) => {
   const { email } = req.body;
   try {
     const user = await User.findOne({ where: { email } });
+    const token = jwt.sign(
+      {
+        email: user.email,
+      },
+      process.env.TOKEN_SECRET
+    );
     if (user) {
-      const template = getTemplateChangePassword(email);
+      const template = getTemplateChangePassword(email, token);
       await sendEmail(email, "Confirmar cambio de contraseña", template);
       res.send("email enviado");
     }
   } catch (err) {
-    console.log(err);
+    next(err);
   }
 };
-// para cuando ya esta validado el mail
+
 userFunction.changePassword = async (req, res, next) => {
-  const { email, password } = req.body;
-  const user = await User.findOne({ where: { email } });
-  const newPasswordEncrypted = await encryptPassword(password);
-  user.password = newPasswordEncrypted;
-  res.send("nueva contraseña guardada");
+  const { email, password, token } = req.body;
+  try {
+    const verified = jwt.verify(token, process.env.TOKEN_SECRET);
+    const user = await User.findOne({ where: { email } });
+    if (user.email === verified.email) {
+      const newPasswordEncrypted = await encryptPassword(password);
+      user.password = newPasswordEncrypted;
+      console.log("entre");
+      await user.save();
+      return res.send("nueva contraseña guardada");
+    }
+    res.status(404).send("err");
+  } catch (err) {
+    console.log("entre al error");
+    next(err);
+  }
 };
 
 userFunction.login = async (req, res, next) => {
@@ -86,6 +102,7 @@ userFunction.login = async (req, res, next) => {
         surname: emailFind.surname,
         username: emailFind.username,
         admin: emailFind.admin,
+        picture: emailFind.picture,
       },
       process.env.TOKEN_SECRET
     );
@@ -112,47 +129,67 @@ userFunction.getAll = async (req, res, next) => {
 
 userFunction.googleLogin = async (req, res, next) => {
   const { token } = req.body;
-  const ticket = await client.verifyIdToken({
-    idToken: token,
-    audience: process.env.CLIENT_ID,
-  });
-  const { name, given_name, family_name, email, picture, at_hash } =
-    ticket.getPayload();
-  const user = await User.findOne({
-    where: { email },
-  });
-  const carritocreado = await Carrito.create({});
+  try {
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: process.env.CLIENT_ID,
+    });
+    const { given_name, family_name, email, picture, at_hash } =
+      ticket.getPayload();
+    const user = await User.findOne({
+      where: { email },
+      include: Carrito,
+    });
 
-  if (user === null) {
-    const newPasswordEncrypted = await encryptPassword(at_hash);
-    const newUser = await User.create({
-      name: given_name,
-      username: email,
-      password: newPasswordEncrypted,
-      email: email,
-      surname: family_name,
-      picture,
-    });
-    newUser.setCarrito(carritocreado.dataValues.id);
-    const token = jwt.sign(
-      {
+    if (user === null) {
+      const carritocreado = await Carrito.create({});
+      const newPasswordEncrypted = await encryptPassword(at_hash);
+      const newUser = await User.create({
+        name: given_name,
         username: email,
-      },
-      process.env.TOKEN_SECRET
-    );
-    return res.header("auth-token", token).json({
-      error: null,
-      data: { token },
-    });
-  }
-  if (user) {
-    const token = jwt.sign({ username: email }, process.env.TOKEN_SECRET);
-    return res.header("auth-token", token).json({
-      error: null,
-      data: {
-        token,
-      },
-    });
+        password: newPasswordEncrypted,
+        email: email,
+        surname: family_name,
+        picture,
+      });
+      newUser.setCarrito(carritocreado.dataValues.id);
+      const token = jwt.sign(
+        {
+          name: given_name,
+          username: email,
+          email: email,
+          surname: family_name,
+          picture,
+        },
+        process.env.TOKEN_SECRET,
+        { expiresIn: "10m" }
+      );
+      return res.header("auth-token", token).json({
+        error: null,
+        data: { token },
+      });
+    }
+    if (user) {
+      const token = jwt.sign(
+        {
+          name: given_name,
+          username: email,
+          email: email,
+          surname: family_name,
+          picture,
+        },
+        process.env.TOKEN_SECRET,
+        { expiresIn: "10m" }
+      );
+      return res.header("auth-token", token).json({
+        error: null,
+        data: {
+          token,
+        },
+      });
+    }
+  } catch (err) {
+    next(err);
   }
 };
 userFunction.createAdmin = async (req, res, next) => {
@@ -166,5 +203,56 @@ userFunction.createAdmin = async (req, res, next) => {
     admin,
   });
 };
+userFunction.logOut = async (req, res, next) => {
+  try {
+    res.clearCookie("refreshtoken", { path: "/user/refresh_token" });
+    return res.json({ msg: "Logged out." });
+  } catch (err) {
+    return res.status(500).json({ msg: err.message });
+  }
+};
+// userFunction.getAccessToken = async (req, res, next) => {
+//   try {
+//     const rf_token = req.cookies.refreshtoken;
+//     if (!rf_token) return res.status(400).json({ msg: "Please login now!" });
 
+//     jwt.verify(rf_token, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+//       if (err) return res.status(400).json({ msg: "Please login now!" });
+
+//       const access_token = createAccessToken({ id: user.id });
+//       res.json({ access_token });
+//     });
+//   } catch (err) {
+//     next(err);
+//   }
+// };
+userFunction.uploadImage = async (req, res, next) => {
+  console.log(req.body.image);
+  const { username } = req.params;
+  try {
+    const user = await User.findByPk(username);
+    user.picture = req.body.image;
+    user.save();
+    const token = jwt.sign(
+      {
+        name: user.name,
+        username: user.username,
+        email: user.email,
+        surname: user.surname,
+        picture: user.picture,
+        admin: user.admin,
+      },
+      process.env.TOKEN_SECRET,
+      { expiresIn: "7d" }
+    );
+    return res.header("auth-token", token).json({
+      error: null,
+      data: {
+        token,
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
 module.exports = userFunction;

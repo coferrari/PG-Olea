@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Product.module.css";
-import { Card, Button } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { updateCart } from "../../redux/actions/index";
 import { isAuthorized, decodeToken } from "../../utils/index";
 import { addOrEditCart, removeProductCart } from "../../cart/index";
 import { BsBag, BsBagCheckFill, BsHeart, BsHeartFill } from "react-icons/bs";
-export function Product({ id, name, image, price }) {
+
+export function Product({ id, name, image, price, stock }) {
   const [add, setAdd] = useState(false);
   const [remove, setRemove] = useState(false);
   const dispatch = useDispatch();
@@ -22,7 +23,7 @@ export function Product({ id, name, image, price }) {
       const cartFromLocalStorage = JSON.parse(localStorage.getItem("cart"));
       const cartAdded = [
         ...cartFromLocalStorage,
-        { id, name, image, price, quantity },
+        { id, name, image, price, quantity, stock },
       ];
       localStorage.setItem("cart", JSON.stringify(cartAdded));
       dispatch(updateCart(cartAdded));
@@ -85,7 +86,6 @@ export function Product({ id, name, image, price }) {
         {/* favorite */}
         {favorite && (
           <button
-            className={styles.fav}
             className={styles.fav}
             onClick={(e) => handleRemoveFavorite(e)}
           >

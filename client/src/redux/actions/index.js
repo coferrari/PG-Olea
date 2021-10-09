@@ -13,12 +13,11 @@ import {
   SEARCH_PRODUCTS_URL,
   GET_PRODUCT_DETAIL_URL,
   CATEGORY_URL,
-  //AGREGAR RUTAS BACK
 } from "../../consts";
 
 export function getProducts() {
   return function (dispatch) {
-    return axios.get(GET_PRODUCTS_URL).then((products) => {
+    return axios.get(`${GET_PRODUCTS_URL}`).then((products) => {
       dispatch({
         type: GET_PRODUCTS,
         payload: products.data,
@@ -29,7 +28,7 @@ export function getProducts() {
 
 export function searchProducts(name) {
   return function (dispatch) {
-    return axios.get(SEARCH_PRODUCTS_URL + name).then((products) => {
+    return axios.get(`${SEARCH_PRODUCTS_URL}${name}`).then((products) => {
       dispatch({
         type: SEARCH_PRODUCTS,
         payload: products.data,
@@ -40,7 +39,7 @@ export function searchProducts(name) {
 
 export function getProductDetail(id) {
   return function (dispatch) {
-    return axios.get(GET_PRODUCT_DETAIL_URL + id).then((product) => {
+    return axios.get(`${GET_PRODUCT_DETAIL_URL}${id}`).then((product) => {
       dispatch({
         type: GET_PRODUCT_DETAIL,
         payload: product.data,
@@ -51,7 +50,7 @@ export function getProductDetail(id) {
 
 export function getProductsByCategory(name) {
   return function (dispatch) {
-    return axios.get(CATEGORY_URL + name).then((products) => {
+    return axios.get(`${CATEGORY_URL}${name}`).then((products) => {
       dispatch({
         type: CATEGORY_FILTER,
         payload: products.data,

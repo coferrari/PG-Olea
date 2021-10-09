@@ -14,8 +14,12 @@ module.exports = (sequelize) => {
       type: DataTypes.DECIMAL,
       allowNull: false,
     },
+    opinion: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
     comment: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
     },
   });

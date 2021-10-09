@@ -32,7 +32,19 @@ class CategoryModel extends Modelo {
       next(error);
     }
   };
-
+  updateName = async (req, res, next) => {
+    const { id } = req.params;
+    const { nameCategory } = req.body;
+    console.log(id);
+    try {
+      const category = await Category.findByPk(id);
+      category.nameCategory = nameCategory;
+      category.save();
+      res.send("hs");
+    } catch (err) {
+      next(err);
+    }
+  };
   addCategories = async (req, res, next) => {
     const { categoriesID, productID } = req.body;
     try {

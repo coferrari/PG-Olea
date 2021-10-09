@@ -1,9 +1,21 @@
-import React from "react";
-import { useAuth0 } from "@auth0/auth0-react";
-
+import React, { useEffect, useState } from "react";
+import UploadImg from "./UploadImg";
+import { decodeToken } from "../../utils";
 const Profile = () => {
-  const { user, isAuthenticated } = useAuth0();
-
-  return <h1>{isAuthenticated ? user.name : ""}</h1>;
+  const [usuario, setUsuario] = useState();
+  const profile = () => {
+    let user = decodeToken();
+    setUsuario(user);
+  };
+  useEffect(() => {
+    profile();
+  }, [decodeToken]);
+  console.log(usuario);
+  return (
+    <div>
+      <h1>Usuario</h1>
+      <UploadImg />
+    </div>
+  );
 };
 export default Profile;

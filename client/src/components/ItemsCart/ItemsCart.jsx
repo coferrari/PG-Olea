@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import ItemCart from "../ItemCart/ItemCart";
 import style from "./ItemsCart.module.css";
@@ -19,6 +19,7 @@ const ItemsCart = () => {
             image={product.image}
             price={product.price}
             quantity={product.quantity}
+            stock={product.stock}
           />
         </div>
       ))}

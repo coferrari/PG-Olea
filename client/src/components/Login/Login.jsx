@@ -1,28 +1,34 @@
-import React from "react";
-import { useHistory, Link } from "react-router-dom";
-import { useState } from "react";
+import React, { useState } from "react";
+import { useHistory } from "react-router";
+import { Link } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import { logIn, logInGoogle } from "../../auth/users";
 import GoogleLogin from "react-google-login";
 import style from "./Login.module.css";
+import { createCartLogin, getByUsername } from "../../cart/index";
+import { isAuthorized, decodeToken } from "../../utils/index";
+import { useDispatch } from "react-redux";
+import { updateCart } from "../../redux/actions/index";
 
 export function validate(input) {
   let errors = {};
   if (!input.email) {
-    errors.email = "Email is required";
+    errors.email = "Por favor ingrese su email";
   } else if (!/\S+@\S+\.\S+/.test(input.email)) {
-    errors.email = "Email is invalid";
+    errors.email = "El email ingreado no es válido";
   } else if (!input.password) {
-    errors.password = "Password is required";
+    errors.password = "Por favor ingrese su contraseña";
   } else if (
     !/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/.test(input.password)
   ) {
-    errors.password = "Password is invalid";
+    errors.password = "El formato de contraseña no es valido";
   }
   return errors;
 }
 
 const LoginButton = () => {
+  const cartFromLocalStorage = JSON.parse(localStorage.getItem("cart") || "[]");
+  const dispatch = useDispatch();
   const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
   const history = useHistory();
   const [input, setInput] = useState({
@@ -44,26 +50,69 @@ const LoginButton = () => {
     );
   };
 
+  // ingresa sesion normal
   const handleSubmit = async (e) => {
-    console.log("entra al submit");
     e.preventDefault();
+    await logIn(input);
     try {
-      const x = await logIn(input);
-      console.log(x);
-      history.push("/");
+      // const x = await logIn(input);
+      const validate = isAuthorized();
+      history.push("/home");
+      if (validate) {
+        const user = decodeToken();
+        const username = user.username;
+        if (cartFromLocalStorage.length > 0) {
+          createCartLogin({
+            products: cartFromLocalStorage,
+            username: username,
+          });
+        } else if (cartFromLocalStorage.length === 0) {
+          const productsDB = await getByUsername({
+            username: username,
+          });
+          if (productsDB.data.products.length) {
+            localStorage.setItem(
+              "cart",
+              JSON.stringify(productsDB.data.products)
+            );
+            dispatch(updateCart(productsDB.data.products));
+          }
+        }
+      }
     } catch (err) {
       setErrorLogin("Contraseña o usuario incorrecto");
-      console.log(err.message);
     }
   };
-  console.log(errorLogin);
+
   const responseSuccessGoogle = async (response) => {
     await logInGoogle(response);
+    const validate = isAuthorized();
     history.push("/");
+    if (validate) {
+      const user = decodeToken();
+      const username = user.username;
+      if (cartFromLocalStorage.length > 0) {
+        createCartLogin({
+          products: cartFromLocalStorage,
+          username: username,
+        });
+      } else if (cartFromLocalStorage.length === 0) {
+        const productsDB = await getByUsername({
+          username: username,
+        });
+        if (productsDB.data.products.length) {
+          localStorage.setItem(
+            "cart",
+            JSON.stringify(productsDB.data.products)
+          );
+          dispatch(updateCart(productsDB.data.products));
+        }
+      }
+    }
   };
+
   const responseErrorGoogle = async (response) => {
-    console.log(response.profileObj);
-    history.push("/");
+    // history.push("/");
   };
 
   return (
@@ -77,7 +126,7 @@ const LoginButton = () => {
             }}
           >
             <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Email address</Form.Label>
+              <Form.Label>Email</Form.Label>
               <Form.Control
                 className={errors.username && style.inputdanger}
                 type="email"
@@ -89,14 +138,14 @@ const LoginButton = () => {
                 }}
               />
               <Form.Text className="text-muted">
-                We'll never share your email with anyone else.
+                Nunca compartiremos esta información
               </Form.Text>
               {errors.email && (
                 <div className={style.errors}>{errors.email}</div>
               )}
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Password</Form.Label>
+              <Form.Label>Contraseña</Form.Label>
               <Form.Control
                 onChange={(e) => {
                   handleChange(e);
@@ -119,7 +168,7 @@ const LoginButton = () => {
                 input.password &&
                 !errors.password && (
                   <Button variant="dark" type="submit">
-                    Ingresa
+                    Iniciar sesión
                   </Button>
                 )}
             </div>
