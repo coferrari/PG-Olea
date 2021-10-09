@@ -74,7 +74,7 @@ export default function CreateProduct() {
     setImage(e.target.value);
   };
   const onAddImage = (image) => {
-    if (image.length < 10) {
+    if (image?.length < 10 || image === undefined) {
       swal("Ingrese un url valido");
     } else if (!newProduct.image.includes(image)) {
       setNewProduct({
