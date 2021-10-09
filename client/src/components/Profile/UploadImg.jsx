@@ -22,6 +22,7 @@ const UploadImg = () => {
   };
   const upload = async () => {
     await uploadImage(urlImage, user.username);
+    window.location.reload(false);
   };
   console.log(urlImage);
   useEffect(() => {
@@ -29,7 +30,6 @@ const UploadImg = () => {
       upload(urlImage);
     }
   }, [urlImage]);
-
   return (
     <div>
       <form onSubmit={(e) => sendImage(e)}>

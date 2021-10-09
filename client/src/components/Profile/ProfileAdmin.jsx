@@ -9,15 +9,16 @@ const ProfileAdmin = () => {
   };
   useEffect(() => {
     profile();
-  }, [decodeToken]);
+  }, [UploadImg]);
   console.log(usuario);
   return (
     <div>
-      {/* <h1>{usuario.name ? usuario.name : "Dylan"}</h1>
-      <h2>{usuario.surname ? usuario.surname : "Gavilan"}</h2> */}
-      <h2>{usuario.email}</h2>
-      <img src={usuario ? usuario.picture : null}></img>
+      <h1>Admin</h1>
+      <h1>{usuario ? usuario.name : "Dylan"}</h1>
+      <h2>{usuario ? usuario.email : "Gavilan"}</h2>
+
       <UploadImg />
+      <img src={usuario ? usuario.picture : null}></img>
     </div>
   );
 };
