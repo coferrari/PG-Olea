@@ -22,6 +22,7 @@ const UploadImg = () => {
   };
   const upload = async () => {
     await uploadImage(urlImage, user.username);
+    window.location.reload(false);
   };
   console.log(urlImage);
   useEffect(() => {
@@ -29,14 +30,11 @@ const UploadImg = () => {
       upload(urlImage);
     }
   }, [urlImage]);
-
   return (
     <div>
       <form onSubmit={(e) => sendImage(e)}>
-        <div className="btn #64b5f6 blue darken-1">
-          <span>Uplaod Image</span>
-          <input type="file" onChange={(e) => setImage(e.target.files[0])} />
-        </div>
+        <span>Agregar imagen</span>
+        <input type="file" onChange={(e) => setImage(e.target.files[0])} />
         <button type="submit">Enviar</button>
       </form>
     </div>

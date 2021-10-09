@@ -188,7 +188,7 @@ export default function EditProduct() {
               defaultValue={product.description}
             />
           </Form.Group>
-          {/* <Form.Group className="mb-3">
+          <Form.Group className="mb-3">
             <Form.Label>Seleccione las Categorias</Form.Label>
 
             <div>
@@ -224,8 +224,8 @@ export default function EditProduct() {
                   Editar Categorias
                 </Button>
               )}
-            </div> 
-          </Form.Group>*/}
+            </div>
+          </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Stock</Form.Label>
             <Form.Control
