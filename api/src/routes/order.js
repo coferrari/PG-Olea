@@ -17,5 +17,6 @@ router.get("/date/:date", OrderControllers.orderByDate);
 router.get("/filterbystatus/:status", OrderControllers.filterByStatus);
 router.post("/createOrder", OrderControllers.createOrder);
 router.get("/setorder/status", OrderControllers.setOrderStatus);
+router.get("/findAll/orders", OrderControllers.allOrders);
 
 module.exports = router;

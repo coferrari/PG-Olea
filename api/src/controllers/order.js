@@ -28,7 +28,6 @@ class OrderModel extends Modelo {
       }
     }
   };
-
   orderByDate = async (req, res, next) => {
     const { date } = req.params;
 
@@ -52,7 +51,6 @@ class OrderModel extends Modelo {
       }
     }
   };
-
   filterByStatus = async (req, res, next) => {
     const { status } = req.params;
 
@@ -111,6 +109,18 @@ class OrderModel extends Modelo {
         }
       );
       res.status(200).send(orden);
+    } catch (err) {
+      next(err);
+    }
+  };
+  allOrders = async (req, res, next) => {
+    const { username } = req.body;
+    try {
+      const order = await this.model.findAll({
+        where: { userUsername: username },
+        include: Product,
+      });
+      res.status(200).send(order);
     } catch (err) {
       next(err);
     }
