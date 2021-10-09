@@ -55,16 +55,13 @@ export default function EditProduct() {
       setNewProduct(product);
       setVerImagenes({ click: 1, compr: !verImagenes.compr });
     } else setVerImagenes({ ...verImagenes, compr: !verImagenes.compr });
-    console.log(newProduct);
   };
   const onChangeInput = (e) => {
-    console.log(product, "newProduct", newProduct);
     e.preventDefault();
     setNewProduct({
       ...newProduct,
       [e.target.name]: e.target.value,
     });
-    console.log(newProduct);
   };
   const categoris = async (catID) => {
     if (!newProduct.categoryID.includes(catID)) {
@@ -99,7 +96,6 @@ export default function EditProduct() {
           },
         }
       );
-
       setNewProduct({
         ...newProduct,
         categoryID: newProduct.categoryID.filter((e) => e != catID),
@@ -110,17 +106,15 @@ export default function EditProduct() {
     setImage(e.target.value);
   };
   const onAddImage = (image) => {
-    if (image.length < 10) {
-      swal("Ingrese un url valido");
-    } else if (!newProduct.image.includes(image)) {
+    if (!newProduct.image?.includes(image)) {
       setNewProduct({
         ...newProduct,
         image: [...newProduct.image, image],
       });
-    } else if (newProduct.image.includes(image)) {
+    } else if (newProduct.image?.includes(image)) {
       setNewProduct({
         ...newProduct,
-        image: newProduct.image.filter((e) => e != image),
+        image: newProduct.image?.filter((e) => e != image),
       });
     }
   };
@@ -160,12 +154,16 @@ export default function EditProduct() {
                   onChangeImage(e);
                 }}
               />
-              <Button
-                onClick={() => onAddImage(image)}
-                variant="outline-secondary"
-              >
-                Añadir
-              </Button>
+              {image ? (
+                <Button
+                  onClick={() => onAddImage(image)}
+                  variant="outline-secondary"
+                >
+                  Añadir
+                </Button>
+              ) : (
+                ""
+              )}
             </InputGroup>
             <Form.Group className="mb-3">
               <Form.Label>Imagenes Cargadas</Form.Label>{" "}
