@@ -102,6 +102,7 @@ userFunction.login = async (req, res, next) => {
         surname: emailFind.surname,
         username: emailFind.username,
         admin: emailFind.admin,
+        picture: emailFind.picture,
       },
       process.env.TOKEN_SECRET
     );
@@ -210,19 +211,40 @@ userFunction.logOut = async (req, res, next) => {
     return res.status(500).json({ msg: err.message });
   }
 };
-userFunction.getAccessToken = async (req, res, next) => {
+// userFunction.getAccessToken = async (req, res, next) => {
+//   try {
+//     const rf_token = req.cookies.refreshtoken;
+//     if (!rf_token) return res.status(400).json({ msg: "Please login now!" });
+
+//     jwt.verify(rf_token, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+//       if (err) return res.status(400).json({ msg: "Please login now!" });
+
+//       const access_token = createAccessToken({ id: user.id });
+//       res.json({ access_token });
+//     });
+//   } catch (err) {
+//     next(err);
+//   }
+// };
+userFunction.uploadImage = async (req, res, next) => {
+  console.log(req.body.image);
+  const { username } = req.params;
   try {
-    const rf_token = req.cookies.refreshtoken;
-    if (!rf_token) return res.status(400).json({ msg: "Please login now!" });
-
-    jwt.verify(rf_token, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
-      if (err) return res.status(400).json({ msg: "Please login now!" });
-
-      const access_token = createAccessToken({ id: user.id });
-      res.json({ access_token });
-    });
-  } catch (err) {
-    next(err);
-  }
+    const user = await User.findByPk(username);
+    user.picture = req.body.image;
+    const token = jwt.sign(
+      {
+        name: user.name,
+        username: user.username,
+        email: user.email,
+        surname: user.surname,
+        picture: user.picture,
+      },
+      process.env.TOKEN_SECRET,
+      { expiresIn: "10m" }
+    );
+    user.save();
+    res.send(user);
+  } catch (err) {}
 };
 module.exports = userFunction;
