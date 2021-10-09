@@ -13,7 +13,7 @@ const Profile = () => {
   console.log(usuario);
   return (
     <div>
-      <BarraAdmin />
+      <h1>Usuario</h1>
     </div>
   );
 };

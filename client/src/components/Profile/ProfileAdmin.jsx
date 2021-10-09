@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { decodeToken } from "../../utils";
 import BarraAdmin from "./BarraAdmin";
-const Profile = () => {
+const ProfileAdmin = () => {
   const [usuario, setUsuario] = useState();
   const profile = () => {
     let user = decodeToken();
@@ -13,8 +13,8 @@ const Profile = () => {
   console.log(usuario);
   return (
     <div>
-      <BarraAdmin />
+      <h1>Admin</h1>
     </div>
   );
 };
-export default Profile;
+export default ProfileAdmin;

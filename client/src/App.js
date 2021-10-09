@@ -25,6 +25,7 @@ import Review from "./components/Review/Review";
 import ReviewsTable from "./components/Admin/Tables/ReviewsTable/ReviewsTable";
 import Profile from "./components/Profile/Profile";
 import EditProduct from "./components/Admin/EditProduct/EditProduct";
+import ProfileAdmin from "./components/Profile/ProfileAdmin";
 
 function App() {
   const loggedIn = decodeToken();
@@ -45,7 +46,7 @@ function App() {
           <Register />
         </Route>
         <Route exact path="/logout">
-          <LogoutButton />
+          {loggedIn ? <LogoutButton /> : <Redirect to="/home" />}
         </Route>
         <Route exact path="/requestchangepassword">
           <RequestChangePassword />
@@ -98,7 +99,13 @@ function App() {
           {loggedIn.admin ? <CategoriasTable /> : <Redirect to="/home" />}
         </Route>
         <Route exact path="/account">
-          <Profile />
+          {loggedIn.admin ? (
+            <ProfileAdmin />
+          ) : loggedIn ? (
+            <Profile />
+          ) : (
+            <Redirect to="/home" />
+          )}
         </Route>
       </Switch>
     </div>

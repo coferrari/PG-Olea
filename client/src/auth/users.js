@@ -19,8 +19,7 @@ export const logIn = async (user) => {
   return token.data;
 };
 export const logOut = async () => {
-  await axios.get("api/user/logout");
-  localStorage.removeItem("token");
+  localStorage.clear();
 };
 export const logInGoogle = async (response) => {
   const res = await axios.post(`/api/user/googlelogin`, {
