@@ -23,7 +23,8 @@ router.post(
   checkEmail,
   userFunction.requestChangePassword
 );
-router.post("/refresh_token", userFunction.getAccessToken);
+router.put("/uploadimage/:username", userFunction.uploadImage);
+// router.post("/refresh_token", userFunction.getAccessToken);
 router.post("/createadmin", userFunction.createAdmin);
 router.post("/changepasswordadmin", isAdmin, adminFunction.changePassword);
 router.delete("/deleteuser/:username", isAdmin, adminFunction.deleteUser);
