@@ -44,5 +44,5 @@ export const uploadImage = async (image, username) => {
   const x = await axios.put(`/api/user/uploadimage/${username}`, {
     image: image,
   });
-  console.log(x.data);
+  localStorage.setItem("token", x.data.data.token);
 };

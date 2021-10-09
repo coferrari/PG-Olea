@@ -13,6 +13,9 @@ const ProfileAdmin = () => {
   console.log(usuario);
   return (
     <div>
+      {/* <h1>{usuario.name ? usuario.name : "Dylan"}</h1>
+      <h2>{usuario.surname ? usuario.surname : "Gavilan"}</h2> */}
+      <h2>{usuario.email}</h2>
       <img src={usuario ? usuario.picture : null}></img>
       <UploadImg />
     </div>

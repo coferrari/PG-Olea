@@ -232,6 +232,7 @@ userFunction.uploadImage = async (req, res, next) => {
   try {
     const user = await User.findByPk(username);
     user.picture = req.body.image;
+    user.save();
     const token = jwt.sign(
       {
         name: user.name,
@@ -239,12 +240,19 @@ userFunction.uploadImage = async (req, res, next) => {
         email: user.email,
         surname: user.surname,
         picture: user.picture,
+        admin: user.admin,
       },
       process.env.TOKEN_SECRET,
-      { expiresIn: "10m" }
+      { expiresIn: "7d" }
     );
-    user.save();
-    res.send(user);
-  } catch (err) {}
+    return res.header("auth-token", token).json({
+      error: null,
+      data: {
+        token,
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
 };
 module.exports = userFunction;
