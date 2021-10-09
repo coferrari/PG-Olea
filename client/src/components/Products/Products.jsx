@@ -13,6 +13,7 @@ export default function Products({ products }) {
             name={p.name}
             image={p.image[0]}
             price={p.price}
+            stock={p.stock}
           />
         );
       })}

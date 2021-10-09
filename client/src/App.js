@@ -33,8 +33,6 @@ function App() {
   return (
     <div>
       <Navbar />
-      <ShoppingCart />
-
       <Switch>
         <Route exact path="/">
           <Landing />
@@ -55,15 +53,19 @@ function App() {
           <ChangePassword />
         </Route>
         <Route exact path="/home">
+          <ShoppingCart />
           <Home />
         </Route>
         <Route path="/home/:attribute/:order">
+          <ShoppingCart />
           <Home />
         </Route>
         <Route path="/category/:nameCategory">
+          <ShoppingCart />
           <CategoryProduct />
         </Route>
         <Route exact path="/product/:idParams">
+          <ShoppingCart />
           <ProductDetail />
         </Route>
         <Route path="/auth/confirmregister/:token">
@@ -82,6 +84,7 @@ function App() {
           {loggedIn.admin ? <CategoriasTable /> : <Redirect to="/home" />}
         </Route>
         <Route exact path="/search/:name">
+          <ShoppingCart />
           <Search />
           <Selects />
           <ProductsByName />
