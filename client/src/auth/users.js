@@ -39,3 +39,10 @@ export const getUsers = async (token) => {
   });
   return res.data;
 };
+export const uploadImage = async (image, username) => {
+  console.log(username);
+  const x = await axios.put(`/api/user/uploadimage/${username}`, {
+    image: image,
+  });
+  console.log(x.data);
+};
