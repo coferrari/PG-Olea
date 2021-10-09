@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { decodeToken } from "../../utils";
 import UploadImg from "./UploadImg";
+import BarraAdmin from "./BarraAdmin";
 const ProfileAdmin = () => {
   const [usuario, setUsuario] = useState();
   const profile = () => {
@@ -10,9 +11,10 @@ const ProfileAdmin = () => {
   useEffect(() => {
     profile();
   }, [decodeToken]);
-  console.log(usuario);
+
   return (
     <div>
+      <BarraAdmin />
       <img src={usuario ? usuario.picture : null}></img>
       <UploadImg />
     </div>
