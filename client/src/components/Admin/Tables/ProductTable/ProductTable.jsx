@@ -76,9 +76,6 @@ export default function ProductTable() {
                 <td>
                   <Button onClick={() => remove(e.name, e.id)}>Eliminar</Button>
                 </td>
-                <Link to={`/product/review/${e.id}`}>
-                  <td>Ver reviews</td>
-                </Link>
               </tr>
             );
           })}
