@@ -5,6 +5,7 @@ import ProductTable from "../Admin/Tables/ProductTable/ProductTable";
 import UsersTable from "../Admin/Tables/UsersTable/UsersTable";
 import CategoriasTable from "../Admin/Tables/CategoriasTable/CategoriasTable";
 import CreateProduct from "../Admin/CreateProduct/CreateProduct";
+import ProfileAdmin from "../Profile/ProfileAdmin";
 const BarraAdmin = () => {
   return (
     <div className={style.container}>
@@ -14,7 +15,7 @@ const BarraAdmin = () => {
         className="mb-3"
       >
         <Tab eventKey="Perfil" title="Perfil">
-          <h1>Perfil</h1>
+          <ProfileAdmin />
         </Tab>
         <Tab eventKey="Productos" title="Productos">
           <h1>Productos</h1>
