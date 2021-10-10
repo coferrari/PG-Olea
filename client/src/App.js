@@ -99,12 +99,13 @@ function App() {
         <Route exact path="/admin/editproduct/:productid">
           {loggedIn.admin ? <EditProduct /> : <Redirect to="/home" />}
         </Route>
+
         <Route exact path="/admin/categoriestable">
           {loggedIn.admin ? <CategoriasTable /> : <Redirect to="/home" />}
         </Route>
         <Route exact path="/account">
           {loggedIn.admin ? (
-            <ProfileAdmin />
+            <BarraAdmin />
           ) : loggedIn ? (
             <Profile />
           ) : (
