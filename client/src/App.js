@@ -26,6 +26,7 @@ import ReviewsTable from "./components/Admin/Tables/ReviewsTable/ReviewsTable";
 import Profile from "./components/Profile/Profile";
 import EditProduct from "./components/Admin/EditProduct/EditProduct";
 import ProfileAdmin from "./components/Profile/ProfileAdmin";
+import BarraAdmin from "./components/Profile/BarraAdmin";
 
 function App() {
   const loggedIn = decodeToken();
@@ -103,7 +104,7 @@ function App() {
         </Route>
         <Route exact path="/account">
           {loggedIn.admin ? (
-            <ProfileAdmin />
+            <BarraAdmin />
           ) : loggedIn ? (
             <Profile />
           ) : (
