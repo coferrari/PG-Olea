@@ -1,16 +1,10 @@
 import React from "react";
 import style from "./BarraAdmin.module.css";
-import {
-  Navbar,
-  Container,
-  NavDropdown,
-  Nav,
-  Tabs,
-  Tab,
-} from "react-bootstrap";
+import { Tabs, Tab } from "react-bootstrap";
 import ProductTable from "../Admin/Tables/ProductTable/ProductTable";
 import UsersTable from "../Admin/Tables/UsersTable/UsersTable";
 import CategoriasTable from "../Admin/Tables/CategoriasTable/CategoriasTable";
+import CreateProduct from "../Admin/CreateProduct/CreateProduct";
 const BarraAdmin = () => {
   return (
     <div className={style.container}>
@@ -26,7 +20,6 @@ const BarraAdmin = () => {
           <h1>Productos</h1>
           <ProductTable />
         </Tab>
-
         <Tab eventKey="Categorias" title="Categorias">
           <CategoriasTable />
         </Tab>
@@ -35,6 +28,9 @@ const BarraAdmin = () => {
         </Tab>
         <Tab eventKey="Ordenes" title="Ordenes">
           <h1>Ordenes</h1>
+        </Tab>
+        <Tab eventKey="Añadir producto" title="Añadir producto">
+          <CreateProduct />
         </Tab>
       </Tabs>
     </div>
