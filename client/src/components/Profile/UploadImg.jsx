@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { decodeToken } from "../../utils";
 import axios from "axios";
 import style from "./ProfileAdmin.module.css";
-import { uploadImage, updateNames } from "../../auth/users";
+import { updateProfile, updateNames } from "../../auth/users";
 import { Button, Form, Modal } from "react-bootstrap";
 import { getToken } from "../../utils";
 const ChangePerfil = () => {
@@ -39,21 +39,25 @@ const ChangePerfil = () => {
       .then((response) => setUrlImage(response.data.url));
   };
   const upload = async () => {
-    await uploadImage(urlImage, usuario.username);
-    window.location.reload(false);
+    let user = {
+      name: "",
+      surname: "",
+      image: "",
+    };
+    input.name ? (user.name = input.name) : (user.name = usuario.name);
+    input.surname
+      ? (user.surname = input.surname)
+      : (user.surname = usuario.surname);
+    urlImage ? (user.image = urlImage) : (user.image = usuario.image);
+    await updateProfile(user);
   };
-  const updateInfo = async () => {
-    await updateNames(input, usuario.username);
-  };
+
   const sendUpdates = async (e) => {
     e.preventDefault();
-    if (urlImage) {
-      await upload();
-    }
-    if (input.name || input.surname) {
-      await updateInfo();
-    }
+    await upload();
+    window.location.reload(false);
   };
+
   useEffect(() => {
     newToken();
   }, [token]);
