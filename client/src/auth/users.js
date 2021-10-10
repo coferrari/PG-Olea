@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getToken } from "../utils";
 
 export const register = async (user) => {
   return await axios.post(`/api/user/register`, user);
@@ -41,8 +42,15 @@ export const getUsers = async (token) => {
 };
 export const uploadImage = async (image, username) => {
   console.log(username);
-  const x = await axios.put(`/api/user/uploadimage/${username}`, {
+  const tokenRefresh = await axios.put(`/api/user/uploadimage/${username}`, {
     image: image,
   });
-  localStorage.setItem("token", x.data.data.token);
+  localStorage.setItem("token", tokenRefresh.data.data.token);
+};
+export const updateNames = async (input, username) => {
+  const tokenRefresh = await axios.put(`/api/user/update/${username}`, {
+    input: input,
+    token: getToken(),
+  });
+  localStorage.setItem("token", tokenRefresh.data.data.token);
 };
