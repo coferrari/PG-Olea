@@ -27,7 +27,7 @@ import Profile from "./components/Profile/Profile";
 import EditProduct from "./components/Admin/EditProduct/EditProduct";
 import ProfileAdmin from "./components/Profile/ProfileAdmin";
 import BarraAdmin from "./components/Profile/BarraAdmin";
-
+import OrdersTable from "./components/Admin/Tables/OrdersTable";
 function App() {
   const loggedIn = decodeToken();
 
@@ -111,6 +111,9 @@ function App() {
           ) : (
             <Redirect to="/home" />
           )}
+        </Route>
+        <Route exact path="/pruebanawi">
+          <OrdersTable />
         </Route>
       </Switch>
     </div>
