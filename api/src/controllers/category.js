@@ -5,7 +5,6 @@ class CategoryModel extends Modelo {
   constructor(model) {
     super(model);
   }
-
   getAll = (req, res, next) => {
     const Users = this.model.findAll({
       include: {
@@ -16,7 +15,6 @@ class CategoryModel extends Modelo {
       res.send(results);
     }).catch((error) => next(error));
   };
-
   filterByCategory = async (req, res, next) => {
     try {
       let productsFiltered = await Product.findAll({

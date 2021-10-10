@@ -104,7 +104,7 @@ function App() {
         </Route>
         <Route exact path="/account">
           {loggedIn.admin ? (
-            <BarraAdmin />
+            <ProfileAdmin />
           ) : loggedIn ? (
             <Profile />
           ) : (
