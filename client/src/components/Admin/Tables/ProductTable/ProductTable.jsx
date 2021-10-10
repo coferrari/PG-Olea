@@ -68,7 +68,6 @@ export default function ProductTable() {
                   </Link>
                 </td>
                 <td>
-                  {" "}
                   <Link to={`/admin/editproduct/${e.id}`}>
                     <Button>Editar Producto</Button>
                   </Link>
