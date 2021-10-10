@@ -38,7 +38,10 @@ const Register = () => {
   });
   const [errors, setErrors] = useState({});
 
+
+
   const history = useHistory();
+
   const handleChange = (e) => {
     setInput({
       ...input,
@@ -179,6 +182,7 @@ const Register = () => {
                 </Button>
               )}
           </Form>
+   
         </div>
       </div>
     </div>

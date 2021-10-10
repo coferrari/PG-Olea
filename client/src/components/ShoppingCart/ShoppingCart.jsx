@@ -8,6 +8,7 @@ import carrito from "../../img/iconshoppingcart.png";
 import { emptyCart } from "../../cart/index";
 import { isAuthorized, decodeToken } from "../../utils/index";
 
+
 const ShoppingCart = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -16,6 +17,8 @@ const ShoppingCart = () => {
   const cartFromLocalStorage = JSON.parse(localStorage.getItem("cart") || "[]");
   const [clear, setClear] = useState(false);
   const dispatch = useDispatch();
+  const history = useHistory();
+
   const productsCart = useSelector(
     (state) => state.carritoReducer.productsCarrito
   );
@@ -46,6 +49,12 @@ const ShoppingCart = () => {
       emptyCart({ username: username });
     }
   };
+
+  const handleCheckout = (e) =>{
+    e.preventDefault()
+    history.push("/checkout")
+    handleClose();
+  }
 
   const totalSum = productsCart?.reduce((acc, curr) => {
     const result = curr.Carrito_Products
@@ -123,7 +132,8 @@ const ShoppingCart = () => {
               </div>
 
               <div>
-                <Button className={style.checkout} variant="dark" type="submit">
+
+                <Button className={style.checkout} variant="dark" type="submit" onClick={ e=> {handleCheckout(e)}} >
                   terminar compra
                 </Button>
               </div>

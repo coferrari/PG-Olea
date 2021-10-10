@@ -8,3 +8,5 @@ export const CREATE_CART_LOGIN = "/api/product/add/carritologin";
 export const EMPTY_CART = "/api/carrito/carrito/emptycart";
 export const GET_CARRITO_USERNAME = "/api/carrito/carrito/byusername";
 export const GET_REVIEWS = "/api/reviews";
+export const PAY_MERCADOPAGO_URL = "/api/checkout/mercadopago";
+

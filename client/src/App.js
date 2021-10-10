@@ -15,6 +15,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import RequestChangePassword from "./components/RequestChangePassword/RequestChangePassword";
 import ChangePassword from "./components/ChangePassword/ChangePassword";
 import ShoppingCart from "./components/ShoppingCart/ShoppingCart";
+import Checkout from "./components/Checkout/Checkout";
 import ProductsByName from "./components/ProductsByName/ProductsByName";
 import { decodeToken } from "./utils/index";
 import CreateProduct from "./components/Admin/CreateProduct/CreateProduct";
@@ -70,6 +71,9 @@ function App() {
         </Route>
         <Route path="/auth/confirmregister/:token">
           <ConfirmRegister />
+        </Route>
+        <Route path="/checkout">
+          <Checkout />
         </Route>
         <Route exact path="/admin/createproduct">
           {loggedIn.admin ? <CreateProduct /> : <Redirect to="/home" />}
