@@ -55,7 +55,7 @@ const Checkout = () => {
                 label: "Aceptar",
                 onClick: () => {
                   window.open(linkDePago)
-                  window.location.href=""
+                  window.location.href="/"
                 },
               },
               {

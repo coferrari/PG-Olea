@@ -7,6 +7,7 @@ import style from "./ShoppingCart.module.css";
 import carrito from "../../img/iconshoppingcart.png";
 import { emptyCart } from "../../cart/index";
 import { isAuthorized, decodeToken } from "../../utils/index";
+import { useHistory} from "react-router-dom";
 
 
 const ShoppingCart = () => {
