@@ -40,18 +40,19 @@ export const getUsers = async (token) => {
   });
   return res.data;
 };
-export const uploadImage = async (image, username) => {
-  console.log(username);
-  const tokenRefresh = await axios.put(`/api/user/uploadimage/${username}`, {
-    image: image,
+export const updateProfile = async (usuario) => {
+  console.log(usuario);
+  const tokenRefresh = await axios.put(`/api/user/updateprofile`, {
+    usuario: usuario,
+    token: getToken(),
   });
   localStorage.setItem("token", tokenRefresh.data.data.token);
 };
-export const updateNames = async (input, username) => {
-  const tokenRefresh = await axios.put(`/api/user/update/${username}`, {
-    input: input,
-    token: getToken(),
-  });
-  console.log(tokenRefresh.data);
-  // localStorage.setItem("token", tokenRefresh.data.data.token);
-};
+// export const updateNames = async (input, username) => {
+//   const tokenRefresh = await axios.put(`/api/user/update/${username}`, {
+//     input: input,
+//     token: getToken(),
+//   });
+//   console.log(tokenRefresh.data);
+//   // localStorage.setItem("token", tokenRefresh.data.data.token);
+// };
