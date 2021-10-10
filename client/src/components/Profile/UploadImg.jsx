@@ -53,6 +53,7 @@ const ChangePerfil = () => {
     if (input.name || input.surname) {
       await updateInfo();
     }
+    window.location.reload(false);
   };
   useEffect(() => {
     newToken();
