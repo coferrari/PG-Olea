@@ -213,12 +213,17 @@ userFunction.logOut = async (req, res, next) => {
 };
 
 userFunction.update = async (req, res, next) => {
-  console.log(req.body);
-  const user = await User.update(
-    { name: req.body.name, surname: req.body.surname },
-    { where: { username: req.body.username } }
-  );
-  res.send("Bien");
+  const { name, surname } = req.body.input;
+  const { token } = req.body;
+  const verified = jwt.verify(token, process.env.TOKEN_SECRET);
+  console.log(verified);
+  console.log(name, surname);
+  const user = await User.findByPk(verified.username);
+  user.name = name;
+  user.surname = surname;
+  user.save();
+  console.log("user", user);
+  res.send(user);
 };
 userFunction.uploadImage = async (req, res, next) => {
   const { username } = req.params;
