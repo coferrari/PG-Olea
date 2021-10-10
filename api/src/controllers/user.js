@@ -211,23 +211,16 @@ userFunction.logOut = async (req, res, next) => {
     return res.status(500).json({ msg: err.message });
   }
 };
-// userFunction.getAccessToken = async (req, res, next) => {
-//   try {
-//     const rf_token = req.cookies.refreshtoken;
-//     if (!rf_token) return res.status(400).json({ msg: "Please login now!" });
 
-//     jwt.verify(rf_token, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
-//       if (err) return res.status(400).json({ msg: "Please login now!" });
-
-//       const access_token = createAccessToken({ id: user.id });
-//       res.json({ access_token });
-//     });
-//   } catch (err) {
-//     next(err);
-//   }
-// };
+userFunction.update = async (req, res, next) => {
+  console.log(req.body);
+  const user = await User.update(
+    { name: req.body.name, surname: req.body.surname },
+    { where: { username: req.body.username } }
+  );
+  res.send("Bien");
+};
 userFunction.uploadImage = async (req, res, next) => {
-  console.log(req.body.image);
   const { username } = req.params;
   try {
     const user = await User.findByPk(username);
