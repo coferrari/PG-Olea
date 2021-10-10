@@ -10,7 +10,7 @@ const BarraAdmin = () => {
   return (
     <div className={style.container}>
       <Tabs
-        defaultActiveKey="profile"
+        defaultActiveKey="Perfil"
         id="uncontrolled-tab-example"
         className="mb-3"
       >
