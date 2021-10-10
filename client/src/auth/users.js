@@ -52,5 +52,6 @@ export const updateNames = async (input, username) => {
     input: input,
     token: getToken(),
   });
-  localStorage.setItem("token", tokenRefresh.data.data.token);
+  console.log(tokenRefresh.data);
+  // localStorage.setItem("token", tokenRefresh.data.data.token);
 };
