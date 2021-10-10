@@ -6,6 +6,7 @@ import {
   EMPTY_CART,
   GET_CARRITO_USERNAME,
   GET_ALL_ORDER,
+  GET_ORDER_DETAIL,
 } from "../consts";
 
 export const addOrEditCart = async (payload) => {
@@ -30,4 +31,8 @@ export const getByUsername = async (payload) => {
 
 export const getAllOrder = async () => {
   return await axios.get(`${GET_ALL_ORDER}`);
+};
+
+export const getOrderId = async (id) => {
+  return await axios.get(`${GET_ORDER_DETAIL}` + id);
 };

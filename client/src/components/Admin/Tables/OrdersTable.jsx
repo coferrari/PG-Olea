@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getAllOrder } from "./../../../cart/index";
 import Table from "react-bootstrap/Table";
+import { Link } from "react-router-dom";
 
 function OrdersTable() {
   const [order, setOrder] = useState();
@@ -9,7 +10,7 @@ function OrdersTable() {
 
     setOrder(orders.data);
   };
-  console.log(order);
+
   useEffect(() => {
     getAllOrders();
   }, []);
@@ -31,7 +32,9 @@ function OrdersTable() {
             {order?.map((o) => {
               return (
                 <tr>
-                  <td>{o.id}</td>
+                  <Link to={`/order/${o.id}`}>
+                    <td>{o.id}</td>
+                  </Link>
                   <td>{o.price}</td>
                   <td>{o.status}</td>
                   <td>{o.username}</td>
