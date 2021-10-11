@@ -11,12 +11,15 @@ const { DB_URL } = process.env;
 conn.sync({ force: true }).then(() => {
   //Posteo todas las marcas y categorias
   for (let i = 0; i < marcas.length; i++) {
-    const post = axios.post(`http://localhost:3001/api/brand/`, marcas[i]);
+    const post = axios.post(
+      `https://olea-deploy.herokuapp.com/api/brand/`,
+      marcas[i]
+    );
     post.then();
   }
   for (let i = 0; i < categorias.length; i++) {
     const post = axios.post(
-      `http://localhost:3001/api/category/`,
+      `https://olea-deploy.herokuapp.com/api/category/`,
       categorias[i]
     );
     post.then();
@@ -24,7 +27,7 @@ conn.sync({ force: true }).then(() => {
   for (let j = 0; j < 5; j++) {
     for (let i = 0; i < productos.length; i++) {
       const post = axios.post(
-        `http://localhost:3001/api/product/create/`,
+        `https://olea-deploy.herokuapp.com/api/product/create/`,
         productos[i]
       );
       post.then();
