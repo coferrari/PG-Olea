@@ -37,7 +37,6 @@ export default function ProductTable() {
       ],
     });
   };
-
   return (
     <div>
       <Table striped bordered hover>

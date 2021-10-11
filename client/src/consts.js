@@ -7,13 +7,10 @@ export const REMOVE_CART = "/api/product/delete/carrito";
 export const CREATE_CART_LOGIN = "/api/product/add/carritologin";
 export const EMPTY_CART = "/api/carrito/carrito/emptycart";
 export const GET_CARRITO_USERNAME = "/api/carrito/carrito/byusername";
-
 export const GET_REVIEWS = "/api/reviews";
-export const ADD_CATEGORY_PRODUCT = "/api/category/product/addCategories";
-export const DELET_CATEGORY_PRODUCT = "/api/category/product/deleteCategory";
+export const PAY_MERCADOPAGO_URL = "/api/checkout/mercadopago";
 export const GET_ALL_ORDER = "/api/order/";
 export const GET_ORDER_DETAIL = "/api/order/";
-
 export const GET_REVIEWS = "/api/reviews/";
 export const ADD_CATEGORY_PRODUCT = "/api/category/product/addCategories";
 export const DELET_CATEGORY_PRODUCT = "/api/category/product/deleteCategory";
