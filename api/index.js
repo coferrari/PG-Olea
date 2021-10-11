@@ -12,7 +12,7 @@ conn.sync({ force: false }).then(() => {
   //Posteo todas las marcas y categorias
   // for (let i = 0; i < categorias.length; i++) {
   //   const post = axios.post(
-  //     `http://localhost:3001/api/category/`,
+  //     `https://olea-deploy.herokuapp.com/api/category/`,
   //     categorias[i]
   //   );
   //   post.then();
@@ -20,7 +20,7 @@ conn.sync({ force: false }).then(() => {
   // for (let j = 0; j < 5; j++) {
   //   for (let i = 0; i < productos.length; i++) {
   //     const post = axios.post(
-  //       `http://localhost:3001/api/product/create/`,
+  //       `https://olea-deploy.herokuapp.com/api/product/create/`,
   //       productos[i]
   //     );
   //     post.then();
