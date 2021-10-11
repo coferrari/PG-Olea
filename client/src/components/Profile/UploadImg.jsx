@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { decodeToken } from "../../utils";
 import axios from "axios";
 import style from "./ProfileAdmin.module.css";
-import { updateProfile, updateNames } from "../../auth/users";
+import { updateProfile } from "../../auth/users";
 import { Button, Form, Modal } from "react-bootstrap";
 import { getToken } from "../../utils";
 const ChangePerfil = () => {

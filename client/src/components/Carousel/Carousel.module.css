@@ -1,24 +1,29 @@
-.container {
-  height: 400px;
-}
-
 .contenedorimg {
-  width: 80vw;
-  height: 40vh;
+  padding-top: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
+  height: 70vh;
 }
 
 .img {
   max-width: 100%;
   max-height: 100%;
 }
-.carruselcontainer {
+
+.imgs {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 70vw;
+  height: 60vh;
+  z-index: -1;
+}
+
+.carruselcontainer {
+  width: 300px;
 }
 
 .btncarousel {
@@ -26,6 +31,38 @@
   border: none;
 }
 
+.arrowscontainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 70vw;
+}
+
 .arrows {
   font-size: 24px;
+}
+
+@media only screen and (min-width: 500px) {
+  .carruselcontainer {
+    width: 400px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .carruselcontainer {
+    width: 700px;
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  .carruselcontainer {
+    width: 1000px;
+  }
+  .imgs {
+    width: 40vw;
+  }
+  .arrowscontainer {
+    width: 40vw;
+  }
 }
