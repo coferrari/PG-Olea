@@ -102,8 +102,17 @@ export default function EditProduct() {
       });
     }
   };
-  const onChangeImage = (e) => {
-    setImage(e.target.value);
+  const addImage = (e) => {
+    e.preventDefault();
+    const data = new FormData();
+    data.append("file", e.target.files[0]);
+    data.append("upload_preset", "oleaproyecto");
+    axios
+      .post(
+        "https://api.cloudinary.com/v1_1/oleaproyecto2021/image/upload",
+        data
+      )
+      .then((response) => onAddImage(response.data.url));
   };
   const onAddImage = (image) => {
     if (!newProduct.image?.includes(image)) {
@@ -144,27 +153,21 @@ export default function EditProduct() {
             />
           </Form.Group>
           <Form.Group className="mb-3">
-            <Form.Label>Imagenes</Form.Label>
-            <InputGroup className="mb-3">
-              <Form.Control
-                type="imagenes"
-                placeholder="Ingrese Imagenes"
-                name="imagenes"
-                onChange={(e) => {
-                  onChangeImage(e);
-                }}
-              />
-              {image ? (
-                <Button
-                  onClick={() => onAddImage(image)}
-                  variant="outline-secondary"
-                >
-                  Añadir
-                </Button>
-              ) : (
-                ""
-              )}
-            </InputGroup>
+            <Form.Group className="mb-3">
+              <Form.Label>Subir Imagenes</Form.Label>
+              <div>
+                <span>
+                  <i className="fas fa-camera"></i>
+                  <p>Subir Imagen</p>
+                  <input
+                    type="file"
+                    name="file"
+                    id="file_up"
+                    onChange={(e) => addImage(e)}
+                  />
+                </span>
+              </div>
+            </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Imagenes Cargadas</Form.Label>{" "}
               <span>
