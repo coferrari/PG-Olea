@@ -1,36 +1,41 @@
-const admins = [
-  {
-    username: "dylan",
-    email: "dylans55@hotmail.com",
-    password: "123Dylan",
-    admin: true,
-    picture:
-      "https://concepto.de/wp-content/uploads/2018/08/persona-e1533759204552.jpg",
-  },
-  {
-    username: "joaco",
-    email: "joaquinjoby@gmail.com",
-    password: "123Joaco",
-    admin: true,
-  },
-  {
-    username: "olea2021",
-    email: "oleaproyecto@gmail.com",
-    password: "Henry2021",
-    admin: true,
-  },
+const bcrypt = require("bcrypt");
+const { User } = require("../src/db");
 
-  {
-    username: "prueba1",
-    email: "prueba1@gmail.com",
-    password: "Henry2021",
-    admin: false,
-  },
-  {
-    username: "prueba2",
-    email: "prueba2@gmail.com",
-    password: "Henry2021",
-    admin: false,
-  },
-];
-module.exports = admins;
+const userMockUp = async () => {
+  // --- Users ---
+  const hashedPasswordA = await bcrypt.hash("123Usuario", 12);
+  try {
+    await User.create({
+      name: "Probando Usuario",
+      username: "usuario1",
+      email: "user@email.com",
+      password: hashedPasswordA,
+      contact: "02201236969",
+      coins: 10,
+    });
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+
+const adminMockUp = async () => {
+  // --- Admin ---
+  const hashedPasswordB = await bcrypt.hash("Henry2021", 12);
+  try {
+    await User.create({
+      name: "Olea",
+      surname: "Proyecto",
+      username: "olea",
+      isAdmin: true,
+      email: "oleaproyecto@gmail.com",
+      password: hashedPasswordB,
+    });
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+
+module.exports = {
+  userMockUp,
+  adminMockUp,
+};
