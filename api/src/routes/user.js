@@ -11,7 +11,7 @@ const {
 } = require("../utils/middlewares/checkDuplicate");
 const isAdmin = require("../utils/middlewares/isAdmin");
 const adminFunction = require("../controllers/admin");
-router.get("/", isAdmin, userFunction.getAll);
+router.get("/", userFunction.getAll);
 router.post("/register", checkDuplicate, userFunction.register);
 router.post("/login", checkEmailAndPassword, userFunction.login);
 router.put("/", verifyToken, userFunction.changePassword);
