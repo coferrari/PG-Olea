@@ -10,6 +10,7 @@ const Profile = () => {
     setToken(tokenNuevo);
     let user = decodeToken();
     setUsuario(user);
+    console.log(usuario);
   };
   useEffect(() => {
     newToken();
@@ -18,11 +19,22 @@ const Profile = () => {
     <div>
       {usuario ? (
         <div>
-          {" "}
-          <img src={usuario.picture} alt={usuario.username} />
-          <h3>{usuario.name}</h3>
-          <h3>{usuario.surname}</h3>
-          <ChangePerfil />
+          <img
+            src={usuario.picture}
+            alt={usuario.username}
+            className={style.imagen}
+          />
+          <h3>
+            {usuario.name} {usuario.surname}
+          </h3>
+          <div>
+            <h3>{usuario.email}</h3>
+          </div>
+          <div>{usuario.phone}</div>
+          <div>{usuario.adress}</div>
+          <div>
+            <ChangePerfil />
+          </div>
         </div>
       ) : (
         ""

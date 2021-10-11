@@ -105,7 +105,9 @@ userFunction.login = async (req, res, next) => {
         admin: emailFind.admin,
         email: emailFind.email
         picture: emailFind.picture,
-
+        email: emailFind.email,
+        adress: emailFind.adress,
+        phone: emailFind.phone,
       },
       process.env.TOKEN_SECRET
     );
@@ -216,14 +218,16 @@ userFunction.logOut = async (req, res, next) => {
 };
 userFunction.updateProfile = async (req, res, next) => {
   try {
-    const { name, surname, image } = req.body.usuario;
+    const { name, surname, image, phone, adress } = req.body.usuario;
+    console.log(req.body.usuario);
     const { token } = req.body;
     const verified = jwt.verify(token, process.env.TOKEN_SECRET);
-    console.log(verified);
     const user = await User.findByPk(verified.username);
     user.picture = image;
     user.name = name;
     user.surname = surname;
+    user.phone = phone;
+    user.adress = adress;
     user.save();
     console.log(user);
     const info = jwt.sign(
@@ -234,6 +238,8 @@ userFunction.updateProfile = async (req, res, next) => {
         surname: surname,
         picture: image,
         admin: user.admin,
+        adress: adress,
+        phone: phone,
       },
       process.env.TOKEN_SECRET,
       { expiresIn: "7d" }

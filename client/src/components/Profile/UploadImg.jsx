@@ -13,8 +13,11 @@ const ChangePerfil = () => {
   const [input, setInput] = useState({
     name: "",
     surname: "",
+    phone: "",
+    adress: "",
   });
   const handleChange = (e) => {
+    console.log(input);
     setInput({
       ...input,
       [e.target.name]: e.target.value,
@@ -49,15 +52,17 @@ const ChangePerfil = () => {
       ? (user.surname = input.surname)
       : (user.surname = usuario.surname);
     urlImage ? (user.image = urlImage) : (user.image = usuario.image);
+    input.phone ? (user.phone = input.phone) : (user.phone = usuario.phone);
+    input.adress
+      ? (user.adress = input.adress)
+      : (user.adress = usuario.adress);
     await updateProfile(user);
   };
-
   const sendUpdates = async (e) => {
     e.preventDefault();
     await upload();
     window.location.reload(false);
   };
-
   useEffect(() => {
     newToken();
   }, [token]);
@@ -122,6 +127,28 @@ const ChangePerfil = () => {
                   id="surname"
                   defaultValue={usuario.surname}
                   placeholder="Your name"
+                  onChange={handleChange}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Telefono</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="phone"
+                  id="surname"
+                  defaultValue={usuario.phone}
+                  placeholder="Telefono"
+                  onChange={handleChange}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Direccion</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="adress"
+                  id="adress"
+                  defaultValue={usuario.adress}
+                  placeholder="Direccion"
                   onChange={handleChange}
                 />
               </Form.Group>
