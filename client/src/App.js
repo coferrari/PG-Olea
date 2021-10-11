@@ -90,8 +90,6 @@ function App() {
         </Route>
         <Route exact path="/search/:name">
           <ShoppingCart />
-          <Search />
-          <Selects />
           <ProductsByName />
           <Footer />
         </Route>
