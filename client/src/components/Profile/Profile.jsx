@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import style from "./ProfileAdmin.module.css";
 import { getToken, decodeToken } from "../../utils";
 import ChangePerfil from "./UploadImg";
+import { BsPersonSquare } from "react-icons/bs"
+
 const Profile = () => {
   const [usuario, setUsuario] = useState();
   const [token, setToken] = useState();
@@ -16,22 +18,26 @@ const Profile = () => {
     newToken();
   }, [token]);
   return (
-    <div>
+    <div className="container">
       {usuario ? (
-        <div>
-          <img
-            src={usuario.picture}
-            alt={usuario.username}
-            className={style.imagen}
-          />
-          <h3>
+        <div className={style.containerprofile}>
+          {usuario.picture ? (
+            <img
+              src={usuario.picture}
+              alt={usuario.username}
+              className={style.imagen}
+            />
+          ) : (
+            <BsPersonSquare className={style.iconprofile} />
+          )}
+          <h3 className={style.name}>
             {usuario.name} {usuario.surname}
           </h3>
           <div>
-            <h3>{usuario.email}</h3>
+            <h3 className={style.mail}>{usuario.email}</h3>
           </div>
-          <div>{usuario.phone}</div>
-          <div>{usuario.adress}</div>
+          <div className={style.mail}>{usuario.phone}</div>
+          <div className={style.mail}>{usuario.adress}</div>
           <div>
             <ChangePerfil />
           </div>
