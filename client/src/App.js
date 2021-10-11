@@ -25,9 +25,8 @@ import Review from "./components/Review/Review";
 import ReviewsTable from "./components/Admin/Tables/ReviewsTable/ReviewsTable";
 import Profile from "./components/Profile/Profile";
 import EditProduct from "./components/Admin/EditProduct/EditProduct";
-import ProfileAdmin from "./components/Profile/ProfileAdmin";
 import BarraAdmin from "./components/Profile/BarraAdmin";
-
+import OrderDetail from "./components/OrderDetail/OrderDetail";
 function App() {
   const loggedIn = decodeToken();
 
@@ -111,6 +110,9 @@ function App() {
           ) : (
             <Redirect to="/home" />
           )}
+        </Route>
+        <Route exact path="/order/:id">
+          <OrderDetail />
         </Route>
       </Switch>
     </div>

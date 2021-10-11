@@ -16,7 +16,6 @@ const CategoriasEdit = ({ id, nameCategory }) => {
         {
           label: "Si",
           onClick: async () => {
-            console.log("onlick", id);
             await updateCat(id, input);
             alert("Se a cambiado el nombre de la categoria");
             window.location.reload(false);
