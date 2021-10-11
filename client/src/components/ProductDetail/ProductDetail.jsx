@@ -143,13 +143,12 @@ export function ProductDetail() {
                 <ListGroupItem>
                   <Button
                     variant="outline-dark"
-                    className={styles.opinions}
                     onClick={() => {
                       setLgShow(true);
                       tickets();
                     }}
                   >
-                    Opiniones sobre el producto
+                    <h4 className={styles.opinions}>Opiniones sobre el producto</h4>
                   </Button>{" "}
                 </ListGroupItem>
               </ListGroup>
