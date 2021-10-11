@@ -107,7 +107,6 @@ userFunction.login = async (req, res, next) => {
         picture: emailFind.picture,
         adress: emailFind.adress,
         phone: emailFind.phone,
-
       },
       process.env.TOKEN_SECRET
     );
