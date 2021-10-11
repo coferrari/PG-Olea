@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import style from "./ProfileAdmin.module.css";
+
 import { getToken, decodeToken } from "../../utils";
 import ChangePerfil from "./UploadImg";
 import Profile from "./Profile";

@@ -48,11 +48,3 @@ export const updateProfile = async (usuario) => {
   });
   localStorage.setItem("token", tokenRefresh.data.data.token);
 };
-// export const updateNames = async (input, username) => {
-//   const tokenRefresh = await axios.put(`/api/user/update/${username}`, {
-//     input: input,
-//     token: getToken(),
-//   });
-//   console.log(tokenRefresh.data);
-//   // localStorage.setItem("token", tokenRefresh.data.data.token);
-// };

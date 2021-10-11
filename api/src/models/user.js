@@ -38,5 +38,17 @@ module.exports = (sequelize) => {
       type: DataTypes.TEXT,
       allowNull: true,
     },
+    phone: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    adress: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    newsLetter: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+    },
   });
 };
