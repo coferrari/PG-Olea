@@ -54,8 +54,6 @@ export default function CreateProduct() {
       e.preventDefault();
       swal("Ingrese un stock");
     } else {
-      console.log(newProduct, "", newProduct.categoryID.length);
-
       e.preventDefault();
       await axios.post(`${GET_PRODUCTS_URL}create`, newProduct, {
         headers: {

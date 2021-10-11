@@ -23,12 +23,12 @@ router.post(
   checkEmail,
   userFunction.requestChangePassword
 );
-router.put("/uploadimage/:username", userFunction.uploadImage);
+router.put("/updateprofile", userFunction.updateProfile);
 // router.post("/refresh_token", userFunction.getAccessToken);
 router.post("/createadmin", userFunction.createAdmin);
 router.post("/changepasswordadmin", isAdmin, adminFunction.changePassword);
 router.delete("/deleteuser/:username", isAdmin, adminFunction.deleteUser);
 router.put("/generateadmin", isAdmin, adminFunction.generateAdmin);
 router.get("/logout", userFunction.logOut);
-router.put("/update/:username", userFunction.update);
+
 module.exports = router;

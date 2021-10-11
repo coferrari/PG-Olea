@@ -11,6 +11,7 @@ const {
   sendEmail,
   getTemplateChangePassword,
 } = require("../helpers/mail");
+const { use } = require("../routes/user.js");
 const userFunction = {};
 
 userFunction.register = async (req, res, next) => {
@@ -211,33 +212,25 @@ userFunction.logOut = async (req, res, next) => {
     return res.status(500).json({ msg: err.message });
   }
 };
-
-userFunction.update = async (req, res, next) => {
-  const { name, surname } = req.body.input;
-  const { token } = req.body;
-  const verified = jwt.verify(token, process.env.TOKEN_SECRET);
-  console.log(verified);
-  console.log(name, surname);
-  const user = await User.findByPk(verified.username);
-  user.name = name;
-  user.surname = surname;
-  user.save();
-  console.log("user", user);
-  res.send(user);
-};
-userFunction.uploadImage = async (req, res, next) => {
-  const { username } = req.params;
+userFunction.updateProfile = async (req, res, next) => {
   try {
-    const user = await User.findByPk(username);
-    user.picture = req.body.image;
+    const { name, surname, image } = req.body.usuario;
+    const { token } = req.body;
+    const verified = jwt.verify(token, process.env.TOKEN_SECRET);
+    console.log(verified);
+    const user = await User.findByPk(verified.username);
+    user.picture = image;
+    user.name = name;
+    user.surname = surname;
     user.save();
-    const token = jwt.sign(
+    console.log(user);
+    const info = jwt.sign(
       {
-        name: user.name,
+        name: name,
         username: user.username,
         email: user.email,
-        surname: user.surname,
-        picture: user.picture,
+        surname: surname,
+        picture: image,
         admin: user.admin,
       },
       process.env.TOKEN_SECRET,
@@ -246,7 +239,7 @@ userFunction.uploadImage = async (req, res, next) => {
     return res.header("auth-token", token).json({
       error: null,
       data: {
-        token,
+        token: info,
       },
     });
   } catch (err) {
