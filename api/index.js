@@ -6,8 +6,6 @@ const productMockUp = require("./json/productos");
 const { adminMockUp } = require("./json/admins");
 const product = require("./src/models/product.js");
 const { DB_URL } = process.env;
-// Syncing all the models at once.
-
 conn
   .sync({ force: false })
   .then(async () => {
