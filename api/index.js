@@ -17,15 +17,15 @@ conn.sync({ force: true }).then(() => {
   //   );
   //   post.then();
   // }
-  for (let j = 0; j < 5; j++) {
-    for (let i = 0; i < productos.length; i++) {
-      const post = axios.post(
-        `https://olea-deploy.herokuapp.com/api/product/create/`,
-        productos[i]
-      );
-      post.then();
-    }
-  }
+  // for (let j = 0; j < 5; j++) {
+  //   for (let i = 0; i < productos.length; i++) {
+  //     const post = axios.post(
+  //       `https://olea-deploy.herokuapp.com/api/product/create/`,
+  //       productos[i]
+  //     );
+  //     post.then();
+  //   }
+  // }
   // for (let i = 0; i < admin.length; i++) {
   //   const post = axios.post(
   //     `http://localhost:3001/api/user/createadmin/`,
