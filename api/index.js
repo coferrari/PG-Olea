@@ -6,7 +6,6 @@ const productMockUp = require("./json/productos");
 const { adminMockUp } = require("./json/admins");
 const product = require("./src/models/product.js");
 const { DB_URL } = process.env;
-
 conn
   .sync({ force: true })
   .then(async () => {
