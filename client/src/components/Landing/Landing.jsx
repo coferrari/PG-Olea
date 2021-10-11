@@ -12,7 +12,7 @@ function Landing() {
       </div>
       <div>
         <Link to="/home">
-          <Button variant="outline-dark">Ver más productos</Button>
+          <Button className={styles.btn} variant="outline-dark">Ver más productos</Button>
         </Link>
       </div>
       <div>
