@@ -30,13 +30,13 @@ conn.sync({ force: true }).then(() => {
       post.then();
     }
   }
-  for (let i = 0; i < admin.length; i++) {
-    const post = axios.post(
-      `http://localhost:3001/api/user/createadmin/`,
-      admin[i]
-    );
-    post.then();
-  }
+  // for (let i = 0; i < admin.length; i++) {
+  //   const post = axios.post(
+  //     `http://localhost:3001/api/user/createadmin/`,
+  //     admin[i]
+  //   );
+  //   post.then();
+  // }
   server.listen(process.env.PORT || 3001, () => {
     console.log("%s listening at 3001"); // eslint-disable-line no-console
   });
