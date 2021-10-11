@@ -26,6 +26,7 @@ import ReviewsTable from "./components/Admin/Tables/ReviewsTable/ReviewsTable";
 import Profile from "./components/Profile/Profile";
 import EditProduct from "./components/Admin/EditProduct/EditProduct";
 import ProfileAdmin from "./components/Profile/ProfileAdmin";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   const loggedIn = decodeToken();
@@ -55,18 +56,22 @@ function App() {
         <Route exact path="/home">
           <ShoppingCart />
           <Home />
+          <Footer />
         </Route>
         <Route path="/home/:attribute/:order">
           <ShoppingCart />
           <Home />
+          <Footer />
         </Route>
         <Route path="/category/:nameCategory">
           <ShoppingCart />
           <CategoryProduct />
+          <Footer />
         </Route>
         <Route exact path="/product/:idParams">
           <ShoppingCart />
           <ProductDetail />
+          <Footer />
         </Route>
         <Route path="/auth/confirmregister/:token">
           <ConfirmRegister />
@@ -88,6 +93,7 @@ function App() {
           <Search />
           <Selects />
           <ProductsByName />
+          <Footer />
         </Route>
         <Route exact path="/createreview/:productid">
           <Review />
