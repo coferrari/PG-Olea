@@ -21,8 +21,6 @@ checkoutControllers.pago = (req, res) => {
     }
     mercadopago.preferences.create(preference)
         .then(function (respuesta) {
-            // Este valor reemplazará el string "<%= global.id %>" en tu HTML
-            //   global.id = response.body.id;
             const redireccion = respuesta.body.init_point
             res.send(redireccion)
         }).catch(function (error) {

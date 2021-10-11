@@ -12,7 +12,7 @@ import style from "../Checkout.module.css";
         <Card.Header className={style.title}> 1 - Datos Personales</Card.Header>
         <ListGroup className={style.listgroup  }>
           <ListGroup.Item className={style.listgroup}>
-           <label> Nombre </label> <input className={style.input} type="text" defaultValue={nombre} />
+           <label> Nombre </label> <input className={style.input} type="text" placeholder="Nombre" defaultValue={nombre} />
           </ListGroup.Item>
           <ListGroup.Item className={style.listgroup}>
           <label> Apellido </label><input className={style.input} type="text" placeholder="Apellido" defaultValue={apellido} />
