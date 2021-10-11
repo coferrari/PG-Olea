@@ -1,4 +1,4 @@
-import { GET_PRODUCT_DETAIL } from "../actions/types";
+import { GET_PRODUCT_DETAIL, CLEAR_DETAIL } from "../actions/types";
 
 const initialState = {
   productDetail: [],
@@ -10,6 +10,11 @@ function productDetailReducer(state = initialState, action) {
       return {
         ...state,
         productDetail: action.payload,
+      };
+    case CLEAR_DETAIL:
+      return {
+        ...state,
+        productDetail: [],
       };
     default:
       return state;

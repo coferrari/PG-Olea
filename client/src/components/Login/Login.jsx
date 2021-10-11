@@ -15,7 +15,7 @@ export function validate(input) {
   if (!input.email) {
     errors.email = "Por favor ingrese su email";
   } else if (!/\S+@\S+\.\S+/.test(input.email)) {
-    errors.email = "El email ingreado no es válido";
+    errors.email = "El email ingresado no es válido";
   } else if (!input.password) {
     errors.password = "Por favor ingrese su contraseña";
   } else if (
@@ -130,7 +130,7 @@ const LoginButton = () => {
               <Form.Control
                 className={errors.username && style.inputdanger}
                 type="email"
-                placeholder="Enter email"
+                placeholder="Ingresá tu email"
                 name="email"
                 value={input.email}
                 onChange={(e) => {
@@ -151,7 +151,7 @@ const LoginButton = () => {
                   handleChange(e);
                 }}
                 type="password"
-                placeholder="Password"
+                placeholder="Ingresá tu contraseña"
                 name="password"
                 value={input.password}
               />

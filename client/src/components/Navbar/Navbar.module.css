@@ -1,3 +1,11 @@
+.fixed {
+    overflow: hidden;
+    background-color: #333;
+    position: fixed; /* Set the navbar to fixed position */
+    top: 0; /* Position the navbar at the top of the page */
+    width: 100%; /* Full width */
+}
+
 .links {
     text-decoration: none;
     color: white;
@@ -8,7 +16,7 @@
 }
 
 .links:hover {
-    color:cornflowerblue;
+    color: #7a8450;
 }
 
 .linkssesion {
@@ -21,7 +29,7 @@
 }
 
 .linkssesion:hover {
-    color:cornflowerblue;
+    color: #7a8450;
 }
 
 .containersession {

@@ -15,6 +15,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import RequestChangePassword from "./components/RequestChangePassword/RequestChangePassword";
 import ChangePassword from "./components/ChangePassword/ChangePassword";
 import ShoppingCart from "./components/ShoppingCart/ShoppingCart";
+import Checkout from "./components/Checkout/Checkout";
 import ProductsByName from "./components/ProductsByName/ProductsByName";
 import { decodeToken } from "./utils/index";
 import CreateProduct from "./components/Admin/CreateProduct/CreateProduct";
@@ -25,8 +26,10 @@ import Review from "./components/Review/Review";
 import ReviewsTable from "./components/Admin/Tables/ReviewsTable/ReviewsTable";
 import Profile from "./components/Profile/Profile";
 import EditProduct from "./components/Admin/EditProduct/EditProduct";
+import Footer from "./components/Footer/Footer";
 import BarraAdmin from "./components/Profile/BarraAdmin";
 import OrderDetail from "./components/OrderDetail/OrderDetail";
+
 function App() {
   const loggedIn = decodeToken();
 
@@ -55,21 +58,32 @@ function App() {
         <Route exact path="/home">
           <ShoppingCart />
           <Home />
+          <Footer />
         </Route>
         <Route path="/home/:attribute/:order">
           <ShoppingCart />
           <Home />
+          <Footer />
         </Route>
+        <Route exact path="/category/:nameCategory">
+          <CategoryProduct />
+        </Route>
+        <Route path="/category/:nameCategory/:attribute/:order">
         <Route path="/category/:nameCategory">
           <ShoppingCart />
           <CategoryProduct />
+          <Footer />
         </Route>
         <Route exact path="/product/:idParams">
           <ShoppingCart />
           <ProductDetail />
+          <Footer />
         </Route>
         <Route path="/auth/confirmregister/:token">
           <ConfirmRegister />
+        </Route>
+        <Route path="/checkout">
+          <Checkout />
         </Route>
         <Route exact path="/admin/createproduct">
           {loggedIn.admin ? <CreateProduct /> : <Redirect to="/home" />}
@@ -85,9 +99,8 @@ function App() {
         </Route>
         <Route exact path="/search/:name">
           <ShoppingCart />
-          <Search />
-          <Selects />
           <ProductsByName />
+          <Footer />
         </Route>
         <Route exact path="/createreview/:productid">
           <Review />

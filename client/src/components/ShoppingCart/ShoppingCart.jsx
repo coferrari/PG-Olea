@@ -4,9 +4,11 @@ import { Button, Offcanvas } from "react-bootstrap";
 import ItemsCart from "../ItemsCart/ItemsCart";
 import { clearCart, updateCart } from "../../redux/actions/index";
 import style from "./ShoppingCart.module.css";
-import carrito from "../../img/iconshoppingcart.png";
 import { emptyCart } from "../../cart/index";
 import { isAuthorized, decodeToken } from "../../utils/index";
+import { useHistory} from "react-router-dom";
+import { BsBag } from "react-icons/bs";
+
 
 const ShoppingCart = () => {
   const [show, setShow] = useState(false);
@@ -16,6 +18,8 @@ const ShoppingCart = () => {
   const cartFromLocalStorage = JSON.parse(localStorage.getItem("cart") || "[]");
   const [clear, setClear] = useState(false);
   const dispatch = useDispatch();
+  const history = useHistory();
+
   const productsCart = useSelector(
     (state) => state.carritoReducer.productsCarrito
   );
@@ -47,6 +51,12 @@ const ShoppingCart = () => {
     }
   };
 
+  const handleCheckout = (e) =>{
+    e.preventDefault()
+    history.push("/checkout")
+    handleClose();
+  }
+
   const totalSum = productsCart?.reduce((acc, curr) => {
     const result = curr.Carrito_Products
       ? acc + parseInt(curr.price) * curr.Carrito_Products.quantity
@@ -77,7 +87,7 @@ const ShoppingCart = () => {
   return (
     <>
       <button onClick={toggleShow} className={style.carrito}>
-        <img src={carrito} alt={carrito}/>
+        <BsBag className={style.bag} />
       </button>
       {productsCart.length !== 0 && (
         <div className={style.itemcarrito}>
@@ -123,7 +133,8 @@ const ShoppingCart = () => {
               </div>
 
               <div>
-                <Button className={style.checkout} variant="dark" type="submit">
+
+                <Button className={style.checkout} variant="dark" type="submit" onClick={ e=> {handleCheckout(e)}} >
                   terminar compra
                 </Button>
               </div>

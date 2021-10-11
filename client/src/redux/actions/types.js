@@ -5,3 +5,6 @@ export const CATEGORY_FILTER = "CATEGORY_FILTER";
 export const ALL_CATEGORIES = "ALL_CATEGORIES";
 export const CLEAR_CART = "CLEAR_CART";
 export const UPDATE_CART = "UPDATE_CART";
+export const PAY_MERCADOPAGO = "PAY_MERCADOPAGO";
+export const CLEAR_DETAIL = "CLEAR_DETAIL";
+

@@ -7,7 +7,7 @@ import { useHistory } from "react-router";
 export function validate(email) {
   let errors = "";
   if (!/\S+@\S+\.\S+/.test(email)) {
-    errors = "Email is invalid";
+    errors = "El email ingresado no es válido";
   }
   return errors;
 }
@@ -46,10 +46,10 @@ const RequestChangePassword = () => {
             }}
           >
             <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Email address</Form.Label>
+              <Form.Label>Email</Form.Label>
               <Form.Control
                 type="email"
-                placeholder="Enter email"
+                placeholder="Ingresá tu email"
                 name="email"
                 value={email}
                 onChange={(e) => {

@@ -9,21 +9,21 @@ import "react-confirm-alert/src/react-confirm-alert.css";
 export function validate(input) {
   let errors = {};
   if (!input.name) {
-    errors.name = "Name is required";
+    errors.name = "Nombre requerido";
   } else if (!input.surname) {
-    errors.surname = "Surname is required";
+    errors.surname = "Apellido requerido";
   } else if (!input.username) {
-    errors.username = "Username is required";
+    errors.username = "Nombre de usuario requerido";
   } else if (!input.email) {
-    errors.email = "Email is required";
+    errors.email = "Por favor ingrese su email";
   } else if (!/\S+@\S+\.\S+/.test(input.email)) {
-    errors.email = "Email is invalid";
+    errors.email = "El email ingreado no es válido";
   } else if (!input.password) {
-    errors.password = "Password is required";
+    errors.password = "Por favor ingrese su contraseña";
   } else if (
     !/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/.test(input.password)
   ) {
-    errors.password = "Password is invalid";
+    errors.password = "El formato de contraseña no es valido";
   }
   return errors;
 }
@@ -38,7 +38,10 @@ const Register = () => {
   });
   const [errors, setErrors] = useState({});
 
+
+
   const history = useHistory();
+
   const handleChange = (e) => {
     setInput({
       ...input,
@@ -87,10 +90,10 @@ const Register = () => {
             }}
           >
             <Form.Group className="mb-3">
-              <Form.Label>Name</Form.Label>
+              <Form.Label>Nombre</Form.Label>
               <Form.Control
                 type="name"
-                placeholder="Enter name"
+                placeholder="Ingresá tu nombre"
                 name="name"
                 value={input.name}
                 onChange={(e) => {
@@ -100,10 +103,10 @@ const Register = () => {
               {errors.name && <div className={style.errors}>{errors.name}</div>}
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label>Surname</Form.Label>
+              <Form.Label>Apellido</Form.Label>
               <Form.Control
                 type="surname"
-                placeholder="Enter surname"
+                placeholder="Ingresá tu apellido"
                 name="surname"
                 value={input.surname}
                 onChange={(e) => {
@@ -115,10 +118,10 @@ const Register = () => {
               )}
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label>Username</Form.Label>
+              <Form.Label>Nombre de usuario</Form.Label>
               <Form.Control
                 type="username"
-                placeholder="Enter username"
+                placeholder="Ingresá un nombre de usuario"
                 name="username"
                 value={input.username}
                 onChange={(e) => {
@@ -131,10 +134,10 @@ const Register = () => {
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Email address</Form.Label>
+              <Form.Label>Email</Form.Label>
               <Form.Control
                 type="email"
-                placeholder="Enter email"
+                placeholder="Ingresá tu email"
                 name="email"
                 value={input.email}
                 onChange={(e) => {
@@ -142,20 +145,20 @@ const Register = () => {
                 }}
               />
               <Form.Text className="text-muted">
-                We'll never share your email with anyone else.
+                Nunca compartiremos esta información.
               </Form.Text>
               {errors.email && (
                 <div className={style.errors}>{errors.email}</div>
               )}
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Password</Form.Label>
+              <Form.Label>Contraseña</Form.Label>
               <Form.Control
                 onChange={(e) => {
                   handleChange(e);
                 }}
                 type="password"
-                placeholder="Password"
+                placeholder="Ingresà una contraseña"
                 name="password"
                 value={input.password}
               />
@@ -179,6 +182,7 @@ const Register = () => {
                 </Button>
               )}
           </Form>
+   
         </div>
       </div>
     </div>

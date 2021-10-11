@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../../redux/actions/index";
 import { Card, Container } from "react-bootstrap";
 import styles from "./Carousel.module.css";
-
 import CarosuelBoots from "react-bootstrap/Carousel";
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 
 export default function Carousel({ img }) {
   const dispatch = useDispatch();
@@ -32,18 +32,35 @@ export default function Carousel({ img }) {
   }
 
   return (
-    <Container>
+    <div>
       {img ? (
-        <div className={styles.contenedor}>
-          .<button onClick={() => productPrev()}>-</button>
-          <button onClick={() => productNext()}>+</button>
-          {img?.map((p, i) => {
-            if (product === i) {
-              return <Card.Img key={i} variant="top" src={p} />;
-            }
-            else return ""
-          })}
-        </div>
+        <Container>
+          <div className={styles.carruselcontainer}>
+            {img?.map((p, i) => {
+              if (product === i) {
+                return (
+                  <div className={styles.imgs}>
+                    <img className={styles.img} key={i} variant="top" src={p} />
+                  </div>
+                );
+              } else return "";
+            })}
+            <div>
+              <button
+                className={styles.btncarousel}
+                onClick={() => productPrev()}
+              >
+                <MdKeyboardArrowLeft className={styles.arrows} />
+              </button>
+              <button
+                className={styles.btncarousel}
+                onClick={() => productNext()}
+              >
+                <MdKeyboardArrowRight className={styles.arrows} />
+              </button>
+            </div>
+          </div>
+        </Container>
       ) : (
         <Container>
           <CarosuelBoots
@@ -65,6 +82,6 @@ export default function Carousel({ img }) {
           </CarosuelBoots>
         </Container>
       )}
-    </Container>
+    </div>
   );
 }

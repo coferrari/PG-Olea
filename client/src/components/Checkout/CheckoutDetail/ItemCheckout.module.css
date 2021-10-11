@@ -1,0 +1,76 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  border-style: solid;
+  border-radius: 20px;
+  border-width: thin;
+  border-color: grey;
+  margin: 10px;
+  justify-content: center;
+  padding: 20px 20px;
+}
+
+.containerimg {
+  height: 150px;
+}
+
+.img {
+  height: 100%;
+  border-radius: 20px;
+}
+
+.details {
+  padding-top: 20px;
+}
+
+.name {
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 2px;
+}
+
+.price {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.btncontainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.btn {
+  border-radius: 0;
+  font-size: 13px;
+}
+
+.btn:active {
+  border: none;
+  outline: white;
+  box-shadow: 0px 0px 0px black;
+}
+
+.btn:focus {
+  box-shadow: 0px 0px 0px black;
+  /* box-shadow: inherit; */
+  outline: white;
+}
+
+.btn:disabled {
+  background-color: #000;
+}
+
+.delete {
+  padding-left: 30px;
+  background-color: white;
+  border: none;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
