@@ -8,7 +8,7 @@ const axios = require("axios");
 const { User } = require("./src/db");
 const { DB_URL } = process.env;
 // Syncing all the models at once.
-conn.sync({ force: true }).then(() => {
+conn.sync({ force: false }).then(() => {
   //Posteo todas las marcas y categorias
   // for (let i = 0; i < categorias.length; i++) {
   //   const post = axios.post(
