@@ -64,7 +64,6 @@ function App() {
           <Home />
           <Footer />
         </Route>
-
         <Route path="/category/:nameCategory">
           <CategoryProduct />
           <Footer />
@@ -104,7 +103,6 @@ function App() {
         <Route exact path="/admin/editproduct/:productid">
           {loggedIn.admin ? <EditProduct /> : <Redirect to="/home" />}
         </Route>
-
         <Route exact path="/admin/categoriestable">
           {loggedIn.admin ? <CategoriasTable /> : <Redirect to="/home" />}
         </Route>

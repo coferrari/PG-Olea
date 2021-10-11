@@ -6,7 +6,7 @@ import { clearCart, updateCart } from "../../redux/actions/index";
 import style from "./ShoppingCart.module.css";
 import { emptyCart } from "../../cart/index";
 import { isAuthorized, decodeToken } from "../../utils/index";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { BsBag } from "react-icons/bs";
 
 const ShoppingCart = () => {
@@ -18,6 +18,8 @@ const ShoppingCart = () => {
   const [clear, setClear] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
+  const { pathname } = useLocation();
+  const path = pathname.split("/")[1];
 
   const productsCart = useSelector(
     (state) => state.carritoReducer.productsCarrito
@@ -85,80 +87,91 @@ const ShoppingCart = () => {
 
   return (
     <>
-      <button onClick={toggleShow} className={style.carrito}>
-        <BsBag className={style.bag} />
-      </button>
-      {productsCart.length !== 0 && (
-        <div className={style.itemcarrito}>
-          <div className={style.qitems}>{totalQuantity}</div>
-        </div>
-      )}
-      <Offcanvas
-        show={show}
-        onHide={handleClose}
-        placement="end"
-        scroll="true"
-        backdrop="true"
+      <div
+        className={
+          path === "category" ||
+          path === "home" ||
+          path === "product" ||
+          path === "search"
+            ? null
+            : style.hidden
+        }
       >
-        <Offcanvas.Header closeButton>
-          <Offcanvas.Title className={style.title}>Carrito</Offcanvas.Title>
-        </Offcanvas.Header>
-        <Offcanvas.Body>
-          <ItemsCart />
-          {cartFromLocalStorage.length !== 0 ? (
-            <div className={style.container}>
-              <div className={style.continue}>
+        <button onClick={toggleShow} className={style.carrito}>
+          <BsBag className={style.bag} />
+        </button>
+        {productsCart.length !== 0 && (
+          <div className={style.itemcarrito}>
+            <div className={style.qitems}>{totalQuantity}</div>
+          </div>
+        )}
+        <Offcanvas
+          show={show}
+          onHide={handleClose}
+          placement="end"
+          scroll="true"
+          backdrop="true"
+        >
+          <Offcanvas.Header closeButton>
+            <Offcanvas.Title className={style.title}>Carrito</Offcanvas.Title>
+          </Offcanvas.Header>
+          <Offcanvas.Body>
+            <ItemsCart />
+            {cartFromLocalStorage.length !== 0 ? (
+              <div className={style.container}>
+                <div className={style.continue}>
+                  <Button
+                    className={style.shop}
+                    variant="dark"
+                    type="submit"
+                    onClick={() => handleClose()}
+                  >
+                    Seguir comprando
+                  </Button>
+                </div>
+                <div className={style.bntcontainer}>
+                  <div className={style.total}>total ${format(totalSum)}</div>
+                  <div>
+                    <Button
+                      className={style.vaciar}
+                      onClick={(e) => handleClearCart(e)}
+                      variant="dark"
+                      type="submit"
+                    >
+                      vaciar carrito
+                    </Button>
+                  </div>
+                </div>
+
+                <div>
+                  <Button
+                    className={style.checkout}
+                    variant="dark"
+                    type="submit"
+                    onClick={(e) => {
+                      handleCheckout(e);
+                    }}
+                  >
+                    terminar compra
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <div className={style.add}>
+                el carrito esta vacio
                 <Button
                   className={style.shop}
                   variant="dark"
                   type="submit"
                   onClick={() => handleClose()}
                 >
-                  Seguir comprando
+                  agregar productos
                 </Button>
               </div>
-              <div className={style.bntcontainer}>
-                <div className={style.total}>total ${format(totalSum)}</div>
-                <div>
-                  <Button
-                    className={style.vaciar}
-                    onClick={(e) => handleClearCart(e)}
-                    variant="dark"
-                    type="submit"
-                  >
-                    vaciar carrito
-                  </Button>
-                </div>
-              </div>
-
-              <div>
-                <Button
-                  className={style.checkout}
-                  variant="dark"
-                  type="submit"
-                  onClick={(e) => {
-                    handleCheckout(e);
-                  }}
-                >
-                  terminar compra
-                </Button>
-              </div>
-            </div>
-          ) : (
-            <div className={style.add}>
-              el carrito esta vacio
-              <Button
-                className={style.shop}
-                variant="dark"
-                type="submit"
-                onClick={() => handleClose()}
-              >
-                agregar productos
-              </Button>
-            </div>
-          )}
-        </Offcanvas.Body>
-      </Offcanvas>
+            )}
+          </Offcanvas.Body>
+        </Offcanvas>
+      </div>
     </>
   );
 };
