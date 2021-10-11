@@ -8,24 +8,24 @@ const axios = require("axios");
 const { User } = require("./src/db");
 const { DB_URL } = process.env;
 // Syncing all the models at once.
-conn.sync({ force: true }).then(() => {
+conn.sync({ force: false }).then(() => {
   //Posteo todas las marcas y categorias
-  for (let i = 0; i < categorias.length; i++) {
-    const post = axios.post(
-      `https://olea-deploy.herokuapp.com/api/category/`,
-      categorias[i]
-    );
-    post.then();
-  }
-  for (let j = 0; j < 5; j++) {
-    for (let i = 0; i < productos.length; i++) {
-      const post = axios.post(
-        `https://olea-deploy.herokuapp.com/api/product/create/`,
-        productos[i]
-      );
-      post.then();
-    }
-  }
+  // for (let i = 0; i < categorias.length; i++) {
+  //   const post = axios.post(
+  //     `http://localhost:3001/api/category/`,
+  //     categorias[i]
+  //   );
+  //   post.then();
+  // }
+  // for (let j = 0; j < 5; j++) {
+  //   for (let i = 0; i < productos.length; i++) {
+  //     const post = axios.post(
+  //       `http://localhost:3001/api/product/create/`,
+  //       productos[i]
+  //     );
+  //     post.then();
+  //   }
+  // }
   // for (let i = 0; i < admin.length; i++) {
   //   const post = axios.post(
   //     `http://localhost:3001/api/user/createadmin/`,
