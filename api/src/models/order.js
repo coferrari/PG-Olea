@@ -15,9 +15,13 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     status: {
-      type: DataTypes.STRING,
+      type: DataTypes.ENUM("creada","procesando", "cancelada", "finalizada" ),
       allowNull: false,
-      defaultValue: "active",
+      defaultValue: "creada",
     },
+    date: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    }
   });
 };
