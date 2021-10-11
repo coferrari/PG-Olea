@@ -62,8 +62,8 @@ export function ProductDetail() {
       setRemove(false);
     }
     return () => {
-      dispatch(clearDetail)
-    }
+      dispatch(clearDetail);
+    };
   }, [dispatch, add, remove, id, image, name, price]);
 
   const isInStore = productsCarrito.filter((product) => product.id === id);
@@ -133,7 +133,6 @@ export function ProductDetail() {
           <div className={styles.info}>
             <div>
               <Card.Title className={styles.title}>{product?.name}</Card.Title>
-              {/* marca */}
               <Card.Text className={styles.description}>
                 {product?.description}
               </Card.Text>
@@ -142,106 +141,24 @@ export function ProductDetail() {
                   Precio: ${product?.price}{" "}
                 </ListGroupItem>
                 <ListGroupItem>
-                  {" "}
-            <Button
-              onClick={() => {
-                setLgShow(true);
-                tickets();
-              }}
-            >
-              Opiniones sobre el producto
-            </Button>{" "}
-          </ListGroupItem>
-        </ListGroup>
-        {isInStore.length === 0 && (
-          <Button
-            variant="dark"
-            type="submit"
-            onClick={(e) => handleAddToCart(e)}
-          >
-            Agregar al carrito
-          </Button>
-        )}
-        {isInStore.length > 0 && (
-          <Button
-            variant="secondary"
-            type="submit"
-            onClick={(e) => handleRemoveFromCart(e)}
-          >
-            Eliminar del carrito
-          </Button>
-        )}
-      </Card>
-      <Modal
-        size="lg"
-        show={lgShow}
-        onHide={() => setLgShow(false)}
-        aria-labelledby="example-modal-sizes-title-lg"
-      >
-        <Modal.Header closeButton>
-          <Modal.Title id="example-modal-sizes-title-lg">
-            Opiniones sobre el producto
-          </Modal.Title>
-        </Modal.Header>
-        {reseñas?.length >= 1 ? (
-          <Modal.Body>
-            <div className={style.h3}>
-              <h5 className={style.titleh3}>{rating.toString().slice(0, 4)}</h5>
-              <div className={style.barraspan}>
-                <span className={style.spanbarra}>
-                  <b>Votos por 5 estrellas</b>
-                </span>
-                <ProgressBar
-                  variant="success"
-                  className={style.barra}
-                  now={(puntuacion[4] / reseñas?.length) * 100}
-                />
-
-                <span>
-                  <b>Votos por 4 estrellas</b>
-                </span>
-                <ProgressBar
-                  className={style.barra}
-                  now={(puntuacion[3] / reseñas?.length) * 100}
-                />
-                <span>
-                  <b>Votos por 3 estrellas</b>
-                </span>
-                <ProgressBar
-                  className={style.barra}
-                  now={(puntuacion[2] / reseñas?.length) * 100}
-                />
-                <span>
-                  <b>Votos por 2 estrellas</b>
-                </span>
-                <ProgressBar
-                  className={style.barra}
-                  now={(puntuacion[1] / reseñas?.length) * 100}
-                />
-                <span>
-                  <b>Votos por 1 estrellas</b>
-                </span>
-                <ProgressBar
-                  className={style.barra}
-                  now={(puntuacion[0] / reseñas?.length) * 100}
-                />
-              </div>
-            </div>
-            <div className={style.containerStars}>
-              <AiFillStar className={rating >= 1 ? style.gold : style.dark} />
-              <AiFillStar className={rating >= 2 ? style.gold : style.dark} />
-              <AiFillStar className={rating >= 3 ? style.gold : style.dark} />
-              <AiFillStar className={rating >= 4 ? style.gold : style.dark} />
-              <AiFillStar className={rating >= 5 ? style.gold : style.dark} />
-            </div>
-            <div className={style.reseñas}>
-              Promedio entre {reseñas.length} puntuaciones
+                  <Button
+                    variant="outline-dark"
+                    className={styles.opinions}
+                    onClick={() => {
+                      setLgShow(true);
+                      tickets();
+                    }}
+                  >
+                    Opiniones sobre el producto
+                  </Button>{" "}
+                </ListGroupItem>
+              </ListGroup>
             </div>
             <div>
               {isInStore.length === 0 && (
                 <Button
-                  className={styles.addcart}
                   variant="dark"
+                  className={styles.addcart}
                   type="submit"
                   onClick={(e) => handleAddToCart(e)}
                 >
@@ -250,8 +167,8 @@ export function ProductDetail() {
               )}
               {isInStore.length > 0 && (
                 <Button
-                  className={styles.removecart}
                   variant="secondary"
+                  className={styles.removecart}
                   type="submit"
                   onClick={(e) => handleRemoveFromCart(e)}
                 >
@@ -259,99 +176,93 @@ export function ProductDetail() {
                 </Button>
               )}
             </div>
-
-            <Modal
-              size="lg"
-              show={lgShow}
-              onHide={() => setLgShow(false)}
-              aria-labelledby="example-modal-sizes-title-lg"
-            >
-              <Modal.Header closeButton>
-                <Modal.Title id="example-modal-sizes-title-lg">
-                  Opiniones sobre el producto
-                </Modal.Title>
-              </Modal.Header>
-              {reseñas?.length >= 1 ? (
-                <Modal.Body>
-                  <div className={style.h3}>
-                    <h5 className={style.titleh3}>
-                      {rating.toString().slice(0, 4)}
-                    </h5>
-                    <div className={style.barraspan}>
-                      <span className={style.spanbarra}>
-                        <b>Votos por 5 estrellas</b>
-                      </span>
-                      <ProgressBar
-                        variant="success"
-                        className={style.barra}
-                        now={(puntuacion[4] / reseñas?.length) * 100}
-                      />
-
-                      <span>
-                        <b>Votos por 4 estrellas</b>
-                      </span>
-                      <ProgressBar
-                        className={style.barra}
-                        now={(puntuacion[3] / reseñas?.length) * 100}
-                      />
-                      <span>
-                        <b>Votos por 3 estrellas</b>
-                      </span>
-                      <ProgressBar
-                        className={style.barra}
-                        now={(puntuacion[2] / reseñas?.length) * 100}
-                      />
-                      <span>
-                        <b>Votos por 2 estrellas</b>
-                      </span>
-                      <ProgressBar
-                        className={style.barra}
-                        now={(puntuacion[1] / reseñas?.length) * 100}
-                      />
-                      <span>
-                        <b>Votos por 1 estrellas</b>
-                      </span>
-                      <ProgressBar
-                        className={style.barra}
-                        now={(puntuacion[0] / reseñas?.length) * 100}
-                      />
-                    </div>
-                  </div>
-                  <div className={style.containerStars}>
-                    <AiFillStar
-                      className={rating >= 1 ? style.gold : style.dark}
-                    />
-                    <AiFillStar
-                      className={rating >= 2 ? style.gold : style.dark}
-                    />
-                    <AiFillStar
-                      className={rating >= 3 ? style.gold : style.dark}
-                    />
-                    <AiFillStar
-                      className={rating >= 4 ? style.gold : style.dark}
-                    />
-                    <AiFillStar
-                      className={rating >= 5 ? style.gold : style.dark}
-                    />
-                  </div>
-                  <div className={style.reseñas}>
-                    Promedio entre {reseñas.length} puntuaciones
-                  </div>
-                  <div>
-                    {reseñas?.map((c) => {
-                      return <Comment reseñas={c} key={c.username} />;
-                    })}
-                  </div>
-                </Modal.Body>
-              ) : (
-                <div>
-                  <h1>Aun no hay reseñas</h1>
-                </div>
-              )}
-            </Modal>
           </div>
         </Card.Body>
       </Card>
+      <Modal
+        size="lg"
+        show={lgShow}
+        onHide={() => setLgShow(false)}
+        aria-labelledby="example-modal-sizes-title-lg"
+      >
+        <Modal.Header closeButton className={style.modal}>
+          <Modal.Title id="example-modal-sizes-title-lg">
+            <h4 className={style.title}>Opiniones sobre el producto</h4>
+          </Modal.Title>
+        </Modal.Header>
+        {reseñas?.length >= 1 ? (
+          <Modal.Body>
+            <div className={style.h3}>
+              <div className={style.container}>
+                <div>
+                  <h5 className={style.titleh3}>
+                    {rating.toString().slice(0, 4)}
+                  </h5>
+                </div>
+                <div className={style.barraspan}>
+                  <span className={style.spanbarra}>
+                    <b className={style.subtitlestars}>Votos por 5 estrellas</b>
+                  </span>
+                  <ProgressBar
+                    variant="success"
+                    className={style.barra}
+                    now={(puntuacion[4] / reseñas?.length) * 100}
+                  />
+                  <span>
+                    <b className={style.subtitlestars}>Votos por 4 estrellas</b>
+                  </span>
+                  <ProgressBar
+                    className={style.barra}
+                    now={(puntuacion[3] / reseñas?.length) * 100}
+                  />
+                  <span>
+                    <b className={style.subtitlestars}>Votos por 3 estrellas</b>
+                  </span>
+                  <ProgressBar
+                    className={style.barra}
+                    now={(puntuacion[2] / reseñas?.length) * 100}
+                  />
+                  <span>
+                    <b className={style.subtitlestars}>Votos por 2 estrellas</b>
+                  </span>
+                  <ProgressBar
+                    className={style.barra}
+                    now={(puntuacion[1] / reseñas?.length) * 100}
+                  />
+                  <span>
+                    <b className={style.subtitlestars}>Votos por 1 estrella</b>
+                  </span>
+                  <ProgressBar
+                    className={style.barra}
+                    now={(puntuacion[0] / reseñas?.length) * 100}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className={style.containerStars}>
+              <div>
+                <AiFillStar className={rating >= 1 ? style.gold : style.dark} />
+                <AiFillStar className={rating >= 2 ? style.gold : style.dark} />
+                <AiFillStar className={rating >= 3 ? style.gold : style.dark} />
+                <AiFillStar className={rating >= 4 ? style.gold : style.dark} />
+                <AiFillStar className={rating >= 5 ? style.gold : style.dark} />
+              </div>
+              <div className={style.reseñas}>
+                Promedio entre {reseñas.length} puntuaciones
+              </div>
+            </div>
+            <div>
+              {reseñas?.map((c) => {
+                return <Comment reseñas={c} key={c.username} />;
+              })}
+            </div>
+          </Modal.Body>
+        ) : (
+          <div>
+            <h4 className={style.subtitle}>Aun no hay reseñas</h4>
+          </div>
+        )}
+      </Modal>
     </div>
   );
 }
