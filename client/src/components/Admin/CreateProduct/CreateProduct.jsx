@@ -54,8 +54,6 @@ export default function CreateProduct() {
       e.preventDefault();
       swal("Ingrese un stock");
     } else {
-      console.log(newProduct, "", newProduct.categoryID.length);
-
       e.preventDefault();
       await axios.post(`${GET_PRODUCTS_URL}create`, newProduct, {
         headers: {
@@ -74,7 +72,7 @@ export default function CreateProduct() {
     setImage(e.target.value);
   };
   const onAddImage = (image) => {
-    if (image.length < 10) {
+    if (image?.length < 10 || image === undefined) {
       swal("Ingrese un url valido");
     } else if (!newProduct.image.includes(image)) {
       setNewProduct({

@@ -11,6 +11,7 @@ const {
   sendEmail,
   getTemplateChangePassword,
 } = require("../helpers/mail");
+const { use } = require("../routes/user.js");
 const userFunction = {};
 
 userFunction.register = async (req, res, next) => {
@@ -102,6 +103,7 @@ userFunction.login = async (req, res, next) => {
         surname: emailFind.surname,
         username: emailFind.username,
         admin: emailFind.admin,
+        picture: emailFind.picture,
       },
       process.env.TOKEN_SECRET
     );
@@ -210,16 +212,35 @@ userFunction.logOut = async (req, res, next) => {
     return res.status(500).json({ msg: err.message });
   }
 };
-userFunction.getAccessToken = async (req, res, next) => {
+userFunction.updateProfile = async (req, res, next) => {
   try {
-    const rf_token = req.cookies.refreshtoken;
-    if (!rf_token) return res.status(400).json({ msg: "Please login now!" });
-
-    jwt.verify(rf_token, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
-      if (err) return res.status(400).json({ msg: "Please login now!" });
-
-      const access_token = createAccessToken({ id: user.id });
-      res.json({ access_token });
+    const { name, surname, image } = req.body.usuario;
+    const { token } = req.body;
+    const verified = jwt.verify(token, process.env.TOKEN_SECRET);
+    console.log(verified);
+    const user = await User.findByPk(verified.username);
+    user.picture = image;
+    user.name = name;
+    user.surname = surname;
+    user.save();
+    console.log(user);
+    const info = jwt.sign(
+      {
+        name: name,
+        username: user.username,
+        email: user.email,
+        surname: surname,
+        picture: image,
+        admin: user.admin,
+      },
+      process.env.TOKEN_SECRET,
+      { expiresIn: "7d" }
+    );
+    return res.header("auth-token", token).json({
+      error: null,
+      data: {
+        token: info,
+      },
     });
   } catch (err) {
     next(err);

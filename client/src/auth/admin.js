@@ -63,8 +63,16 @@ export const deleteCategory = async (id) => {
 };
 export const updateCategory = async (id, nameCategory) => {
   console.log(id, nameCategory);
-  const res = await axios.put(`/api/category/${id}`, {
-    nameCategory: nameCategory,
-  });
+  const res = await axios.put(
+    `/api/category/${id}`,
+    {
+      nameCategory: nameCategory,
+    },
+    {
+      headers: {
+        authorization: getToken(),
+      },
+    }
+  );
   return res.data;
 };

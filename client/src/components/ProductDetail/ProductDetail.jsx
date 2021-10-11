@@ -136,7 +136,7 @@ export function ProductDetail() {
                 tickets();
               }}
             >
-              Large modal
+              Opiniones sobre el producto
             </Button>{" "}
           </ListGroupItem>
         </ListGroup>
