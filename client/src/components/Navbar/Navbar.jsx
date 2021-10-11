@@ -21,7 +21,7 @@ const NavResponsive = () => {
     const user = decodeToken();
     return (
       <div>
-        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" className={style.fixed}>
           <Container>
             <Link to="/">
               <Navbar.Brand>

@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { getCategories } from "../../redux/actions";
+import style from "./Selects.module.css";
 
 export default function Selects() {
   const dispatch = useDispatch();
@@ -17,18 +18,20 @@ export default function Selects() {
 
   return (
     <div>
-    <select onChange={(e) => handleOrderSelect(e.target.value)}>
-    <option value="" selected disabled hidden>Ordenar por...</option>
-      <option value={"name asc"}>Nombre: A-Z</option>
-      <option value={"name desc"}>Nombre: Z-A</option>
-      <option
-        value={"price desc"}
-        onChange={(e) => handleOrderSelect(e.target.name, e.target.value)}
+      <select
+        className={style.select}
+        onChange={(e) => handleOrderSelect(e.target.value)}
       >
-        Precio: más alto a más bajo
-      </option>
-      <option value={"price asc"}>Precio: más bajo a más alto</option>
-    </select>
+        <option value={"name asc"}>Alfabeticamente, A-Z</option>
+        <option value={"name desc"}>Alfabeticamente, Z-A</option>
+        <option
+          value={"price desc"}
+          onChange={(e) => handleOrderSelect(e.target.name, e.target.value)}
+        >
+          precio, mayor a menor
+        </option>
+        <option value={"price asc"}>precio, menor a mayor</option>
+      </select>
     </div>
   );
 }

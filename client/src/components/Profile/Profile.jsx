@@ -1,20 +1,34 @@
 import React, { useEffect, useState } from "react";
-import BarraAdmin from "./BarraAdmin";
-import { decodeToken } from "../../utils";
+import style from "./ProfileAdmin.module.css";
+import { getToken, decodeToken } from "../../utils";
+import ChangePerfil from "./UploadImg";
 const Profile = () => {
   const [usuario, setUsuario] = useState();
-  const profile = () => {
+  const [token, setToken] = useState();
+  const newToken = () => {
+    const tokenNuevo = getToken();
+    setToken(tokenNuevo);
     let user = decodeToken();
     setUsuario(user);
   };
   useEffect(() => {
-    profile();
-  }, [decodeToken]);
-  console.log(usuario);
+    newToken();
+  }, [token]);
   return (
     <div>
-      <BarraAdmin />
+      {usuario ? (
+        <div>
+          {" "}
+          <img src={usuario.picture} alt={usuario.username} />
+          <h3>{usuario.name}</h3>
+          <h3>{usuario.surname}</h3>
+          <ChangePerfil />
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 };
+
 export default Profile;

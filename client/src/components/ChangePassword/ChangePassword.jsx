@@ -7,19 +7,19 @@ import { useHistory, useParams } from "react-router";
 export function validate(input) {
   let errors = {};
   if (!input.email) {
-    errors.email = "Email is required";
+    errors.email = "Por favor ingrese su email";
   } else if (!/\S+@\S+\.\S+/.test(input.email)) {
-    errors.email = "Email is invalid";
+    errors.email = "El email ingresado no es válido";
   } else if (!input.passwordOne) {
-    errors.passwordOne = "Password is required";
+    errors.passwordOne = "Por favor ingrese una contraseña";
   } else if (
     !/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/.test(input.passwordOne)
   ) {
-    errors.passwordOne = "Password is invalid";
+    errors.passwordOne = "El formato de contraseña no es valido";
   } else if (!input.passwordTwo) {
-    errors.passwordTwo = "Password is required";
+    errors.passwordTwo = "Por favor repita la contraseña";
   } else if (input.passwordOne !== input.passwordTwo) {
-    errors.passwordTwo = "Password must much";
+    errors.passwordTwo = "Las contraseñas deben ser iguales";
   }
   return errors;
 }
@@ -71,10 +71,10 @@ const ChangePassword = () => {
             }}
           >
             <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Email address</Form.Label>
+              <Form.Label>Email</Form.Label>
               <Form.Control
                 type="email"
-                placeholder="Enter email"
+                placeholder="Ingresá tu email"
                 name="email"
                 value={input.email}
                 onChange={(e) => {
@@ -82,20 +82,20 @@ const ChangePassword = () => {
                 }}
               />
               <Form.Text className="text-muted">
-                We'll never share your email with anyone else.
+              Nunca compartiremos esta información
               </Form.Text>
               {errors.email && (
                 <div className={style.errors}>{errors.email}</div>
               )}
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Password</Form.Label>
+              <Form.Label>Contraseña</Form.Label>
               <Form.Control
                 onChange={(e) => {
                   handleChange(e);
                 }}
                 type="password"
-                placeholder="Password"
+                placeholder="Ingresá tu nueva contraseña"
                 name="passwordOne"
                 value={input.passwordOne}
               />
@@ -104,13 +104,13 @@ const ChangePassword = () => {
               )}
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Repeti tu password</Form.Label>
+              <Form.Label>Repeti tu contraseña</Form.Label>
               <Form.Control
                 onChange={(e) => {
                   handleChange(e);
                 }}
                 type="password"
-                placeholder="Password"
+                placeholder="Ingresá tu nueva contraseña otra vez"
                 name="passwordTwo"
                 value={input.passwordTwo}
               />

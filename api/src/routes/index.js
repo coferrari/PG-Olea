@@ -1,9 +1,10 @@
 const { Router } = require("express");
-
+const cors = require("cors");
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 
 const router = Router();
+router.use(cors());
 // requerimos los modelos de la db
 const userRoutes = require("./user");
 const productRoutes = require("./product");

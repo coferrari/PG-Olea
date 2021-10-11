@@ -1,17 +1,31 @@
+.container {
+  height: 400px;
+}
+
 .contenedorimg {
-  width: 80vw;
-  height: 40vh;
-  left: 36%;
-}
-.img {
-  max-width: 100%;
-  max-height: 100%;
-}
-.carruselcontainer {
   width: 80vw;
   height: 40vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.img {
+  max-width: 100%;
+  max-height: 100%;
+}
+.carruselcontainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
+}
+
+.btncarousel {
+  background-color: white;
+  border: none;
+}
+
+.arrows {
+  font-size: 24px;
 }

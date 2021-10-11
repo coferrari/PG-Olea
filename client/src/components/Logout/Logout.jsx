@@ -12,9 +12,13 @@ const LogoutButton = () => {
   const handleClick = (e) => {
     e.preventDefault();
     logOut();
-    localStorage.setItem("cart", JSON.stringify([]));
-    dispatch(clearCart([]));
-    history.push("/");
+    try {
+      localStorage.setItem("cart", JSON.stringify([]));
+      dispatch(clearCart([]));
+      history.push("/");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (

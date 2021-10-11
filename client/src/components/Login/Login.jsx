@@ -15,7 +15,7 @@ export function validate(input) {
   if (!input.email) {
     errors.email = "Por favor ingrese su email";
   } else if (!/\S+@\S+\.\S+/.test(input.email)) {
-    errors.email = "El email ingreado no es válido";
+    errors.email = "El email ingresado no es válido";
   } else if (!input.password) {
     errors.password = "Por favor ingrese su contraseña";
   } else if (
@@ -53,10 +53,11 @@ const LoginButton = () => {
   // ingresa sesion normal
   const handleSubmit = async (e) => {
     e.preventDefault();
+    await logIn(input);
     try {
-      await logIn(input);
       // const x = await logIn(input);
       const validate = isAuthorized();
+      history.push("/home");
       if (validate) {
         const user = decodeToken();
         const username = user.username;
@@ -78,7 +79,6 @@ const LoginButton = () => {
           }
         }
       }
-      history.push("/home");
     } catch (err) {
       setErrorLogin("Contraseña o usuario incorrecto");
     }
@@ -87,6 +87,7 @@ const LoginButton = () => {
   const responseSuccessGoogle = async (response) => {
     await logInGoogle(response);
     const validate = isAuthorized();
+    history.push("/");
     if (validate) {
       const user = decodeToken();
       const username = user.username;
@@ -108,7 +109,6 @@ const LoginButton = () => {
         }
       }
     }
-    // history.push("/");
   };
 
   const responseErrorGoogle = async (response) => {
@@ -130,7 +130,7 @@ const LoginButton = () => {
               <Form.Control
                 className={errors.username && style.inputdanger}
                 type="email"
-                placeholder="Enter email"
+                placeholder="Ingresá tu email"
                 name="email"
                 value={input.email}
                 onChange={(e) => {
@@ -151,7 +151,7 @@ const LoginButton = () => {
                   handleChange(e);
                 }}
                 type="password"
-                placeholder="Password"
+                placeholder="Ingresá tu contraseña"
                 name="password"
                 value={input.password}
               />

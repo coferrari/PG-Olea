@@ -8,6 +8,7 @@ import {
   CLEAR_CART,
   UPDATE_CART,
   PAY_MERCADOPAGO,
+  CLEAR_DETAIL
 } from "./types";
 import {
   GET_PRODUCTS_URL,
@@ -85,6 +86,7 @@ export function updateCart(products) {
   }
 }
 
+
 export function checkoutMercadoPago(itemsCheckout) {
   return async function(dispatch) {
     axios.post(PAY_MERCADOPAGO_URL, itemsCheckout)
@@ -96,3 +98,10 @@ export function checkoutMercadoPago(itemsCheckout) {
       })
   }
 }
+
+export function clearDetail() {
+  return {
+    type: CLEAR_DETAIL
+  }
+}
+

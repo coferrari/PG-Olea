@@ -1,0 +1,20 @@
+.bntsearch {
+    background-color: white;
+    border: none;
+}
+
+.iconsearch {
+  font-size: 20px;
+  margin: 10px;
+}
+
+.search {
+  outline: none;
+  border: none;
+  padding: 5px;
+  text-transform: uppercase;
+  font-family: "Montserrat", sans-serif;
+  font-size: 14px;
+  letter-spacing: 1px;
+  height: 30px;
+}

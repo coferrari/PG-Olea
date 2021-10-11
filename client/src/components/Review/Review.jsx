@@ -19,10 +19,8 @@ const Review = () => {
   };
   const handleChange = (e) => {
     setText(e.target.value);
-    console.log(text);
   };
   const handleSubmit = async (e) => {
-    console.log("adsads");
     e.preventDefault();
     await createReviews(user.username, productid, stars, text, opinion);
   };

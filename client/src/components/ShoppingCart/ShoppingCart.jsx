@@ -4,10 +4,10 @@ import { Button, Offcanvas } from "react-bootstrap";
 import ItemsCart from "../ItemsCart/ItemsCart";
 import { clearCart, updateCart } from "../../redux/actions/index";
 import style from "./ShoppingCart.module.css";
-import carrito from "../../img/iconshoppingcart.png";
 import { emptyCart } from "../../cart/index";
 import { isAuthorized, decodeToken } from "../../utils/index";
 import { useHistory} from "react-router-dom";
+import { BsBag } from "react-icons/bs";
 
 
 const ShoppingCart = () => {
@@ -87,7 +87,7 @@ const ShoppingCart = () => {
   return (
     <>
       <button onClick={toggleShow} className={style.carrito}>
-        <img src={carrito} alt={carrito}/>
+        <BsBag className={style.bag} />
       </button>
       {productsCart.length !== 0 && (
         <div className={style.itemcarrito}>

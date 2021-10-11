@@ -11,6 +11,7 @@ const {
   sendEmail,
   getTemplateChangePassword,
 } = require("../helpers/mail");
+const { use } = require("../routes/user.js");
 const userFunction = {};
 
 userFunction.register = async (req, res, next) => {
@@ -103,6 +104,8 @@ userFunction.login = async (req, res, next) => {
         username: emailFind.username,
         admin: emailFind.admin,
         email: emailFind.email
+        picture: emailFind.picture,
+
       },
       process.env.TOKEN_SECRET
     );
@@ -129,52 +132,67 @@ userFunction.getAll = async (req, res, next) => {
 
 userFunction.googleLogin = async (req, res, next) => {
   const { token } = req.body;
-  const ticket = await client.verifyIdToken({
-    idToken: token,
-    audience: process.env.CLIENT_ID,
-  });
-  const { name, given_name, family_name, email, picture, at_hash } =
-    ticket.getPayload();
-  const user = await User.findOne({
-    where: { email },
-    include: Carrito,
-  });
-  
-  if (user === null) {
-    const carritocreado = await Carrito.create({});
-    const newPasswordEncrypted = await encryptPassword(at_hash);
-    const newUser = await User.create({
-      name: given_name,
-      username: email,
-      password: newPasswordEncrypted,
-      email: email,
-      surname: family_name,
-      picture,
+  try {
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: process.env.CLIENT_ID,
     });
-    newUser.setCarrito(carritocreado.dataValues.id);
-    const token = jwt.sign(
-      {
+    const { given_name, family_name, email, picture, at_hash } =
+      ticket.getPayload();
+    const user = await User.findOne({
+      where: { email },
+      include: Carrito,
+    });
+
+    if (user === null) {
+      const carritocreado = await Carrito.create({});
+      const newPasswordEncrypted = await encryptPassword(at_hash);
+      const newUser = await User.create({
         name: given_name,
         username: email,
+        password: newPasswordEncrypted,
         email: email,
         surname: family_name,
         picture,
-      },
-      process.env.TOKEN_SECRET
-    );
-    return res.header("auth-token", token).json({
-      error: null,
-      data: { token },
-    });
-  }
-  if (user) {
-    const token = jwt.sign({ username: email }, process.env.TOKEN_SECRET);
-    return res.header("auth-token", token).json({
-      error: null,
-      data: {
-        token,
-      },
-    });
+      });
+      newUser.setCarrito(carritocreado.dataValues.id);
+      const token = jwt.sign(
+        {
+          name: given_name,
+          username: email,
+          email: email,
+          surname: family_name,
+          picture,
+        },
+        process.env.TOKEN_SECRET,
+        { expiresIn: "10m" }
+      );
+      return res.header("auth-token", token).json({
+        error: null,
+        data: { token },
+      });
+    }
+    if (user) {
+      const token = jwt.sign(
+        {
+          name: given_name,
+          username: email,
+          email: email,
+          surname: family_name,
+          picture,
+        },
+        process.env.TOKEN_SECRET,
+        { expiresIn: "10m" }
+      );
+      return res.header("auth-token", token).json({
+        error: null,
+        data: {
+          token,
+        },
+      });
+    }
+  } catch (err) {
+    next(err);
   }
 };
 userFunction.createAdmin = async (req, res, next) => {
@@ -188,5 +206,46 @@ userFunction.createAdmin = async (req, res, next) => {
     admin,
   });
 };
-
+userFunction.logOut = async (req, res, next) => {
+  try {
+    res.clearCookie("refreshtoken", { path: "/user/refresh_token" });
+    return res.json({ msg: "Logged out." });
+  } catch (err) {
+    return res.status(500).json({ msg: err.message });
+  }
+};
+userFunction.updateProfile = async (req, res, next) => {
+  try {
+    const { name, surname, image } = req.body.usuario;
+    const { token } = req.body;
+    const verified = jwt.verify(token, process.env.TOKEN_SECRET);
+    console.log(verified);
+    const user = await User.findByPk(verified.username);
+    user.picture = image;
+    user.name = name;
+    user.surname = surname;
+    user.save();
+    console.log(user);
+    const info = jwt.sign(
+      {
+        name: name,
+        username: user.username,
+        email: user.email,
+        surname: surname,
+        picture: image,
+        admin: user.admin,
+      },
+      process.env.TOKEN_SECRET,
+      { expiresIn: "7d" }
+    );
+    return res.header("auth-token", token).json({
+      error: null,
+      data: {
+        token: info,
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
 module.exports = userFunction;

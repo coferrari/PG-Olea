@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
-import { getProductDetail } from "../../redux/actions/index";
+import { clearDetail, getProductDetail } from "../../redux/actions/index";
 import {
   Card,
   ListGroup,
@@ -18,6 +18,8 @@ import { addOrEditCart, removeProductCart } from "../../cart/index";
 import { reviewsByProduct } from "../../utils/reviews";
 import Comment from "./CommentReviews.jsx";
 import style from "./ProductReview.module.css";
+import styles from "./ProductDetail.module.css";
+
 export function ProductDetail() {
   const dispatch = useDispatch();
   const { idParams } = useParams();
@@ -58,6 +60,9 @@ export function ProductDetail() {
       localStorage.setItem("cart", JSON.stringify(cartRemoved));
       dispatch(updateCart(cartRemoved));
       setRemove(false);
+    }
+    return () => {
+      dispatch(clearDetail)
     }
   }, [dispatch, add, remove, id, image, name, price]);
 
@@ -120,23 +125,31 @@ export function ProductDetail() {
   console.log(reseñas);
   return (
     <div className="container">
-      <Card style={{ width: "18rem" }}>
-        <Card.Body>
-          <Carousel img={product.image} />
-          <Card.Title>{product?.name}</Card.Title>
-          <Card.Text>{product?.description}</Card.Text>
-        </Card.Body>
-        <ListGroup className="list-group-flush">
-          <ListGroupItem>Precio: ${product?.price} </ListGroupItem>
-          <ListGroupItem>
-            {" "}
+      <Card>
+        <Card.Body className={styles.container}>
+          <div className={styles.carousel}>
+            <Carousel img={product.image} />
+          </div>
+          <div className={styles.info}>
+            <div>
+              <Card.Title className={styles.title}>{product?.name}</Card.Title>
+              {/* marca */}
+              <Card.Text className={styles.description}>
+                {product?.description}
+              </Card.Text>
+              <ListGroup className="list-group-flush">
+                <ListGroupItem className={styles.price}>
+                  Precio: ${product?.price}{" "}
+                </ListGroupItem>
+                <ListGroupItem>
+                  {" "}
             <Button
               onClick={() => {
                 setLgShow(true);
                 tickets();
               }}
             >
-              Large modal
+              Opiniones sobre el producto
             </Button>{" "}
           </ListGroupItem>
         </ListGroup>
@@ -225,17 +238,120 @@ export function ProductDetail() {
               Promedio entre {reseñas.length} puntuaciones
             </div>
             <div>
-              {reseñas?.map((c) => {
-                return <Comment reseñas={c} key={c.username} />;
-              })}
+              {isInStore.length === 0 && (
+                <Button
+                  className={styles.addcart}
+                  variant="dark"
+                  type="submit"
+                  onClick={(e) => handleAddToCart(e)}
+                >
+                  Agregar al carrito
+                </Button>
+              )}
+              {isInStore.length > 0 && (
+                <Button
+                  className={styles.removecart}
+                  variant="secondary"
+                  type="submit"
+                  onClick={(e) => handleRemoveFromCart(e)}
+                >
+                  Eliminar del carrito
+                </Button>
+              )}
             </div>
-          </Modal.Body>
-        ) : (
-          <div>
-            <h1>Aun no hay reseñas</h1>
+
+            <Modal
+              size="lg"
+              show={lgShow}
+              onHide={() => setLgShow(false)}
+              aria-labelledby="example-modal-sizes-title-lg"
+            >
+              <Modal.Header closeButton>
+                <Modal.Title id="example-modal-sizes-title-lg">
+                  Opiniones sobre el producto
+                </Modal.Title>
+              </Modal.Header>
+              {reseñas?.length >= 1 ? (
+                <Modal.Body>
+                  <div className={style.h3}>
+                    <h5 className={style.titleh3}>
+                      {rating.toString().slice(0, 4)}
+                    </h5>
+                    <div className={style.barraspan}>
+                      <span className={style.spanbarra}>
+                        <b>Votos por 5 estrellas</b>
+                      </span>
+                      <ProgressBar
+                        variant="success"
+                        className={style.barra}
+                        now={(puntuacion[4] / reseñas?.length) * 100}
+                      />
+
+                      <span>
+                        <b>Votos por 4 estrellas</b>
+                      </span>
+                      <ProgressBar
+                        className={style.barra}
+                        now={(puntuacion[3] / reseñas?.length) * 100}
+                      />
+                      <span>
+                        <b>Votos por 3 estrellas</b>
+                      </span>
+                      <ProgressBar
+                        className={style.barra}
+                        now={(puntuacion[2] / reseñas?.length) * 100}
+                      />
+                      <span>
+                        <b>Votos por 2 estrellas</b>
+                      </span>
+                      <ProgressBar
+                        className={style.barra}
+                        now={(puntuacion[1] / reseñas?.length) * 100}
+                      />
+                      <span>
+                        <b>Votos por 1 estrellas</b>
+                      </span>
+                      <ProgressBar
+                        className={style.barra}
+                        now={(puntuacion[0] / reseñas?.length) * 100}
+                      />
+                    </div>
+                  </div>
+                  <div className={style.containerStars}>
+                    <AiFillStar
+                      className={rating >= 1 ? style.gold : style.dark}
+                    />
+                    <AiFillStar
+                      className={rating >= 2 ? style.gold : style.dark}
+                    />
+                    <AiFillStar
+                      className={rating >= 3 ? style.gold : style.dark}
+                    />
+                    <AiFillStar
+                      className={rating >= 4 ? style.gold : style.dark}
+                    />
+                    <AiFillStar
+                      className={rating >= 5 ? style.gold : style.dark}
+                    />
+                  </div>
+                  <div className={style.reseñas}>
+                    Promedio entre {reseñas.length} puntuaciones
+                  </div>
+                  <div>
+                    {reseñas?.map((c) => {
+                      return <Comment reseñas={c} key={c.username} />;
+                    })}
+                  </div>
+                </Modal.Body>
+              ) : (
+                <div>
+                  <h1>Aun no hay reseñas</h1>
+                </div>
+              )}
+            </Modal>
           </div>
-        )}
-      </Modal>
+        </Card.Body>
+      </Card>
     </div>
   );
 }

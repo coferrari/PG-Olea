@@ -13,6 +13,9 @@ router.post("/", categoryControllers.create);
 router.put("/:id", isAdmin, categoryControllers.updateName);
 router.delete("/:id", isAdmin, categoryControllers.delete);
 router.post("/addCategories", isAdmin, categoryControllers.addCategories);
+router.post("/product/addCategories", categoryControllers.addCategories);
+router.delete("/product/deleteCategory", categoryControllers.deleteCategories);
+
 // router.get("/:category", categoryControllers.filterByCategory);
 
 module.exports = router;

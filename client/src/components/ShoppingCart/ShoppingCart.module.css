@@ -36,8 +36,8 @@
   background-color: white;
 }
 .shop {
-  /* margin-top: 30px; */
   border-radius: 0;
+  margin-top: 10px;
   text-transform: uppercase;
   letter-spacing: 2px;
   font-size: 14px;
@@ -76,26 +76,27 @@
 }
 
 .carrito {
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
   -moz-border-radius: 50%;
   -webkit-border-radius: 50%;
   border-radius: 50%;
   position: fixed;
   right: 20px;
   top: 120px;
-  background-color: white;
-  border-color: white;
   z-index: 100;
+  background-color:#7a8450;
+  border: 1px solid #7a8450;
+  outline: none;
 }
 
 .itemcarrito {
-  width: 25px;
-  height: 25px;
+  width: 22px;
+  height: 22px;
   -moz-border-radius: 50%;
   -webkit-border-radius: 50%;
   border-radius: 50%;
-  background-color:hotpink;
+  background-color: #0466c8;
   z-index: 200;
   position: fixed;
   right: 20px;
@@ -108,4 +109,10 @@
 
 .qitems {
   font-family: "Montserrat", sans-serif;
+  font-size: 12px;
+}
+
+.bag {
+  font-size: 20px;
+  color: white;
 }
