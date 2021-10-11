@@ -5,6 +5,7 @@ import { Search } from "../Search/Search";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../../redux/actions/index";
 import { useParams } from "react-router";
+import style from "./Home.module.css";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -47,8 +48,10 @@ const Home = () => {
 
   return (
     <div>
-      <Search />
-      <Selects />
+      <div className={style.bar}>
+        <Search />
+        <Selects />
+      </div>
       <Products products={products} />
     </div>
   );

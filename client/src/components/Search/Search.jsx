@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router";
+import { GoSearch } from "react-icons/go";
+import style from "./Search.module.css";
 
 export function Search() {
   const history = useHistory();
@@ -21,13 +23,20 @@ export function Search() {
   return (
     <div>
       <input
+        className={style.search}
         type="text"
         name="name"
         value={input.name}
-        placeholder="Ingrese un producto..."
+        placeholder="buscar..."
         onChange={handleChange}
       />
-      <button onClick={handleClick}>Buscar</button>
+      <button
+        disabled={!input.name ? true : false}
+        className={style.bntsearch}
+        onClick={handleClick}
+      >
+        <GoSearch className={style.iconsearch} />
+      </button>
     </div>
   );
 }
