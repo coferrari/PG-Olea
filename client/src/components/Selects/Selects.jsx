@@ -10,6 +10,7 @@ export default function Selects() {
   useEffect(() => {
     dispatch(getCategories());
   }, [dispatch]);
+
   const handleOrderSelect = function (order) {
     order = order.split(" ");
     history.push(`/home/${order[0]}/${order[1]}`);

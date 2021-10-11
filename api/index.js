@@ -1,23 +1,3 @@
-//                       _oo0oo_
-//                      o8888888o
-//                      88" . "88
-//                      (| -_- |)
-//                      0\  =  /0
-//                    ___/`---'\___
-//                  .' \\|     |// '.
-//                 / \\|||  :  |||// \
-//                / _||||| -:- |||||- \
-//               |   | \\\  -  /// |   |
-//               | \_|  ''\---/''  |_/ |
-//               \  .-\__  '-'  ___/-. /
-//             ___'. .'  /--.--\  `. .'___
-//          ."" '<  `.___\_<|>_/___.' >' "".
-//         | | :  `- \`.;`\ _ /`;.`/ - ` : | |
-//         \  \ `_.   \_ __\ /__ _/   .-` /  /
-//     =====`-.____`.___ \_____/___.-`___.-'=====
-//                       `=---='
-//     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 const server = require("./src/app.js");
 const { conn } = require("./src/db.js");
 const marcas = require("./json/marcas.js");
@@ -28,28 +8,31 @@ const axios = require("axios");
 const { User } = require("./src/db");
 const { DB_URL } = process.env;
 // Syncing all the models at once.
-conn.sync({ force: false }).then(() => {
+conn.sync({ force: true }).then(() => {
   //Posteo todas las marcas y categorias
-  // for (let i = 0; i < marcas.length; i++) {
-  //   const post = axios.post(`http://localhost:3001/api/brand/`, marcas[i]);
-  //   post.then();
-  // }
-  // for (let i = 0; i < categorias.length; i++) {
-  //   const post = axios.post(
-  //     `http://localhost:3001/api/category/`,
-  //     categorias[i]
-  //   );
-  //   post.then();
-  // }
-  // for (let j = 0; j < 5; j++) {
-  //   for (let i = 0; i < productos.length; i++) {
-  //     const post = axios.post(
-  //       `http://localhost:3001/api/product/create/`,
-  //       productos[i]
-  //     );
-  //     post.then();
-  //   }
-  // }
+  for (let i = 0; i < marcas.length; i++) {
+    const post = axios.post(
+      `https://olea-deploy.herokuapp.com/api/brand/`,
+      marcas[i]
+    );
+    post.then();
+  }
+  for (let i = 0; i < categorias.length; i++) {
+    const post = axios.post(
+      `https://olea-deploy.herokuapp.com/api/category/`,
+      categorias[i]
+    );
+    post.then();
+  }
+  for (let j = 0; j < 5; j++) {
+    for (let i = 0; i < productos.length; i++) {
+      const post = axios.post(
+        `https://olea-deploy.herokuapp.com/api/product/create/`,
+        productos[i]
+      );
+      post.then();
+    }
+  }
   // for (let i = 0; i < admin.length; i++) {
   //   const post = axios.post(
   //     `http://localhost:3001/api/user/createadmin/`,

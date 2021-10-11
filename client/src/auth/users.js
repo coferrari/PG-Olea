@@ -1,6 +1,7 @@
 import axios from "axios";
 import { getToken } from "../utils";
 
+
 export const register = async (user) => {
   return await axios.post(`/api/user/register`, user);
 };

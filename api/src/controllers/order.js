@@ -1,4 +1,4 @@
-const { Order } = require("../db.js");
+const { Order, Order_Products, Product } = require("../db.js");
 const Modelo = require("./index.js");
 class OrderModel extends Modelo {
   constructor(model) {
@@ -28,7 +28,6 @@ class OrderModel extends Modelo {
       }
     }
   };
-
   orderByDate = async (req, res, next) => {
     const { date } = req.params;
 
@@ -52,7 +51,6 @@ class OrderModel extends Modelo {
       }
     }
   };
-
   filterByStatus = async (req, res, next) => {
     const { status } = req.params;
 
@@ -69,6 +67,66 @@ class OrderModel extends Modelo {
       }
     }
   };
+
+  createOrder = async (req, res, next) => {
+    try {
+      const { username, price, products, addres, addresNum } = req.body;
+      const ordenCreada = await this.model.create({
+        userUsername: username,
+        price,
+        addres,
+        addresNum,
+        date: Date().slice(0, 10).replace(/-/g, "/"),
+      });
+      for (let i = 0; i < products.length; i++) {
+        await ordenCreada.addProduct(products[i].id);
+        await Order_Products.update(
+          { quantity: products[i].quantity },
+          {
+            where: {
+              orderId: ordenCreada.id,
+              productId: products[i].id,
+            },
+          }
+        );
+      }
+      res.json(ordenCreada);
+    } catch (error) {
+      next(error);
+    }
+  };
+  setOrderStatus = async (req, res, next) => {
+    const { status, orderID } = req.body;
+    try {
+      const orden = await this.model.findByPk(orderID, { include: Product });
+      orden.update(
+        {
+          status: status,
+        },
+        {
+          where: {
+            id: orderID,
+          },
+        }
+      );
+      res.status(200).send(orden);
+    } catch (err) {
+      next(err);
+    }
+  };
+  allOrders = async (req, res, next) => {
+    const { username } = req.body;
+    try {
+      const order = await this.model.findAll({
+        where: { userUsername: username },
+        include: Product,
+      });
+      res.status(200).send(order);
+    } catch (err) {
+      next(err);
+    }
+  };
+
 }
 
 const OrderControllers = new OrderModel(Order);
