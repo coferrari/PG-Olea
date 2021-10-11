@@ -82,13 +82,12 @@ userFunction.changePassword = async (req, res, next) => {
     if (user.email === verified.email) {
       const newPasswordEncrypted = await encryptPassword(password);
       user.password = newPasswordEncrypted;
-      console.log("entre");
+
       await user.save();
       return res.send("nueva contraseña guardada");
     }
     res.status(404).send("err");
   } catch (err) {
-    console.log("entre al error");
     next(err);
   }
 };
@@ -217,7 +216,7 @@ userFunction.logOut = async (req, res, next) => {
 userFunction.updateProfile = async (req, res, next) => {
   try {
     const { name, surname, image, phone, adress } = req.body.usuario;
-    console.log(req.body.usuario);
+
     const { token } = req.body;
     const verified = jwt.verify(token, process.env.TOKEN_SECRET);
     const user = await User.findByPk(verified.username);
@@ -227,7 +226,7 @@ userFunction.updateProfile = async (req, res, next) => {
     user.phone = phone;
     user.adress = adress;
     user.save();
-    console.log(user);
+
     const info = jwt.sign(
       {
         name: name,

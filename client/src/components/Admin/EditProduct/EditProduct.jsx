@@ -248,12 +248,11 @@ export default function EditProduct() {
               ) : (
                 <Button
                   onClick={() => {
-                    console.log(product);
                     setNewProduct({
                       ...newProduct,
                       categoryID: product.categories.map((e) => e.id),
                     });
-                    console.log(newProduct);
+
                     setEditCats(true);
                   }}
                 >

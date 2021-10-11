@@ -44,7 +44,7 @@ class ReviewsModel extends Modelo {
   getByProduct = async (req, res, next) => {
     try {
       const { id } = req.params;
-      console.log(id);
+
       const reviews = await this.model.findAll({
         where: { productId: id },
         include: [

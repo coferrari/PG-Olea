@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import style from "./ProfileAdmin.module.css";
 import { getToken, decodeToken } from "../../utils";
 import ChangePerfil from "./UploadImg";
-import { BsPersonSquare } from "react-icons/bs"
+import { BsPersonSquare } from "react-icons/bs";
 
 const Profile = () => {
   const [usuario, setUsuario] = useState();
@@ -12,7 +12,6 @@ const Profile = () => {
     setToken(tokenNuevo);
     let user = decodeToken();
     setUsuario(user);
-    console.log(usuario);
   };
   useEffect(() => {
     newToken();

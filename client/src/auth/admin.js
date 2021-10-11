@@ -62,7 +62,6 @@ export const deleteCategory = async (id) => {
   return res.data;
 };
 export const updateCategory = async (id, nameCategory) => {
-  console.log(id, nameCategory);
   const res = await axios.put(
     `/api/category/${id}`,
     {

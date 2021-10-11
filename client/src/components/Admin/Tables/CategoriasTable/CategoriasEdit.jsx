@@ -29,7 +29,6 @@ const CategoriasEdit = ({ id, nameCategory }) => {
     });
   };
   const updateCat = async (id, name) => {
-    console.log("update", id);
     await updateCategory(id, name);
   };
   return (
