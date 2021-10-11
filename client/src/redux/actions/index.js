@@ -6,7 +6,8 @@ import {
   CATEGORY_FILTER,
   ALL_CATEGORIES,
   CLEAR_CART,
-  UPDATE_CART
+  UPDATE_CART, 
+  CLEAR_DETAIL
 } from "./types";
 import {
   GET_PRODUCTS_URL,
@@ -80,5 +81,11 @@ export function updateCart(products) {
   return {
     type: UPDATE_CART,
     payload: products
+  }
+}
+
+export function clearDetail() {
+  return {
+    type: CLEAR_DETAIL
   }
 }

@@ -12,10 +12,9 @@ function Footer() {
           <div className={style.footer__flexitem}>
             <h5 className={style.subtitles}>somos olea</h5>
             <ul className={style.ul}>
-              <li className={style.list}>Lorem Ipsum is simply dummy text</li>
+              <li className={style.list}>OLEA nace con la intención de incorporar productos amigables con el medio ambiente en nuestra vida diaria.</li>
               <li className={style.list}>
-                Lorem Ipsum has been the industry's standard dummy text ever
-                since the 1500s.
+                Es por eso que decidimos acercarte alimentos saludables, cosmética natural, objetos sustentables y muchas cosas más.
               </li>
             </ul>
           </div>
