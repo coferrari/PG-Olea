@@ -66,6 +66,7 @@ function App() {
           <Footer />
         </Route>
         <Route exact path="/category/:nameCategory">
+          <ShoppingCart />
           <CategoryProduct />
         </Route>
 
