@@ -14,6 +14,7 @@ import { getToken } from "../../../utils/index";
 import axios from "axios";
 import { GET_PRODUCTS_URL } from "../../../consts";
 import swal from "sweetalert";
+import style from "./CreateProduct.module.css";
 
 export default function CreateProduct() {
   const dispatch = useDispatch();
@@ -153,7 +154,7 @@ export default function CreateProduct() {
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Imagenes Cargadas</Form.Label>
-              <Container>
+              <Container className={style.containerimg} >
                 {newProduct.image?.map((e) => (
                   <Row>
                     <Col xs={6} md={4}>
@@ -167,7 +168,7 @@ export default function CreateProduct() {
                       >
                         x
                       </Button>
-                      <Image src={e} rounded />
+                      <Image src={e} rounded className={style.img} />
                     </Col>
                   </Row>
                 ))}
