@@ -10,21 +10,21 @@ const { DB_URL } = process.env;
 // Syncing all the models at once.
 conn.sync({ force: false }).then(() => {
   //Posteo todas las marcas y categorias
-  for (let i = 0; i < categorias.length; i++) {
-    const post = axios.post(
-      `https://olea-deploy.herokuapp.com/api/category/`,
-      categorias[i]
-    );
-    post.then();
-  }
+  // for (let i = 0; i < categorias.length; i++) {
+  //   const post = axios.post(
+  //     `https://olea-deploy.herokuapp.com/api/category/`,
+  //     categorias[i]
+  //   );
+  //   post.then();
+  // }
 
-  for (let i = 0; i < productos.length; i++) {
-    const post = axios.post(
-      `https://olea-deploy.herokuapp.com/api/product/create/`,
-      productos[i]
-    );
-    post.then();
-  }
+  // for (let i = 0; i < productos.length; i++) {
+  //   const post = axios.post(
+  //     `https://olea-deploy.herokuapp.com/api/product/create/`,
+  //     productos[i]
+  //   );
+  //   post.then();
+  // }
 
   // for (let i = 0; i < admin.length; i++) {
   //   const post = axios.post(
