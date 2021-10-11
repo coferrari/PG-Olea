@@ -1,10 +1,10 @@
 const { Product, Category } = require("../db.js");
 const Modelo = require("./index.js");
+const productControllers = require("./product.js");
 class CategoryModel extends Modelo {
   constructor(model) {
     super(model);
   }
-
   getAll = (req, res, next) => {
     const Users = this.model.findAll({
       include: {
@@ -15,7 +15,6 @@ class CategoryModel extends Modelo {
       res.send(results);
     }).catch((error) => next(error));
   };
-
   filterByCategory = async (req, res, next) => {
     try {
       let productsFiltered = await Product.findAll({
@@ -61,6 +60,24 @@ class CategoryModel extends Modelo {
         } else {
           res.status(404).send("No hay un producto con ese ID");
         }
+      }
+    } catch (err) {
+      next(err);
+    }
+  };
+  deleteCategories = async (req, res, next) => {
+    const { categoriesID, productID } = req.body;
+    try {
+      if (categoriesID.length === 1) {
+        const producto = await Product.findByPk(productID);
+        await Product.findOne({
+          where: {
+            id: productID,
+          },
+          include: { model: Category },
+        });
+        producto.removeCategory([categoriesID]);
+        res.send(producto);
       }
     } catch (err) {
       next(err);

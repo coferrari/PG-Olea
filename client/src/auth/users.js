@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getToken } from "../utils";
 
 export const register = async (user) => {
   return await axios.post(`/api/user/register`, user);
@@ -39,3 +40,19 @@ export const getUsers = async (token) => {
   });
   return res.data;
 };
+export const updateProfile = async (usuario) => {
+  console.log(usuario);
+  const tokenRefresh = await axios.put(`/api/user/updateprofile`, {
+    usuario: usuario,
+    token: getToken(),
+  });
+  localStorage.setItem("token", tokenRefresh.data.data.token);
+};
+// export const updateNames = async (input, username) => {
+//   const tokenRefresh = await axios.put(`/api/user/update/${username}`, {
+//     input: input,
+//     token: getToken(),
+//   });
+//   console.log(tokenRefresh.data);
+//   // localStorage.setItem("token", tokenRefresh.data.data.token);
+// };

@@ -16,7 +16,11 @@ import axios from "axios";
 import swal from "sweetalert";
 import { useParams } from "react-router";
 import { GET_PRODUCTS } from "../../../redux/actions/types";
-import { GET_PRODUCTS_URL } from "../../../consts";
+import {
+  GET_PRODUCTS_URL,
+  ADD_CATEGORY_PRODUCT,
+  DELET_CATEGORY_PRODUCT,
+} from "../../../consts";
 
 export default function EditProduct() {
   const dispatch = useDispatch();
@@ -51,7 +55,6 @@ export default function EditProduct() {
       setNewProduct(product);
       setVerImagenes({ click: 1, compr: !verImagenes.compr });
     } else setVerImagenes({ ...verImagenes, compr: !verImagenes.compr });
-    console.log(newProduct);
   };
   const onChangeInput = (e) => {
     e.preventDefault();
@@ -59,15 +62,40 @@ export default function EditProduct() {
       ...newProduct,
       [e.target.name]: e.target.value,
     });
-    console.log(newProduct);
   };
-  const categoris = (catID) => {
+  const categoris = async (catID) => {
     if (!newProduct.categoryID.includes(catID)) {
+      await axios.post(
+        `${ADD_CATEGORY_PRODUCT}`,
+        {
+          categoriesID: [catID],
+          productID: productid,
+        },
+        {
+          headers: {
+            authorization: getToken(),
+          },
+        }
+      );
       setNewProduct({
         ...newProduct,
         categoryID: [...newProduct.categoryID, catID],
       });
     } else if (newProduct.categoryID.includes(catID)) {
+      await axios.delete(
+        `${DELET_CATEGORY_PRODUCT}`,
+        {
+          data: {
+            categoriesID: [catID],
+            productID: productid,
+          },
+        },
+        {
+          headers: {
+            authorization: getToken(),
+          },
+        }
+      );
       setNewProduct({
         ...newProduct,
         categoryID: newProduct.categoryID.filter((e) => e != catID),
@@ -78,20 +106,19 @@ export default function EditProduct() {
     setImage(e.target.value);
   };
   const onAddImage = (image) => {
-    if (image.length < 10) {
-      swal("Ingrese un url valido");
-    } else if (!newProduct.image.includes(image)) {
+    if (!newProduct.image?.includes(image)) {
       setNewProduct({
         ...newProduct,
         image: [...newProduct.image, image],
       });
-    } else if (newProduct.image.includes(image)) {
+    } else if (newProduct.image?.includes(image)) {
       setNewProduct({
         ...newProduct,
-        image: newProduct.image.filter((e) => e != image),
+        image: newProduct.image?.filter((e) => e != image),
       });
     }
   };
+
   return (
     <div className="container">
       <div className="col-lg-4 mx-auto text-center">
@@ -127,12 +154,16 @@ export default function EditProduct() {
                   onChangeImage(e);
                 }}
               />
-              <Button
-                onClick={() => onAddImage(image)}
-                variant="outline-secondary"
-              >
-                Añadir
-              </Button>
+              {image ? (
+                <Button
+                  onClick={() => onAddImage(image)}
+                  variant="outline-secondary"
+                >
+                  Añadir
+                </Button>
+              ) : (
+                ""
+              )}
             </InputGroup>
             <Form.Group className="mb-3">
               <Form.Label>Imagenes Cargadas</Form.Label>{" "}
@@ -188,7 +219,7 @@ export default function EditProduct() {
               defaultValue={product.description}
             />
           </Form.Group>
-          {/* <Form.Group className="mb-3">
+          <Form.Group className="mb-3">
             <Form.Label>Seleccione las Categorias</Form.Label>
 
             <div>
@@ -202,7 +233,9 @@ export default function EditProduct() {
                             ? "dark"
                             : "secondary"
                         }
-                        onClick={() => categoris(cat.id)}
+                        onClick={() => {
+                          categoris(cat.id);
+                        }}
                       >
                         {cat.nameCategory}
                       </Button>{" "}
@@ -224,8 +257,8 @@ export default function EditProduct() {
                   Editar Categorias
                 </Button>
               )}
-            </div> 
-          </Form.Group>*/}
+            </div>
+          </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Stock</Form.Label>
             <Form.Control

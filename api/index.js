@@ -29,7 +29,7 @@ const { User } = require("./src/db");
 const { DB_URL } = process.env;
 // Syncing all the models at once.
 conn.sync({ force: false }).then(() => {
-  // //Posteo todas las marcas y categorias
+  //Posteo todas las marcas y categorias
   // for (let i = 0; i < marcas.length; i++) {
   //   const post = axios.post(`http://localhost:3001/api/brand/`, marcas[i]);
   //   post.then();

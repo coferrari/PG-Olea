@@ -16,10 +16,12 @@ export default function ReviewsTable() {
         authorization: getToken(),
       },
     });
-    return res;
+
+    setReviews(res.data);
+    console.log(reviews);
   };
   useEffect(() => {
-    setReviews(review());
+    review();
   }, [productid]);
 
   const remove = (id) => {
@@ -50,32 +52,34 @@ export default function ReviewsTable() {
 
   return (
     <div>
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>Id</th>
-            <th>Usuario</th>
-            <th>Rating</th>
-            <th>Comentario</th>
-            <th>Eliminar</th>
-          </tr>
-        </thead>
-        <tbody>
-          {reviews?.map((e) => {
-            return (
-              <tr>
-                <td>{e.id}</td>
-                <td>{e.userUsername}</td>
-                <td>{e.rating}</td>
-                <td>{e.comment}</td>
-                <td>
-                  <Button onClick={() => remove(e.id)}>Eliminar</Button>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </Table>
+      {
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Usuario</th>
+              <th>Rating</th>
+              <th>Comentario</th>
+              <th>Eliminar</th>
+            </tr>
+          </thead>
+          <tbody>
+            {reviews?.map((e) => {
+              return (
+                <tr>
+                  <td>{e.id}</td>
+                  <td>{e.userUsername}</td>
+                  <td>{e.rating}</td>
+                  <td>{e.comment}</td>
+                  <td>
+                    <Button onClick={() => remove(e.id)}>Eliminar</Button>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </Table>
+      }
     </div>
   );
 }

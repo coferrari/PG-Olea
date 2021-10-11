@@ -143,16 +143,99 @@ export function ProductDetail() {
                 </ListGroupItem>
                 <ListGroupItem>
                   {" "}
-                  <Button
-                    onClick={() => {
-                      setLgShow(true);
-                      tickets();
-                    }}
-                  >
-                    Large modal
-                  </Button>{" "}
-                </ListGroupItem>
-              </ListGroup>
+            <Button
+              onClick={() => {
+                setLgShow(true);
+                tickets();
+              }}
+            >
+              Opiniones sobre el producto
+            </Button>{" "}
+          </ListGroupItem>
+        </ListGroup>
+        {isInStore.length === 0 && (
+          <Button
+            variant="dark"
+            type="submit"
+            onClick={(e) => handleAddToCart(e)}
+          >
+            Agregar al carrito
+          </Button>
+        )}
+        {isInStore.length > 0 && (
+          <Button
+            variant="secondary"
+            type="submit"
+            onClick={(e) => handleRemoveFromCart(e)}
+          >
+            Eliminar del carrito
+          </Button>
+        )}
+      </Card>
+      <Modal
+        size="lg"
+        show={lgShow}
+        onHide={() => setLgShow(false)}
+        aria-labelledby="example-modal-sizes-title-lg"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="example-modal-sizes-title-lg">
+            Opiniones sobre el producto
+          </Modal.Title>
+        </Modal.Header>
+        {reseñas?.length >= 1 ? (
+          <Modal.Body>
+            <div className={style.h3}>
+              <h5 className={style.titleh3}>{rating.toString().slice(0, 4)}</h5>
+              <div className={style.barraspan}>
+                <span className={style.spanbarra}>
+                  <b>Votos por 5 estrellas</b>
+                </span>
+                <ProgressBar
+                  variant="success"
+                  className={style.barra}
+                  now={(puntuacion[4] / reseñas?.length) * 100}
+                />
+
+                <span>
+                  <b>Votos por 4 estrellas</b>
+                </span>
+                <ProgressBar
+                  className={style.barra}
+                  now={(puntuacion[3] / reseñas?.length) * 100}
+                />
+                <span>
+                  <b>Votos por 3 estrellas</b>
+                </span>
+                <ProgressBar
+                  className={style.barra}
+                  now={(puntuacion[2] / reseñas?.length) * 100}
+                />
+                <span>
+                  <b>Votos por 2 estrellas</b>
+                </span>
+                <ProgressBar
+                  className={style.barra}
+                  now={(puntuacion[1] / reseñas?.length) * 100}
+                />
+                <span>
+                  <b>Votos por 1 estrellas</b>
+                </span>
+                <ProgressBar
+                  className={style.barra}
+                  now={(puntuacion[0] / reseñas?.length) * 100}
+                />
+              </div>
+            </div>
+            <div className={style.containerStars}>
+              <AiFillStar className={rating >= 1 ? style.gold : style.dark} />
+              <AiFillStar className={rating >= 2 ? style.gold : style.dark} />
+              <AiFillStar className={rating >= 3 ? style.gold : style.dark} />
+              <AiFillStar className={rating >= 4 ? style.gold : style.dark} />
+              <AiFillStar className={rating >= 5 ? style.gold : style.dark} />
+            </div>
+            <div className={style.reseñas}>
+              Promedio entre {reseñas.length} puntuaciones
             </div>
             <div>
               {isInStore.length === 0 && (
