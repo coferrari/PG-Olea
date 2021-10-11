@@ -2,3 +2,29 @@
   width: 10rem;
   border-radius: 50%;
 }
+
+.name {
+  text-transform: uppercase;
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 1px;
+  font-size: 24px;
+}
+
+.mail {
+  font-family: "Open Sans", sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.iconprofile {
+  font-size: 100px;
+  color: lightgray;
+  margin: 20px;
+}
+
+.containerprofile {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
