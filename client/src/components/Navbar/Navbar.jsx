@@ -88,7 +88,7 @@ const NavResponsive = () => {
                 );
               })}
             </Nav>
-            <Nav>
+            <Nav className={style.containersession}>
               <Nav.Link>
                 <Link to="/login" className={style.linkssesion}>
                   <li>Iniciar sesión</li>
