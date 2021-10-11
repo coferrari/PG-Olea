@@ -53,9 +53,8 @@ const LoginButton = () => {
   // ingresa sesion normal
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await logIn(input);
     try {
-      // const x = await logIn(input);
+      await logIn(input);
       const validate = isAuthorized();
       history.push("/home");
       if (validate) {
