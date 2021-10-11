@@ -4,13 +4,12 @@ const marcas = require("./json/marcas.js");
 const categoryMockUp = require("./json/categorias");
 const productMockUp = require("./json/productos");
 const { adminMockUp } = require("./json/admins");
-const { User } = require("./src/db");
 const product = require("./src/models/product.js");
 const { DB_URL } = process.env;
 // Syncing all the models at once.
 
 conn
-  .sync({ force: true })
+  .sync({ force: false })
   .then(async () => {
     //Posteo todas las marcas y categorias
     await categoryMockUp();
