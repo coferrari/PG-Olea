@@ -1,10 +1,7 @@
 const { Product } = require("../src/db");
-
-let productos = [, , , , , , ,];
-
 const productMockUp = async () => {
   try {
-    await Product.create({
+    var p1 = await Product.create({
       name: "Dulce de frambuesa artesanal",
       price: 300,
       newItem: false,
@@ -14,11 +11,11 @@ const productMockUp = async () => {
       stock: 1,
       description:
         "El dulce artesanal de frambuesa BEEPURE está preparado con frambuesa orgánica de El Bolsón, Río Negro. Lo elaboramos con fruta entera, lo que permite disfrutar de la textura típica de los dulces de la Patagonia argentina. Es único para untar tostadas, rellenar panqueques y hasta para cocinar cheesecake y tartas dulces. Ingredientes: frambuesas orgánicas certificadas, azúcar rubia certificada, pectina (aglutinante natural de la fruta).",
-      categoryID: 1,
       rating: 0,
       brand: 1,
     });
-    await Product.create({
+    p1.addCategory(1);
+    var p2 = await Product.create({
       name: "Dulce de leche Sin Azúcar Agregada",
       price: "200",
       newItem: false,
@@ -33,7 +30,8 @@ const productMockUp = async () => {
       rating: 0,
       brand: 1,
     });
-    await Product.create({
+    p2.addCategory(1);
+    var p3 = await Product.create({
       name: "Serum Facial Ácido Hialurónico",
       price: "800",
       newItem: false,
@@ -48,7 +46,8 @@ const productMockUp = async () => {
       rating: 0,
       brand: 2,
     });
-    await Product.create({
+    p3.addCategory(2);
+    var p4 = await Product.create({
       name: "Leche Estrías - Coco & Calendula",
       price: "700",
       newItem: true,
@@ -64,7 +63,8 @@ const productMockUp = async () => {
       rating: 0,
       brand: 3,
     });
-    await Product.create({
+    p4.addCategory(2);
+    var p5 = await Product.create({
       name: "Crema Untable De Almendras Y Coco x 170grs",
       price: "600",
       newItem: false,
@@ -80,7 +80,8 @@ const productMockUp = async () => {
       rating: 5,
       brand: 4,
     });
-    await Product.create({
+    p5.addCategory(1);
+    var p6 = await Product.create({
       name: "Difusor: PARIS",
       price: "2100",
       newItem: true,
@@ -94,7 +95,8 @@ const productMockUp = async () => {
       rating: 2,
       brand: 3,
     });
-    await Product.create({
+    p6.addCategory(3);
+    var p7 = await Product.create({
       name: "Vela blanca",
       price: "1100",
       newItem: false,
@@ -109,7 +111,8 @@ const productMockUp = async () => {
       rating: 2,
       brand: 3,
     });
-    await Product.create({
+    p7.addCategory(3);
+    var p8 = await Product.create({
       name: "Vela de Cerámica",
       price: "1600",
       newItem: false,
@@ -124,7 +127,8 @@ const productMockUp = async () => {
       rating: 5,
       brand: 3,
     });
-    await Product.create({
+    p8.addCategory(3);
+    var p9 = await Product.create({
       name: "LECHE DE ALMENDRAS SIN AZÚCAR",
       price: "305",
       newItem: false,
@@ -138,7 +142,8 @@ const productMockUp = async () => {
       rating: 4,
       brand: 5,
     });
-    await Product.create({
+    p9.addCategory(1);
+    var p10 = await Product.create({
       name: "Vela blanca",
       price: "1100",
       newItem: false,
@@ -153,7 +158,8 @@ const productMockUp = async () => {
       rating: 2,
       brand: 3,
     });
-    await Product.create({
+    p10.addCategory(3);
+    var p11 = await Product.create({
       name: "Crema untable de castañas de cajú x 170grs",
       price: "700",
       newItem: true,
@@ -168,7 +174,8 @@ const productMockUp = async () => {
       rating: 3,
       brand: 4,
     });
-    await Product.create({
+    p11.addCategory(1);
+    var p12 = await Product.create({
       name: "Crema untable de nueces pecan x 170grs",
       price: "600",
       newItem: false,
@@ -184,6 +191,7 @@ const productMockUp = async () => {
       rating: 2,
       brand: 4,
     });
+    p12.addCategory(1);
   } catch (e) {
     console.log(e.message);
   }
