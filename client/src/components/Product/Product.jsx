@@ -82,57 +82,63 @@ export function Product({ id, name, image, price, stock }) {
 
   return (
     <div className={styles.container}>
-      <Card className={styles.card}>
-        {/* favorite */}
-        {favorite && (
-          <button
-            className={styles.fav}
-            onClick={(e) => handleRemoveFavorite(e)}
-          >
-            <BsHeartFill className={styles.removefav} />
-          </button>
-        )}
-        {!favorite && (
-          <button className={styles.fav} onClick={(e) => handleAddFavorite(e)}>
-            <BsHeart className={styles.addfav} />
-          </button>
-        )}
-        {/* termina favorite */}
-        {isInStore === -1 && (
-          <button
-            className={styles.cart}
-            title="click here"
-            type="submit"
-            onClick={(e) => handleAddToCart(e)}
-          >
-            <BsBag className={styles.iconcart} />
-          </button>
-        )}
-        {isInStore >= 0 && (
-          <button
-            className={styles.cart}
-            title="click here"
-            type="submit"
-            onClick={(e) => handleRemoveFromCart(e)}
-          >
-            <BsBagCheckFill className={styles.iconcart} />
-          </button>
-        )}
-        <Card.Img
-          className={styles.img}
-          variant="top"
-          src={image ? image : ""}
-          alt="producto"
-        />{" "}
-        <Card.Body>
-          <div className={styles.cardbody}>
-            <Link className={styles.link} to={`/product/${id}`}>
-              <h5 className={styles.titlecard}>{name}</h5>
-            </Link>
-            <Card.Text className={styles.subtitlecard}>$ {price}</Card.Text>
-          </div>
-        </Card.Body>
-      </Card>
+      <div className={stock === 0 ? styles.sinstock : null}>
+        <Card className={styles.card}>
+          {/* favorite */}
+          {favorite && (
+            <button
+              className={styles.fav}
+              onClick={(e) => handleRemoveFavorite(e)}
+            >
+              <BsHeartFill className={styles.removefav} />
+            </button>
+          )}
+          {!favorite && (
+            <button
+              className={styles.fav}
+              onClick={(e) => handleAddFavorite(e)}
+            >
+              <BsHeart className={styles.addfav} />
+            </button>
+          )}
+          {/* termina favorite */}
+          {isInStore === -1 && stock > 0 && (
+            <button
+              className={styles.cart}
+              title="click here"
+              type="submit"
+              onClick={(e) => handleAddToCart(e)}
+            >
+              <BsBag className={styles.iconcart} />
+            </button>
+          )}
+          {isInStore >= 0 && stock > 0 && (
+            <button
+              className={styles.cart}
+              title="click here"
+              type="submit"
+              onClick={(e) => handleRemoveFromCart(e)}
+            >
+              <BsBagCheckFill className={styles.iconcart} />
+            </button>
+          )}
+          {stock === 0 && <div className={styles.textstock}>sin stock</div>}
+          <Card.Img
+            className={styles.img}
+            variant="top"
+            src={image ? image : ""}
+            alt="producto"
+          />{" "}
+          <Card.Body>
+            <div className={styles.cardbody}>
+              <Link className={styles.link} to={`/product/${id}`}>
+                <h5 className={styles.titlecard}>{name}</h5>
+              </Link>
+              <Card.Text className={styles.subtitlecard}>$ {price}</Card.Text>
+            </div>
+          </Card.Body>
+        </Card>
+      </div>
     </div>
   );
 }
