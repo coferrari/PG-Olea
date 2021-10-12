@@ -83,6 +83,18 @@ class CategoryModel extends Modelo {
       next(err);
     }
   };
+  inOffer = async (req, res, next) => {
+    const { categoryID, inOffer } = req.body;
+    try {
+      const category = await this.model.findByPk(categoryID);
+      await category.update({
+        offer: inOffer,
+      });
+      res.status(200).send(category);
+    } catch (err) {
+      next(err);
+    }
+  };
 }
 
 const categoryControllers = new CategoryModel(Category);

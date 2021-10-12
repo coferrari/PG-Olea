@@ -23,7 +23,7 @@ router.delete(
   isAdmin,
   categoryControllers.deleteCategories
 );
-
+router.put("/cat/inOffer", categoryControllers.inOffer);
 // router.get("/:category", categoryControllers.filterByCategory);
 
 module.exports = router;
