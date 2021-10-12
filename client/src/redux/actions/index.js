@@ -8,7 +8,7 @@ import {
   CLEAR_CART,
   UPDATE_CART,
   PAY_MERCADOPAGO,
-  CLEAR_DETAIL
+  CLEAR_DETAIL,
 } from "./types";
 import {
   GET_PRODUCTS_URL,
@@ -102,6 +102,13 @@ export function checkoutMercadoPago(itemsCheckout) {
 export function clearDetail() {
   return {
     type: CLEAR_DETAIL
+  }
+}
+
+export function collectUsername(payload){
+  return {
+    type: COLLECT_USERNAME,
+    payload
   }
 }
 

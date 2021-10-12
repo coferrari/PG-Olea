@@ -32,9 +32,13 @@ const Checkout = () => {
   const handleConfirmOrder = async (e) => {
     e.preventDefault();
     dispatch(checkoutMercadoPago(itemsCheckout));
-    console.log(linkDePago)
-
-    //este handler nos llena el estado de link de pago (no redirecciona)
+    // dispatch(createOrder({
+    //   username: ,
+    //   price: ,
+    //   products: [], 
+    //   addres:,
+    //   addresNum:
+    // }))
   };
 
   return (

@@ -17,7 +17,13 @@ checkoutControllers.pago = (req, res) => {
                 unit_price: parseInt(i.price),
                 quantity: i.quantity,
             }
-        })
+        }),
+        back_urls: {
+            "success": "http://localhost:3000/home",
+            "failure": "myapp.com/failure",
+            "pending": "myapp.com/pending"
+        },
+        auto_return: "approved"
     }
     mercadopago.preferences.create(preference)
         .then(function (respuesta) {
