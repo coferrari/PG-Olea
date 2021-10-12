@@ -123,6 +123,7 @@ const ItemCart = ({ id, name, image, price, quantity, stock }) => {
                 price * cartFromLocalStorage[index].Carrito_Products.quantity
               )}
         </p>
+        <p className={style.stock} >* {stock} en stock</p>
         <div className={style.btncontainer}>
           <Button
             className={style.btn}
@@ -140,7 +141,7 @@ const ItemCart = ({ id, name, image, price, quantity, stock }) => {
             className={style.btn}
             variant="dark"
             type="submit"
-            disabled={q === stock ? true : false} 
+            disabled={q === stock ? true : false}
             onClick={(e) => handleAddOne(e)}
           >
             +
