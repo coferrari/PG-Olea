@@ -192,6 +192,49 @@ const productMockUp = async () => {
       brand: 4,
     });
     p12.addCategory(1);
+    var p13 = await Product.create({
+      name: "Crema facial HYDRA ZEN",
+      price: "3000",
+      stock: 10,
+      categoryID: 2,
+      image: ["https://i1.perfumesclub.com/grande/114749.jpg"],
+      description:
+        "Gracias a una inédita tecnología, Hydra Zen Neurocalm aporta una hidratación intensa, inmediata, continua y calma las pieles sensibles. Una textura gourmand aceite en agua que se funde en contacto con la piel. Está hidratada con intensidad y calmada durante más tiempo, más suave, lisa y luminosa.",
+    });
+    p13.addCategory(2);
+    var p14 = await Product.create({
+      name: "Mascara facial",
+      image: [
+        "http://d3ugyf2ht6aenh.cloudfront.net/stores/001/058/870/products/bell20_1-889cc978377b138c5616027134313101-640-0.jpg",
+      ],
+      stock: 5,
+      price: "750",
+      description:
+        "Desarrollada con nuestra exclusiva formula Organic active a base de aceites y mantecas orgánicas certificadas. Combina una mezcla de arcillas naturales y cascara de nuez molida que descontaminan los poros promoviendo el crecimiento y desarrollo de nuevas células, es altamente nutritiva debido a la presencia de vitaminas y antioxidantes naturales.",
+    });
+    p14.addCategory(2);
+    var p15 = await Product.create({
+      name: "Crema ultra vital veganis",
+      description:
+        "Con propiedades antioxidantes y vitamina E que ayudan a equilibrar todas las funciones de la piel, regulando y restaurando el equilibrio graso",
+      image: [
+        "https://www.farmacialeloir.com.ar/img/articulos/2021/02/veganis_detox_facial_crema_de_di_a_palta_y_oliva_thumb1.jpg",
+      ],
+      price: "700",
+      stock: 3,
+    });
+    p15.addCategory(2);
+    var p16 = await Product.create({
+      name: "Hydra Me Corporal ",
+      description:
+        "Hydra Me Regeneradora esta formulada con una base de aceite de almendras puro, extracto de aloe vera y manteca de karite. Enriquecida con aceite de argan, este actúa como un potente anti-edad y regenerador.",
+      image: [
+        "https://d3ugyf2ht6aenh.cloudfront.net/stores/808/161/products/hydra-me-uso-diario-111-17a2fd8512e9b2b83f16262352159047-1024-1024.jpg",
+      ],
+      price: "400",
+      stock: 10,
+    });
+    p16.addCategory(2);
   } catch (e) {
     console.log(e.message);
   }

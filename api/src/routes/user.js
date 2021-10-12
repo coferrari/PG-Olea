@@ -11,7 +11,7 @@ const {
 } = require("../utils/middlewares/checkDuplicate");
 const isAdmin = require("../utils/middlewares/isAdmin");
 const adminFunction = require("../controllers/admin");
-router.get("/", userFunction.getAll);
+router.get("/", isAdmin, userFunction.getAll);
 router.post("/register", checkDuplicate, userFunction.register);
 router.post("/login", checkEmailAndPassword, userFunction.login);
 router.put("/", verifyToken, userFunction.changePassword);
@@ -24,8 +24,7 @@ router.post(
   userFunction.requestChangePassword
 );
 router.put("/updateprofile", userFunction.updateProfile);
-// router.post("/refresh_token", userFunction.getAccessToken);
-router.post("/createadmin", userFunction.createAdmin);
+// router.post("/createadmin", userFunction.createAdmin);
 router.post("/changepasswordadmin", isAdmin, adminFunction.changePassword);
 router.delete("/deleteuser/:username", isAdmin, adminFunction.deleteUser);
 router.put("/generateadmin", isAdmin, adminFunction.generateAdmin);

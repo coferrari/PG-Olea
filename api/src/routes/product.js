@@ -12,11 +12,10 @@ router.get("/orderByName/:name", productControllers.orderByName);
 router.get("/orderByRating/:rating", productControllers.orderByRating);
 router.get("/searchby/name", productControllers.searchName);
 router.delete("/delete/carrito", productControllers.deleteProduct);
-router.post("/create", productControllers.create);
-// router.post("/create", isAdmin, productControllers.create); tira error con el isAdmin
+router.post("/create", isAdmin, productControllers.create);
 router.post("/add/carrito", productControllers.addOrEditProduct);
 router.post("/add/carritologin", productControllers.createCartLogin);
 router.put("/:id", isAdmin, productControllers.update);
 router.delete("/:id", isAdmin, productControllers.delete);
-router.put("/update/stock", productControllers.editStock);
+router.put("/update/stock", isAdmin, productControllers.editStock);
 module.exports = router;
