@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "mocha -w ./tests/**/*.spec.js"
+    "start": "node index",
+    "test": "mocha -w ./tests/*/.spec.js"
   },
   "author": "Henry",
   "license": "ISC",
@@ -27,7 +27,6 @@
     "google-auth-library": "^7.10.0",
     "ioredis": "^4.19.2",
     "jsonwebtoken": "^8.5.1",
-    "mercadopago": "^1.5.8",
     "morgan": "^1.10.0",
     "nodemailer": "^6.6.5",
     "passport-google-oauth": "^2.0.0",
