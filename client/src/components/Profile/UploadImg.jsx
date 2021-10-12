@@ -26,6 +26,7 @@ const ChangePerfil = () => {
     const tokenNuevo = getToken();
     setToken(tokenNuevo);
     let user = decodeToken();
+    setUrlImage(user.picture);
     setUsuario(user);
   };
   const changeAvatar = (e) => {
@@ -50,13 +51,14 @@ const ChangePerfil = () => {
     input.surname
       ? (user.surname = input.surname)
       : (user.surname = usuario.surname);
-    urlImage ? (user.image = urlImage) : (user.image = usuario.image);
+    user.image = urlImage;
     input.phone ? (user.phone = input.phone) : (user.phone = usuario.phone);
     input.adress
       ? (user.adress = input.adress)
       : (user.adress = usuario.adress);
     await updateProfile(user);
   };
+  console.log(urlImage);
   const sendUpdates = async (e) => {
     e.preventDefault();
     await upload();

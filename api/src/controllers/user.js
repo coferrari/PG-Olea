@@ -219,7 +219,7 @@ userFunction.logOut = async (req, res, next) => {
 userFunction.updateProfile = async (req, res, next) => {
   try {
     const { name, surname, image, phone, adress } = req.body.usuario;
-
+    console.log(req.body);
     const { token } = req.body;
     const verified = jwt.verify(token, process.env.TOKEN_SECRET);
     const user = await User.findByPk(verified.username);
