@@ -8,7 +8,7 @@ const productMockUp = async () => {
       image: [
         "https://d3ugyf2ht6aenh.cloudfront.net/stores/001/130/674/products/beepure_dulce-frambuesal-copia11-721e7340aa8dec81ac15900785230333-640-0.jpg",
       ],
-      stock: 1,
+      stock: 0,
       description:
         "El dulce artesanal de frambuesa BEEPURE está preparado con frambuesa orgánica de El Bolsón, Río Negro. Lo elaboramos con fruta entera, lo que permite disfrutar de la textura típica de los dulces de la Patagonia argentina. Es único para untar tostadas, rellenar panqueques y hasta para cocinar cheesecake y tartas dulces. Ingredientes: frambuesas orgánicas certificadas, azúcar rubia certificada, pectina (aglutinante natural de la fruta).",
       rating: 0,
@@ -23,7 +23,7 @@ const productMockUp = async () => {
         "https://d3ugyf2ht6aenh.cloudfront.net/stores/001/130/674/products/beepure-dulce-de-leche-sin-azucar1-ee43bb6b152f0ea31616052114309444-640-0.jpg",
         "https://d3ugyf2ht6aenh.cloudfront.net/stores/001/130/674/products/dulce-de-leche-sin-azucar-agregada-budin1-a9dd7ac8e29ef6b0b716121964536217-640-0.jpg",
       ],
-      stock: 1,
+      stock: 0,
       description:
         "El dulce de leche sin azúcar agregada BEEPURE se prepara con leche de tambos de Magdalena, Buenos Aires. Está endulzado con sucralosa, por lo cual es apto para diabéticos (los hidratos de carbono -azúcares- que se utilizan para espesar el producto son de bajo índice glucémico y de bajo aporte calórico).",
       categoryID: 1,
@@ -56,7 +56,7 @@ const productMockUp = async () => {
         "https://d3ugyf2ht6aenh.cloudfront.net/stores/776/340/products/coco-11-7342609717327eb20516313651755734-640-0.jpg",
         "https://d3ugyf2ht6aenh.cloudfront.net/stores/776/340/products/coco-11-7342609717327eb20516313651755734-640-0.jpg",
       ],
-      stock: 1,
+      stock: 0,
       description:
         "Nutre y ayuda a corregir naturalmente las marcas de estrías. La planta de Caléndula contiene una sustancia altamente cicatrizante y emoliente llamada “Calendulina”, encargada de producir la epitelización, acción natural de curación dérmica. El Coco posee propiedades que promueven la regeneración y rehidratación de los tejidos ayudando y complementando las propiedades correctoras de la Caléndula. El extracto Orgánico de Oliva ayuda a suavizar y reforzar la hidratación de la piel. Modo de Uso: Aplicar sobre la piel dando masajes circulares cubriendo todas las zonas con estrías. Para optimizar los resultados realizar este procedimiento dos veces al día o más si así lo desea. Envase con 500 g Cosmética Sustentable",
       categoryID: 2,
@@ -73,7 +73,7 @@ const productMockUp = async () => {
         "https://d3ugyf2ht6aenh.cloudfront.net/stores/001/571/332/products/whatsapp-image-2021-03-24-at-16-26-071-273aa632cd1ffc30dc16166144029236-640-0.jpeg",
         "https://d3ugyf2ht6aenh.cloudfront.net/stores/001/571/332/products/tabla-alm-y-coco1-905f1965ec9e1c2a3a16142697602707-640-0.png",
       ],
-      stock: 10,
+      stock: 0,
       description:
         "Ingredientes: almendras y coco ¡y nada más! El equilibrio perfecto entre la intensidad de la almendra tostada y el dulzor del coco. Un nuevo sabor para explotar tus papilas.",
       categoryID: 1,
@@ -104,7 +104,7 @@ const productMockUp = async () => {
         "https://d3ugyf2ht6aenh.cloudfront.net/stores/845/679/products/86afe347-a49e-46e8-bc00-93341511a9841-43f005170753f169a616154900448327-640-0.jpeg",
         "https://d3ugyf2ht6aenh.cloudfront.net/stores/845/679/products/1f8e0580-3729-4d68-94db-1603c8a3a8fd1-ad1ac32eff9c49b0ea16154900448179-640-0.jpeg",
       ],
-      stock: 8,
+      stock: 0,
       description:
         "EDICIÓN LIMITADA - vela de cera de soja en vaso cilíndrico blanco, al prenderla la luz se trasluce suavemente tipo fanal. disponible en aires africanos y verbena naranja.",
       categoryID: 3,
