@@ -41,7 +41,6 @@ export const getUsers = async (token) => {
   return res.data;
 };
 export const updateProfile = async (usuario) => {
-  console.log(usuario);
   const tokenRefresh = await axios.put(`/api/user/updateprofile`, {
     usuario: usuario,
     token: getToken(),
