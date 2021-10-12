@@ -115,14 +115,11 @@ export function ProductDetail() {
     });
     setPuntuacion([$1, $2, $3, $4, $5]);
   };
-
-  console.log(puntuacion);
   const rating = Rating();
   useEffect(() => {
     dispatch(getProductDetail(idParams));
     getReviews(idParams);
   }, [dispatch, idParams]);
-  console.log(reseñas);
   return (
     <div className="container">
       <Card>
