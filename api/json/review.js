@@ -6,35 +6,34 @@ const reviewsMockUp = async () => {
     rating: 5,
     opinion: "genial",
   });
-  n1.setUser("usuario3");
+  n1.setUser("Toni");
   const n2 = await Reviews.create({
-    username: "",
     productId: 1,
     comment: "es malisimo este producto!",
     rating: 1,
     opinion: "malo",
   });
-  n2.setUser("usuario2");
+  n2.setUser("Elena");
   const n3 = await Reviews.create({
     productId: 1,
     comment: "algo muy util realmente me sirvio muchas gracias",
     rating: 4,
     opinion: "normal",
   });
-  n3.setUser("usuario1");
+  n3.setUser("Franco");
   const n4 = await Reviews.create({
     productId: 1,
     comment: "algo muy util realmente me sirvio muchas gracias",
     rating: 4,
     opinion: "normal",
   });
-  n4.setUser("dylan");
+  n4.setUser("Dibu");
   const n5 = await Reviews.create({
     productId: 1,
     comment: "algo muy util realmente me sirvio muchas gracias",
     rating: 4,
     opinion: "normal",
   });
-  n5.setUser("usuario4");
+  n5.setUser("Elena");
 };
 module.exports = reviewsMockUp;

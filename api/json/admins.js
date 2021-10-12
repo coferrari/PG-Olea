@@ -6,28 +6,28 @@ const userMockUp = async () => {
   try {
     await User.create({
       name: "Probando Usuario",
-      username: "usuario1",
+      username: "Franco",
       email: "user@email.com",
       password: hashedPasswordA,
       admin: false,
     });
     await User.create({
       name: "Probando Usuario",
-      username: "usuario2",
+      username: "Dibu",
       email: "user2@email.com",
       password: hashedPasswordA,
       admin: false,
     });
     await User.create({
       name: "Probando Usuario",
-      username: "usuario3",
+      username: "Elena",
       email: "user3@email.com",
       password: hashedPasswordA,
       admin: false,
     });
     await User.create({
       name: "Probando Usuario",
-      username: "usuario4",
+      username: "Toni",
       email: "user4@email.com",
       password: hashedPasswordA,
       admin: false,
