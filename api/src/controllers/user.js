@@ -153,6 +153,7 @@ userFunction.googleLogin = async (req, res, next) => {
         email: email,
         surname: family_name,
         picture,
+        admin: false,
       });
       newUser.setCarrito(carritocreado.dataValues.id);
       const token = jwt.sign(
@@ -162,6 +163,7 @@ userFunction.googleLogin = async (req, res, next) => {
           email: email,
           surname: family_name,
           picture,
+          admin: newUser.admin,
         },
         process.env.TOKEN_SECRET,
         { expiresIn: "10m" }
@@ -179,6 +181,7 @@ userFunction.googleLogin = async (req, res, next) => {
           email: email,
           surname: family_name,
           picture,
+          admin: user.admin,
         },
         process.env.TOKEN_SECRET,
         { expiresIn: "10m" }
@@ -216,7 +219,7 @@ userFunction.logOut = async (req, res, next) => {
 userFunction.updateProfile = async (req, res, next) => {
   try {
     const { name, surname, image, phone, adress } = req.body.usuario;
-
+    console.log(req.body);
     const { token } = req.body;
     const verified = jwt.verify(token, process.env.TOKEN_SECRET);
     const user = await User.findByPk(verified.username);

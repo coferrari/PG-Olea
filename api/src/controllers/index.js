@@ -28,6 +28,7 @@ class Modelo {
   };
 
   update = (req, res, next) => {
+    console.log(req.body);
     const { id } = req.params;
     const body = req.body;
     this.model

@@ -8,7 +8,7 @@ const productMockUp = async () => {
       image: [
         "https://d3ugyf2ht6aenh.cloudfront.net/stores/001/130/674/products/beepure_dulce-frambuesal-copia11-721e7340aa8dec81ac15900785230333-640-0.jpg",
       ],
-      stock: 1,
+      stock: 0,
       description:
         "El dulce artesanal de frambuesa BEEPURE está preparado con frambuesa orgánica de El Bolsón, Río Negro. Lo elaboramos con fruta entera, lo que permite disfrutar de la textura típica de los dulces de la Patagonia argentina. Es único para untar tostadas, rellenar panqueques y hasta para cocinar cheesecake y tartas dulces. Ingredientes: frambuesas orgánicas certificadas, azúcar rubia certificada, pectina (aglutinante natural de la fruta).",
       rating: 0,
@@ -23,7 +23,7 @@ const productMockUp = async () => {
         "https://d3ugyf2ht6aenh.cloudfront.net/stores/001/130/674/products/beepure-dulce-de-leche-sin-azucar1-ee43bb6b152f0ea31616052114309444-640-0.jpg",
         "https://d3ugyf2ht6aenh.cloudfront.net/stores/001/130/674/products/dulce-de-leche-sin-azucar-agregada-budin1-a9dd7ac8e29ef6b0b716121964536217-640-0.jpg",
       ],
-      stock: 1,
+      stock: 0,
       description:
         "El dulce de leche sin azúcar agregada BEEPURE se prepara con leche de tambos de Magdalena, Buenos Aires. Está endulzado con sucralosa, por lo cual es apto para diabéticos (los hidratos de carbono -azúcares- que se utilizan para espesar el producto son de bajo índice glucémico y de bajo aporte calórico).",
       categoryID: 1,
@@ -56,7 +56,7 @@ const productMockUp = async () => {
         "https://d3ugyf2ht6aenh.cloudfront.net/stores/776/340/products/coco-11-7342609717327eb20516313651755734-640-0.jpg",
         "https://d3ugyf2ht6aenh.cloudfront.net/stores/776/340/products/coco-11-7342609717327eb20516313651755734-640-0.jpg",
       ],
-      stock: 1,
+      stock: 0,
       description:
         "Nutre y ayuda a corregir naturalmente las marcas de estrías. La planta de Caléndula contiene una sustancia altamente cicatrizante y emoliente llamada “Calendulina”, encargada de producir la epitelización, acción natural de curación dérmica. El Coco posee propiedades que promueven la regeneración y rehidratación de los tejidos ayudando y complementando las propiedades correctoras de la Caléndula. El extracto Orgánico de Oliva ayuda a suavizar y reforzar la hidratación de la piel. Modo de Uso: Aplicar sobre la piel dando masajes circulares cubriendo todas las zonas con estrías. Para optimizar los resultados realizar este procedimiento dos veces al día o más si así lo desea. Envase con 500 g Cosmética Sustentable",
       categoryID: 2,
@@ -73,7 +73,7 @@ const productMockUp = async () => {
         "https://d3ugyf2ht6aenh.cloudfront.net/stores/001/571/332/products/whatsapp-image-2021-03-24-at-16-26-071-273aa632cd1ffc30dc16166144029236-640-0.jpeg",
         "https://d3ugyf2ht6aenh.cloudfront.net/stores/001/571/332/products/tabla-alm-y-coco1-905f1965ec9e1c2a3a16142697602707-640-0.png",
       ],
-      stock: 10,
+      stock: 0,
       description:
         "Ingredientes: almendras y coco ¡y nada más! El equilibrio perfecto entre la intensidad de la almendra tostada y el dulzor del coco. Un nuevo sabor para explotar tus papilas.",
       categoryID: 1,
@@ -104,7 +104,7 @@ const productMockUp = async () => {
         "https://d3ugyf2ht6aenh.cloudfront.net/stores/845/679/products/86afe347-a49e-46e8-bc00-93341511a9841-43f005170753f169a616154900448327-640-0.jpeg",
         "https://d3ugyf2ht6aenh.cloudfront.net/stores/845/679/products/1f8e0580-3729-4d68-94db-1603c8a3a8fd1-ad1ac32eff9c49b0ea16154900448179-640-0.jpeg",
       ],
-      stock: 8,
+      stock: 0,
       description:
         "EDICIÓN LIMITADA - vela de cera de soja en vaso cilíndrico blanco, al prenderla la luz se trasluce suavemente tipo fanal. disponible en aires africanos y verbena naranja.",
       categoryID: 3,
@@ -192,6 +192,49 @@ const productMockUp = async () => {
       brand: 4,
     });
     p12.addCategory(1);
+    var p13 = await Product.create({
+      name: "Crema facial HYDRA ZEN",
+      price: "3000",
+      stock: 10,
+      categoryID: 2,
+      image: ["https://i1.perfumesclub.com/grande/114749.jpg"],
+      description:
+        "Gracias a una inédita tecnología, Hydra Zen Neurocalm aporta una hidratación intensa, inmediata, continua y calma las pieles sensibles. Una textura gourmand aceite en agua que se funde en contacto con la piel. Está hidratada con intensidad y calmada durante más tiempo, más suave, lisa y luminosa.",
+    });
+    p13.addCategory(2);
+    var p14 = await Product.create({
+      name: "Mascara facial",
+      image: [
+        "http://d3ugyf2ht6aenh.cloudfront.net/stores/001/058/870/products/bell20_1-889cc978377b138c5616027134313101-640-0.jpg",
+      ],
+      stock: 5,
+      price: "750",
+      description:
+        "Desarrollada con nuestra exclusiva formula Organic active a base de aceites y mantecas orgánicas certificadas. Combina una mezcla de arcillas naturales y cascara de nuez molida que descontaminan los poros promoviendo el crecimiento y desarrollo de nuevas células, es altamente nutritiva debido a la presencia de vitaminas y antioxidantes naturales.",
+    });
+    p14.addCategory(2);
+    var p15 = await Product.create({
+      name: "Crema ultra vital veganis",
+      description:
+        "Con propiedades antioxidantes y vitamina E que ayudan a equilibrar todas las funciones de la piel, regulando y restaurando el equilibrio graso",
+      image: [
+        "https://www.farmacialeloir.com.ar/img/articulos/2021/02/veganis_detox_facial_crema_de_di_a_palta_y_oliva_thumb1.jpg",
+      ],
+      price: "700",
+      stock: 3,
+    });
+    p15.addCategory(2);
+    var p16 = await Product.create({
+      name: "Hydra Me Corporal ",
+      description:
+        "Hydra Me Regeneradora esta formulada con una base de aceite de almendras puro, extracto de aloe vera y manteca de karite. Enriquecida con aceite de argan, este actúa como un potente anti-edad y regenerador.",
+      image: [
+        "https://d3ugyf2ht6aenh.cloudfront.net/stores/808/161/products/hydra-me-uso-diario-111-17a2fd8512e9b2b83f16262352159047-1024-1024.jpg",
+      ],
+      price: "400",
+      stock: 10,
+    });
+    p16.addCategory(2);
   } catch (e) {
     console.log(e.message);
   }

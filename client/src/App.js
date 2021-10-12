@@ -42,7 +42,7 @@ function App() {
           <Landing />
         </Route>
         <Route exact path="/login">
-          <LoginButton />
+          {loggedIn ? <Redirect to="/home" /> : <LoginButton />}
         </Route>
         <Route exact path="/register">
           <Register />

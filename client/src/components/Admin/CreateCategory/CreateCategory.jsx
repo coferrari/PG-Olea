@@ -6,12 +6,13 @@ const CreateCategory = () => {
   const [show, setShow] = useState(false);
   const [input, setInput] = useState("");
   const handleInputChange = (e) => {
+    console.log(input);
     setInput(e.target.value);
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await createCategory(input);
     try {
+      await createCategory(input);
       alert("Se creo la categoria");
       setShow(false);
     } catch (err) {
@@ -46,7 +47,7 @@ const CreateCategory = () => {
                 type="category"
                 placeholder="Ingrese nombre de la categoria"
                 name="texto"
-                onChange={handleInputChange}
+                onChange={(e) => handleInputChange(e)}
               />
             </Form.Group>
             <Button type="submit">Crear</Button>

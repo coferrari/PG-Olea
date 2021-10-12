@@ -21,8 +21,7 @@ adminFunction.changePassword = async (req, res, next) => {
 adminFunction.deleteUser = async (req, res, next) => {
   const { username } = req.params;
   try {
-    const user = await User.destroy({ where: { username } });
-
+    await User.destroy({ where: { username } });
     res.send("usuario eliminado correctamente");
   } catch (err) {
     next(err);
@@ -31,7 +30,7 @@ adminFunction.deleteUser = async (req, res, next) => {
 adminFunction.generateAdmin = async (req, res, next) => {
   const { username } = req.body;
   try {
-    const user = await User.update(
+    await User.update(
       { admin: true },
       {
         where: {
@@ -40,6 +39,22 @@ adminFunction.generateAdmin = async (req, res, next) => {
       }
     );
     res.send("este usuario ahora es admin");
+  } catch (err) {
+    next(err);
+  }
+};
+adminFunction.deleteAdmin = async (req, res, next) => {
+  const { username } = req.body;
+  try {
+    await User.update(
+      { admin: false },
+      {
+        where: {
+          username,
+        },
+      }
+    );
+    res.send("Se ha degradado a este usuario");
   } catch (err) {
     next(err);
   }

@@ -15,13 +15,13 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     status: {
-      type: DataTypes.ENUM("creada","procesando", "cancelada", "finalizada" ),
+      type: DataTypes.ENUM("creada", "procesando", "cancelada", "finalizada"),
       allowNull: false,
       defaultValue: "creada",
     },
     date: {
       type: DataTypes.DATE,
-      allowNull: false,
-    }
+      allowNull: true,
+    },
   });
 };
