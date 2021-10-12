@@ -1,8 +1,11 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getProductsByCategory } from "../../redux/actions";
+import { getProductsByCategory, getCategories } from "../../redux/actions";
 import Products from "../Products/Products";
 import { useParams, useHistory } from "react-router";
+import style from "../Selects/Selects.module.css";
+import { Search } from "../Search/Search";
+import style2 from "./CategoryProducts.module.css";
 
 export default function CategoryProduct() {
   const dispatch = useDispatch();
@@ -15,6 +18,8 @@ export default function CategoryProduct() {
   useEffect(() => {
     dispatch(getProductsByCategory(nameCategory));
   }, [dispatch, nameCategory]);
+
+  console.log(productsByCategory);
 
     // PARA ORDENAR
     if (attribute === "name" && order === "asc") {
@@ -54,18 +59,26 @@ export default function CategoryProduct() {
 
   return (
     <div>
-    <select onChange={(e) => handleOrderSelect(e.target.value)}>
-    <option value="" selected disabled hidden>Ordenar por...</option>
-      <option value={"name asc"}>Nombre: A-Z</option>
-      <option value={"name desc"}>Nombre: Z-A</option>
-      <option
-        value={"price desc"}
-        onChange={(e) => handleOrderSelect(e.target.name, e.target.value)}
+      <div className={style2.bar}>
+      <Search />
+      <div>
+      <select
+        className={style.select}
+        onChange={(e) => handleOrderSelect(e.target.value)}
       >
-        Precio: más alto a más bajo
-      </option>
-      <option value={"price asc"}>Precio: más bajo a más alto</option>
-    </select>
+        <option value="" selected disabled hidden>Ordenar por...</option>
+        <option value={"name asc"}>Alfabeticamente, A-Z</option>
+        <option value={"name desc"}>Alfabeticamente, Z-A</option>
+        <option
+          value={"price desc"}
+          onChange={(e) => handleOrderSelect(e.target.name, e.target.value)}
+        >
+          precio, mayor a menor
+        </option>
+        <option value={"price asc"}>precio, menor a mayor</option>
+      </select>
+      </div>
+      </div>
   <Products products={productsByCategory} />
   </div>
   );
