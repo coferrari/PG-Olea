@@ -8,7 +8,7 @@ import { isAuthorized, decodeToken } from "../../utils/index";
 import { addOrEditCart, removeProductCart } from "../../cart/index";
 import { BsBag, BsBagCheckFill, BsHeart, BsHeartFill } from "react-icons/bs";
 
-export function Product({ id, name, image, price, stock }) {
+export function Product({ id, name, image, price, stock, categories }) {
   const [add, setAdd] = useState(false);
   const [remove, setRemove] = useState(false);
   const dispatch = useDispatch();
@@ -69,6 +69,16 @@ export function Product({ id, name, image, price, stock }) {
     }
   };
 
+  const searchOffer = (categories) => {
+    let descuento = 0;
+    categories.map((c) => {
+      if (c.offer !== null) {
+        descuento = c.offer;
+      }
+    });
+
+    return descuento;
+  };
   //////
 
   const handleAddFavorite = (e) => {
@@ -134,7 +144,12 @@ export function Product({ id, name, image, price, stock }) {
               <Link className={styles.link} to={`/product/${id}`}>
                 <h5 className={styles.titlecard}>{name}</h5>
               </Link>
-              <Card.Text className={styles.subtitlecard}>$ {price}</Card.Text>
+              <Card.Text className={styles.subtitlecard}>
+                ${" "}
+                {searchOffer(categories) > 0
+                  ? price - (price * searchOffer(categories)) / 100
+                  : price}
+              </Card.Text>
             </div>
           </Card.Body>
         </Card>
