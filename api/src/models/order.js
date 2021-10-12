@@ -22,6 +22,14 @@ module.exports = (sequelize) => {
     date: {
       type: DataTypes.DATE,
       allowNull: false,
+    },
+    address:{
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    phone:{
+      type: DataTypes.STRING,
+      allowNull:false
     }
   });
 };

@@ -9,7 +9,6 @@ import {
   UPDATE_CART,
   PAY_MERCADOPAGO,
   CLEAR_DETAIL,
-  CREATE_ORDER,
 } from "./types";
 import {
   GET_PRODUCTS_URL,
@@ -17,7 +16,6 @@ import {
   GET_PRODUCT_DETAIL_URL,
   CATEGORY_URL,
   PAY_MERCADOPAGO_URL,
-  CREATE_ORDER_URL,
 } from "../../consts";
 
 export function getProducts() {
@@ -105,14 +103,4 @@ export function clearDetail() {
   };
 }
 
-export function createOrder(order) {
-  return async function (dispatch) {
-    await axios.post(CREATE_ORDER_URL, order).then((response) => {
-      dispatch({
-        type: CREATE_ORDER,
-        payload: response.data,
-      });
-    });
-  };
-}
 

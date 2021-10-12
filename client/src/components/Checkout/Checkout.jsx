@@ -8,7 +8,8 @@ import { confirmAlert } from "react-confirm-alert"; // Import
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 import { useHistory } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { checkoutMercadoPago, createOrder } from "../../redux/actions";
+import { checkoutMercadoPago } from "../../redux/actions";
+import { createOrder } from "../../order";
 import style from "./Checkout.module.css";
 import { Card, ListGroup, Nav, Form } from "react-bootstrap";
 
@@ -16,8 +17,8 @@ const Checkout = () => {
   const history = useHistory();
   const sesionIniciada = isAuthorized();
   const datosLogin = decodeToken();
-  console.log(datosLogin);
   const dispatch = useDispatch();
+  
   const [delivery, setDelivery] = useState(true);
 
   let linkDePago = useSelector((state) => state.carritoReducer.linkPago);
@@ -26,56 +27,13 @@ const Checkout = () => {
     (state) => state.carritoReducer.productsCarrito
   );
 
-  // let total = 0;
-  // for (var i = 0; i < itemsCheckout.length; i++) {
-  //   let totalPorUnidad = itemsCheckout[i].price * itemsCheckout[i].quantity;
-  //   total = total + totalPorUnidad;
-  // }
-
+  //TOTAL
   const totalSum = itemsCheckout?.reduce((acc, curr) => {
     const result = curr.Carrito_Products
       ? acc + parseInt(curr.price) * curr.Carrito_Products.quantity
       : acc + parseInt(curr.price) * curr.quantity;
     return result;
   }, 0);
-
-  const [order, setOrder] = useState({
-    username: datosLogin.username,
-    price: totalSum,
-    products: itemsCheckout,
-    addres: "Retira por local",
-    addresNum: 12,
-  });
-
-
-  // const totalQuantity = itemsCheckout?.reduce((acc, curr) => {
-  //   const result = curr.Carrito_Products
-  //     ? acc + curr.Carrito_Products.quantity
-  //     : acc + curr.quantity;
-  //   return result;
-  // }, 0);
-
-  const handleConfirmOrder = async (e) => {
-    e.preventDefault();
-    dispatch(checkoutMercadoPago(itemsCheckout));
-    dispatch(createOrder(order))
-  };
-
-  const handleSelected = (selectedKey) => {
-    if (selectedKey === "Envío") {
-      setDelivery(true);
-    } else {
-      setDelivery(false);
-    }
-  };
-
-  const handleChange = (e) => {
-    e.preventDefault();
-    setOrder({
-      ...order,
-      addres:  e.target.value,
-    });
-  };
 
   const format = (num) => {
     num = num + "";
@@ -90,15 +48,46 @@ const Checkout = () => {
     return str.split("").reverse().join("");
   };
 
+
+  const [order, setOrder] = useState({
+    username: datosLogin.username,
+    price: totalSum,
+    products: itemsCheckout,
+    addres: "Retira por local",
+    phone: "",
+  });
+
+
+  const handleConfirmOrder = async (e) => {
+    e.preventDefault();
+    dispatch(checkoutMercadoPago(itemsCheckout));
+    createOrder(order)
+  };
+
+  const handleSelected = (selectedKey) => {
+    if (selectedKey === "Envío") {
+      setDelivery(true);
+    } else {
+      setDelivery(false);
+    }
+  };
+
+  const handleChange = (e) => {
+    e.preventDefault();
+    setOrder({
+      ...order,
+      [e.target.name]:e.target.value,
+    });
+  };
+
+
   return (
     <div>
       {sesionIniciada === true ? (
         <div className={style.checkoutContainer}>
-          {/* <Data datosLogin={datosLogin} /> */}
           <div>
             <Card style={{ width: "%100" }}>
               <Card.Header className={style.title}>
-                {" "}
                 1 - Datos Personales
               </Card.Header>
               <ListGroup className={style.listgroup}>
@@ -126,6 +115,10 @@ const Checkout = () => {
                     className={style.input}
                     type="text"
                     placeholder="Teléfono"
+                    name="phone"
+                    onChange={(e) => {
+                      handleChange(e);
+                    }}
                   />
                 </ListGroup.Item>
               </ListGroup>
@@ -183,7 +176,7 @@ const Checkout = () => {
                       <Form.Control
                         type="text"
                         placeholder="Domicilio de Envío"
-                        name="domicilio"
+                        name="address"
                         className={style.inputDatosEnvio}
                         onChange={(e) => {
                           handleChange(e);

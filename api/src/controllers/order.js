@@ -70,12 +70,12 @@ class OrderModel extends Modelo {
 
   createOrder = async (req, res, next) => {
     try {
-      const { username, price, products, addres, addresNum } = req.body;
+      const { username, price, products, address, phone } = req.body;
       const ordenCreada = await this.model.create({
         userUsername: username,
         price,
-        addres,
-        addresNum,
+        address,
+        phone,
         date: Date().slice(0, 10).replace(/-/g, "/"),
       });
       for (let i = 0; i < products.length; i++) {
@@ -115,10 +115,10 @@ class OrderModel extends Modelo {
     }
   };
   allOrders = async (req, res, next) => {
-    const { username } = req.body;
+    //const { username } = req.body;
     try {
       const order = await this.model.findAll({
-        where: { userUsername: username },
+        //where: { userUsername: username },
         include: Product,
       });
       res.status(200).send(order);

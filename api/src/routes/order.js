@@ -12,7 +12,7 @@ router.get("/:id", OrderControllers.getByID);
 router.put("/:id", OrderControllers.update);
 router.delete("/:id", OrderControllers.delete);
 router.get("/orderbystatus/:status", OrderControllers.orderByStatus);
-router.get("/", OrderControllers.getAll);
+//router.get("/", OrderControllers.getAll);
 router.get("/date/:date", OrderControllers.orderByDate);
 router.get("/filterbystatus/:status", OrderControllers.filterByStatus);
 router.post("/createOrder", OrderControllers.createOrder);
