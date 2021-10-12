@@ -37,6 +37,14 @@
   letter-spacing: 1px;
 }
 
+.stock {
+  font-size: 13px;
+  color: gray;
+  margin-top: -5px;
+  margin-bottom: 0;
+  padding: 0;
+}
+
 .btncontainer {
   display: flex;
   flex-direction: row;
