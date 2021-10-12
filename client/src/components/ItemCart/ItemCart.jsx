@@ -73,7 +73,6 @@ const ItemCart = ({ id, name, image, price, quantity, stock }) => {
     }
   };
 
-  // controlar stock??
   const handleRemoveItem = (e) => {
     e.preventDefault();
     setRemove(true);
@@ -123,7 +122,7 @@ const ItemCart = ({ id, name, image, price, quantity, stock }) => {
                 price * cartFromLocalStorage[index].Carrito_Products.quantity
               )}
         </p>
-        <p className={style.stock} >* {stock} en stock</p>
+        <p className={style.stock}>* {stock} en stock</p>
         <div className={style.btncontainer}>
           <Button
             className={style.btn}
