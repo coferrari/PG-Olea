@@ -15,8 +15,11 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     offer: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false,
+      type: DataTypes.INTEGER,
+      validate: {
+        min: 0,
+        max: 100,
+      },
     },
   });
 };
