@@ -154,7 +154,7 @@ export default function CreateProduct() {
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Imagenes Cargadas</Form.Label>
-              <Container className={style.containerimg} >
+              <Container className={style.containerimg}>
                 {newProduct.image?.map((e) => (
                   <Row>
                     <Col xs={6} md={4}>
