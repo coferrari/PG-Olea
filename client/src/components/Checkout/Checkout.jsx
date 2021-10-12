@@ -8,7 +8,7 @@ import { confirmAlert } from "react-confirm-alert"; // Import
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 import { useHistory } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { checkoutMercadoPago } from "../../redux/actions";
+import { checkoutMercadoPago, createOrder } from "../../redux/actions";
 import style from "./Checkout.module.css";
 import { Card, ListGroup, Nav, Form } from "react-bootstrap";
 
@@ -19,13 +19,6 @@ const Checkout = () => {
   console.log(datosLogin);
   const dispatch = useDispatch();
   const [delivery, setDelivery] = useState(true);
-  const [order, setOrder] = useState({
-    username: datosLogin.username,
-    price: 0,
-    products: [],
-    addres: "",
-    addresNum: 0,
-  });
 
   let linkDePago = useSelector((state) => state.carritoReducer.linkPago);
 
@@ -46,6 +39,15 @@ const Checkout = () => {
     return result;
   }, 0);
 
+  const [order, setOrder] = useState({
+    username: datosLogin.username,
+    price: totalSum,
+    products: itemsCheckout,
+    addres: "Retira por local",
+    addresNum: 12,
+  });
+
+
   // const totalQuantity = itemsCheckout?.reduce((acc, curr) => {
   //   const result = curr.Carrito_Products
   //     ? acc + curr.Carrito_Products.quantity
@@ -56,13 +58,7 @@ const Checkout = () => {
   const handleConfirmOrder = async (e) => {
     e.preventDefault();
     dispatch(checkoutMercadoPago(itemsCheckout));
-    // dispatch(createOrder({
-    //   username: ,
-    //   price: ,
-    //   products: [],
-    //   addres:,
-    //   addresNum:
-    // }))
+    dispatch(createOrder(order))
   };
 
   const handleSelected = (selectedKey) => {
@@ -77,7 +73,7 @@ const Checkout = () => {
     e.preventDefault();
     setOrder({
       ...order,
-      addres: e.target.value,
+      addres:  e.target.value,
     });
   };
 
@@ -138,7 +134,6 @@ const Checkout = () => {
           <div>
             <Card>
               <Card.Header className={style.title}>
-                {" "}
                 2 - Datos de Envío
               </Card.Header>
               <Card.Header className={style.title}>
@@ -177,13 +172,13 @@ const Checkout = () => {
                       className={style.datosEnvio}
                       controlId="formBasicPassword"
                     >
-                      <Form.Label>Localidad</Form.Label>
+                      {/* <Form.Label>Localidad</Form.Label>
                       <Form.Control
                         type="text"
                         placeholder="Localidad"
                         name="localidad"
                         className={style.inputDatosEnvio}
-                      />
+                      /> */}
                       <Form.Label>Domicilio de envío</Form.Label>
                       <Form.Control
                         type="text"

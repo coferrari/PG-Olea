@@ -1,27 +1,19 @@
 import {
-    COLLECT_USERNAME
+  CREATE_ORDER
   } from "../actions/types";
   
   
   const initialState = {
-      dataOrder: {
-          username: "",
-          price: "",
-          products: "",
-          addres: "",
-          addresNum: ""
-      }
+      dataOrder: {}
   };
   
-  export default function orderReducer(state = initialState, action) {
+  export default function createOrder(state = initialState, action) {
     switch (action.type) {
   
-      case COLLECT_USERNAME:
+      case CREATE_ORDER:
         return {
           ...state,
-          dataOrder: {
-              username: action.payload
-          }
+          dataOrder: action.payload
         };
 
       default:
