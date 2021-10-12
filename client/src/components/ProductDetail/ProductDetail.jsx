@@ -41,6 +41,7 @@ export function ProductDetail() {
     const reviews = await reviewsByProduct(id);
     setReseñas(reviews);
   };
+
   useEffect(() => {
     if (add) {
       const cartFromLocalStorage = JSON.parse(localStorage.getItem("cart"));
@@ -61,10 +62,13 @@ export function ProductDetail() {
       dispatch(updateCart(cartRemoved));
       setRemove(false);
     }
-    return () => {
-      dispatch(clearDetail);
-    };
   }, [dispatch, add, remove, id, image, name, price]);
+
+  // useEffect(() => {
+  //   return () => {
+  //     dispatch(clearDetail());
+  //   };
+  // }, []);
 
   const isInStore = productsCarrito.filter((product) => product.id === id);
 
@@ -120,6 +124,7 @@ export function ProductDetail() {
     dispatch(getProductDetail(idParams));
     getReviews(idParams);
   }, [dispatch, idParams]);
+
   return (
     <div className="container">
       <Card>
