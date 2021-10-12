@@ -32,7 +32,7 @@ export function ProductDetail() {
   const product = useSelector(
     (state) => state.productDetailReducer.productDetail
   );
-  const { id, image, name, price } = useSelector(
+  const { id, image, name, price, stock } = useSelector(
     (state) => state.productDetailReducer.productDetail
   );
   const { productsCarrito } = useSelector((state) => state.carritoReducer);
@@ -46,7 +46,7 @@ export function ProductDetail() {
       const cartFromLocalStorage = JSON.parse(localStorage.getItem("cart"));
       const cartAdded = [
         ...cartFromLocalStorage,
-        { id, name, image, price, quantity },
+        { id, name, image, price, quantity, stock },
       ];
       localStorage.setItem("cart", JSON.stringify(cartAdded));
       dispatch(updateCart(cartAdded));
