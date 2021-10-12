@@ -17,7 +17,6 @@ const ChangePerfil = () => {
     adress: "",
   });
   const handleChange = (e) => {
-    console.log(input);
     setInput({
       ...input,
       [e.target.name]: e.target.value,
