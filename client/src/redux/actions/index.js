@@ -9,13 +9,14 @@ import {
   UPDATE_CART,
   PAY_MERCADOPAGO,
   CLEAR_DETAIL,
+  COLLECT_USERNAME,
 } from "./types";
 import {
   GET_PRODUCTS_URL,
   SEARCH_PRODUCTS_URL,
   GET_PRODUCT_DETAIL_URL,
   CATEGORY_URL,
-  PAY_MERCADOPAGO_URL
+  PAY_MERCADOPAGO_URL,
 } from "../../consts";
 
 export function getProducts() {
@@ -82,33 +83,30 @@ export function clearCart() {
 export function updateCart(products) {
   return {
     type: UPDATE_CART,
-    payload: products
-  }
+    payload: products,
+  };
 }
 
-
 export function checkoutMercadoPago(itemsCheckout) {
-  return async function(dispatch) {
-    axios.post(PAY_MERCADOPAGO_URL, itemsCheckout)
-      .then ((response) =>{
-        dispatch({
-          type: PAY_MERCADOPAGO,
-          payload: response.data
-        })
-      })
-  }
+  return async function (dispatch) {
+    axios.post(PAY_MERCADOPAGO_URL, itemsCheckout).then((response) => {
+      dispatch({
+        type: PAY_MERCADOPAGO,
+        payload: response.data,
+      });
+    });
+  };
 }
 
 export function clearDetail() {
   return {
-    type: CLEAR_DETAIL
-  }
+    type: CLEAR_DETAIL,
+  };
 }
 
-export function collectUsername(payload){
+export function collectUsername(payload) {
   return {
     type: COLLECT_USERNAME,
-    payload
-  }
+    payload,
+  };
 }
-
