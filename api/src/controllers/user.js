@@ -91,21 +91,20 @@ userFunction.changePassword = async (req, res, next) => {
     next(err);
   }
 };
-
 userFunction.login = async (req, res, next) => {
-  const { email, password } = req.body;
+  const { email } = req.body;
   try {
     const emailFind = await User.findOne({ where: { email } });
     if (emailFind.admin) {
+      res.json({
+        username: emailFind.username,
+        msg: "Debe revisar el codigo que se le envio al mail",
+      });
       const code = getRandomInt();
       const template = getTemplateAuthenticationAdmin(email, code);
       await sendEmail(email, "Codigo de confirmación", template);
       emailFind.codeVerification = code;
       emailFind.save();
-      return res.json({
-        username: emailFind.username,
-        msg: "Debe revisar el codigo que se le envio al mail",
-      });
     } else {
       const token = jwt.sign(
         {
@@ -131,11 +130,8 @@ userFunction.login = async (req, res, next) => {
 };
 userFunction.authenticateLogin = async (req, res, next) => {
   const { code, username } = req.body;
-  console.log("aca");
-  console.log(req.body);
   try {
     const userAdmin = await User.findByPk(username);
-    console.log(userAdmin.codeVerification, code);
     if (userAdmin.codeVerification !== parseInt(code))
       return res.json({
         msg: "Su codigo es incorrecto o expiro",
