@@ -39,14 +39,13 @@ newsLetter.sendLetterProduct = async (req, res, next) => {
 };
 newsLetter.sendCategoryLetter = async (req, res, next) => {
   const { category, offert, fecha } = req.body;
-  console.log(req.body);
   try {
     const allUsers = await User.findAll({
       where: {
         newsLetter: true,
       },
     });
-    const categoria = await Category.findByPk(Category);
+    const categoria = await Category.findByPk(category);
     for (let i = 0; i < allUsers.length; i++) {
       let name = allUsers[i].name;
       const mail = getTemplateCategoryLetter(
@@ -58,6 +57,21 @@ newsLetter.sendCategoryLetter = async (req, res, next) => {
       await sendEmail(allUsers[i].email, "Ofertas", mail);
     }
     res.json({ message: "email enviado" });
+  } catch (err) {
+    next(err);
+  }
+};
+newsLetter.suscribeNewsLetter = async (req, res, next) => {
+  const { email } = req.body;
+  console.log(req.body);
+  try {
+    const user = await User.findOne({ where: { email: email } });
+    if (!user) {
+      return res.status(403).json({ message: "Usuario no encontrado" });
+    }
+    user.newsLetter = true;
+    user.save();
+    return res.send("Se ha suscripto correctamente");
   } catch (err) {
     next(err);
   }
