@@ -13,4 +13,7 @@ export const GET_ALL_ORDER = "/api/order/";
 export const GET_ORDER_DETAIL = "/api/order/";
 export const ADD_CATEGORY_PRODUCT = "/api/category/product/addCategories";
 export const DELET_CATEGORY_PRODUCT = "/api/category/product/deleteCategory";
+export const GET_WISHLIST_URL = "/api/wishlist";
+export const ADD_TO_WISHLIST_URL = "/api/wishlist/add";
+export const REMOVE_FROM_WISHLIST_URL = "/api/wishlist/delete";
 
