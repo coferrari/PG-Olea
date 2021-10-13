@@ -93,6 +93,7 @@ export function Product({ id, name, image, price, stock }) {
       })
     }
   };
+  
   const handleRemoveFavorite = (e) => {
     e.preventDefault();
     setRemoveWishlist(true);
