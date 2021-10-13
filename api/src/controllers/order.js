@@ -1,4 +1,4 @@
-const { Order, Order_Products, Product } = require("../db.js");
+const { Order, Order_Products, Product, User } = require("../db.js");
 const Modelo = require("./index.js");
 class OrderModel extends Modelo {
   constructor(model) {
@@ -67,15 +67,16 @@ class OrderModel extends Modelo {
       }
     }
   };
-
   createOrder = async (req, res, next) => {
     try {
-      const { username, price, products, address, phone } = req.body;
+      const { username, price, products, address, phone, contactName, contactSurname } = req.body;
       const ordenCreada = await this.model.create({
         userUsername: username,
         price,
         address,
         phone,
+        contactName,
+        contactSurname,
         date: Date().slice(0, 10).replace(/-/g, "/"),
       });
       for (let i = 0; i < products.length; i++) {
@@ -126,7 +127,27 @@ class OrderModel extends Modelo {
       next(err);
     }
   };
+  getOrderDetails = async (req, res, next) => {
+    const { username } = req.body
+    const { id } = req.query
+    try {
+      const user = await User.findByPk(username)
+      const ordenDetail = await this.model.findByPk(id, {include: Product})
+      res.send(await user.addOrder(ordenDetail.id))
+    } catch (error) {
+      next(error)
+    }
+  }
 
+  getUserOrder = async(req,res,next) =>{
+    const { username } = req.body
+    try{
+      const user = await User.findByPk(username, {include : Order})
+      res.send(user)
+    } catch (error){
+      next(error)
+    }
+  }
 }
 
 const OrderControllers = new OrderModel(Order);

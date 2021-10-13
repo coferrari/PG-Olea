@@ -29,6 +29,7 @@ import EditProduct from "./components/Admin/EditProduct/EditProduct";
 import Footer from "./components/Footer/Footer";
 import BarraAdmin from "./components/Profile/BarraAdmin";
 import OrderDetail from "./components/OrderDetail/OrderDetail";
+import CheckoutConfirm from "./components/Checkout/CheckoutConfirm";
 
 function App() {
   const loggedIn = decodeToken();
@@ -125,6 +126,9 @@ function App() {
         </Route>
         <Route exact path="/order/:id">
           <OrderDetail />
+        </Route>
+        <Route exact path="/checkoutconfirm">
+          <CheckoutConfirm />
         </Route>
       </Switch>
     </div>

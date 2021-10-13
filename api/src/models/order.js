@@ -19,6 +19,11 @@ module.exports = (sequelize) => {
       allowNull: false,
       defaultValue: "creada",
     },
+    statusPago: {
+      type: DataTypes.ENUM("aprobado","rechazado", "pendiente"),
+      allowNull: false,
+      defaultValue: "pendiente",
+    },
     date: {
       type: DataTypes.DATE,
       allowNull: false,
@@ -28,6 +33,14 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     phone:{
+      type: DataTypes.STRING,
+      allowNull:false
+    },
+    contactName:{
+      type: DataTypes.STRING,
+      allowNull:false
+    },
+    contactSurname:{
       type: DataTypes.STRING,
       allowNull:false
     }

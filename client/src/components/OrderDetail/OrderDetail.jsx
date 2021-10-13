@@ -6,7 +6,6 @@ function OrderDetail() {
   const [orderDetail, setOrderDetail] = useState();
   const getOrderIds = async () => {
     const orderDetails = await getOrderId();
-
     setOrderDetail(orderDetails.data);
   };
   useEffect(() => {

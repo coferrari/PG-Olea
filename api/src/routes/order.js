@@ -7,7 +7,7 @@ const router = Router();
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
-router.get("/:id", OrderControllers.getByID);
+//router.get("/:id", OrderControllers.getByID);
 // router.post("/", OrderControllers.create);
 router.put("/:id", OrderControllers.update);
 router.delete("/:id", OrderControllers.delete);
@@ -18,5 +18,7 @@ router.get("/filterbystatus/:status", OrderControllers.filterByStatus);
 router.post("/createOrder", OrderControllers.createOrder);
 router.get("/setorder/status", OrderControllers.setOrderStatus);
 router.get("/findAll/orders", OrderControllers.allOrders);
+router.post("/getorderdetails" , OrderControllers.getOrderDetails);
+router.post("/getuserorder" , OrderControllers.getUserOrder);
 
 module.exports = router;
