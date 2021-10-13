@@ -84,11 +84,12 @@ class CategoryModel extends Modelo {
     }
   };
   inOffer = async (req, res, next) => {
-    const { categoryID, inOffer } = req.body;
+    const { categoryID, inOffer, offerDay } = req.body;
     try {
       const category = await this.model.findByPk(categoryID);
       await category.update({
         offer: inOffer,
+        offerday: offerDay,
       });
       res.status(200).send(category);
     } catch (err) {
@@ -96,6 +97,18 @@ class CategoryModel extends Modelo {
     }
   };
 }
+// isOfferDay = async (req, res, next) => {
+//   const { categoryID, offerDay } = req.body;
+//   try {
+//     const category = await this.model.findByPk(categoryID)
+//     await category.update({
+//       offerday: offerDay
+//     })
+//     res.status(200).send(category)
+//   }catch(err){
+//     next(err)
+//   }
+// };
 
 const categoryControllers = new CategoryModel(Category);
 

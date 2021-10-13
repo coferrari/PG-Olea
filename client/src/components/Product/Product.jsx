@@ -8,7 +8,16 @@ import { isAuthorized, decodeToken } from "../../utils/index";
 import { addOrEditCart, removeProductCart } from "../../cart/index";
 import { BsBag, BsBagCheckFill, BsHeart, BsHeartFill } from "react-icons/bs";
 
-export function Product({ id, name, image, price, stock, categories, offer }) {
+export function Product({
+  id,
+  name,
+  image,
+  price,
+  stock,
+  categories,
+  offer,
+  offerday,
+}) {
   const [add, setAdd] = useState(false);
   const [remove, setRemove] = useState(false);
   const dispatch = useDispatch();
@@ -17,7 +26,7 @@ export function Product({ id, name, image, price, stock, categories, offer }) {
   //favorite
   const [favorite, setFavorite] = useState(false);
   const { productsCarrito } = useSelector((state) => state.carritoReducer);
-
+  console.log(offerday);
   useEffect(() => {
     if (add) {
       const cartFromLocalStorage = JSON.parse(localStorage.getItem("cart"));
@@ -79,6 +88,7 @@ export function Product({ id, name, image, price, stock, categories, offer }) {
 
     return descuento;
   };
+  var now = new Date().toLocaleDateString();
 
   const handleAddFavorite = (e) => {
     e.preventDefault();
@@ -144,26 +154,32 @@ export function Product({ id, name, image, price, stock, categories, offer }) {
                 <h5 className={styles.titlecard}>{name}</h5>
               </Link>
               <Card.Text className={styles.subtitlecard}>
-                {offer > searchOffer(categories) ? (
-                  <div>
-                    <span className={styles.oldprice}>${price}</span>
-                    <span className={styles.descuento}>
-                      ${price - Math.round((price * offer) / 100)}
-                    </span>
-                    <span className={styles.porcentaje}>{offer}% OFF</span>
-                  </div>
-                ) : searchOffer(categories) > 0 ? (
-                  <div>
-                    <span className={styles.oldprice}>${price}</span>
-                    <span className={styles.descuento}>
-                      $
-                      {price -
-                        Math.round((price * searchOffer(categories)) / 100)}
-                    </span>
-                    <span className={styles.porcentaje}>
-                      {categories[0].offer}% OFF
-                    </span>
-                  </div>
+                {now === offerday ? (
+                  offer > searchOffer(categories) ? (
+                    <div>
+                      <span className={styles.oldprice}>${price}</span>
+                      <span className={styles.descuento}>
+                        ${price - Math.round((price * offer) / 100)}
+                      </span>
+                      <span className={styles.porcentaje}>{offer}% OFF</span>
+                    </div>
+                  ) : searchOffer(categories) > 0 ? (
+                    <div>
+                      <span className={styles.oldprice}>${price}</span>
+                      <span className={styles.descuento}>
+                        $
+                        {price -
+                          Math.round((price * searchOffer(categories)) / 100)}
+                      </span>
+                      <span className={styles.porcentaje}>
+                        {categories[0].offer}% OFF
+                      </span>
+                    </div>
+                  ) : (
+                    <div>
+                      <span>${price}</span>
+                    </div>
+                  )
                 ) : (
                   <div>
                     <span>${price}</span>
