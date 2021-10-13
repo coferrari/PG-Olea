@@ -19,6 +19,8 @@ export default function CategoryProduct() {
     dispatch(getProductsByCategory(nameCategory));
   }, [dispatch, nameCategory]);
 
+  console.log(productsByCategory);
+
     // PARA ORDENAR
     if (attribute === "name" && order === "asc") {
       //ordenar alfabeticamente de A a Z
