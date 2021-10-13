@@ -15,6 +15,7 @@ import axios from "axios";
 import { GET_PRODUCTS_URL } from "../../../consts";
 import swal from "sweetalert";
 import style from "./CreateProduct.module.css";
+import { Redirect } from "react-router-dom";
 
 export default function CreateProduct() {
   const dispatch = useDispatch();
@@ -62,7 +63,9 @@ export default function CreateProduct() {
         },
       });
 
-      swal("Este producto ha sido creado exitosamente");
+      swal("Este producto ha sido creado exitosamente").then(function () {
+        window.location = "/account";
+      });
     }
   };
 
@@ -154,7 +157,7 @@ export default function CreateProduct() {
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Imagenes Cargadas</Form.Label>
-              <Container className={style.containerimg} >
+              <Container className={style.containerimg}>
                 {newProduct.image?.map((e) => (
                   <Row>
                     <Col xs={6} md={4}>

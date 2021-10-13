@@ -48,7 +48,9 @@ export default function EditProduct() {
         },
       });
 
-      return swal("Este producto ha sido modificado");
+      return swal("Este producto ha sido modificado").then(function () {
+        window.location = "/account";
+      });
     }
   };
   const handleEdit = () => {
