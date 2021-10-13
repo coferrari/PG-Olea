@@ -47,5 +47,8 @@ module.exports = (sequelize) => {
         max: 100,
       },
     },
+    offerday: {
+      type: DataTypes.STRING,
+    },
   });
 };

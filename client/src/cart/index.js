@@ -47,6 +47,10 @@ export const offerCategory = async (offCat, valor) => {
   });
 };
 
-export const offerProduct = async () => {
-  return await axios.put(`${ADD_OFFER_PRODUCT}`);
+export const offerProduct = async (productOff, valor) => {
+  return await axios.put(`${ADD_OFFER_PRODUCT}`, {
+    productID: productOff.idProduct,
+    offerDay: valor,
+    inOffer: productOff.offProduct,
+  });
 };

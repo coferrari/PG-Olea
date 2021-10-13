@@ -18,6 +18,7 @@ export default function Products({ products }) {
               categories={p.categories}
               offer={p.offer}
               offerday={p.categories[0].offerday}
+              productOff={p.offerday}
             />
           );
         })}

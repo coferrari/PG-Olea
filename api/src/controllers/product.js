@@ -240,11 +240,12 @@ class ProductModel extends Modelo {
     }
   };
   inOffer = async (req, res, next) => {
-    const { productID, inOffer } = req.body;
+    const { productID, inOffer, offerDay } = req.body;
     try {
       const product = await this.model.findByPk(productID);
       await product.update({
         offer: inOffer,
+        offerday: offerDay,
       });
       res.status(200).send(product);
     } catch (err) {

@@ -97,18 +97,6 @@ class CategoryModel extends Modelo {
     }
   };
 }
-// isOfferDay = async (req, res, next) => {
-//   const { categoryID, offerDay } = req.body;
-//   try {
-//     const category = await this.model.findByPk(categoryID)
-//     await category.update({
-//       offerday: offerDay
-//     })
-//     res.status(200).send(category)
-//   }catch(err){
-//     next(err)
-//   }
-// };
 
 const categoryControllers = new CategoryModel(Category);
 

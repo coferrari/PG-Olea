@@ -17,6 +17,7 @@ export function Product({
   categories,
   offer,
   offerday,
+  productOff,
 }) {
   const [add, setAdd] = useState(false);
   const [remove, setRemove] = useState(false);
@@ -154,7 +155,7 @@ export function Product({
                 <h5 className={styles.titlecard}>{name}</h5>
               </Link>
               <Card.Text className={styles.subtitlecard}>
-                {now === offerday ? (
+                {now === offerday || now === productOff ? (
                   offer > searchOffer(categories) ? (
                     <div>
                       <span className={styles.oldprice}>${price}</span>
