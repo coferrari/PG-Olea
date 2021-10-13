@@ -41,10 +41,22 @@ export const generateAdminDB = async (username) => {
   );
   return res.data;
 };
+export const removeAdminDB = async (username) => {
+  const res = await axios.put(
+    `/api/user/removeadmin`,
+    { username },
+    {
+      headers: {
+        authorization: getToken(),
+      },
+    }
+  );
+  return res.data;
+};
 export const createCategory = async (input) => {
   const res = await axios.post(
     `/api/category`,
-    { nameCategory: input.texto },
+    { nameCategory: input },
     {
       headers: {
         authorization: getToken(),
@@ -62,7 +74,6 @@ export const deleteCategory = async (id) => {
   return res.data;
 };
 export const updateCategory = async (id, nameCategory) => {
-  console.log(id, nameCategory);
   const res = await axios.put(
     `/api/category/${id}`,
     {

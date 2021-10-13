@@ -32,7 +32,7 @@ export function ProductDetail() {
   const product = useSelector(
     (state) => state.productDetailReducer.productDetail
   );
-  const { id, image, name, price } = useSelector(
+  const { id, image, name, price, stock } = useSelector(
     (state) => state.productDetailReducer.productDetail
   );
   const { productsCarrito } = useSelector((state) => state.carritoReducer);
@@ -41,12 +41,13 @@ export function ProductDetail() {
     const reviews = await reviewsByProduct(id);
     setReseñas(reviews);
   };
+
   useEffect(() => {
     if (add) {
       const cartFromLocalStorage = JSON.parse(localStorage.getItem("cart"));
       const cartAdded = [
         ...cartFromLocalStorage,
-        { id, name, image, price, quantity },
+        { id, name, image, price, quantity, stock },
       ];
       localStorage.setItem("cart", JSON.stringify(cartAdded));
       dispatch(updateCart(cartAdded));
@@ -61,10 +62,13 @@ export function ProductDetail() {
       dispatch(updateCart(cartRemoved));
       setRemove(false);
     }
-    return () => {
-      dispatch(clearDetail);
-    };
   }, [dispatch, add, remove, id, image, name, price]);
+
+  // useEffect(() => {
+  //   return () => {
+  //     dispatch(clearDetail());
+  //   };
+  // }, []);
 
   const isInStore = productsCarrito.filter((product) => product.id === id);
 
@@ -115,14 +119,12 @@ export function ProductDetail() {
     });
     setPuntuacion([$1, $2, $3, $4, $5]);
   };
-
-  console.log(puntuacion);
   const rating = Rating();
   useEffect(() => {
     dispatch(getProductDetail(idParams));
     getReviews(idParams);
   }, [dispatch, idParams]);
-  console.log(reseñas);
+
   return (
     <div className="container">
       <Card>
@@ -136,6 +138,9 @@ export function ProductDetail() {
               <Card.Text className={styles.description}>
                 {product?.description}
               </Card.Text>
+              <Card.Text className={styles.description}>
+                <p>* {product?.stock} en stock</p>
+              </Card.Text>
               <ListGroup className="list-group-flush">
                 <ListGroupItem className={styles.price}>
                   Precio: ${product?.price}{" "}
@@ -143,19 +148,20 @@ export function ProductDetail() {
                 <ListGroupItem>
                   <Button
                     variant="outline-dark"
-                    className={styles.opinions}
                     onClick={() => {
                       setLgShow(true);
                       tickets();
                     }}
                   >
-                    Opiniones sobre el producto
+                    <h4 className={styles.opinions}>
+                      Opiniones sobre el producto
+                    </h4>
                   </Button>{" "}
                 </ListGroupItem>
               </ListGroup>
             </div>
             <div>
-              {isInStore.length === 0 && (
+              {isInStore.length === 0 && stock > 0 && (
                 <Button
                   variant="dark"
                   className={styles.addcart}
@@ -165,7 +171,7 @@ export function ProductDetail() {
                   Agregar al carrito
                 </Button>
               )}
-              {isInStore.length > 0 && (
+              {isInStore.length > 0 && stock > 0 && (
                 <Button
                   variant="secondary"
                   className={styles.removecart}
@@ -173,6 +179,15 @@ export function ProductDetail() {
                   onClick={(e) => handleRemoveFromCart(e)}
                 >
                   Eliminar del carrito
+                </Button>
+              )}
+              {stock === 0 && (
+                <Button
+                  variant="secondary"
+                  className={styles.removecart}
+                  disabled
+                >
+                  sin stock
                 </Button>
               )}
             </div>

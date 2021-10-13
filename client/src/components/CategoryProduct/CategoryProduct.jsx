@@ -19,8 +19,6 @@ export default function CategoryProduct() {
     dispatch(getProductsByCategory(nameCategory));
   }, [dispatch, nameCategory]);
 
-  console.log(productsByCategory);
-
     // PARA ORDENAR
     if (attribute === "name" && order === "asc") {
       //ordenar alfabeticamente de A a Z
@@ -52,10 +50,11 @@ export default function CategoryProduct() {
       productsByCategory = productsByCategory.sort((a, b) => b.price - a.price);
     }
 
-    const handleOrderSelect = function (order) {
-      order = order.split(" ");
-      history.push(`/category/${nameCategory}/${order[0]}/${order[1]}`);
-    };
+
+  const handleOrderSelect = function (order) {
+    order = order.split(" ");
+    history.push(`/category/${nameCategory}/${order[0]}/${order[1]}`);
+  };
 
   return (
     <div>
