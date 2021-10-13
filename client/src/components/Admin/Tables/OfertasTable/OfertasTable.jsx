@@ -5,14 +5,35 @@ import styles from "./OfertasTable.module.css";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import Button from "react-bootstrap/Button";
+import { offerCategory } from "../../../../cart/index";
 function OfertasTable() {
   const [value, onChange] = useState(new Date());
 
-  const [off, setOff] = useState({
-    id: "",
-    off: 0,
+  const [offCat, setOffCat] = useState({
+    idCat: 0,
+    offCat: 0,
   });
+  const onChangeCat = (e) => {
+    e.preventDefault();
+    setOffCat({
+      ...offCat,
+      [e.target.name]: e.target.value,
+    });
+  };
 
+  const onSubmitCat = (e) => {
+    e.preventDefault();
+
+    if (!offCat.idCat && !offCat.offCat && !value) {
+      alert("faltan parametros");
+    }
+    let valor = value.toLocaleDateString();
+    offerCategory(offCat, valor);
+    setOffCat({
+      idCat: "",
+      offCat: 0,
+    });
+  };
   return (
     <div className={styles.main}>
       <Tabs
@@ -36,15 +57,25 @@ function OfertasTable() {
         </Tab>
         <Tab eventKey="Categorias" title="Categorias">
           <Calendar onChange={onChange} value={value} />
-          <form className={styles.container}>
+          <form className={styles.container} onSubmit={(e) => onSubmitCat(e)}>
             <input
               type="text"
               placeholder="Ingrese el ID de una categoria"
               required
               className={styles.id}
+              name="idCat"
+              onChange={(e) => onChangeCat(e)}
             />
             <span>Porcentaje de descuento</span>
-            <input type="range" min={0} max={100} step={5} required />
+            <input
+              type="range"
+              min={0}
+              max={100}
+              step={5}
+              required
+              name="offCat"
+              onChange={(e) => onChangeCat(e)}
+            />
 
             <Button type="submit">Enviar</Button>
           </form>

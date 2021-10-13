@@ -14,7 +14,7 @@ function OrdersTable() {
   useEffect(() => {
     getAllOrders();
   }, []);
-  console.log(order);
+
   return (
     <div>
       {order === undefined ? (

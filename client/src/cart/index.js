@@ -7,6 +7,8 @@ import {
   GET_CARRITO_USERNAME,
   GET_ALL_ORDER,
   GET_ORDER_DETAIL,
+  ADD_OFFER_CATEGORY,
+  ADD_OFFER_PRODUCT,
 } from "../consts";
 
 export const addOrEditCart = async (payload) => {
@@ -35,4 +37,16 @@ export const getAllOrder = async () => {
 
 export const getOrderId = async (id) => {
   return await axios.get(`${GET_ORDER_DETAIL}` + id);
+};
+
+export const offerCategory = async (offCat, valor) => {
+  return await axios.put(`${ADD_OFFER_CATEGORY}`, {
+    categoryID: offCat.idCat,
+    offerDay: valor,
+    inOffer: offCat.offCat,
+  });
+};
+
+export const offerProduct = async () => {
+  return await axios.put(`${ADD_OFFER_PRODUCT}`);
 };
