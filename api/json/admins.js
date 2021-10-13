@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt");
-const { User, Carrito } = require("../src/db");
+const { User, Carrito, Wishlist } = require("../src/db");
 
 const userMockUp = async () => {
   const hashedPasswordA = await bcrypt.hash("123Usuario", 12);
@@ -12,6 +12,7 @@ const userMockUp = async () => {
       admin: false,
     });
     const carritocreado = await Carrito.create({});
+
     franco.setCarrito(carritocreado.dataValues.id);
     const dibu = await User.create({
       name: "Probando Usuario",
