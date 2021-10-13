@@ -30,11 +30,13 @@ const WishlistItem = ({ id, name, image }) => {
         <div className={style.containerimg}>
           <img className={style.img} src={image} alt={name} />
         </div>
-        <Card.Body>
-          <div className={style.containertext}>
-            <Link to={`/product/${id}`}>
-              <h5>{name}</h5>
+        <Card.Body className={style.containertext}>
+          <div>
+            <Link to={`/product/${id}`} className={style.link}>
+              <h5 className={style.title}>{name}</h5>
             </Link>
+          </div>
+          <div className={style.delete}>
             <button
               onClick={(e) => handleRemoveWishlist(e)}
               className={style.delete}

@@ -11,7 +11,8 @@ import {
   CLEAR_DETAIL,
   GET_WISHLIST,
   ADD_TO_WISHLIST,
-  REMOVE_FROM_WISHLIST
+  REMOVE_FROM_WISHLIST,
+  CLEAR_WISHLIST
 } from "./types";
 import {
   GET_PRODUCTS_URL,
@@ -132,5 +133,11 @@ export function removeFromWishlist(id) {
   return {
     type: REMOVE_FROM_WISHLIST,
     payload: id
+  }
+}
+
+export function clearWishlist() {
+  return {
+    type: CLEAR_WISHLIST
   }
 }
