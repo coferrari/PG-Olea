@@ -85,6 +85,7 @@ class CategoryModel extends Modelo {
   };
   inOffer = async (req, res, next) => {
     const { categoryID, inOffer, offerDay } = req.body;
+
     try {
       const category = await this.model.findByPk(categoryID);
       await category.update({

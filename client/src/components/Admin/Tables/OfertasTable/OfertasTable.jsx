@@ -5,20 +5,20 @@ import styles from "./OfertasTable.module.css";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import Button from "react-bootstrap/Button";
+import { useSelector } from "react-redux";
 import { offerCategory, offerProduct } from "../../../../cart/index";
 function OfertasTable() {
   const [value, onChange] = useState(new Date());
-
   const [offCat, setOffCat] = useState({
     idCat: 0,
     offCat: 0,
   });
-
   const [productOff, setProductOff] = useState({
     idProduct: 0,
     offProduct: 0,
   });
-
+  const categories = useSelector((state) => state.categoryReducer.categories);
+  const product = useSelector((state) => state.productsReducer.products);
   const onChangeProduct = (e) => {
     e.preventDefault();
     setProductOff({
@@ -26,7 +26,6 @@ function OfertasTable() {
       [e.target.name]: e.target.value,
     });
   };
-
   const onSubmitProduct = (e) => {
     e.preventDefault();
 
@@ -40,7 +39,6 @@ function OfertasTable() {
       offProduct: 0,
     });
   };
-
   const onChangeCat = (e) => {
     e.preventDefault();
     setOffCat({
@@ -48,7 +46,6 @@ function OfertasTable() {
       [e.target.name]: e.target.value,
     });
   };
-
   const onSubmitCat = (e) => {
     e.preventDefault();
 
@@ -62,6 +59,7 @@ function OfertasTable() {
       offCat: 0,
     });
   };
+  console.log(offCat);
   return (
     <div className={styles.main}>
       <Tabs
@@ -75,14 +73,15 @@ function OfertasTable() {
             className={styles.container}
             onSubmit={(e) => onSubmitProduct(e)}
           >
-            <input
-              type="text"
-              placeholder="Ingrese el ID de un producto"
-              required
-              className={styles.id}
-              name="idProduct"
-              onChange={(e) => onChangeProduct(e)}
-            />
+            <select onChange={(e) => onChangeProduct(e)} name="idProduct">
+              <option value="">Seleccione un producto</option>
+              {product &&
+                product.map((p) => (
+                  <option value={p.id} key={p.id}>
+                    {p.name}
+                  </option>
+                ))}
+            </select>
             <span>Porcentaje de descuento</span>
             <input
               type="range"
@@ -100,14 +99,16 @@ function OfertasTable() {
         <Tab eventKey="Categorias" title="Categorias">
           <Calendar onChange={onChange} value={value} />
           <form className={styles.container} onSubmit={(e) => onSubmitCat(e)}>
-            <input
-              type="text"
-              placeholder="Ingrese el ID de una categoria"
-              required
-              className={styles.id}
-              name="idCat"
-              onChange={(e) => onChangeCat(e)}
-            />
+            <select onChange={(e) => onChangeCat(e)} name="idCat">
+              <option value="">Seleccione una categoria</option>
+              {categories &&
+                categories.map((c) => (
+                  <option value={c.id} key={c.id}>
+                    {c.nameCategory}
+                  </option>
+                ))}
+            </select>
+
             <span>Porcentaje de descuento</span>
             <input
               type="range"

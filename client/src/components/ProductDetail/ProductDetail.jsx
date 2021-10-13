@@ -64,12 +64,6 @@ export function ProductDetail() {
     }
   }, [dispatch, add, remove, id, image, name, price]);
 
-  // useEffect(() => {
-  //   return () => {
-  //     dispatch(clearDetail());
-  //   };
-  // }, []);
-
   const isInStore = productsCarrito.filter((product) => product.id === id);
 
   const handleAddToCart = (e) => {
@@ -126,16 +120,21 @@ export function ProductDetail() {
   }, [dispatch, idParams]);
 
   const searchOffer = (categories) => {
-    let descuento = 0;
-    categories.map((c) => {
-      if (c.offer !== null) {
-        descuento = c.offer;
-      }
-    });
+    if (categories) {
+      let descuento = 0;
 
-    return descuento;
+      categories.map((c) => {
+        if (c.offer !== null) {
+          descuento = c.offer;
+        }
+      });
+
+      return descuento;
+    }
+    return "";
   };
   console.log(product);
+  var now = new Date().toLocaleDateString();
   return (
     <div className="container">
       <Card>
@@ -154,20 +153,36 @@ export function ProductDetail() {
               </Card.Text>
               <ListGroup className="list-group-flush">
                 <ListGroupItem className={styles.price}>
-                  {searchOffer(product.categories) > 0 ? (
-                    <div>
-                      <span className={styles.oldprice}>${price}</span>
-                      <span className={styles.descuento}>
-                        $
-                        {price -
-                          Math.round(
-                            (price * searchOffer(product.categories)) / 100
-                          )}
-                      </span>
-                      <span className={styles.porcentaje}>
-                        {product.categories[0].offer}% OFF
-                      </span>
-                    </div>
+                  {now === product.offerday ? (
+                    product.offer > searchOffer(product.categories) ? (
+                      <div>
+                        <span className={styles.oldprice}>${price}</span>
+                        <span className={styles.descuento}>
+                          ${price - Math.round((price * product.offer) / 100)}
+                        </span>
+                        <span className={styles.porcentaje}>
+                          {product.offer}% OFF
+                        </span>
+                      </div>
+                    ) : searchOffer(product.categories) > 0 ? (
+                      <div>
+                        <span className={styles.oldprice}>${price}</span>
+                        <span className={styles.descuento}>
+                          $
+                          {price -
+                            Math.round(
+                              (price * searchOffer(product.categories)) / 100
+                            )}
+                        </span>
+                        <span className={styles.porcentaje}>
+                          {product.categories[0].offer}% OFF
+                        </span>
+                      </div>
+                    ) : (
+                      <div>
+                        <span>${price}</span>
+                      </div>
+                    )
                   ) : (
                     <div>Precio: ${product?.price} </div>
                   )}
