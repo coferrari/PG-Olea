@@ -30,6 +30,7 @@ import Footer from "./components/Footer/Footer";
 import BarraAdmin from "./components/Profile/BarraAdmin";
 import OrderDetail from "./components/OrderDetail/OrderDetail";
 import Wishlist from "./components/Wishlist/Wishlist";
+import Map from "./components/Map/Map";
 
 function App() {
   const loggedIn = decodeToken();

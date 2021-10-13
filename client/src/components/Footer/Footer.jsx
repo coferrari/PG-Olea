@@ -3,6 +3,7 @@ import logo from "../../img/OLEA marca de agua-08.png";
 import style from "./Footer.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInstagram } from "@fortawesome/free-brands-svg-icons";
+import Map from "../Map/Map";
 
 function Footer() {
   return (
@@ -12,11 +13,18 @@ function Footer() {
           <div className={style.footer__flexitem}>
             <h5 className={style.subtitles}>somos olea</h5>
             <ul className={style.ul}>
-              <li className={style.list}>OLEA nace con la intención de incorporar productos amigables con el medio ambiente en nuestra vida diaria.</li>
               <li className={style.list}>
-                Es por eso que decidimos acercarte alimentos saludables, cosmética natural, objetos sustentables y muchas cosas más.
+                OLEA nace con la intención de incorporar productos amigables con
+                el medio ambiente en nuestra vida diaria.
+              </li>
+              <li className={style.list}>
+                Es por eso que decidimos acercarte alimentos saludables,
+                cosmética natural, objetos sustentables y muchas cosas más.
               </li>
             </ul>
+          </div>
+          <div>
+            <Map />
           </div>
           <div className={style.footer__flexitem}>
             <h5 className={style.subtitles}>contacto</h5>
