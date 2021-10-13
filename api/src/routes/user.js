@@ -24,7 +24,7 @@ router.post(
   userFunction.requestChangePassword
 );
 router.put("/updateprofile", userFunction.updateProfile);
-// router.post("/createadmin", userFunction.createAdmin);
+router.post("/authenticateadmin", userFunction.authenticateLogin);
 router.post("/changepasswordadmin", isAdmin, adminFunction.changePassword);
 router.delete("/deleteuser/:username", isAdmin, adminFunction.deleteUser);
 router.put("/generateadmin", isAdmin, adminFunction.generateAdmin);
