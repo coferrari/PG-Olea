@@ -29,6 +29,7 @@ import EditProduct from "./components/Admin/EditProduct/EditProduct";
 import Footer from "./components/Footer/Footer";
 import BarraAdmin from "./components/Profile/BarraAdmin";
 import OrderDetail from "./components/OrderDetail/OrderDetail";
+import Wishlist from "./components/Wishlist/Wishlist";
 
 function App() {
   const loggedIn = decodeToken();
@@ -117,6 +118,9 @@ function App() {
         </Route>
         <Route exact path="/order/:id">
           <OrderDetail />
+        </Route>
+        <Route exact path="/wishlist">
+          <Wishlist />
         </Route>
       </Switch>
     </div>
