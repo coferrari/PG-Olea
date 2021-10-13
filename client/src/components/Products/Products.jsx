@@ -16,6 +16,7 @@ export default function Products({ products }) {
               price={p.price}
               stock={p.stock}
               categories={p.categories}
+              offer={p.offer}
             />
           );
         })}

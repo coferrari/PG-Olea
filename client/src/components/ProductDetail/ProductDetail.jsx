@@ -125,6 +125,17 @@ export function ProductDetail() {
     getReviews(idParams);
   }, [dispatch, idParams]);
 
+  const searchOffer = (categories) => {
+    let descuento = 0;
+    categories.map((c) => {
+      if (c.offer !== null) {
+        descuento = c.offer;
+      }
+    });
+
+    return descuento;
+  };
+  console.log(product);
   return (
     <div className="container">
       <Card>
@@ -143,7 +154,23 @@ export function ProductDetail() {
               </Card.Text>
               <ListGroup className="list-group-flush">
                 <ListGroupItem className={styles.price}>
-                  Precio: ${product?.price}{" "}
+                  {searchOffer(product.categories) > 0 ? (
+                    <div>
+                      <span className={styles.oldprice}>${price}</span>
+                      <span className={styles.descuento}>
+                        $
+                        {price -
+                          Math.round(
+                            (price * searchOffer(product.categories)) / 100
+                          )}
+                      </span>
+                      <span className={styles.porcentaje}>
+                        {product.categories[0].offer}% OFF
+                      </span>
+                    </div>
+                  ) : (
+                    <div>Precio: ${product?.price} </div>
+                  )}
                 </ListGroupItem>
                 <ListGroupItem>
                   <Button

@@ -8,7 +8,7 @@ import { isAuthorized, decodeToken } from "../../utils/index";
 import { addOrEditCart, removeProductCart } from "../../cart/index";
 import { BsBag, BsBagCheckFill, BsHeart, BsHeartFill } from "react-icons/bs";
 
-export function Product({ id, name, image, price, stock, categories }) {
+export function Product({ id, name, image, price, stock, categories, offer }) {
   const [add, setAdd] = useState(false);
   const [remove, setRemove] = useState(false);
   const dispatch = useDispatch();
@@ -79,7 +79,6 @@ export function Product({ id, name, image, price, stock, categories }) {
 
     return descuento;
   };
-  //////
 
   const handleAddFavorite = (e) => {
     e.preventDefault();
@@ -145,10 +144,31 @@ export function Product({ id, name, image, price, stock, categories }) {
                 <h5 className={styles.titlecard}>{name}</h5>
               </Link>
               <Card.Text className={styles.subtitlecard}>
-                ${" "}
-                {searchOffer(categories) > 0
-                  ? price - (price * searchOffer(categories)) / 100
-                  : price}
+                {offer > searchOffer(categories) ? (
+                  <div>
+                    <span className={styles.oldprice}>${price}</span>
+                    <span className={styles.descuento}>
+                      ${price - Math.round((price * offer) / 100)}
+                    </span>
+                    <span className={styles.porcentaje}>{offer}% OFF</span>
+                  </div>
+                ) : searchOffer(categories) > 0 ? (
+                  <div>
+                    <span className={styles.oldprice}>${price}</span>
+                    <span className={styles.descuento}>
+                      $
+                      {price -
+                        Math.round((price * searchOffer(categories)) / 100)}
+                    </span>
+                    <span className={styles.porcentaje}>
+                      {categories[0].offer}% OFF
+                    </span>
+                  </div>
+                ) : (
+                  <div>
+                    <span>${price}</span>
+                  </div>
+                )}
               </Card.Text>
             </div>
           </Card.Body>
