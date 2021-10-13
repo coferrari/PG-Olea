@@ -7,6 +7,7 @@ import Tabs from "react-bootstrap/Tabs";
 import Button from "react-bootstrap/Button";
 import { useSelector } from "react-redux";
 import { offerCategory, offerProduct } from "../../../../cart/index";
+import Ofertas from "./Ofertas";
 function OfertasTable() {
   const [value, onChange] = useState(new Date());
   const [offCat, setOffCat] = useState({
@@ -59,7 +60,7 @@ function OfertasTable() {
       offCat: 0,
     });
   };
-  console.log(offCat);
+
   return (
     <div className={styles.main}>
       <Tabs
@@ -122,6 +123,9 @@ function OfertasTable() {
 
             <Button type="submit">Enviar</Button>
           </form>
+        </Tab>
+        <Tab eventKey="Ofertas" title="Ofertas">
+          <Ofertas />
         </Tab>
       </Tabs>
     </div>

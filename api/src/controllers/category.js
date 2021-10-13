@@ -97,6 +97,18 @@ class CategoryModel extends Modelo {
       next(err);
     }
   };
+
+  getOffers = async (req, res, next) => {
+    const { offerday } = req.body;
+    console.log(offerday);
+    try {
+      const ofertas = await this.model.findAll({ where: { offerday } });
+      const ofertasProductos = await Product.findAll({ where: { offerday } });
+      res.status(200).send(ofertasProductos.concat(ofertas));
+    } catch (err) {
+      next(err);
+    }
+  };
 }
 
 const categoryControllers = new CategoryModel(Category);

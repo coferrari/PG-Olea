@@ -133,7 +133,7 @@ export function ProductDetail() {
     }
     return "";
   };
-  console.log(product);
+  console.log(product.categories[0].offerday);
   var now = new Date().toLocaleDateString();
   return (
     <div className="container">
@@ -153,7 +153,8 @@ export function ProductDetail() {
               </Card.Text>
               <ListGroup className="list-group-flush">
                 <ListGroupItem className={styles.price}>
-                  {now === product.offerday ? (
+                  {now === product.offerday ||
+                  now === product.categories[0].offerday ? (
                     product.offer > searchOffer(product.categories) ? (
                       <div>
                         <span className={styles.oldprice}>${price}</span>

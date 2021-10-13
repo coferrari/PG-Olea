@@ -15,3 +15,4 @@ export const ADD_CATEGORY_PRODUCT = "/api/category/product/addCategories";
 export const DELET_CATEGORY_PRODUCT = "/api/category/product/deleteCategory";
 export const ADD_OFFER_CATEGORY = "/api/category/cat/inOffer";
 export const ADD_OFFER_PRODUCT = "/api/product/update/Offer";
+export const GET_OFFER = "/api/category/offerday/get";

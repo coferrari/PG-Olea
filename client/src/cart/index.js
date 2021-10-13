@@ -9,6 +9,7 @@ import {
   GET_ORDER_DETAIL,
   ADD_OFFER_CATEGORY,
   ADD_OFFER_PRODUCT,
+  GET_OFFER,
 } from "../consts";
 
 export const addOrEditCart = async (payload) => {
@@ -53,4 +54,9 @@ export const offerProduct = async (productOff, valor) => {
     offerDay: valor,
     inOffer: productOff.offProduct,
   });
+};
+
+export const getOffer = async (offerday) => {
+  console.log(offerday);
+  return await axios.put(`${GET_OFFER}`, { offerday: offerday });
 };
