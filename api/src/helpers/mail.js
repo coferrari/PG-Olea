@@ -76,9 +76,23 @@ const getTemplateAdminChangePassword = (name, token) => {
 `;
 };
 
+const getTemplateProductLetter = (name, fecha, product, offert) => {
+  return `
+  <head>
+      <link rel="stylesheet" href="./style.css">
+  </head>
+  
+  <div id="email___content">
+      <h2>Hola ${name}</h2>
+      <p>El dia ${fecha} el producto ${product} se encontrara con un %${offert} de descuento!</p>
+      <p><a href="https://somosolea.vercel.app/" target="_blank">Visite nuestra página!</a></p>
+  </div>
+  `;
+};
 module.exports = {
   sendEmail,
   getTemplate,
   getTemplateChangePassword,
+  getTemplateProductLetter,
   getTemplateAdminChangePassword,
 };
