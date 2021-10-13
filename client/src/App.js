@@ -64,7 +64,11 @@ function App() {
           <Home />
           <Footer />
         </Route>
-        <Route path="/category/:nameCategory">
+        <Route exact path="/category/:nameCategory">
+          <CategoryProduct />
+        </Route>
+        <Route path="/category/:nameCategory/:attribute/:order">
+          <ShoppingCart />
           <CategoryProduct />
           <Footer />
         </Route>
