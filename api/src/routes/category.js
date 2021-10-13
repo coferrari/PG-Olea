@@ -9,12 +9,20 @@ const router = Router();
 // Ejemplo: router.use('/auth', authRouter);
 router.get("/", categoryControllers.getAll);
 router.get("/:category", categoryControllers.filterByCategory);
-router.post("/", categoryControllers.create);
+router.post("/", isAdmin, categoryControllers.create);
 router.put("/:id", isAdmin, categoryControllers.updateName);
 router.delete("/:id", isAdmin, categoryControllers.delete);
 router.post("/addCategories", isAdmin, categoryControllers.addCategories);
-router.post("/product/addCategories", categoryControllers.addCategories);
-router.delete("/product/deleteCategory", categoryControllers.deleteCategories);
+router.post(
+  "/product/addCategories",
+  isAdmin,
+  categoryControllers.addCategories
+);
+router.delete(
+  "/product/deleteCategory",
+  isAdmin,
+  categoryControllers.deleteCategories
+);
 
 // router.get("/:category", categoryControllers.filterByCategory);
 

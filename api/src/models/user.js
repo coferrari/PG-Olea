@@ -13,10 +13,12 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
       primaryKey: true,
+      unique: true,
     },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
     password: {
       type: DataTypes.STRING,
@@ -48,6 +50,10 @@ module.exports = (sequelize) => {
     },
     newsLetter: {
       type: DataTypes.BOOLEAN,
+      allowNull: true,
+    },
+    codeVerification: {
+      type: DataTypes.INTEGER,
       allowNull: true,
     },
   });

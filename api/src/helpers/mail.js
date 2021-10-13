@@ -75,10 +75,22 @@ const getTemplateAdminChangePassword = (name, token) => {
   </div>
 `;
 };
+const getTemplateAuthenticationAdmin = (name, code) => {
+  return `
+  <head>
+      <link rel="stylesheet" href="./style.css">
+  </head>
+  
+  <div id="email___content">
+      <h2>Hola ${name}</h2>
+      <p>Para continuar con su inicio de sesion ingrese el siguiente codigo ${code}</p>
+  </div>`;
+};
 
 module.exports = {
   sendEmail,
   getTemplate,
   getTemplateChangePassword,
   getTemplateAdminChangePassword,
+  getTemplateAuthenticationAdmin,
 };

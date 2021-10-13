@@ -29,7 +29,7 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     image: {
-      type: DataTypes.ARRAY(STRING),
+      type: DataTypes.ARRAY(DataTypes.TEXT),
     },
     description: {
       type: DataTypes.STRING(1234),

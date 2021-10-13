@@ -11,7 +11,6 @@ const Comment = ({ reseñas }) => {
             {reseñas.user.username.charAt(0).toUpperCase() +
               reseñas.user.username.slice(1)}
           </span>
-
           <AiFillStar
             className={reseñas.rating >= 1 ? style.gold : style.dark}
           />

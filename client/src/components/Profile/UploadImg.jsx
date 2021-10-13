@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { decodeToken } from "../../utils";
 import axios from "axios";
 import style from "./ProfileAdmin.module.css";
-import { updateProfile, updateNames } from "../../auth/users";
+import { updateProfile } from "../../auth/users";
 import { Button, Form, Modal } from "react-bootstrap";
 import { getToken } from "../../utils";
 const ChangePerfil = () => {
@@ -17,7 +17,6 @@ const ChangePerfil = () => {
     adress: "",
   });
   const handleChange = (e) => {
-    console.log(input);
     setInput({
       ...input,
       [e.target.name]: e.target.value,
@@ -27,6 +26,7 @@ const ChangePerfil = () => {
     const tokenNuevo = getToken();
     setToken(tokenNuevo);
     let user = decodeToken();
+    setUrlImage(user.picture);
     setUsuario(user);
   };
   const changeAvatar = (e) => {
@@ -51,13 +51,14 @@ const ChangePerfil = () => {
     input.surname
       ? (user.surname = input.surname)
       : (user.surname = usuario.surname);
-    urlImage ? (user.image = urlImage) : (user.image = usuario.image);
+    user.image = urlImage;
     input.phone ? (user.phone = input.phone) : (user.phone = usuario.phone);
     input.adress
       ? (user.adress = input.adress)
       : (user.adress = usuario.adress);
     await updateProfile(user);
   };
+  console.log(urlImage);
   const sendUpdates = async (e) => {
     e.preventDefault();
     await upload();

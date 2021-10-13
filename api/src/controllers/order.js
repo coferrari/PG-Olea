@@ -1,4 +1,4 @@
-const { Order, Order_Products, Product } = require("../db.js");
+const { Order, Order_Products, Product, User } = require("../db.js");
 const Modelo = require("./index.js");
 class OrderModel extends Modelo {
   constructor(model) {
@@ -126,7 +126,16 @@ class OrderModel extends Modelo {
       next(err);
     }
   };
-
+  getAll = async (req, res, next) => {
+    try {
+      const order = await this.model.findAll({
+        include: User,
+      });
+      res.status(200).send(order);
+    } catch (err) {
+      next(err);
+    }
+  };
 }
 
 const OrderControllers = new OrderModel(Order);

@@ -28,6 +28,7 @@ class Modelo {
   };
 
   update = (req, res, next) => {
+    console.log(req.body);
     const { id } = req.params;
     const body = req.body;
     this.model
@@ -41,7 +42,6 @@ class Modelo {
       })
       .catch((error) => next(error));
   };
-
   delete = (req, res, next) => {
     const { id } = req.params;
     this.model
