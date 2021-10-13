@@ -6,6 +6,8 @@ import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import Button from "react-bootstrap/Button";
 import { offerCategory, offerProduct } from "../../../../cart/index";
+import { productOfert, categoryOfert } from "../../../../auth/admin";
+
 function OfertasTable() {
   const [value, onChange] = useState(new Date());
 
@@ -27,14 +29,20 @@ function OfertasTable() {
     });
   };
 
-  const onSubmitProduct = (e) => {
+  const onSubmitProduct = async (e) => {
     e.preventDefault();
 
     if (!productOff.idProduct && !productOff.offProduct && !value) {
       alert("faltan parametros");
     }
     let valor = value.toLocaleDateString();
+    console.log(productOff, valor);
     offerProduct(productOff, valor);
+    const res = await productOfert(
+      productOff.idProduct,
+      productOff.offProduct,
+      valor
+    );
     setProductOff({
       idProduct: 0,
       offProduct: 0,
@@ -49,14 +57,14 @@ function OfertasTable() {
     });
   };
 
-  const onSubmitCat = (e) => {
+  const onSubmitCat = async (e) => {
     e.preventDefault();
-
     if (!offCat.idCat && !offCat.offCat && !value) {
       alert("faltan parametros");
     }
     let valor = value.toLocaleDateString();
     offerCategory(offCat, valor);
+    const res = await categoryOfert(offCat.idCat, offCat.oofCat, valor);
     setOffCat({
       idCat: "",
       offCat: 0,

@@ -84,7 +84,20 @@ const getTemplateProductLetter = (name, fecha, product, offert) => {
   
   <div id="email___content">
       <h2>Hola ${name}</h2>
-      <p>El dia ${fecha} el producto ${product} se encontrara con un %${offert} de descuento!</p>
+      <p>El dia ${fecha} el producto ${product} se encontrara con un ${offert}% de descuento!</p>
+      <p><a href="https://somosolea.vercel.app/" target="_blank">Visite nuestra página!</a></p>
+  </div>
+  `;
+};
+const getTemplateCategoryLetter = (name, fecha, category, offert) => {
+  return `
+  <head>
+      <link rel="stylesheet" href="./style.css">
+  </head>
+  
+  <div id="email___content">
+      <h2>Hola ${name}</h2>
+      <p>El dia ${fecha} toda la categoria ${category} se encontrara con un ${offert}% de descuento!</p>
       <p><a href="https://somosolea.vercel.app/" target="_blank">Visite nuestra página!</a></p>
   </div>
   `;
@@ -95,4 +108,5 @@ module.exports = {
   getTemplateChangePassword,
   getTemplateProductLetter,
   getTemplateAdminChangePassword,
+  getTemplateCategoryLetter,
 };
