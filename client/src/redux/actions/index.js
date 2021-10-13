@@ -8,14 +8,19 @@ import {
   CLEAR_CART,
   UPDATE_CART,
   PAY_MERCADOPAGO,
-  CLEAR_DETAIL
+  CLEAR_DETAIL,
+  GET_WISHLIST,
+  ADD_TO_WISHLIST,
+  REMOVE_FROM_WISHLIST,
+  CLEAR_WISHLIST
 } from "./types";
 import {
   GET_PRODUCTS_URL,
   SEARCH_PRODUCTS_URL,
   GET_PRODUCT_DETAIL_URL,
   CATEGORY_URL,
-  PAY_MERCADOPAGO_URL
+  PAY_MERCADOPAGO_URL,
+  GET_WISHLIST_URL
 } from "../../consts";
 
 export function getProducts() {
@@ -105,3 +110,34 @@ export function clearDetail() {
   }
 }
 
+export function getWishlist(payload) {
+  console.log(payload)
+  return function (dispatch) {
+    return axios.get(GET_WISHLIST_URL, {params: payload}).then((wishlist) => {
+      dispatch({
+        type: GET_WISHLIST,
+        payload: wishlist.data,
+      });
+    });
+  };
+}
+
+export function addToWishlist(product) {
+  return {
+    type: ADD_TO_WISHLIST,
+    payload: product
+  }
+}
+
+export function removeFromWishlist(id) {
+  return {
+    type: REMOVE_FROM_WISHLIST,
+    payload: id
+  }
+}
+
+export function clearWishlist() {
+  return {
+    type: CLEAR_WISHLIST
+  }
+}

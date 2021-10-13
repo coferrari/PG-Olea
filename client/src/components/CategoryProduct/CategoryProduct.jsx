@@ -1,19 +1,26 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getProductsByCategory } from "../../redux/actions";
+import { getProductsByCategory, getWishlist } from "../../redux/actions";
 import Products from "../Products/Products";
 import { useParams, useHistory } from "react-router";
+import { isAuthorized, decodeToken } from "../../utils/index";
 
 export default function CategoryProduct() {
   const dispatch = useDispatch();
   const history = useHistory();
   const { nameCategory, attribute, order } = useParams();
+  const validate = isAuthorized();
   let productsByCategory = useSelector(
     (state) => state.categoryReducer.productsByCategory
   );
 
   useEffect(() => {
     dispatch(getProductsByCategory(nameCategory));
+    if (validate) {
+      const user = decodeToken();
+      const username = user.username;
+      dispatch(getWishlist({ username }));
+    }
   }, [dispatch, nameCategory]);
 
   // PARA ORDENAR
