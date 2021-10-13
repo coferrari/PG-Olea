@@ -58,7 +58,29 @@ const LoginButton = () => {
     e.preventDefault();
     try {
       await codeLogin(code);
-      history.push("/");
+      const validate = isAuthorized();
+      history.push("/home");
+      if (validate) {
+        const user = decodeToken();
+        const username = user.username;
+        if (cartFromLocalStorage.length > 0) {
+          createCartLogin({
+            products: cartFromLocalStorage,
+            username: username,
+          });
+        } else if (cartFromLocalStorage.length === 0) {
+          const productsDB = await getByUsername({
+            username: username,
+          });
+          if (productsDB.data.products.length) {
+            localStorage.setItem(
+              "cart",
+              JSON.stringify(productsDB.data.products)
+            );
+            dispatch(updateCart(productsDB.data.products));
+          }
+        }
+      }
     } catch (err) {
       setErrorCode("Su codigo es incorrecto o expiro");
       console.log(err.message);
@@ -95,7 +117,6 @@ const LoginButton = () => {
         }
       }
     } catch (err) {
-      console.log(err.message);
       setErrorLogin("Contraseña o usuario incorrecto");
     }
   };
