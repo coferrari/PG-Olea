@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { getOrderDetails } from "../../order/index";
 import { ListGroup, Button, Table, Card } from "react-bootstrap";
-import { useLocation } from "react-router";
-import CardHeader from "react-bootstrap/esm/CardHeader";
+import { useLocation, useHistory } from "react-router";
+
 
 function OrderDetail() {
   const [orderDetail, setOrderDetail] = useState();
 
   const location = useLocation()
   const id = location.pathname.split("/")[2]
+  const history = useHistory()
 
   const getOrderIds = async () => {
     const orderDetails = await getOrderDetails(id);
@@ -19,7 +20,7 @@ function OrderDetail() {
     getOrderIds();
   }, []);
 
-  console.log(orderDetail)
+
   return (
     <div>
       {orderDetail === undefined ? (
@@ -52,31 +53,31 @@ function OrderDetail() {
             <ListGroup.Item>Total: ${orden.price}</ListGroup.Item> */}
           </ListGroup>
           <Card>
-          <Card.Header> Productos de la Orden </Card.Header>
-          <Table striped bordered hover variant="dark">
-            <thead>
-              <tr>
-                <th>id</th>
-                <th>Producto</th>
-                <th>Cantidad</th>
-                <th>Precio</th>
-              </tr>
-            </thead>
-            <tbody>
-            {orderDetail.products?.map((o) => {
-              return (
+            <Card.Header> Productos de la Orden </Card.Header>
+            <Table striped bordered hover variant="dark">
+              <thead>
                 <tr>
-                  <td>{o.id}</td>
-                  <td>{o.name}</td>
-                  <td>{o.Order_Products.quantity}</td>
-                  <td>{o.price}</td>
+                  <th>id</th>
+                  <th>Producto</th>
+                  <th>Cantidad</th>
+                  <th>Precio</th>
                 </tr>
-              );
-            })}
-          </tbody>
-          </Table>
+              </thead>
+              <tbody>
+                {orderDetail.products?.map((o) => {
+                  return (
+                    <tr>
+                      <td>{o.id}</td>
+                      <td>{o.name}</td>
+                      <td>{o.Order_Products.quantity}</td>
+                      <td>{o.price}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </Table>
           </Card>
-          <Button variant="dark">
+          <Button variant="dark" onClick={() => history.push("/account")}>
             Volver
           </Button>
         </div>
