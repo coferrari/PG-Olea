@@ -11,6 +11,8 @@ function OrdersTable() {
     setOrder(orders.data);
   };
 
+  console.log(order)
+
   useEffect(() => {
     getAllOrders();
   }, []);
@@ -24,9 +26,11 @@ function OrdersTable() {
           <thead>
             <tr>
               <th>Id</th>
-              <th>Precio</th>
-              <th>Estado</th>
               <th>Usuario</th>
+              <th>Contacto</th>
+              <th>Teléfono</th>
+              <th>Precio</th>
+              <th>Estado de orden</th>
             </tr>
           </thead>
           <tbody>
@@ -36,9 +40,11 @@ function OrdersTable() {
                   <Link to={`/order/${o.id}`}>
                     <td>{o.id}</td>
                   </Link>
+                  <td>{o.userUsername}</td>
+                  <td>{o.contactName + " " + o.contactSurname}</td>
+                  <td>{o.phone}</td>
                   <td>{o.price}</td>
                   <td>{o.status}</td>
-                  <td>{o.username}</td>
                 </tr>
               );
             })}
