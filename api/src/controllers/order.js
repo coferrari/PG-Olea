@@ -20,7 +20,23 @@ class OrderModel extends Modelo {
       ordenDetail.status = state;
       ordenDetail.statusPago = estado;
       ordenDetail.save();
-      res.json({ message: "Se actualizo el estado de la orden" });
+      if (estado === "aproved") {
+        ordenDetail.products.forEach(async (p) => {
+          let x = await Product.findByPk(p.id);
+          let cantidad = p["Order_Products"].quantity;
+          let nuevoStock = x.stock - cantidad;
+          x.stock = nuevoStock;
+          x.save();
+        });
+        return res.json({
+          message: "Se actualizo el estado de la orden y se cambio el stock",
+          order: ordenDetail,
+        });
+      }
+      res.json({
+        message: "Se actualizo el estado de la orden",
+        order: ordenDetail,
+      });
     } catch (err) {
       next(err);
     }

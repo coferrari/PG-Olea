@@ -44,13 +44,12 @@ const Checkout = () => {
     return str.split("").reverse().join("");
   };
 
-  
   const [delivery, setDelivery] = useState("");
   const handleSelected = (e) => {
-    e.preventDefault()
-    setDelivery(e.target.value)
+    e.preventDefault();
+    setDelivery(e.target.value);
   };
-  
+
   const [order, setOrder] = useState({
     username: datosLogin.username,
     price: totalSum,
@@ -58,18 +57,19 @@ const Checkout = () => {
     address: delivery,
     phone: "",
     contactName: "",
-    contactSurname: ""
+    contactSurname: "",
   });
-  
-  let idOrden = ""
+
+  let idOrden = "";
   const handleConfirmOrder = async (e) => {
     e.preventDefault();
-    if(!delivery) {
-      alert("Por favor, seleccione una opción de envío")
+
+    if (!delivery) {
+      alert("Por favor, seleccione una opción de envío");
     } else {
-      idOrden = await createOrder(order)
-      console.log(idOrden)
-      dispatch(checkoutMercadoPago(itemsCheckout,idOrden));
+      idOrden = await createOrder(order);
+      console.log(idOrden);
+      dispatch(checkoutMercadoPago(itemsCheckout, idOrden));
     }
   };
   const handleChange = (e) => {
@@ -79,7 +79,6 @@ const Checkout = () => {
       [e.target.name]: e.target.value,
     });
   };
-
 
   return (
     <div>
@@ -95,7 +94,9 @@ const Checkout = () => {
                   <label> Nombre </label>{" "}
                   <input
                     name="contactName"
-                    onChange={(e) => { handleChange(e); }}
+                    onChange={(e) => {
+                      handleChange(e);
+                    }}
                     className={style.input}
                     type="text"
                     placeholder="Nombre"
@@ -106,7 +107,9 @@ const Checkout = () => {
                   <label> Apellido </label>
                   <input
                     className={style.input}
-                    onChange={(e) => { handleChange(e); }}
+                    onChange={(e) => {
+                      handleChange(e);
+                    }}
                     name="contactSurname"
                     type="text"
                     placeholder="Apellido"
@@ -120,7 +123,9 @@ const Checkout = () => {
                     type="text"
                     placeholder="Teléfono"
                     name="phone"
-                    onChange={(e) => { handleChange(e); }}
+                    onChange={(e) => {
+                      handleChange(e);
+                    }}
                   />
                 </ListGroup.Item>
               </ListGroup>
@@ -132,74 +137,95 @@ const Checkout = () => {
             </Card.Header>
 
             <div className={style.title}>
+              <input
+                type="radio"
+                class="btn-check"
+                className={style.botonesEnvío}
+                name="options"
+                id="option1"
+                autocomplete="off"
+                onChange={(e) => {
+                  handleSelected(e);
+                }}
+                value="Envío"
+                name="options"
+              />
+              <label class="btn btn-secondary" for="option1">
+                Envío
+              </label>
 
-              <input type="radio" class="btn-check" className={style.botonesEnvío} name="options" id="option1" autocomplete="off" onChange={(e) => {handleSelected(e)}} value="Envío" name="options"  />
-              <label class="btn btn-secondary" for="option1">Envío</label>
-
-              <input type="radio" class="btn-check" name="options" id="option2" autocomplete="off" onChange={(e) => {handleSelected(e)}} value="Retiro por local" name="options"  />
-              <label class="btn btn-secondary" for="option2">Retiro por local</label>
-              
+              <input
+                type="radio"
+                class="btn-check"
+                name="options"
+                id="option2"
+                autocomplete="off"
+                onChange={(e) => {
+                  handleSelected(e);
+                }}
+                value="Retiro por local"
+                name="options"
+              />
+              <label class="btn btn-secondary" for="option2">
+                Retiro por local
+              </label>
             </div>
-
             <Card.Body className={style.bodyDelivery} eventKey={delivery}>
               {delivery === "Envío" ? (
                 <div>
                   <Card.Title>Envío</Card.Title>
-
-                  <Form.Group className={style.datosEnvio} >
+                  <Form.Group className={style.datosEnvio}>
                     <Form.Label>Domicilio de envío</Form.Label>
                     <Form.Control
                       type="text"
                       placeholder="Domicilio de Envío"
                       name="address"
                       className={style.inputDatosEnvio}
-                      onChange={(e) => { handleChange(e);}}/>
+                      onChange={(e) => {
+                        handleChange(e);
+                      }}
+                    />
                   </Form.Group>
-
                 </div>
               ) : (
                 <div>
                   <Card.Title>Retiro</Card.Title>
-
                   <Card.Text>
                     Pasá a retirar tu pedido por Garibaldi 283, Coronel Suárez
                     <br />
-                    Horario : Lu a Vi 9: 30-12: 30, 17: 30-19: 30 y Sa 10-12:
-                    30
+                    Horario : Lu a Vi 9: 30-12: 30, 17: 30-19: 30 y Sa 10-12: 30
                   </Card.Text>
-
                 </div>
               )}
             </Card.Body>
           </div>
-          
           <Details />
 
           <p className={style.total}> Total ${format(totalSum)}</p>
 
           <div className={style.buttonConfirmarCompra}>
             <Button variant="dark" onClick={(e) => handleConfirmOrder(e)}>
-              Confirmar orden de compra
+              {linkDePago &&
+                confirmAlert({
+                  title: "Atención",
+                  message: "Usted será redirigido al checkout de Mercado Pago",
+                  buttons: [
+                    {
+                      label: "Aceptar",
+                      onClick: () => {
+                        window.open(linkDePago);
+                        window.location.href = "/";
+                      },
+                    },
+                    {
+                      label: "Volver",
+                      onClick: () => {
+                        window.location.href = "";
+                      },
+                    },
+                  ],
+                })}
             </Button>
-            {linkDePago && confirmAlert({
-                title: "Atención",
-                message: "Usted será redirigido al checkout de Mercado Pago",
-                buttons: [
-                  {
-                    label: "Aceptar",
-                    onClick: () => {
-                      window.open(linkDePago);
-                      window.location.href = "/";
-                    },
-                  },
-                  {
-                    label: "Volver",
-                    onClick: () => {
-                      window.location.href = "";
-                    },
-                  },
-                ],
-              })}
           </div>
         </div>
       ) : (
