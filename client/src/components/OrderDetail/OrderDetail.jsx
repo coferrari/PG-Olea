@@ -1,15 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { getOrderDetails } from "../../order/index";
 import { ListGroup, Button, Table, Card } from "react-bootstrap";
+<<<<<<< HEAD
 import { useLocation } from "react-router";
 import style from "./orderdetail.module.css";
 import CardHeader from "react-bootstrap/esm/CardHeader";
+=======
+import { useLocation, useHistory } from "react-router";
+
+>>>>>>> 9bd915b760a0ba8b6dd8d085762662ade27a54d9
 
 function OrderDetail() {
   const [orderDetail, setOrderDetail] = useState();
 
+<<<<<<< HEAD
   const location = useLocation();
   const id = location.pathname.split("/")[2];
+=======
+  const location = useLocation()
+  const id = location.pathname.split("/")[2]
+  const history = useHistory()
+>>>>>>> 9bd915b760a0ba8b6dd8d085762662ade27a54d9
 
   const getOrderIds = async () => {
     const orderDetails = await getOrderDetails(id);
@@ -20,7 +31,11 @@ function OrderDetail() {
     getOrderIds();
   }, []);
 
+<<<<<<< HEAD
   console.log(orderDetail);
+=======
+
+>>>>>>> 9bd915b760a0ba8b6dd8d085762662ade27a54d9
   return (
     <div className={style.containerAll}>
       {!orderDetail ? (
@@ -91,7 +106,13 @@ function OrderDetail() {
               </tbody>
             </Table>
           </Card>
+<<<<<<< HEAD
           <Button variant="dark">Volver</Button>
+=======
+          <Button variant="dark" onClick={() => history.push("/account")}>
+            Volver
+          </Button>
+>>>>>>> 9bd915b760a0ba8b6dd8d085762662ade27a54d9
         </div>
       )}
     </div>

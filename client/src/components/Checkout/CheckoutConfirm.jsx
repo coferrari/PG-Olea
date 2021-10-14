@@ -32,8 +32,6 @@ const CheckoutConfirm = () => {
     history.push("/home");
   }
 
-  console.log(orden);
-
   return (
     <div>
       {location.search &&
@@ -68,7 +66,7 @@ const CheckoutConfirm = () => {
         <div>
           Algo salió mal con el pago
           <Button variant="dark" onClick={onClick}>
-            Dark
+            Volver
           </Button>
         </div>
       )}
