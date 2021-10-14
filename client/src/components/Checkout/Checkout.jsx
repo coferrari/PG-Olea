@@ -19,9 +19,12 @@ const Checkout = () => {
 
   let linkDePago = useSelector((state) => state.carritoReducer.linkPago);
 
+
   const itemsCheckout = useSelector(
     (state) => state.carritoReducer.productsCarrito
   );
+
+
 
   //TOTAL
   const totalSum = itemsCheckout?.reduce((acc, curr) => {
@@ -55,7 +58,7 @@ const Checkout = () => {
     username: datosLogin.username,
     price: totalSum,
     products: itemsCheckout,
-    address: delivery,
+    address: "",
     phone: "",
     contactName: "",
     contactSurname: ""
@@ -66,11 +69,18 @@ const Checkout = () => {
     e.preventDefault();
     if(!delivery) {
       alert("Por favor, seleccione una opción de envío")
-    } else {
-      idOrden = await createOrder(order)
-      console.log(idOrden)
-      dispatch(checkoutMercadoPago(itemsCheckout,idOrden));
     }
+    if(delivery === "Envío" && !order.address){
+      alert("Completá la dirección de envío")
+    }
+    if(delivery === "Envío" && order.address){
+      idOrden = await createOrder(order)
+      dispatch(checkoutMercadoPago(itemsCheckout,idOrden));
+      }
+    if(delivery === "Retiro por local"){
+      idOrden = await createOrder(order)
+      dispatch(checkoutMercadoPago(itemsCheckout,idOrden));
+    }  
   };
   const handleChange = (e) => {
     e.preventDefault();
@@ -189,13 +199,14 @@ const Checkout = () => {
                     label: "Aceptar",
                     onClick: () => {
                       window.open(linkDePago);
+                      localStorage.setItem("cart", JSON.stringify([]));
                       window.location.href = "/";
                     },
                   },
                   {
                     label: "Volver",
                     onClick: () => {
-                      window.location.href = "";
+                      // window.location.href = "";
                     },
                   },
                 ],
