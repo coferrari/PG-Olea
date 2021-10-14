@@ -103,4 +103,19 @@ export const productOfert = async (product, offert, date) => {
   );
   return res;
 };
-export const categoryOfert = async (category, offert, date) => {};
+export const categoryOfert = async (category, offert, date) => {
+  const res = await axios.post(
+    `/api/news/ofertcategory`,
+    {
+      category: category,
+      offert: offert,
+      fecha: date,
+    },
+    {
+      headers: {
+        authorization: getToken(),
+      },
+    }
+  );
+  return res;
+};
