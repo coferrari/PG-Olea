@@ -86,11 +86,35 @@ const getTemplateAuthenticationAdmin = (name, code) => {
       <p>Para continuar con su inicio de sesion ingrese el siguiente codigo ${code}</p>
   </div>`;
 };
-
+const getTemplateAproved = (name, price) => {
+  return `
+  <head>
+      <link rel="stylesheet" href="./style.css">
+  </head>
+  
+  <div id="email___content">
+      <h2>Hola ${name}</h2>
+      <p>Queriamos avisarte que tu compra por ${price} se completo exitosamente!</p>
+      <a href="https://somosolea.vercel.app/">Visite nuestra pagina!</a>
+  </div>`;
+};
+const getTemplateRejected = (name, price) => {
+  return `
+  <head>
+      <link rel="stylesheet" href="./style.css">
+  </head>
+  <div id="email___content">
+      <h2>Hola ${name}</h2>
+      <p>Queriamos avisarte que hubo un problema en tu compra.. Intentelo nuevamente!</p>
+      <a href="https://somosolea.vercel.app/">Visite nuestra pagina!</a>
+  </div>`;
+};
 module.exports = {
   sendEmail,
   getTemplate,
   getTemplateChangePassword,
   getTemplateAdminChangePassword,
+  getTemplateAproved,
   getTemplateAuthenticationAdmin,
+  getTemplateRejected,
 };

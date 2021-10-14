@@ -1,5 +1,10 @@
 const { Order, Order_Products, Product, User } = require("../db.js");
 const Modelo = require("./index.js");
+const {
+  getTemplateAproved,
+  sendEmail,
+  getTemplateRejected,
+} = require("../helpers/mail");
 class OrderModel extends Modelo {
   constructor(model) {
     super(model);
@@ -8,19 +13,21 @@ class OrderModel extends Modelo {
   changeStatus = async (req, res, next) => {
     const { estado } = req.body;
     const { id } = req.params;
+    console.log("estado", estado);
     console.log("entre");
     try {
       let state;
-      estado === "aproved"
+      estado === "approved"
         ? (state = "finalizada")
-        : estado === "rejected"
+        : estado === "reject"
         ? (state = "cancelada")
         : (state = "procesando");
+      console.log(state);
       const ordenDetail = await this.model.findByPk(id, { include: Product });
       ordenDetail.status = state;
       ordenDetail.statusPago = estado;
       ordenDetail.save();
-      if (estado === "aproved") {
+      if (estado === "approved") {
         ordenDetail.products.forEach(async (p) => {
           let x = await Product.findByPk(p.id);
           let cantidad = p["Order_Products"].quantity;
@@ -28,9 +35,20 @@ class OrderModel extends Modelo {
           x.stock = nuevoStock;
           x.save();
         });
+        let template = getTemplateAproved(
+          ordenDetail.contactName,
+          ordenDetail.price
+        );
+        await sendEmail(ordenDetail.email, "Pago exitoso", template);
         return res.json({
           message: "Se actualizo el estado de la orden y se cambio el stock",
-          order: ordenDetail,
+        });
+      }
+      if (estado === "rejected") {
+        let template = getTemplateRejected(ordenDetail.contactName);
+        await sendEmail(ordenDetail.email, "Problema en la compra", template);
+        return res.json({
+          message: "Se envio el mail, compra rechazada.",
         });
       }
       res.json({
@@ -105,6 +123,7 @@ class OrderModel extends Modelo {
   createOrder = async (req, res, next) => {
     const {
       username,
+      email,
       price,
       products,
       address,
@@ -114,8 +133,10 @@ class OrderModel extends Modelo {
     } = req.body;
     try {
       console.log("entre");
+      console.log(email);
       const ordenCreada = await this.model.create({
         //userUsername: username,
+        email,
         price,
         address,
         phone,
@@ -176,6 +197,7 @@ class OrderModel extends Modelo {
   getOrderDetails = async (req, res, next) => {
     //const { username } = req.body
     const { id } = req.params;
+    console.log(id);
     try {
       const ordenDetail = await this.model.findByPk(id, { include: Product });
       res.send(ordenDetail).status(200);
@@ -188,11 +210,8 @@ class OrderModel extends Modelo {
     const { username } = req.params;
     console.log(req.params, "params");
     try {
-      const ordenDetail = await this.model.findAll({
-        where: { userUsername: username },
-        include: Product,
-      });
-      res.send(ordenDetail);
+      const user = await User.findByPk(username, { include: Order });
+      res.send(user);
     } catch (error) {
       next(error);
     }
