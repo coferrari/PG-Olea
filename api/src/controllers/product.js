@@ -5,7 +5,12 @@ const {
   User,
   Carrito,
   Carrito_Products,
+  Wishlist
 } = require("../db.js");
+const {
+  sendEmail,
+  getTemplateProductStock
+} = require("../helpers/mail");
 const { Op } = require("sequelize");
 const Modelo = require("./index.js");
 
@@ -229,16 +234,17 @@ class ProductModel extends Modelo {
           id: productID
         }
       })
-      if (product.stock === 0){
+      if (product?.stock === 0){
         const wishlists = await Wishlist.findAll({
           include: Product
         })
         const wishlistFiltered = wishlists.filter(w => w.products.find(p => p.id === productID));
         for (let i=0; i < wishlistFiltered.length; i++){
-          //logica del nodemailer
+          const template = getTemplateProductStock(wishlistFiltered[i].userUsername, product.name, product.image[0],product.id);
+          await sendEmail(wishlistFiltered[i].userEmail, "Ya tenemos disponible este producto para vos!", template);
         }
       }
-      this.model.update(
+      await this.model.update(
         {
           stock: stock,
         },
@@ -248,7 +254,7 @@ class ProductModel extends Modelo {
           }
         }
       );
-      res.status(200).send("updated");
+      res.status(200).send("emails sent");
     } catch (err) {
       next(err);
     }

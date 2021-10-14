@@ -13,4 +13,4 @@ export const GET_ALL_ORDER = "/api/order/";
 export const GET_ORDER_DETAIL = "/api/order/";
 export const ADD_CATEGORY_PRODUCT = "/api/category/product/addCategories";
 export const DELET_CATEGORY_PRODUCT = "/api/category/product/deleteCategory";
-
+export const EDIT_STOCK = "/api/product/update/stock";

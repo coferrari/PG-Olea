@@ -21,6 +21,7 @@ import {
   ADD_CATEGORY_PRODUCT,
   DELET_CATEGORY_PRODUCT,
 } from "../../../consts";
+import { editStock } from "../../../stock/index";
 import style from "./EditProduct.module.css";
 
 export default function EditProduct() {
@@ -47,7 +48,8 @@ export default function EditProduct() {
           authorization: getToken(),
         },
       });
-
+      // await editStock({stock: newProduct.stock, productID: product.id})
+      
       return swal("Este producto ha sido modificado");
     }
   };
@@ -138,7 +140,7 @@ export default function EditProduct() {
             <Form.Control
               type="nombre"
               name="name"
-              defaultValue={product.name}
+              defaultValue={product?.name}
               onChange={(e) => onChangeInput(e)}
             />
           </Form.Group>
@@ -150,7 +152,7 @@ export default function EditProduct() {
               name="price"
               min="0"
               onChange={(e) => onChangeInput(e)}
-              defaultValue={product.price}
+              defaultValue={product?.price}
             />
           </Form.Group>
           <Form.Group className="mb-3">
@@ -177,7 +179,7 @@ export default function EditProduct() {
                     handleEdit(
                       setNewProduct({
                         ...newProduct,
-                        image: [...product.image, e.target.value],
+                        image: [...product?.image, e.target.value],
                       })
                     )
                   }
@@ -220,7 +222,7 @@ export default function EditProduct() {
               placeholder="Ingrese Descripcion"
               name="description"
               onChange={(e) => onChangeInput(e)}
-              defaultValue={product.description}
+              defaultValue={product?.description}
             />
           </Form.Group>
           <Form.Group className="mb-3">
@@ -251,7 +253,7 @@ export default function EditProduct() {
                   onClick={() => {
                     setNewProduct({
                       ...newProduct,
-                      categoryID: product.categories.map((e) => e.id),
+                      categoryID: product?.categories.map((e) => e.id),
                     });
 
                     setEditCats(true);
@@ -270,7 +272,7 @@ export default function EditProduct() {
               name="stock"
               min="0"
               onChange={(e) => onChangeInput(e)}
-              defaultValue={product.stock}
+              defaultValue={product?.stock}
             />
           </Form.Group>
           <Button variant="dark" type="submit">
