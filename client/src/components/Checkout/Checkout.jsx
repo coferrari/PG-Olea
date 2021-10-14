@@ -18,11 +18,6 @@ const Checkout = () => {
   const dispatch = useDispatch();
 
   let linkDePago = useSelector((state) => state.carritoReducer.linkPago);
-<<<<<<< HEAD
-=======
-
-
->>>>>>> b6a4088b765f626399942700707c6fbaf6f847d2
   const itemsCheckout = useSelector(
     (state) => state.carritoReducer.productsCarrito
   );
