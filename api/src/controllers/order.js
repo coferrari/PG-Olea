@@ -185,7 +185,8 @@ class OrderModel extends Modelo {
   };
 
   getUserOrder = async (req, res, next) => {
-    const { username } = req.body;
+    const { username } = req.params;
+    console.log(req.params, "params");
     try {
       const ordenDetail = await this.model.findAll({
         where: { userUsername: username },
