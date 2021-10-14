@@ -19,15 +19,13 @@ class OrderModel extends Modelo {
       let state;
       estado === "approved"
         ? (state = "finalizada")
-        : estado === "reject"
+        : estado === "rejected"
         ? (state = "cancelada")
         : (state = "procesando");
-      console.log(state);
       const ordenDetail = await this.model.findByPk(id, { include: Product });
       ordenDetail.status = state;
       ordenDetail.statusPago = estado;
       ordenDetail.save();
-<<<<<<< HEAD
       if (estado === "approved") {
         ordenDetail.products.forEach(async (p) => {
           let x = await Product.findByPk(p.id);
@@ -47,6 +45,8 @@ class OrderModel extends Modelo {
       }
       if (estado === "rejected") {
         let template = getTemplateRejected(ordenDetail.contactName);
+        console.log("entre rejected");
+        console.log(template);
         await sendEmail(ordenDetail.email, "Problema en la compra", template);
         return res.json({
           message: "Se envio el mail, compra rechazada.",
@@ -56,10 +56,6 @@ class OrderModel extends Modelo {
         message: "Se actualizo el estado de la orden",
         order: ordenDetail,
       });
-=======
-      console.log(ordenDetail);
-      res.send("Listo");
->>>>>>> b6a4088b765f626399942700707c6fbaf6f847d2
     } catch (err) {
       next(err);
     }
@@ -202,7 +198,6 @@ class OrderModel extends Modelo {
   getOrderDetails = async (req, res, next) => {
     //const { username } = req.body
     const { id } = req.params;
-    console.log(id);
     try {
       const ordenDetail = await this.model.findByPk(id, { include: Product });
       res.send(ordenDetail).status(200);
@@ -212,10 +207,13 @@ class OrderModel extends Modelo {
   };
 
   getUserOrder = async (req, res, next) => {
-    const { username } = req.body;
+    const { username } = req.params;
     try {
-      const user = await User.findByPk(username, { include: Order });
-      res.send(user);
+      const ordenDetail = await this.model.findAll({
+        where: { userUsername: username },
+        include: Product,
+      });
+      res.send(ordenDetail);
     } catch (error) {
       next(error);
     }

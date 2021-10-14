@@ -19,3 +19,10 @@ export const changeStatus = async (statusPago, idOrder) => {
   });
   return updateOrder.data;
 };
+export const getOrderUser = async (username) => {
+  console.log(username);
+  const orderUser = await axios.get(`/api/order/getuserorder`, {
+    username: username,
+  });
+  console.log(orderUser.data);
+};

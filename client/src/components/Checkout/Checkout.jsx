@@ -225,6 +225,7 @@ const Checkout = () => {
                     },
                   ],
                 })}
+              Confirmar compra
             </Button>
           </div>
         </div>

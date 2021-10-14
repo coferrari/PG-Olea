@@ -19,7 +19,7 @@ router.post("/createOrder", OrderControllers.createOrder);
 router.get("/setorder/status", OrderControllers.setOrderStatus);
 router.get("/findAll/orders", OrderControllers.allOrders);
 router.get("/getorderdetails/:id", OrderControllers.getOrderDetails);
-router.get("/getuserorder", OrderControllers.getUserOrder);
+router.get("/getuserorder/:username", OrderControllers.getUserOrder);
 router.put("/change/:id", OrderControllers.changeStatus);
 
 module.exports = router;
