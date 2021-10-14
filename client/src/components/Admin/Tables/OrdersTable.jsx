@@ -11,12 +11,9 @@ function OrdersTable() {
     setOrder(orders.data);
   };
 
-  console.log(order)
-
   useEffect(() => {
     getAllOrders();
   }, []);
-  console.log(order);
   return (
     <div>
       {order === undefined ? (
@@ -31,6 +28,7 @@ function OrdersTable() {
               <th>Teléfono</th>
               <th>Precio</th>
               <th>Estado de orden</th>
+              <th>Fecha</th>
             </tr>
           </thead>
           <tbody>
@@ -45,6 +43,7 @@ function OrdersTable() {
                   <td>{o.phone}</td>
                   <td>{o.price}</td>
                   <td>{o.status}</td>
+                  <td>{o.date.split("T")[0]}</td>
                 </tr>
               );
             })}
