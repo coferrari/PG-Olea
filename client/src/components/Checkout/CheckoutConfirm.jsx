@@ -1,40 +1,43 @@
 import React, { useEffect, useState } from "react";
-import { useLocation} from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 import { getOrderDetails, changeStatus } from "../../order";
 
 const CheckoutConfirm = () => {
+  const location = useLocation();
+  const datosPago = location.search.split("&");
 
-const location = useLocation()
-const datosPago = location.search.split("&")
+  //ESTADO DE PAGO
+  const status = datosPago[3].split("=");
+  const statusPago = status[1];
 
-//ESTADO DE PAGO
-const status = datosPago[3].split("=")
-const statusPago = status[1]
+  //ID DE LA ORDEN
+  const order = datosPago[4].split("=");
+  const idOrder = order[1];
 
+  const [orden, setOrden] = useState({});
 
-//ID DE LA ORDEN
-const order = datosPago[4].split("=")
-const idOrder = order[1]
+  const getOrden = async () => {
+    const x = await getOrderDetails(idOrder);
+    setOrden(x);
+  };
 
-const [orden,setOrden] = useState({})
+  useEffect(async () => {
+    await changeStatus(statusPago, idOrder);
+    // getOrden()
+  }, []);
 
-const getOrden = async () =>{
-  const x = await getOrderDetails(idOrder)
-  setOrden(x)
-}
-
-
-useEffect(async () => {
-  changeStatus(statusPago,idOrder)
-  getOrden()
-},[])
-
-
-console.log(orden)
+  console.log(orden);
 
   return (
-    <div>{location.search && location.search.includes("collection_status=approved") ? (<div>El estado es {statusPago} y el id de la orden es {idOrder} </div>) : (<div>Algo no fue bien con el pago</div>) }
-
+    <div>
+      {location.search &&
+      location.search.includes("collection_status=approved") ? (
+        <div>
+          El estado es {statusPago} y el id de la orden es {idOrder}{" "}
+        </div>
+      ) : (
+        <div>Algo no fue bien con el pago</div>
+      )}
     </div>
   );
 };
