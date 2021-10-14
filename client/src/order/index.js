@@ -3,6 +3,7 @@ import {
   CHANGE_STATUS,
   CREATE_ORDER_URL,
   GET_ORDER_DETAILS_URL,
+  GET_USER_ORDERS,
 } from "../consts";
 
 export const createOrder = async (payload) => {
@@ -18,4 +19,10 @@ export const changeStatus = async (statusPago, idOrder) => {
     estado: statusPago,
   });
   return updateOrder.data;
+};
+
+export const getUserOrder = async (username) => {
+  console.log(username);
+  const userOrders = await axios.get(`${GET_USER_ORDERS}/${username}`);
+  return userOrders.data;
 };
