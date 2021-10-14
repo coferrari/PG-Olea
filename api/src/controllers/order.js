@@ -148,6 +148,7 @@ class OrderModel extends Modelo {
       next(error)
     }
   }
+
 }
 
 const OrderControllers = new OrderModel(Order);

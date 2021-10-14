@@ -1,7 +1,6 @@
 import axios from "axios";
 import { getToken } from "../utils";
 
-
 export const register = async (user) => {
   return await axios.post(`/api/user/register`, user);
 };
@@ -17,9 +16,25 @@ export const changePassword = async (email, password, token) => {
 };
 export const logIn = async (user) => {
   const token = await axios.post(`/api/user/login`, user);
-  localStorage.setItem("token", token.data.data.token);
-  return token.data;
+  if (token.data.msg) {
+    localStorage.setItem("user", token.data.username);
+    return token.data;
+  } else {
+    localStorage.setItem("token", token.data.data.token);
+    return token.data;
+  }
 };
+export const codeLogin = async (code) => {
+  console.log(code);
+  const user = localStorage.getItem("user");
+  console.log("user");
+  const token = await axios.post(`/api/user/authenticateadmin`, {
+    code: code,
+    username: user,
+  });
+  localStorage.setItem("token", token.data.data.token);
+};
+
 export const logOut = async () => {
   localStorage.clear();
 };
@@ -42,7 +57,6 @@ export const getUsers = async (token) => {
   return res.data;
 };
 export const updateProfile = async (usuario) => {
-  console.log(usuario);
   const tokenRefresh = await axios.put(`/api/user/updateprofile`, {
     usuario: usuario,
     token: getToken(),

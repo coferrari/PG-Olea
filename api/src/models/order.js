@@ -15,7 +15,7 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     status: {
-      type: DataTypes.ENUM("creada","procesando", "cancelada", "finalizada" ),
+      type: DataTypes.ENUM("creada", "procesando", "cancelada", "finalizada"),
       allowNull: false,
       defaultValue: "creada",
     },
@@ -44,5 +44,6 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull:false
     }
+
   });
 };

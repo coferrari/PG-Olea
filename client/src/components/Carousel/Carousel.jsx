@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../../redux/actions/index";
-import { Card, Container } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import styles from "./Carousel.module.css";
-import CarosuelBoots from "react-bootstrap/Carousel";
+import { Carousel } from "react-bootstrap";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 
-export default function Carousel({ img }) {
+export default function Carousell({ img }) {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.productsReducer.products);
 
@@ -35,7 +35,7 @@ export default function Carousel({ img }) {
     <div>
       {img ? (
         <Container>
-          <div className={styles.carruselcontainer}>
+          <div>
             {img?.map((p, i) => {
               if (product === i) {
                 return (
@@ -45,42 +45,44 @@ export default function Carousel({ img }) {
                 );
               } else return "";
             })}
-            <div>
-              <button
-                className={styles.btncarousel}
-                onClick={() => productPrev()}
-              >
-                <MdKeyboardArrowLeft className={styles.arrows} />
-              </button>
-              <button
-                className={styles.btncarousel}
-                onClick={() => productNext()}
-              >
-                <MdKeyboardArrowRight className={styles.arrows} />
-              </button>
-            </div>
+          </div>
+          <div className={styles.arrowscontainer}>
+            <button
+              className={styles.btncarousel}
+              onClick={() => productPrev()}
+            >
+              <MdKeyboardArrowLeft className={styles.arrows} />
+            </button>
+            <button
+              className={styles.btncarousel}
+              onClick={() => productNext()}
+            >
+              <MdKeyboardArrowRight className={styles.arrows} />
+            </button>
           </div>
         </Container>
       ) : (
-        <Container>
-          <CarosuelBoots
+        <div>
+          <Carousel
             variant="dark"
             desvanecerse="true"
             className={styles.carruselcontainer}
           >
             {newItemProducts?.map((p, i) => {
               return (
-                <CarosuelBoots.Item key={i} className={styles.contenedorimg}>
-                  <img
-                    className={styles.img}
-                    src={p.image[0]}
-                    alt="First slide"
-                  />
-                </CarosuelBoots.Item>
+                <Carousel.Item key={i}>
+                  <div className={styles.contenedorimg}>
+                    <img
+                      className={styles.img}
+                      src={p.image[0]}
+                      alt="First slide"
+                    />
+                  </div>
+                </Carousel.Item>
               );
             })}
-          </CarosuelBoots>
-        </Container>
+          </Carousel>
+        </div>
       )}
     </div>
   );

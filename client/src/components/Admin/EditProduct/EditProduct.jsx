@@ -21,6 +21,7 @@ import {
   ADD_CATEGORY_PRODUCT,
   DELET_CATEGORY_PRODUCT,
 } from "../../../consts";
+import style from "./EditProduct.module.css";
 
 export default function EditProduct() {
   const dispatch = useDispatch();
@@ -185,7 +186,7 @@ export default function EditProduct() {
                 </Button>
               </span>
               {verImagenes.compr ? (
-                <Container>
+                <Container className={style.containerimg}>
                   {newProduct.image?.map((e) => (
                     <Row>
                       <Col xs={6} md={4}>
@@ -199,7 +200,7 @@ export default function EditProduct() {
                         >
                           x
                         </Button>
-                        <Image src={e} rounded />
+                        <Image src={e} rounded  className={style.img} />
                       </Col>
                     </Row>
                   ))}
@@ -248,12 +249,11 @@ export default function EditProduct() {
               ) : (
                 <Button
                   onClick={() => {
-                    console.log(product);
                     setNewProduct({
                       ...newProduct,
                       categoryID: product.categories.map((e) => e.id),
                     });
-                    console.log(newProduct);
+
                     setEditCats(true);
                   }}
                 >

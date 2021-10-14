@@ -18,7 +18,6 @@ export default function ReviewsTable() {
     });
 
     setReviews(res.data);
-    console.log(reviews);
   };
   useEffect(() => {
     review();

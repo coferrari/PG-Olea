@@ -1,43 +1,35 @@
-.fixed {
-    overflow: hidden;
-    background-color: #333;
-    position: fixed; /* Set the navbar to fixed position */
-    top: 0; /* Position the navbar at the top of the page */
-    width: 100%; /* Full width */
-}
-
 .links {
-    text-decoration: none;
-    color: white;
-    text-transform: uppercase;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 14px;
-    letter-spacing: 1px;
+  text-decoration: none;
+  color: white;
+  text-transform: uppercase;
+  font-family: "Montserrat", sans-serif;
+  font-size: 14px;
+  letter-spacing: 1px;
 }
 
 .links:hover {
-    color: #7a8450;
+  color: #7a8450;
 }
 
 .linkssesion {
-    text-decoration: none;
-    color: white;
-    text-transform: uppercase;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 12px;
-    letter-spacing: 1px;
+  text-decoration: none;
+  color: white;
+  text-transform: uppercase;
+  font-family: "Montserrat", sans-serif;
+  font-size: 12px;
+  letter-spacing: 1px;
 }
 
 .linkssesion:hover {
-    color: #7a8450;
+  color: #7a8450;
 }
 
 .containersession {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .username {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 14px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 14px;
 }

@@ -5,11 +5,12 @@ const { OAuth2Client } = require("google-auth-library");
 const client = new OAuth2Client(
   "699731210579-fq1sd4ijgh6ph842rlc3f0rf86eftdgh.apps.googleusercontent.com"
 );
-const nodemailer = require("nodemailer");
+const getRandomInt = require("../helpers/getRandom");
 const {
   getTemplate,
   sendEmail,
   getTemplateChangePassword,
+  getTemplateAuthenticationAdmin,
 } = require("../helpers/mail");
 const { use } = require("../routes/user.js");
 const userFunction = {};
@@ -82,13 +83,11 @@ userFunction.changePassword = async (req, res, next) => {
     if (user.email === verified.email) {
       const newPasswordEncrypted = await encryptPassword(password);
       user.password = newPasswordEncrypted;
-      console.log("entre");
       await user.save();
       return res.send("nueva contraseña guardada");
     }
     res.status(404).send("err");
   } catch (err) {
-    console.log("entre al error");
     next(err);
   }
 };
@@ -97,17 +96,64 @@ userFunction.login = async (req, res, next) => {
   const { email, password } = req.body;
   try {
     const emailFind = await User.findOne({ where: { email } });
+    if (emailFind.admin) {
+      const code = getRandomInt();
+      const template = getTemplateAuthenticationAdmin(email, code);
+      await sendEmail(email, "Codigo de confirmación", template);
+      emailFind.codeVerification = code;
+      emailFind.save();
+      return res.json({
+        username: emailFind.username,
+        msg: "Debe revisar el codigo que se le envio al mail",
+      });
+    } else {
+      const token = jwt.sign(
+        {
+          name: emailFind.name,
+          surname: emailFind.surname,
+          username: emailFind.username,
+          admin: emailFind.admin,
+          email: emailFind.email,
+          picture: emailFind.picture,
+          adress: emailFind.adress,
+          phone: emailFind.phone,
+        },
+        process.env.TOKEN_SECRET
+      );
+      return res.header("auth-token", token).json({
+        error: null,
+        data: { token },
+      });
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+userFunction.authenticateLogin = async (req, res, next) => {
+  const { code, username } = req.body;
+  console.log("aca");
+  console.log(req.body);
+  try {
+    const userAdmin = await User.findByPk(username);
+    console.log(userAdmin.codeVerification, code);
+    if (userAdmin.codeVerification !== parseInt(code))
+      return res.json({
+        msg: "Su codigo es incorrecto o expiro",
+      });
+    if (!userAdmin.codeVerification)
+      return res.json({
+        msg: "Su codigo es incorrecto o expiro",
+      });
     const token = jwt.sign(
       {
-        name: emailFind.name,
-        surname: emailFind.surname,
-        username: emailFind.username,
-        admin: emailFind.admin,
-        email: emailFind.email,
-        picture: emailFind.picture,
-        adress: emailFind.adress,
-        phone: emailFind.phone,
-
+        name: userAdmin.name,
+        surname: userAdmin.surname,
+        username: userAdmin.username,
+        admin: userAdmin.admin,
+        email: userAdmin.email,
+        picture: userAdmin.picture,
+        adress: userAdmin.adress,
+        phone: userAdmin.phone,
       },
       process.env.TOKEN_SECRET
     );
@@ -119,9 +165,7 @@ userFunction.login = async (req, res, next) => {
     next(err);
   }
 };
-
 userFunction.getAll = async (req, res, next) => {
-  console.log("llegue");
   const users = await User.findAll({
     include: Carrito,
   });
@@ -156,6 +200,7 @@ userFunction.googleLogin = async (req, res, next) => {
         email: email,
         surname: family_name,
         picture,
+        admin: false,
       });
       newUser.setCarrito(carritocreado.dataValues.id);
       const token = jwt.sign(
@@ -165,6 +210,7 @@ userFunction.googleLogin = async (req, res, next) => {
           email: email,
           surname: family_name,
           picture,
+          admin: newUser.admin,
         },
         process.env.TOKEN_SECRET,
         { expiresIn: "10m" }
@@ -182,6 +228,7 @@ userFunction.googleLogin = async (req, res, next) => {
           email: email,
           surname: family_name,
           picture,
+          admin: user.admin,
         },
         process.env.TOKEN_SECRET,
         { expiresIn: "10m" }
@@ -219,7 +266,7 @@ userFunction.logOut = async (req, res, next) => {
 userFunction.updateProfile = async (req, res, next) => {
   try {
     const { name, surname, image, phone, adress } = req.body.usuario;
-    console.log(req.body.usuario);
+
     const { token } = req.body;
     const verified = jwt.verify(token, process.env.TOKEN_SECRET);
     const user = await User.findByPk(verified.username);
@@ -229,7 +276,7 @@ userFunction.updateProfile = async (req, res, next) => {
     user.phone = phone;
     user.adress = adress;
     user.save();
-    console.log(user);
+
     const info = jwt.sign(
       {
         name: name,
