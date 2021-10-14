@@ -9,12 +9,9 @@ function Ofertas() {
   const [value, onChange] = useState(new Date());
   const getOfertas = async () => {
     let res = value.toLocaleDateString();
-
     const ofertas = await getOffer(res);
-
     setOff(ofertas);
   };
-  console.log(off.data);
   useEffect(() => {
     getOfertas();
   }, [value]);

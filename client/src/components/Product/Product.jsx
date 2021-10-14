@@ -18,6 +18,7 @@ export function Product({
   offer,
   offerday,
   productOff,
+  categoryOff,
 }) {
   const [add, setAdd] = useState(false);
   const [remove, setRemove] = useState(false);
@@ -27,14 +28,26 @@ export function Product({
   //favorite
   const [favorite, setFavorite] = useState(false);
   const { productsCarrito } = useSelector((state) => state.carritoReducer);
-  console.log(offerday);
+
   useEffect(() => {
     if (add) {
       const cartFromLocalStorage = JSON.parse(localStorage.getItem("cart"));
       const cartAdded = [
         ...cartFromLocalStorage,
-        { id, name, image, price, quantity, stock },
+        {
+          id,
+          name,
+          image,
+          price,
+          quantity,
+          stock,
+          offer,
+          offerday,
+          categoryOff,
+          productOff,
+        },
       ];
+
       localStorage.setItem("cart", JSON.stringify(cartAdded));
       dispatch(updateCart(cartAdded));
       setAdd(false);
@@ -148,7 +161,7 @@ export function Product({
             variant="top"
             src={image ? image : ""}
             alt="producto"
-          />{" "}
+          />
           <Card.Body>
             <div className={styles.cardbody}>
               <Link className={styles.link} to={`/product/${id}`}>

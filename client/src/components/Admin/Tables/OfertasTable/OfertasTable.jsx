@@ -56,7 +56,7 @@ function OfertasTable() {
     let valor = value.toLocaleDateString();
     offerCategory(offCat, valor);
     setOffCat({
-      idCat: "",
+      idCat: 0,
       offCat: 0,
     });
   };

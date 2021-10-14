@@ -7,6 +7,7 @@ export default function Products({ products }) {
     <div className={styles.center}>
       <div className={styles.container}>
         {products?.map((p) => {
+          console.log(p.categories[0].offer);
           return (
             <Product
               key={p.id}
@@ -18,6 +19,7 @@ export default function Products({ products }) {
               categories={p.categories}
               offer={p.offer}
               offerday={p.categories[0].offerday}
+              categoryOff={p.categories[0].offer}
               productOff={p.offerday}
             />
           );

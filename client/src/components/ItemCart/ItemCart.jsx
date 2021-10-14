@@ -6,7 +6,18 @@ import { Button } from "react-bootstrap";
 import { isAuthorized, decodeToken } from "../../utils/index";
 import { addOrEditCart, removeProductCart } from "../../cart/index";
 
-const ItemCart = ({ id, name, image, price, quantity, stock }) => {
+const ItemCart = ({
+  id,
+  name,
+  image,
+  price,
+  quantity,
+  stock,
+  offer,
+  offerday,
+  productOff,
+  categoryOff,
+}) => {
   const dispatch = useDispatch();
   const [remove, setRemove] = useState(false);
   const validate = isAuthorized();
@@ -98,7 +109,8 @@ const ItemCart = ({ id, name, image, price, quantity, stock }) => {
     }
     return str.split("").reverse().join("");
   };
-
+  var now = new Date().toLocaleDateString();
+  var precio = parseInt(price);
   return (
     <div className={style.container}>
       <div>
@@ -116,11 +128,54 @@ const ItemCart = ({ id, name, image, price, quantity, stock }) => {
         <h4 className={style.name}>{name}</h4>
         <p className={style.price}>
           ${" "}
-          {q
-            ? format(price * q)
-            : format(
-                price * cartFromLocalStorage[index].Carrito_Products.quantity
-              )}
+          {q ? (
+            (console.log(productOff, offerday),
+            now === productOff || now === offerday
+              ? (console.log("coni"),
+                offer > categoryOff ? (
+                  <span className={style.descuento}>
+                    {format(
+                      precio * q - Math.round((precio * offer) / 100) * q
+                    )}
+                  </span>
+                ) : (
+                  (console.log(precio, q, offer, categoryOff),
+                  (
+                    <span className={style.descuento}>
+                      {format(
+                        precio * q -
+                          Math.round((precio * categoryOff) / 100) * q
+                      )}
+                    </span>
+                  ))
+                ))
+              : format(precio * q))
+          ) : now === productOff || now === offerday ? (
+            offer > categoryOff ? (
+              <span className={style.descuento}>
+                {format(
+                  precio *
+                    cartFromLocalStorage[index].Carrito_Products.quantity -
+                    Math.round((precio * offer) / 100) *
+                      cartFromLocalStorage[index].Carrito_Products.quantity
+                )}
+              </span>
+            ) : (
+              <span className={style.descuento}>
+                $
+                {format(
+                  precio *
+                    cartFromLocalStorage[index].Carrito_Products.quantity -
+                    Math.round((precio * categoryOff) / 100) *
+                      cartFromLocalStorage[index].Carrito_Products.quantity
+                )}
+              </span>
+            )
+          ) : (
+            format(
+              precio * cartFromLocalStorage[index].Carrito_Products.quantity
+            )
+          )}
         </p>
         <p className={style.stock}>* {stock} en stock</p>
         <div className={style.btncontainer}>

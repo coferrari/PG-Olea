@@ -32,9 +32,8 @@ export function ProductDetail() {
   const product = useSelector(
     (state) => state.productDetailReducer.productDetail
   );
-  const { id, image, name, price, stock } = useSelector(
-    (state) => state.productDetailReducer.productDetail
-  );
+  const { id, image, name, price, stock, offer, offerday, productOff } =
+    useSelector((state) => state.productDetailReducer.productDetail);
   const { productsCarrito } = useSelector((state) => state.carritoReducer);
   const quantity = 1;
   const getReviews = async (id) => {
@@ -47,7 +46,17 @@ export function ProductDetail() {
       const cartFromLocalStorage = JSON.parse(localStorage.getItem("cart"));
       const cartAdded = [
         ...cartFromLocalStorage,
-        { id, name, image, price, quantity, stock },
+        {
+          id,
+          name,
+          image,
+          price,
+          quantity,
+          stock,
+          offer,
+          offerday,
+          productOff,
+        },
       ];
       localStorage.setItem("cart", JSON.stringify(cartAdded));
       dispatch(updateCart(cartAdded));
@@ -133,7 +142,6 @@ export function ProductDetail() {
     }
     return "";
   };
-  console.log(product.categories[0].offerday);
   var now = new Date().toLocaleDateString();
   return (
     <div className="container">
@@ -154,7 +162,7 @@ export function ProductDetail() {
               <ListGroup className="list-group-flush">
                 <ListGroupItem className={styles.price}>
                   {now === product.offerday ||
-                  now === product.categories[0].offerday ? (
+                  now === product.categories?.[0].offerday ? (
                     product.offer > searchOffer(product.categories) ? (
                       <div>
                         <span className={styles.oldprice}>${price}</span>
