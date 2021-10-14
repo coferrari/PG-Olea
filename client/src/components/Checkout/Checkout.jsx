@@ -11,7 +11,6 @@ import { createOrder } from "../../order";
 import style from "./Checkout.module.css";
 import { Card, ListGroup, Form } from "react-bootstrap";
 
-
 const Checkout = () => {
   const history = useHistory();
   const sesionIniciada = isAuthorized();
@@ -23,7 +22,6 @@ const Checkout = () => {
   const itemsCheckout = useSelector(
     (state) => state.carritoReducer.productsCarrito
   );
-
 
   //TOTAL
   const totalSum = itemsCheckout?.reduce((acc, curr) => {
@@ -66,7 +64,6 @@ const Checkout = () => {
   let idOrden = ""
   const handleConfirmOrder = async (e) => {
     e.preventDefault();
-
     if(!delivery) {
       alert("Por favor, seleccione una opción de envío")
     } else {
@@ -175,12 +172,16 @@ const Checkout = () => {
               )}
             </Card.Body>
           </div>
+          
           <Details />
 
           <p className={style.total}> Total ${format(totalSum)}</p>
 
           <div className={style.buttonConfirmarCompra}>
             <Button variant="dark" onClick={(e) => handleConfirmOrder(e)}>
+              Confirmar orden de compra
+            </Button>
+            {linkDePago && confirmAlert({
                 title: "Atención",
                 message: "Usted será redirigido al checkout de Mercado Pago",
                 buttons: [

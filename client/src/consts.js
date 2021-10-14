@@ -14,6 +14,6 @@ export const GET_ORDER_DETAIL = "/api/order/";
 export const ADD_CATEGORY_PRODUCT = "/api/category/product/addCategories";
 export const DELET_CATEGORY_PRODUCT = "/api/category/product/deleteCategory";
 export const CREATE_ORDER_URL = "/api/order/createOrder";
-export const GET_ORDER_DETAILS_URL = "/api/order/getOrderDetails"
-
+export const GET_ORDER_DETAILS_URL = "/api/order/getorderdetails"
+export const CHANGE_STATUS = "/api/order/change/";
 
