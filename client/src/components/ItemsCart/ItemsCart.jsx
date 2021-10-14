@@ -12,18 +12,18 @@ const ItemsCart = () => {
     <div className={style.container}>
       {productsReducer?.map((product) => (
         <div key={product.id}>
-          {console.log(product)}
           <ItemCart
             id={product.id}
             name={product.name}
             image={product.image}
             price={product.price}
+            categories={product.categories}
             quantity={product.quantity}
             stock={product.stock}
-            offer={product.offer} // % de descuento del producto
-            categoryOff={product.categoryOff} // % de descuento de la cat
-            offerday={product.offerday} // dia de descuento de la cat
-            productOff={product.productOff} // dia de descuento del producto
+            descuentoProducto={product.offer} // % de descuento del producto
+            descuentoCategoria={product.categories?.[0].offer} // % de descuento de la cat
+            diaDescuentoCategoria={product.categories?.[0].offerday} // dia de descuento de la cat
+            diaDescuentoProducto={product.productOff} // dia de descuento del producto
           />
         </div>
       ))}

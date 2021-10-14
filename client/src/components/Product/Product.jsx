@@ -31,6 +31,7 @@ export function Product({
 
   useEffect(() => {
     if (add) {
+      console.log(categories);
       const cartFromLocalStorage = JSON.parse(localStorage.getItem("cart"));
       const cartAdded = [
         ...cartFromLocalStorage,
@@ -42,9 +43,8 @@ export function Product({
           quantity,
           stock,
           offer,
-          offerday,
-          categoryOff,
           productOff,
+          categories,
         },
       ];
 

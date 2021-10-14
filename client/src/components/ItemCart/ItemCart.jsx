@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { updateCart } from "../../redux/actions/index";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import style from "./ItemCart.module.css";
 import { Button } from "react-bootstrap";
 import { isAuthorized, decodeToken } from "../../utils/index";
@@ -13,10 +13,11 @@ const ItemCart = ({
   price,
   quantity,
   stock,
-  offer,
-  offerday,
-  productOff,
-  categoryOff,
+  descuentoProducto,
+  diaDescuentoCategoria,
+  diaDescuentoProducto,
+  descuentoCategoria,
+  categories,
 }) => {
   const dispatch = useDispatch();
   const [remove, setRemove] = useState(false);
@@ -32,7 +33,14 @@ const ItemCart = ({
   if (index >= 0) {
     cartFromLocalStorage[index].quantity = q;
   }
-
+  if (index >= 0) {
+    var descuentoCategoriaBD = cartFromLocalStorage[index].categories[0].offer;
+    var diaDescuentoCategoriaBD =
+      cartFromLocalStorage[index].categories[0].offerday;
+    var descuentoProductoBD = cartFromLocalStorage[index].offer;
+    var diaDescuentoProductoBD = cartFromLocalStorage[index].offerday;
+    console.log(descuentoProductoBD, diaDescuentoProductoBD);
+  }
   // me va actualizando las cantidades del carrito
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cartFromLocalStorage));
@@ -111,6 +119,7 @@ const ItemCart = ({
   };
   var now = new Date().toLocaleDateString();
   var precio = parseInt(price);
+
   return (
     <div className={style.container}>
       <div>
@@ -128,35 +137,34 @@ const ItemCart = ({
         <h4 className={style.name}>{name}</h4>
         <p className={style.price}>
           ${" "}
-          {q ? (
-            (console.log(productOff, offerday),
-            now === productOff || now === offerday
-              ? (console.log("coni"),
-                offer > categoryOff ? (
-                  <span className={style.descuento}>
-                    {format(
-                      precio * q - Math.round((precio * offer) / 100) * q
-                    )}
-                  </span>
-                ) : (
-                  (console.log(precio, q, offer, categoryOff),
-                  (
-                    <span className={style.descuento}>
-                      {format(
-                        precio * q -
-                          Math.round((precio * categoryOff) / 100) * q
-                      )}
-                    </span>
-                  ))
-                ))
-              : format(precio * q))
-          ) : now === productOff || now === offerday ? (
-            offer > categoryOff ? (
+          {q && categories[0].offer ? (
+            now === diaDescuentoProducto || now === diaDescuentoCategoria ? (
+              descuentoProducto > descuentoCategoria ? (
+                <span className={style.descuento}>
+                  {format(
+                    precio * q -
+                      Math.round((precio * descuentoProducto) / 100) * q
+                  )}
+                </span>
+              ) : (
+                <span className={style.descuento}>
+                  {format(
+                    precio * q -
+                      Math.round((precio * descuentoCategoria) / 100) * q
+                  )}
+                </span>
+              )
+            ) : (
+              format(precio * q)
+            )
+          ) : now === diaDescuentoProductoBD ||
+            now === diaDescuentoCategoriaBD ? (
+            descuentoProductoBD > descuentoCategoriaBD ? (
               <span className={style.descuento}>
                 {format(
                   precio *
                     cartFromLocalStorage[index].Carrito_Products.quantity -
-                    Math.round((precio * offer) / 100) *
+                    Math.round((precio * descuentoProductoBD) / 100) *
                       cartFromLocalStorage[index].Carrito_Products.quantity
                 )}
               </span>
@@ -166,7 +174,7 @@ const ItemCart = ({
                 {format(
                   precio *
                     cartFromLocalStorage[index].Carrito_Products.quantity -
-                    Math.round((precio * categoryOff) / 100) *
+                    Math.round((precio * descuentoCategoriaBD) / 100) *
                       cartFromLocalStorage[index].Carrito_Products.quantity
                 )}
               </span>

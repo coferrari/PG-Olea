@@ -85,7 +85,7 @@ class CategoryModel extends Modelo {
   };
   inOffer = async (req, res, next) => {
     const { categoryID, inOffer, offerDay } = req.body;
-
+    console.log(inOffer);
     try {
       const category = await this.model.findByPk(categoryID);
       await category.update({
@@ -100,7 +100,7 @@ class CategoryModel extends Modelo {
 
   getOffers = async (req, res, next) => {
     const { offerday } = req.body;
-    console.log(offerday);
+
     try {
       const ofertas = await this.model.findAll({ where: { offerday } });
       const ofertasProductos = await Product.findAll({ where: { offerday } });

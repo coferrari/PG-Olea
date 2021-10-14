@@ -57,6 +57,5 @@ export const offerProduct = async (productOff, valor) => {
 };
 
 export const getOffer = async (offerday) => {
-  console.log(offerday);
   return await axios.put(`${GET_OFFER}`, { offerday: offerday });
 };

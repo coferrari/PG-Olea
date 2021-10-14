@@ -7,7 +7,6 @@ export default function Products({ products }) {
     <div className={styles.center}>
       <div className={styles.container}>
         {products?.map((p) => {
-          console.log(p.categories[0].offer);
           return (
             <Product
               key={p.id}

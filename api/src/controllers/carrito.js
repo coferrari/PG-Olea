@@ -1,4 +1,10 @@
-const { Carrito, Carrito_Products, User, Product } = require("../db.js");
+const {
+  Carrito,
+  Carrito_Products,
+  User,
+  Product,
+  Category,
+} = require("../db.js");
 const Modelo = require("./index.js");
 
 class CarritoModel extends Modelo {
@@ -7,11 +13,11 @@ class CarritoModel extends Modelo {
   }
   getByID = async (req, res, next) => {
     try {
-      const { carritoId } = req.params; 
+      const { carritoId } = req.params;
       const product = await Carrito_Products.findAll({
-        where : {
-          carritoId
-        }
+        where: {
+          carritoId,
+        },
       });
       return res.json(product);
     } catch (error) {
@@ -22,10 +28,10 @@ class CarritoModel extends Modelo {
     const { username } = req.query;
     try {
       const product = await Carrito.findOne({
-        where : {
-          userUsername: username
+        where: {
+          userUsername: username,
         },
-        include: Product
+        include: [{ model: Product, include: [Category] }],
       });
       return res.json(product);
     } catch (error) {
@@ -37,24 +43,22 @@ class CarritoModel extends Modelo {
     try {
       const user = await User.findOne({
         where: {
-          username: username
-        }
-      })
+          username: username,
+        },
+      });
       const carrito = await this.model.destroy({
         where: {
-          userUsername: username
-        }
+          userUsername: username,
+        },
       });
-      const newCarrito = await this.model.create()
-      user.setCarrito(newCarrito.dataValues.id)
+      const newCarrito = await this.model.create();
+      user.setCarrito(newCarrito.dataValues.id);
       res.status(200).send(newCarrito);
     } catch (error) {
       next(error);
     }
   };
 }
-
-
 
 const carritoControllers = new CarritoModel(Carrito);
 
