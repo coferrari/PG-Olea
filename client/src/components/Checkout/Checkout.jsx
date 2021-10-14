@@ -18,7 +18,6 @@ const Checkout = () => {
   const dispatch = useDispatch();
 
   let linkDePago = useSelector((state) => state.carritoReducer.linkPago);
-
   const itemsCheckout = useSelector(
     (state) => state.carritoReducer.productsCarrito
   );
@@ -52,6 +51,7 @@ const Checkout = () => {
 
   const [order, setOrder] = useState({
     username: datosLogin.username,
+    email: datosLogin.email,
     price: totalSum,
     products: itemsCheckout,
     address: delivery,
@@ -220,7 +220,7 @@ const Checkout = () => {
                     {
                       label: "Volver",
                       onClick: () => {
-                        window.location.href = "";
+                        // window.location.href = "";
                       },
                     },
                   ],
