@@ -13,16 +13,14 @@ class OrderModel extends Modelo {
       let state;
       estado === "aproved"
         ? (state = "finalizada")
-        : estado === "reject"
+        : estado === "rejected"
         ? (state = "cancelada")
         : (state = "procesando");
-      console.log(state);
       const ordenDetail = await this.model.findByPk(id, { include: Product });
       ordenDetail.status = state;
       ordenDetail.statusPago = estado;
       ordenDetail.save();
-      console.log(ordenDetail);
-      res.send("Listo");
+      res.json({ message: "Se actualizo el estado de la orden" });
     } catch (err) {
       next(err);
     }
@@ -161,8 +159,7 @@ class OrderModel extends Modelo {
   };
   getOrderDetails = async (req, res, next) => {
     //const { username } = req.body
-    const { id } = req.query;
-    console.log(id);
+    const { id } = req.params;
     try {
       const ordenDetail = await this.model.findByPk(id, { include: Product });
       res.send(ordenDetail).status(200);
@@ -174,8 +171,11 @@ class OrderModel extends Modelo {
   getUserOrder = async (req, res, next) => {
     const { username } = req.body;
     try {
-      const user = await User.findByPk(username, { include: Order });
-      res.send(user);
+      const ordenDetail = await this.model.findAll({
+        where: { userUsername: username },
+        include: Product,
+      });
+      res.send(ordenDetail);
     } catch (error) {
       next(error);
     }

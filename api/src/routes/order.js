@@ -18,8 +18,8 @@ router.get("/filterbystatus/:status", OrderControllers.filterByStatus);
 router.post("/createOrder", OrderControllers.createOrder);
 router.get("/setorder/status", OrderControllers.setOrderStatus);
 router.get("/findAll/orders", OrderControllers.allOrders);
-router.post("/getorderdetails", OrderControllers.getOrderDetails);
-router.post("/getuserorder", OrderControllers.getUserOrder);
+router.get("/getorderdetails/:id", OrderControllers.getOrderDetails);
+router.get("/getuserorder", OrderControllers.getUserOrder);
 router.put("/change/:id", OrderControllers.changeStatus);
 
 module.exports = router;
