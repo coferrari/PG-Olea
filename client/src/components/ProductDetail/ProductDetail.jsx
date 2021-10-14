@@ -32,8 +32,17 @@ export function ProductDetail() {
   const product = useSelector(
     (state) => state.productDetailReducer.productDetail
   );
-  const { id, image, name, price, stock, offer, offerday, productOff } =
-    useSelector((state) => state.productDetailReducer.productDetail);
+  const {
+    id,
+    image,
+    name,
+    price,
+    stock,
+    offer,
+    offerday,
+    productOff,
+    categories,
+  } = useSelector((state) => state.productDetailReducer.productDetail);
   const { productsCarrito } = useSelector((state) => state.carritoReducer);
   const quantity = 1;
   const getReviews = async (id) => {
@@ -55,7 +64,8 @@ export function ProductDetail() {
           stock,
           offer,
           offerday,
-          productOff,
+          productOff: offerday,
+          categories,
         },
       ];
       localStorage.setItem("cart", JSON.stringify(cartAdded));

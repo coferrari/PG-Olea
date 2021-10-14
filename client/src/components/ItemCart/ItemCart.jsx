@@ -34,12 +34,12 @@ const ItemCart = ({
     cartFromLocalStorage[index].quantity = q;
   }
   if (index >= 0) {
-    var descuentoCategoriaBD = cartFromLocalStorage[index].categories[0].offer;
+    var descuentoCategoriaBD =
+      cartFromLocalStorage[index].categories?.[0].offer;
     var diaDescuentoCategoriaBD =
-      cartFromLocalStorage[index].categories[0].offerday;
+      cartFromLocalStorage[index].categories?.[0].offerday;
     var descuentoProductoBD = cartFromLocalStorage[index].offer;
     var diaDescuentoProductoBD = cartFromLocalStorage[index].offerday;
-    console.log(descuentoProductoBD, diaDescuentoProductoBD);
   }
   // me va actualizando las cantidades del carrito
   useEffect(() => {
@@ -119,7 +119,7 @@ const ItemCart = ({
   };
   var now = new Date().toLocaleDateString();
   var precio = parseInt(price);
-
+  console.log(diaDescuentoProducto, "toni");
   return (
     <div className={style.container}>
       <div>
@@ -137,8 +137,67 @@ const ItemCart = ({
         <h4 className={style.name}>{name}</h4>
         <p className={style.price}>
           ${" "}
-          {q && categories[0].offer ? (
+          {/* {(q && now === diaDescuentoProducto) ||
+            (q &&
+              now === diaDescuentoCategoria &&
+              descuentoProducto > descuentoCategoria && (
+                <span className={style.descuento}>
+                  {" "}
+                  {format(
+                    precio * q -
+                      Math.round((precio * descuentoProducto) / 100) * q
+                  )}
+                </span>
+              ))} */}
+          {/* {(q && now === diaDescuentoProducto) ||
+            (now === diaDescuentoCategoria &&
+              descuentoProducto < descuentoCategoria && (
+                <span className={style.descuento}>
+                  {" "}
+                  {format(
+                    precio * q -
+                      Math.round((precio * descuentoCategoria) / 100) * q
+                  )}
+                </span>
+              ))} */}
+          {/* {q &&
+            now !== diaDescuentoProducto &&
+            now !== diaDescuentoCategoria &&
+            format(precio * q)} */}
+          {/* {(!q && now === diaDescuentoProductoBD) ||
+            (now === diaDescuentoCategoriaBD &&
+              diaDescuentoProductoBD > descuentoCategoriaBD && (
+                <span className={style.descuento}>
+                  {format(
+                    precio *
+                      cartFromLocalStorage[index].Carrito_Products.quantity -
+                      Math.round((precio * descuentoProductoBD) / 100) *
+                        cartFromLocalStorage[index].Carrito_Products.quantity
+                  )}
+                </span>
+              ))} */}
+          {/* {(!q && now === diaDescuentoProductoBD) ||
+            (now === diaDescuentoCategoriaBD &&
+              diaDescuentoProductoBD < descuentoCategoriaBD && (
+                <span className={style.descuento}>
+                  $
+                  {format(
+                    precio *
+                      cartFromLocalStorage[index].Carrito_Products.quantity -
+                      Math.round((precio * descuentoCategoriaBD) / 100) *
+                        cartFromLocalStorage[index].Carrito_Products.quantity
+                  )}
+                </span>
+              ))} */}
+          {/* {!q &&
+            now !== diaDescuentoProductoBD &&
+            now !== diaDescuentoCategoriaBD &&
+            format(
+              precio * cartFromLocalStorage[index].Carrito_Products.quantity
+            )} */}
+          {q ? (
             now === diaDescuentoProducto || now === diaDescuentoCategoria ? (
+              (console.log(descuentoProducto, descuentoCategoria),
               descuentoProducto > descuentoCategoria ? (
                 <span className={style.descuento}>
                   {format(
@@ -153,7 +212,7 @@ const ItemCart = ({
                       Math.round((precio * descuentoCategoria) / 100) * q
                   )}
                 </span>
-              )
+              ))
             ) : (
               format(precio * q)
             )

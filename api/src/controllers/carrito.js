@@ -58,6 +58,36 @@ class CarritoModel extends Modelo {
       next(error);
     }
   };
+
+  prueba2 = async (req, res, next) => {
+    const { username } = req.params;
+    try {
+      const product = await Carrito.findOne({
+        where: {
+          userUsername: username,
+        },
+        include: [{ model: Product, include: [Category] }],
+      });
+      return res.json(product);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  prueba = async (req, res, next) => {
+    const { username } = req.params;
+    try {
+      const product = await Carrito.findOne({
+        where: {
+          userUsername: username,
+        },
+        include: Product,
+      });
+      return res.json(product);
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
 const carritoControllers = new CarritoModel(Carrito);
