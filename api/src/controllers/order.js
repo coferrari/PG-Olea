@@ -5,9 +5,30 @@ class OrderModel extends Modelo {
     super(model);
   }
   //A partir de aca se pueden agregar funciones que necesitemos en la ruta
+  changeStatus = async (req, res, next) => {
+    const { estado } = req.body;
+    const { id } = req.params;
+    console.log("entre");
+    try {
+      let state;
+      estado === "aproved"
+        ? (state = "finalizada")
+        : estado === "reject"
+        ? (state = "cancelada")
+        : (state = "procesando");
+      console.log(state);
+      const ordenDetail = await this.model.findByPk(id, { include: Product });
+      ordenDetail.status = state;
+      ordenDetail.statusPago = estado;
+      ordenDetail.save();
+      console.log(ordenDetail);
+      res.send("Listo");
+    } catch (err) {
+      next(err);
+    }
+  };
   orderByStatus = async (req, res, next) => {
     const { status } = req.params;
-
     if (status === "active") {
       try {
         const orderStatus = await this.model.findAll({
@@ -68,10 +89,19 @@ class OrderModel extends Modelo {
     }
   };
   createOrder = async (req, res, next) => {
+    const {
+      username,
+      price,
+      products,
+      address,
+      phone,
+      contactName,
+      contactSurname,
+    } = req.body;
     try {
-      const { username, price, products, address, phone, contactName, contactSurname } = req.body;
+      console.log("entre");
       const ordenCreada = await this.model.create({
-        userUsername: username,
+        //userUsername: username,
         price,
         address,
         phone,
@@ -91,6 +121,8 @@ class OrderModel extends Modelo {
           }
         );
       }
+      const user = await User.findByPk(username);
+      await user.addOrder(ordenCreada.id);
       res.json(ordenCreada);
     } catch (error) {
       next(error);
@@ -128,27 +160,26 @@ class OrderModel extends Modelo {
     }
   };
   getOrderDetails = async (req, res, next) => {
-    const { username } = req.body
-    const { id } = req.query
+    //const { username } = req.body
+    const { id } = req.query;
+    console.log(id);
     try {
-      const user = await User.findByPk(username)
-      const ordenDetail = await this.model.findByPk(id, {include: Product})
-      res.send(await user.addOrder(ordenDetail.id))
+      const ordenDetail = await this.model.findByPk(id, { include: Product });
+      res.send(ordenDetail).status(200);
     } catch (error) {
-      next(error)
+      next(error);
     }
-  }
+  };
 
-  getUserOrder = async(req,res,next) =>{
-    const { username } = req.body
-    try{
-      const user = await User.findByPk(username, {include : Order})
-      res.send(user)
-    } catch (error){
-      next(error)
+  getUserOrder = async (req, res, next) => {
+    const { username } = req.body;
+    try {
+      const user = await User.findByPk(username, { include: Order });
+      res.send(user);
+    } catch (error) {
+      next(error);
     }
-  }
-
+  };
 }
 
 const OrderControllers = new OrderModel(Order);
