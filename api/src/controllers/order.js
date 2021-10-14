@@ -1,5 +1,10 @@
 const { Order, Order_Products, Product, User } = require("../db.js");
 const Modelo = require("./index.js");
+const {
+  getTemplateAproved,
+  sendEmail,
+  getTemplateRejected,
+} = require("../helpers/mail");
 class OrderModel extends Modelo {
   constructor(model) {
     super(model);
@@ -8,10 +13,11 @@ class OrderModel extends Modelo {
   changeStatus = async (req, res, next) => {
     const { estado } = req.body;
     const { id } = req.params;
+    console.log("estado", estado);
     console.log("entre");
     try {
       let state;
-      estado === "aproved"
+      estado === "approved"
         ? (state = "finalizada")
         : estado === "reject"
         ? (state = "cancelada")
@@ -21,8 +27,39 @@ class OrderModel extends Modelo {
       ordenDetail.status = state;
       ordenDetail.statusPago = estado;
       ordenDetail.save();
+<<<<<<< HEAD
+      if (estado === "approved") {
+        ordenDetail.products.forEach(async (p) => {
+          let x = await Product.findByPk(p.id);
+          let cantidad = p["Order_Products"].quantity;
+          let nuevoStock = x.stock - cantidad;
+          x.stock = nuevoStock;
+          x.save();
+        });
+        let template = getTemplateAproved(
+          ordenDetail.contactName,
+          ordenDetail.price
+        );
+        await sendEmail(ordenDetail.email, "Pago exitoso", template);
+        return res.json({
+          message: "Se actualizo el estado de la orden y se cambio el stock",
+        });
+      }
+      if (estado === "rejected") {
+        let template = getTemplateRejected(ordenDetail.contactName);
+        await sendEmail(ordenDetail.email, "Problema en la compra", template);
+        return res.json({
+          message: "Se envio el mail, compra rechazada.",
+        });
+      }
+      res.json({
+        message: "Se actualizo el estado de la orden",
+        order: ordenDetail,
+      });
+=======
       console.log(ordenDetail);
       res.send("Listo");
+>>>>>>> b6a4088b765f626399942700707c6fbaf6f847d2
     } catch (err) {
       next(err);
     }
@@ -91,6 +128,7 @@ class OrderModel extends Modelo {
   createOrder = async (req, res, next) => {
     const {
       username,
+      email,
       price,
       products,
       address,
@@ -100,8 +138,10 @@ class OrderModel extends Modelo {
     } = req.body;
     try {
       console.log("entre");
+      console.log(email);
       const ordenCreada = await this.model.create({
         //userUsername: username,
+        email,
         price,
         address,
         phone,
