@@ -3,12 +3,8 @@ import style from "./ProfileAdmin.module.css";
 import { getToken, decodeToken } from "../../utils";
 import ChangePerfil from "./UploadImg";
 import { BsPersonSquare } from "react-icons/bs";
-<<<<<<< HEAD
-import { getOrderUser } from "../../order";
-=======
 import UserOrders from "../UserOrders/UserOrders";
 
->>>>>>> 9bd915b760a0ba8b6dd8d085762662ade27a54d9
 const Profile = () => {
   const [usuario, setUsuario] = useState();
   const [token, setToken] = useState();

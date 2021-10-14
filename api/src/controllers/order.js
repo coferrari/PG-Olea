@@ -208,10 +208,6 @@ class OrderModel extends Modelo {
 
   getUserOrder = async (req, res, next) => {
     const { username } = req.params;
-<<<<<<< HEAD
-=======
-    console.log(req.params, "params");
->>>>>>> 9bd915b760a0ba8b6dd8d085762662ade27a54d9
     try {
       const ordenDetail = await this.model.findAll({
         where: { userUsername: username },

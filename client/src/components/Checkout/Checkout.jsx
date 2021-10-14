@@ -234,16 +234,9 @@ const Checkout = () => {
                     onClick: () => {
                       window.location.href = "";
                     },
-<<<<<<< HEAD
-                  ],
-                })}
-              Confirmar compra
-            </Button>
-=======
                   },
                 ],
               })}
->>>>>>> 9bd915b760a0ba8b6dd8d085762662ade27a54d9
           </div>
         </div>
       ) : (
