@@ -7,4 +7,6 @@ export const CLEAR_CART = "CLEAR_CART";
 export const UPDATE_CART = "UPDATE_CART";
 export const PAY_MERCADOPAGO = "PAY_MERCADOPAGO";
 export const CLEAR_DETAIL = "CLEAR_DETAIL";
+export const CREATE_ORDER = "CREATE_ORDER";
+export const GET_ORDER_DETAILS = "GET_ORDER_DETAILS";
 
