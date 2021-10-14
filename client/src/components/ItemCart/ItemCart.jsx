@@ -137,64 +137,6 @@ const ItemCart = ({
         <h4 className={style.name}>{name}</h4>
         <p className={style.price}>
           ${" "}
-          {/* {(q && now === diaDescuentoProducto) ||
-            (q &&
-              now === diaDescuentoCategoria &&
-              descuentoProducto > descuentoCategoria && (
-                <span className={style.descuento}>
-                  {" "}
-                  {format(
-                    precio * q -
-                      Math.round((precio * descuentoProducto) / 100) * q
-                  )}
-                </span>
-              ))} */}
-          {/* {(q && now === diaDescuentoProducto) ||
-            (now === diaDescuentoCategoria &&
-              descuentoProducto < descuentoCategoria && (
-                <span className={style.descuento}>
-                  {" "}
-                  {format(
-                    precio * q -
-                      Math.round((precio * descuentoCategoria) / 100) * q
-                  )}
-                </span>
-              ))} */}
-          {/* {q &&
-            now !== diaDescuentoProducto &&
-            now !== diaDescuentoCategoria &&
-            format(precio * q)} */}
-          {/* {(!q && now === diaDescuentoProductoBD) ||
-            (now === diaDescuentoCategoriaBD &&
-              diaDescuentoProductoBD > descuentoCategoriaBD && (
-                <span className={style.descuento}>
-                  {format(
-                    precio *
-                      cartFromLocalStorage[index].Carrito_Products.quantity -
-                      Math.round((precio * descuentoProductoBD) / 100) *
-                        cartFromLocalStorage[index].Carrito_Products.quantity
-                  )}
-                </span>
-              ))} */}
-          {/* {(!q && now === diaDescuentoProductoBD) ||
-            (now === diaDescuentoCategoriaBD &&
-              diaDescuentoProductoBD < descuentoCategoriaBD && (
-                <span className={style.descuento}>
-                  $
-                  {format(
-                    precio *
-                      cartFromLocalStorage[index].Carrito_Products.quantity -
-                      Math.round((precio * descuentoCategoriaBD) / 100) *
-                        cartFromLocalStorage[index].Carrito_Products.quantity
-                  )}
-                </span>
-              ))} */}
-          {/* {!q &&
-            now !== diaDescuentoProductoBD &&
-            now !== diaDescuentoCategoriaBD &&
-            format(
-              precio * cartFromLocalStorage[index].Carrito_Products.quantity
-            )} */}
           {q ? (
             now === diaDescuentoProducto || now === diaDescuentoCategoria ? (
               (console.log(descuentoProducto, descuentoCategoria),

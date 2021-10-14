@@ -57,14 +57,49 @@ const ShoppingCart = () => {
     history.push("/checkout");
     handleClose();
   };
-
+  console.log(productsCart);
+  // preguntar por cada vuelta si tiene un descuento aplicable
+  //   ${price - Math.round((price * offer) / 100)}
+  const desc = productsCart?.reduce((acc, curr) => {
+    const result =
+      curr.Carrito_Products && curr.offer >= curr.categories[0].offer
+        ? acc +
+          parseInt(
+            curr.price - Math.round(parseInt(curr.price * curr.offer) / 100)
+          ) *
+            curr.Carrito_Products.quantity
+        : curr.Carrito_Products && curr.offer < curr.categories[0].offer
+        ? acc +
+          parseInt(
+            curr.price -
+              Math.round(parseInt(curr.price * curr.categories[0].offer) / 100)
+          ) *
+            curr.Carrito_Products.quantity
+        : curr.Carrito_Products && !curr.offer && !curr.categories[0].offer
+        ? acc + parseInt(curr.price) * curr.Carrito_Products.quantity
+        : curr.quantity && curr.offer >= curr.categories[0].offer
+        ? acc +
+          parseInt(curr.price) -
+          Math.round(parseInt(curr.price * curr.offer) / 100) * curr.quantity
+        : curr.quantity && curr.offer < curr.categories[0].offer
+        ? acc +
+          parseInt(curr.price) -
+          Math.round(
+            (parseInt(curr.price * curr.categories[0].offer) / 100) *
+              curr.quantity
+          )
+        : curr.quantity && !curr.offer && !curr.categories[0].offer
+        ? acc + parseInt(curr.price) * curr.quantity
+        : null;
+    return result;
+  }, 0);
+  console.log(desc);
   const totalSum = productsCart?.reduce((acc, curr) => {
     const result = curr.Carrito_Products
       ? acc + parseInt(curr.price) * curr.Carrito_Products.quantity
       : acc + parseInt(curr.price) * curr.quantity;
     return result;
   }, 0);
-
   const totalQuantity = productsCart?.reduce((acc, curr) => {
     const result = curr.Carrito_Products
       ? acc + curr.Carrito_Products.quantity
@@ -130,7 +165,7 @@ const ShoppingCart = () => {
                   </Button>
                 </div>
                 <div className={style.bntcontainer}>
-                  <div className={style.total}>total ${format(totalSum)}</div>
+                  <div className={style.total}>total ${format(desc)}</div>
                   <div>
                     <Button
                       className={style.vaciar}
