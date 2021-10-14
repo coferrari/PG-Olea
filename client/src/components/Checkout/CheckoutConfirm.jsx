@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation} from 'react-router-dom';
 import { getOrderDetails, changeStatus } from "../../order";
 
@@ -16,12 +16,21 @@ const statusPago = status[1]
 const order = datosPago[4].split("=")
 const idOrder = order[1]
 
-let detalleOrden = {}
+const [orden,setOrden] = useState({})
 
-useEffect(() => {
+const getOrden = async () =>{
+  const x = await getOrderDetails(idOrder)
+  setOrden(x)
+}
+
+
+useEffect(async () => {
   changeStatus(statusPago,idOrder)
-  detalleOrden = getOrderDetails(idOrder)
+  getOrden()
 },[])
+
+
+console.log(orden)
 
   return (
     <div>{location.search && location.search.includes("collection_status=approved") ? (<div>El estado es {statusPago} y el id de la orden es {idOrder} </div>) : (<div>Algo no fue bien con el pago</div>) }
