@@ -27,8 +27,34 @@ class OrderModel extends Modelo {
       ordenDetail.status = state;
       ordenDetail.statusPago = estado;
       ordenDetail.save();
-      console.log(ordenDetail);
-      res.send("Listo");
+      if (estado === "approved") {
+        ordenDetail.products.forEach(async (p) => {
+          let x = await Product.findByPk(p.id);
+          let cantidad = p["Order_Products"].quantity;
+          let nuevoStock = x.stock - cantidad;
+          x.stock = nuevoStock;
+          x.save();
+        });
+        let template = getTemplateAproved(
+          ordenDetail.contactName,
+          ordenDetail.price
+        );
+        await sendEmail(ordenDetail.email, "Pago exitoso", template);
+        return res.json({
+          message: "Se actualizo el estado de la orden y se cambio el stock",
+        });
+      }
+      if (estado === "rejected") {
+        let template = getTemplateRejected(ordenDetail.contactName);
+        await sendEmail(ordenDetail.email, "Problema en la compra", template);
+        return res.json({
+          message: "Se envio el mail, compra rechazada.",
+        });
+      }
+      res.json({
+        message: "Se actualizo el estado de la orden",
+        order: ordenDetail,
+      });
     } catch (err) {
       next(err);
     }
