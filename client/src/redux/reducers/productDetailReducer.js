@@ -16,6 +16,11 @@ function productDetailReducer(state = initialState, action) {
         ...state,
         productDetail: [],
       };
+    // case EDIT_PRODUCT:
+    //   return {
+    //     ...state,
+    //     productDetail: action.payload,
+    //   }
     default:
       return state;
   }

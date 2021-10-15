@@ -25,6 +25,7 @@ import {
   GET_WISHLIST_URL
 
 } from "../../consts";
+import {getToken} from "../../utils/index";
 
 export function getProducts() {
   return function (dispatch) {

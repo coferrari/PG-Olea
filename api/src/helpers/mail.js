@@ -86,6 +86,24 @@ const getTemplateAuthenticationAdmin = (name, code) => {
       <p>Para continuar con su inicio de sesion ingrese el siguiente codigo ${code}</p>
   </div>`;
 };
+
+const getTemplateProductStock = (username, productName, productImage, productId) => {
+  return `
+  <head>
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<div id="email___content">
+  <h2>Hola ${username}</h2>
+  <p>Te avisamos que ya tenemos disponible el siguiente producto por el cual estas interesado/a: </p>
+  <img src=${productImage} alt='' />
+  <a
+  href="https://somosolea.vercel.app/product/${productId}"
+  target="_blank"
+  >${productName}</a>
+</div>`;
+}
+
 const getTemplateAproved = (name, price) => {
   return `
   <head>
@@ -143,7 +161,7 @@ module.exports = {
   getTemplateAdminChangePassword,
   getTemplateAproved,
   getTemplateAuthenticationAdmin,
+  getTemplateProductStock,
   getTemplateRejected,
   getTemplateCategoryLetter,
-  getTemplateProductLetter,
 };

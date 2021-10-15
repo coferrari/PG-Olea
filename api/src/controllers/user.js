@@ -1,3 +1,4 @@
+
 const { User, Carrito, Product, Wishlist} = require("../db.js");
 const { encryptPassword, comparePassword } = require("../helpers/index");
 const jwt = require("jsonwebtoken");
@@ -54,6 +55,9 @@ userFunction.confirmRegister = async (req, res, next) => {
   });
   user.setCarrito(carritocreado.dataValues.id);
   user.setWishlist(wishlist.dataValues.id);
+  await wishlist.update({
+    userEmail: verified.email
+  })
   res.send(user);
 };
 
@@ -203,6 +207,10 @@ userFunction.googleLogin = async (req, res, next) => {
       });
       newUser.setCarrito(carritocreado.dataValues.id);
       newUser.setWishlist(wishlist.dataValues.id);
+
+      await wishlist.update({
+        userEmail: email
+      })
       
       const token = jwt.sign(
         {
