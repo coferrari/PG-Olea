@@ -1,12 +1,5 @@
 const { Reviews } = require("../src/db");
 const reviewsMockUp = async () => {
-  const n1 = await Reviews.create({
-    productId: 1,
-    comment: "muy bueno la verdad que espectacular",
-    rating: 5,
-    opinion: "genial",
-  });
-  n1.setUser("Toni");
   const n2 = await Reviews.create({
     productId: 1,
     comment: "es malisimo este producto!",
@@ -35,13 +28,6 @@ const reviewsMockUp = async () => {
     opinion: "normal",
   });
   n5.setUser("Elena");
-  const n6 = await Reviews.create({
-    productId: 1,
-    comment: "muy bueno la verdad que espectacular",
-    rating: 5,
-    opinion: "genial",
-  });
-  n6.setUser("Toni");
   const n7 = await Reviews.create({
     productId: 1,
     comment: "es malisimo este producto!",

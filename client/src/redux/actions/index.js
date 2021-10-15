@@ -9,14 +9,15 @@ import {
   UPDATE_CART,
   PAY_MERCADOPAGO,
   CLEAR_DETAIL,
-  EDIT_PRODUCT
+  GET_ORDER_DETAILS
 } from "./types";
 import {
   GET_PRODUCTS_URL,
   SEARCH_PRODUCTS_URL,
   GET_PRODUCT_DETAIL_URL,
   CATEGORY_URL,
-  PAY_MERCADOPAGO_URL
+  PAY_MERCADOPAGO_URL,
+  GET_ORDER_DETAILS_URL
 } from "../../consts";
 import {getToken} from "../../utils/index";
 
@@ -84,41 +85,38 @@ export function clearCart() {
 export function updateCart(products) {
   return {
     type: UPDATE_CART,
-    payload: products
-  }
+    payload: products,
+  };
 }
 
-
-export function checkoutMercadoPago(itemsCheckout) {
-  return async function(dispatch) {
-    axios.post(PAY_MERCADOPAGO_URL, itemsCheckout)
-      .then ((response) =>{
-        dispatch({
-          type: PAY_MERCADOPAGO,
-          payload: response.data
-        })
-      })
-  }
+export function checkoutMercadoPago(itemsCheckout,idOrden) {
+  return function (dispatch) {
+    axios.post(PAY_MERCADOPAGO_URL, [itemsCheckout, idOrden]).then((response) => {
+      dispatch({
+        type: PAY_MERCADOPAGO,
+        payload: response.data,
+      });
+    });
+  };
 }
 
 export function clearDetail() {
   return {
-    type: CLEAR_DETAIL
-  }
+    type: CLEAR_DETAIL,
+  };
 }
 
-// export function editProduct(productid, newProduct) {
-//   return function (dispatch) {
-//     return axios.put(`${GET_PRODUCTS_URL}${productid}`, newProduct, {
-//       headers: {
-//         authorization: getToken(),
-//       },
-//     }).then((product) => {
-//       dispatch({
-//         type: EDIT_PRODUCT,
-//         payload: product.data,
-//       });
-//     });
-//   };
-// }
+export function getOrderDetails (id) {
+  console.log(id)
+  return function (dispatch) {
+    axios.get(`${GET_ORDER_DETAILS_URL}/${id}`).
+      then((response) => {
+      dispatch({
+        type: GET_ORDER_DETAILS ,
+        payload: response.data,
+      });
+    });
+  };
+}
+
 

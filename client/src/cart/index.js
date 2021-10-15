@@ -34,5 +34,5 @@ export const getAllOrder = async () => {
 };
 
 export const getOrderId = async (id) => {
-  return await axios.get(`${GET_ORDER_DETAIL}` + id);
+  return await axios.get(`${GET_ORDER_DETAIL}/${id}`);
 };
