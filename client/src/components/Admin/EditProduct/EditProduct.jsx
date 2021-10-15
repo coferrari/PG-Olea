@@ -22,7 +22,7 @@ export default function EditProduct() {
   const { productid } = useParams();
   const [newProduct, setNewProduct] = useState({});
   const [editCats, setEditCats] = useState(false);
-  const [image, setImage] = useState();
+
   const [verImagenes, setVerImagenes] = useState({ compr: false, click: 0 });
   useEffect(() => {
     dispatch(getCategories());
