@@ -58,6 +58,7 @@ class CarritoModel extends Modelo {
       next(error);
     }
   };
+}
 
  
 const carritoControllers = new CarritoModel(Carrito);
