@@ -19,6 +19,7 @@ import {
   PAY_MERCADOPAGO_URL,
   GET_ORDER_DETAILS_URL
 } from "../../consts";
+import {getToken} from "../../utils/index";
 
 export function getProducts() {
   return function (dispatch) {

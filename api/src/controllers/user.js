@@ -1,4 +1,4 @@
-const { User, Carrito, Product } = require("../db.js");
+const { User, Carrito, Product, Wishlist } = require("../db.js");
 const { encryptPassword, comparePassword } = require("../helpers/index");
 const jwt = require("jsonwebtoken");
 const { OAuth2Client } = require("google-auth-library");
@@ -43,6 +43,7 @@ userFunction.confirmRegister = async (req, res, next) => {
   const { token } = req.body;
   const verified = jwt.verify(token, process.env.TOKEN_SECRET);
   const carritocreado = await Carrito.create({});
+  const wishlist = await Wishlist.create({})
   const user = await User.create({
     name: verified.name,
     surname: verified.surname,
@@ -52,6 +53,10 @@ userFunction.confirmRegister = async (req, res, next) => {
     admin: false,
   });
   user.setCarrito(carritocreado.dataValues.id);
+  user.setWishlist(wishlist.dataValues.id);
+  await wishlist.update({
+    userEmail: verified.email
+  })
   res.send(user);
 };
 
@@ -188,6 +193,7 @@ userFunction.googleLogin = async (req, res, next) => {
 
     if (user === null) {
       const carritocreado = await Carrito.create({});
+      const wishlist = await Wishlist.create({})
       const newPasswordEncrypted = await encryptPassword(at_hash);
       const newUser = await User.create({
         name: given_name,
@@ -199,6 +205,10 @@ userFunction.googleLogin = async (req, res, next) => {
         admin: false,
       });
       newUser.setCarrito(carritocreado.dataValues.id);
+      newUser.setWishlist(wishlist.dataValues.id);
+      await wishlist.update({
+        userEmail: email
+      })
       const token = jwt.sign(
         {
           name: given_name,
