@@ -22,6 +22,7 @@ export default function Selects() {
         className={style.select}
         onChange={(e) => handleOrderSelect(e.target.value)}
       >
+        <option value="" selected disabled hidden>Ordenar por...</option>
         <option value={"name asc"}>Alfabeticamente, A-Z</option>
         <option value={"name desc"}>Alfabeticamente, Z-A</option>
         <option

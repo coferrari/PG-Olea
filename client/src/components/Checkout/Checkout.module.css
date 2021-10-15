@@ -55,14 +55,6 @@
   width: fit-content;
 }
 
-.navLink{
-  color: white;
-}
-
-.navLink:hover{
- transition: color .5;
- color: white;
-}
 
 .datosEnvio{
   display: flex;
@@ -88,3 +80,4 @@
   background-color: black;
   font-family: "Montserrat", sans-serif;
 }
+

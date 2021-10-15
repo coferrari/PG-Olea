@@ -36,6 +36,7 @@ export const getAllOrder = async () => {
   return await axios.get(`${GET_ALL_ORDER}`);
 };
 
+
 export const getOrderId = async (id) => {
   return await axios.get(`${GET_ORDER_DETAIL}` + id);
 };
@@ -59,3 +60,8 @@ export const offerProduct = async (productOff, valor) => {
 export const getOffer = async (offerday) => {
   return await axios.put(`${GET_OFFER}`, { offerday: offerday });
 };
+
+// export const getOrderId = async (id) => {
+//   return await axios.get(`${GET_ORDER_DETAIL}/${id}`);
+// };
+
