@@ -13,7 +13,7 @@ const userMockUp = async () => {
     });
     const carritocreado = await Carrito.create({});
 
-   // const wishlistfranco = await Wishlist.create({});
+    // const wishlistfranco = await Wishlist.create({});
     franco.setCarrito(carritocreado.dataValues.id);
     //franco.setWishlist(wishlistfranco.dataValues.id);
     const dibu = await User.create({
@@ -36,8 +36,8 @@ const userMockUp = async () => {
       admin: false,
     });
     const carritoElena = await Carrito.create({});
-   // const wishlistelena = await Wishlist.create({});
-   // elena.setWishlist(wishlistelena.dataValues.id);
+    // const wishlistelena = await Wishlist.create({});
+    // elena.setWishlist(wishlistelena.dataValues.id);
     elena.setCarrito(carritoElena.dataValues.id);
   } catch (e) {
     console.log(e.message);

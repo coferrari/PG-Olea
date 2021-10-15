@@ -30,9 +30,9 @@ function OfertasTable() {
     });
   };
 
-  const onSubmitProduct = (e) => {
+  const onSubmitProduct = async (e) => {
     if (!productOff.idProduct && !productOff.offProduct && !value) {
-      alert("faltan parametros");
+      return alert("faltan parametros");
     }
     let valor = value.toLocaleDateString();
     console.log(productOff, valor);
@@ -54,10 +54,10 @@ function OfertasTable() {
       [e.target.name]: e.target.value,
     });
   };
-  const onSubmitCat = (e) => {
+  const onSubmitCat = async (e) => {
     e.preventDefault();
     if (!offCat.idCat && !offCat.offCat && !value) {
-      alert("faltan parametros");
+      return alert("faltan parametros");
     }
     let valor = value.toLocaleDateString();
     offerCategory(offCat, valor);
