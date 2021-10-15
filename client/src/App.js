@@ -29,7 +29,9 @@ import EditProduct from "./components/Admin/EditProduct/EditProduct";
 import Footer from "./components/Footer/Footer";
 import BarraAdmin from "./components/Profile/BarraAdmin";
 import OrderDetail from "./components/OrderDetail/OrderDetail";
+import CheckoutConfirm from "./components/Checkout/CheckoutConfirm";
 import Wishlist from "./components/Wishlist/Wishlist";
+
 
 function App() {
   const loggedIn = decodeToken();
@@ -65,7 +67,11 @@ function App() {
           <Home />
           <Footer />
         </Route>
-        <Route path="/category/:nameCategory">
+        <Route exact path="/category/:nameCategory">
+          <CategoryProduct />
+        </Route>
+        <Route path="/category/:nameCategory/:attribute/:order">
+          <ShoppingCart />
           <CategoryProduct />
           <Footer />
         </Route>
@@ -119,6 +125,8 @@ function App() {
         <Route exact path="/order/:id">
           <OrderDetail />
         </Route>
+        <Route exact path="/checkoutconfirm">
+          <CheckoutConfirm />
         <Route exact path="/wishlist">
           <Wishlist />
         </Route>

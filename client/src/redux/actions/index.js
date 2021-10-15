@@ -9,6 +9,7 @@ import {
   UPDATE_CART,
   PAY_MERCADOPAGO,
   CLEAR_DETAIL,
+  GET_ORDER_DETAILS,
   GET_WISHLIST,
   ADD_TO_WISHLIST,
   REMOVE_FROM_WISHLIST,
@@ -20,7 +21,9 @@ import {
   GET_PRODUCT_DETAIL_URL,
   CATEGORY_URL,
   PAY_MERCADOPAGO_URL,
+  GET_ORDER_DETAILS_URL,
   GET_WISHLIST_URL
+
 } from "../../consts";
 
 export function getProducts() {
@@ -87,29 +90,35 @@ export function clearCart() {
 export function updateCart(products) {
   return {
     type: UPDATE_CART,
-    payload: products
-  }
+    payload: products,
+  };
 }
 
-
-export function checkoutMercadoPago(itemsCheckout) {
-  return async function(dispatch) {
-    axios.post(PAY_MERCADOPAGO_URL, itemsCheckout)
-      .then ((response) =>{
-        dispatch({
-          type: PAY_MERCADOPAGO,
-          payload: response.data
-        })
-      })
-  }
+export function checkoutMercadoPago(itemsCheckout,idOrden) {
+  return function (dispatch) {
+    axios.post(PAY_MERCADOPAGO_URL, [itemsCheckout, idOrden]).then((response) => {
+      dispatch({
+        type: PAY_MERCADOPAGO,
+        payload: response.data,
+      });
+    });
+  };
 }
 
 export function clearDetail() {
   return {
-    type: CLEAR_DETAIL
-  }
+    type: CLEAR_DETAIL,
+  };
 }
 
+
+export function getOrderDetails (id) {
+  return function (dispatch) {
+    axios.get(`${GET_ORDER_DETAILS_URL}/${id}`).
+      then((response) => {
+      dispatch({
+        type: GET_ORDER_DETAILS ,
+        payload: response.data,
 export function getWishlist(payload) {
   console.log(payload)
   return function (dispatch) {
@@ -128,16 +137,15 @@ export function addToWishlist(product) {
     payload: product
   }
 }
-
 export function removeFromWishlist(id) {
   return {
     type: REMOVE_FROM_WISHLIST,
     payload: id
   }
 }
-
 export function clearWishlist() {
   return {
     type: CLEAR_WISHLIST
   }
 }
+

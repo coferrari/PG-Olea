@@ -58,7 +58,29 @@ const LoginButton = () => {
     e.preventDefault();
     try {
       await codeLogin(code);
-      history.push("/");
+      const validate = isAuthorized();
+      history.push("/home");
+      if (validate) {
+        const user = decodeToken();
+        const username = user.username;
+        if (cartFromLocalStorage.length > 0) {
+          createCartLogin({
+            products: cartFromLocalStorage,
+            username: username,
+          });
+        } else if (cartFromLocalStorage.length === 0) {
+          const productsDB = await getByUsername({
+            username: username,
+          });
+          if (productsDB.data.products.length) {
+            localStorage.setItem(
+              "cart",
+              JSON.stringify(productsDB.data.products)
+            );
+            dispatch(updateCart(productsDB.data.products));
+          }
+        }
+      }
     } catch (err) {
       setErrorCode("Su codigo es incorrecto o expiro");
       console.log(err.message);
@@ -95,7 +117,6 @@ const LoginButton = () => {
         }
       }
     } catch (err) {
-      console.log(err.message);
       setErrorLogin("Contraseña o usuario incorrecto");
     }
   };
@@ -207,7 +228,7 @@ const LoginButton = () => {
           >
             <Modal.Header closeButton>
               <Modal.Title id="example-modal-sizes-title-sm">
-                Codigo de confirmación
+                Confirmacion
               </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -217,10 +238,13 @@ const LoginButton = () => {
                 }}
               >
                 <Form.Group className="mb-3">
-                  <Form.Label>Ingrese su codigo</Form.Label>
+                  <Form.Label>
+                    Se envio un mail a su correo. Ingrese el codigo para
+                    continuar
+                  </Form.Label>
                   <Form.Control
                     type="codigo"
-                    placeholder="Ingrese nombre de la categoria"
+                    placeholder="Ingresar codigo"
                     name="texto"
                     onChange={(e) => codeChange(e)}
                   />

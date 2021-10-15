@@ -50,7 +50,7 @@ export default function ReviewsTable() {
   };
 
   return (
-    <div>
+    <div className="container">
       {
         <Table striped bordered hover>
           <thead>

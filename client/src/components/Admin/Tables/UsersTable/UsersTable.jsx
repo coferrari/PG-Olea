@@ -150,7 +150,7 @@ export default function UsersTable() {
     getAll();
   }, []);
   return (
-    <div>
+    <div className="container">
       <Table striped bordered hover>
         <thead>
           <tr>

@@ -17,14 +17,12 @@ class CategoryModel extends Modelo {
   };
   filterByCategory = async (req, res, next) => {
     try {
-      let productsFiltered = await Product.findAll({
+      let products = await Product.findAll({
         include: {
           model: Category,
         },
       });
-      productsFiltered = productsFiltered.filter(
-        (p) => p.categories[0].nameCategory === req.params.category
-      );
+      const productsFiltered = products.filter(p => p.categories.find(c => c.nameCategory === req.params.category));
       res.send(productsFiltered);
     } catch (error) {
       next(error);
