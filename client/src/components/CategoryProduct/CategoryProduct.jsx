@@ -6,7 +6,10 @@ import { useParams, useHistory } from "react-router";
 import style from "../Selects/Selects.module.css";
 import { Search } from "../Search/Search";
 import style2 from "./CategoryProducts.module.css";
-import { isAuthorized, decodeToken } from "../../utils/index";
+import { isAuthorized, decodeToken } from "../../utils";
+import { getWishlist } from "../../redux/actions"
+
+
 
 export default function CategoryProduct() {
   const dispatch = useDispatch();

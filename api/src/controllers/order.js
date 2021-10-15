@@ -95,8 +95,7 @@ class OrderModel extends Modelo {
   };
   orderByDate = async (req, res, next) => {
     const { date } = req.params;
-
-    if (date === "ASC") {
+    if (date === "masReciente") {
       try {
         const orderDate = await this.model.findAll({
           order: [["createdAt", "ASC"]],
@@ -105,7 +104,7 @@ class OrderModel extends Modelo {
       } catch (err) {
         next(err);
       }
-    } else if (date === "DES") {
+    } else if (date === "menosReciente") {
       try {
         const orderDate = await this.model.findAll({
           order: [["createdAt", "DESC"]],
@@ -118,18 +117,11 @@ class OrderModel extends Modelo {
   };
   filterByStatus = async (req, res, next) => {
     const { status } = req.params;
-
-    if (status) {
-      const order = await this.model.findAll({
-        where: {
-          status,
-        },
-      });
-      if (order.length >= 1) {
-        res.status(200).json(order);
-      } else {
-        next(err);
-      }
+    try{
+      const order = await this.model.findAll({ where: {status}})
+      res.status(200).json(order)
+    } catch (error) {
+      next(error);
     }
   };
   createOrder = async (req, res, next) => {
@@ -176,16 +168,19 @@ class OrderModel extends Modelo {
     }
   };
   setOrderStatus = async (req, res, next) => {
-    const { status, orderID } = req.body;
+    const { status } = req.body;
+    const { orderid } = req.params;
+    console.log("status", status);
+    console.log("orderid", orderid);
     try {
-      const orden = await this.model.findByPk(orderID, { include: Product });
+      const orden = await this.model.findByPk(orderid, { include: Product });
       orden.update(
         {
           status: status,
         },
         {
           where: {
-            id: orderID,
+            id: orderid,
           },
         }
       );
@@ -216,7 +211,6 @@ class OrderModel extends Modelo {
       next(error);
     }
   };
-
   getUserOrder = async (req, res, next) => {
     const { username } = req.params;
     try {
