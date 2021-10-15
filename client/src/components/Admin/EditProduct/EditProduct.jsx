@@ -12,7 +12,7 @@ import {
 import { getCategories, getProductDetail } from "../../../redux/actions";
 import { getToken } from "../../../utils/index";
 import axios from "axios";
-
+import { editStock } from "../../../stock/index";
 import swal from "sweetalert";
 import { useParams } from "react-router";
 import { GET_PRODUCTS } from "../../../redux/actions/types";
@@ -21,7 +21,6 @@ import {
   ADD_CATEGORY_PRODUCT,
   DELET_CATEGORY_PRODUCT,
 } from "../../../consts";
-import { editStock } from "../../../stock/index";
 import style from "./EditProduct.module.css";
 
 export default function EditProduct() {
@@ -42,15 +41,19 @@ export default function EditProduct() {
 
   const handleSubmit = async (e) => {
     {
+      console.log("new product", newProduct);
       e.preventDefault();
+      newProduct.stock && await editStock({
+          stock: parseInt(newProduct.stock),
+          productID: parseInt(productid)
+        })
       await axios.put(`${GET_PRODUCTS_URL}${productid}`, newProduct, {
         headers: {
           authorization: getToken(),
         },
       });
-      // await editStock({stock: newProduct.stock, productID: product.id})
-      
       return swal("Este producto ha sido modificado");
+
     }
   };
   const handleEdit = () => {
@@ -140,7 +143,7 @@ export default function EditProduct() {
             <Form.Control
               type="nombre"
               name="name"
-              defaultValue={product?.name}
+              defaultValue={product.name}
               onChange={(e) => onChangeInput(e)}
             />
           </Form.Group>
@@ -152,7 +155,7 @@ export default function EditProduct() {
               name="price"
               min="0"
               onChange={(e) => onChangeInput(e)}
-              defaultValue={product?.price}
+              defaultValue={product.price}
             />
           </Form.Group>
           <Form.Group className="mb-3">
@@ -179,7 +182,7 @@ export default function EditProduct() {
                     handleEdit(
                       setNewProduct({
                         ...newProduct,
-                        image: [...product?.image, e.target.value],
+                        image: [...product.image, e.target.value],
                       })
                     )
                   }
@@ -222,7 +225,7 @@ export default function EditProduct() {
               placeholder="Ingrese Descripcion"
               name="description"
               onChange={(e) => onChangeInput(e)}
-              defaultValue={product?.description}
+              defaultValue={product.description}
             />
           </Form.Group>
           <Form.Group className="mb-3">
@@ -253,7 +256,7 @@ export default function EditProduct() {
                   onClick={() => {
                     setNewProduct({
                       ...newProduct,
-                      categoryID: product?.categories.map((e) => e.id),
+                      categoryID: product.categories.map((e) => e.id),
                     });
 
                     setEditCats(true);
@@ -272,7 +275,7 @@ export default function EditProduct() {
               name="stock"
               min="0"
               onChange={(e) => onChangeInput(e)}
-              defaultValue={product?.stock}
+              defaultValue={product.stock}
             />
           </Form.Group>
           <Button variant="dark" type="submit">

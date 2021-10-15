@@ -8,7 +8,8 @@ import {
   CLEAR_CART,
   UPDATE_CART,
   PAY_MERCADOPAGO,
-  CLEAR_DETAIL
+  CLEAR_DETAIL,
+  EDIT_PRODUCT
 } from "./types";
 import {
   GET_PRODUCTS_URL,
@@ -17,6 +18,7 @@ import {
   CATEGORY_URL,
   PAY_MERCADOPAGO_URL
 } from "../../consts";
+import {getToken} from "../../utils/index";
 
 export function getProducts() {
   return function (dispatch) {
@@ -104,4 +106,19 @@ export function clearDetail() {
     type: CLEAR_DETAIL
   }
 }
+
+// export function editProduct(productid, newProduct) {
+//   return function (dispatch) {
+//     return axios.put(`${GET_PRODUCTS_URL}${productid}`, newProduct, {
+//       headers: {
+//         authorization: getToken(),
+//       },
+//     }).then((product) => {
+//       dispatch({
+//         type: EDIT_PRODUCT,
+//         payload: product.data,
+//       });
+//     });
+//   };
+// }
 
