@@ -7,6 +7,7 @@ import CategoriasTable from "../Admin/Tables/CategoriasTable/CategoriasTable";
 import CreateProduct from "../Admin/CreateProduct/CreateProduct";
 import ProfileAdmin from "../Profile/ProfileAdmin";
 import OrdersTable from "../Admin/Tables/OrdersTable";
+import OfertasTable from "../Admin/Tables/OfertasTable/OfertasTable";
 const BarraAdmin = () => {
   return (
     <div className={style.container}>
@@ -32,6 +33,9 @@ const BarraAdmin = () => {
         </Tab>
         <Tab eventKey="Añadir producto" title="Añadir producto">
           <CreateProduct />
+        </Tab>
+        <Tab eventKey="Ofertas" title="Ofertas">
+          <OfertasTable />
         </Tab>
       </Tabs>
     </div>

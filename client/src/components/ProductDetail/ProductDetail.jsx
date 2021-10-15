@@ -41,9 +41,17 @@ export function ProductDetail() {
   const product = useSelector(
     (state) => state.productDetailReducer.productDetail
   );
-  const { id, image, name, price, stock } = useSelector(
-    (state) => state.productDetailReducer.productDetail
-  );
+  const {
+    id,
+    image,
+    name,
+    price,
+    stock,
+    offer,
+    offerday,
+    productOff,
+    categories,
+  } = useSelector((state) => state.productDetailReducer.productDetail);
   const { productsCarrito } = useSelector((state) => state.carritoReducer);
   const { wishlist } = useSelector((state) => state.wishlistReducer);
   const quantity = 1;
@@ -66,7 +74,18 @@ export function ProductDetail() {
       const cartFromLocalStorage = JSON.parse(localStorage.getItem("cart"));
       const cartAdded = [
         ...cartFromLocalStorage,
-        { id, name, image, price, quantity, stock },
+        {
+          id,
+          name,
+          image,
+          price,
+          quantity,
+          stock,
+          offer,
+          offerday,
+          productOff: offerday,
+          categories,
+        },
       ];
       localStorage.setItem("cart", JSON.stringify(cartAdded));
       dispatch(updateCart(cartAdded));
@@ -90,6 +109,7 @@ export function ProductDetail() {
       setRemoveWishlist(false);
     }
   }, [dispatch, add, remove, addWishlist, removeWishlist]);
+
 
   const isInStore = productsCarrito.filter((product) => product.id === id);
   const isInWishlist = wishlist?.findIndex((product) => product.id === id);
@@ -174,6 +194,21 @@ export function ProductDetail() {
     getReviews(idParams);
   }, [dispatch, idParams]);
 
+  const searchOffer = (categories) => {
+    if (categories) {
+      let descuento = 0;
+
+      categories.map((c) => {
+        if (c.offer !== null) {
+          descuento = c.offer;
+        }
+      });
+
+      return descuento;
+    }
+    return "";
+  };
+  var now = new Date().toLocaleDateString();
   return (
     <div className="container">
       
@@ -203,7 +238,40 @@ export function ProductDetail() {
               </Card.Text>
               <ListGroup className="list-group-flush">
                 <ListGroupItem className={styles.price}>
-                  Precio: ${product?.price}{" "}
+                  {now === product.offerday ||
+                  now === product.categories?.[0].offerday ? (
+                    product.offer > searchOffer(product.categories) ? (
+                      <div>
+                        <span className={styles.oldprice}>${price}</span>
+                        <span className={styles.descuento}>
+                          ${price - Math.round((price * product.offer) / 100)}
+                        </span>
+                        <span className={styles.porcentaje}>
+                          {product.offer}% OFF
+                        </span>
+                      </div>
+                    ) : searchOffer(product.categories) > 0 ? (
+                      <div>
+                        <span className={styles.oldprice}>${price}</span>
+                        <span className={styles.descuento}>
+                          $
+                          {price -
+                            Math.round(
+                              (price * searchOffer(product.categories)) / 100
+                            )}
+                        </span>
+                        <span className={styles.porcentaje}>
+                          {product.categories[0].offer}% OFF
+                        </span>
+                      </div>
+                    ) : (
+                      <div>
+                        <span>${price}</span>
+                      </div>
+                    )
+                  ) : (
+                    <div>Precio: ${product?.price} </div>
+                  )}
                 </ListGroupItem>
                 <ListGroupItem>
                   <Button

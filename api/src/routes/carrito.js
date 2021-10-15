@@ -14,5 +14,7 @@ router.post("/", carritoControllers.create);
 router.put("/:id", carritoControllers.update);
 router.delete("/:id", carritoControllers.delete);
 router.delete("/carrito/emptycart", carritoControllers.emptyCart);
+router.get("/prueba/uno/:username", carritoControllers.prueba);
+router.get("/prueba/dos/:username", carritoControllers.prueba2);
 
 module.exports = router;

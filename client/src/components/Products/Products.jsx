@@ -36,6 +36,11 @@ export default function Products({ products }) {
               image={p.image[0]}
               price={p.price}
               stock={p.stock}
+              categories={p.categories}
+              offer={p.offer}
+              offerday={p.categories[0].offerday}
+              categoryOff={p.categories[0].offer}
+              productOff={p.offerday}
             />
           );
         })}
