@@ -61,19 +61,21 @@ const ShoppingCart = () => {
   const desc = productsCart?.reduce((acc, curr) => {
     let result = 0;
     if (curr.Carrito_Products) {
-      if (curr.offer >= curr.categories[0].offer) {
+      if (curr.offer >= curr.categories?.[0].offer) {
         result =
           acc +
           parseInt(
             curr.price - Math.round(parseInt(curr.price * curr.offer) / 100)
           ) *
             curr.Carrito_Products.quantity;
-      } else if (curr.offer < curr.categories[0].offer) {
+      } else if (curr.offer < curr.categories?.[0].offer) {
         result =
           acc +
           parseInt(
             curr.price -
-              Math.round(parseInt(curr.price * curr.categories[0].offer) / 100)
+              Math.round(
+                parseInt(curr.price * curr.categories?.[0].offer) / 100
+              )
           ) *
             curr.Carrito_Products.quantity;
       } else {
@@ -81,19 +83,21 @@ const ShoppingCart = () => {
       }
     }
     if (curr.quantity) {
-      if (curr.offer >= curr.categories[0].offer) {
+      if (curr.offer >= curr.categories?.[0].offer) {
         result =
           acc +
           parseInt(
             curr.price - Math.round(parseInt(curr.price * curr.offer) / 100)
           ) *
             curr.quantity;
-      } else if (curr.offer < curr.categories[0].offer) {
+      } else if (curr.offer < curr.categories?.[0].offer) {
         result =
           acc +
           parseInt(
             curr.price -
-              Math.round(parseInt(curr.price * curr.categories[0].offer) / 100)
+              Math.round(
+                parseInt(curr.price * curr.categories?.[0].offer) / 100
+              )
           ) *
             curr.quantity;
       } else {
