@@ -161,7 +161,7 @@ module.exports = {
   getTemplateAdminChangePassword,
   getTemplateAproved,
   getTemplateAuthenticationAdmin,
-  getTemplateProductStock
+  getTemplateProductStock,
   getTemplateRejected,
   getTemplateCategoryLetter,
 };
