@@ -95,8 +95,7 @@ class OrderModel extends Modelo {
   };
   orderByDate = async (req, res, next) => {
     const { date } = req.params;
-
-    if (date === "ASC") {
+    if (date === "masReciente") {
       try {
         const orderDate = await this.model.findAll({
           order: [["createdAt", "ASC"]],
@@ -105,7 +104,7 @@ class OrderModel extends Modelo {
       } catch (err) {
         next(err);
       }
-    } else if (date === "DES") {
+    } else if (date === "menosReciente") {
       try {
         const orderDate = await this.model.findAll({
           order: [["createdAt", "DESC"]],

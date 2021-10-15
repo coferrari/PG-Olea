@@ -21,5 +21,6 @@ export const GET_USER_ORDERS = "/api/order/getuserorder";
 export const GET_WISHLIST_URL = "/api/wishlist";
 export const ADD_TO_WISHLIST_URL = "/api/wishlist/add";
 export const REMOVE_FROM_WISHLIST_URL = "/api/wishlist/delete";
+export const ORDER_BY_DATE = "/api/order/date";
 
 

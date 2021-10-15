@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getAllOrder } from "./../../../cart/index";
-import { filterByStatus } from "../../../order";
+import { filterByStatus, orderByDate } from "../../../order";
 import Table from "react-bootstrap/Table";
 import { Link } from "react-router-dom";
 
@@ -17,24 +17,21 @@ function OrdersTable() {
 
   const filterOrdersbyStatus = async (e) => {
     let select = e.target.value
-
-    console.log(select)
     if(select==="Todo"){
       getAllOrders()
     }
-
     let ordersFiltered =  await filterByStatus (select);
-    console.log(ordersFiltered)
-    
     !ordersFiltered && alert("No hay órdenes con ese estado")
     ordersFiltered && setOrder(ordersFiltered)
-    // if(ordersFiltered===[]){
-    //   alert("No hay órdenes con ese estado")
-    // } else {
-    //   setOrder(ordersFiltered)
-    // }
   }
-console.log(order)
+
+  const handleorderByDate = async (e) => {
+    let select = e.target.value
+    console.log(select)
+    let ordenesByDate = await orderByDate(select)
+    console.log(ordenesByDate)
+    setOrder(ordenesByDate)
+  }
 
   
 
@@ -52,6 +49,11 @@ console.log(order)
             <option value="procesando">procesando</option>
             <option value="cancelada">canceladas</option>
             <option value="finalizada">finalizadas</option>
+          </select>
+          {/* ORDEN POR FECHA */}
+          <select class="form-select" aria-label="Default select example" onChange={(e)=>{handleorderByDate(e)}}>
+            <option selected value="masReciente">Más recientes</option>
+            <option value="menosReciente">Menos Recientes</option>
           </select>
 
           <Table striped bordered hover>
