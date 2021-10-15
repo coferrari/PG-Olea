@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import logo from "../../img/OLEA marca de agua-08.png";
 import style from "./Footer.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -24,7 +24,9 @@ function Footer() {
             </ul>
           </div>
           <div>
-            <Map />
+            <div>
+              <Map />
+            </div>
           </div>
           <div className={style.footer__flexitem}>
             <h5 className={style.subtitles}>contacto</h5>

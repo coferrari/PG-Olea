@@ -31,6 +31,7 @@ import BarraAdmin from "./components/Profile/BarraAdmin";
 import OrderDetail from "./components/OrderDetail/OrderDetail";
 import Wishlist from "./components/Wishlist/Wishlist";
 import Map from "./components/Map/Map";
+import Stores from "./components/Admin/Stores/Stores";
 
 function App() {
   const loggedIn = decodeToken();
@@ -122,6 +123,9 @@ function App() {
         </Route>
         <Route exact path="/wishlist">
           <Wishlist />
+        </Route>
+        <Route exact path="/account/stores">
+          {loggedIn.admin ? <Stores /> : <Redirect to="/home" />}
         </Route>
       </Switch>
     </div>

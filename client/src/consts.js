@@ -16,4 +16,4 @@ export const DELET_CATEGORY_PRODUCT = "/api/category/product/deleteCategory";
 export const GET_WISHLIST_URL = "/api/wishlist";
 export const ADD_TO_WISHLIST_URL = "/api/wishlist/add";
 export const REMOVE_FROM_WISHLIST_URL = "/api/wishlist/delete";
-
+export const STORES_URL = "/api/stores";

@@ -12,7 +12,8 @@ import {
   GET_WISHLIST,
   ADD_TO_WISHLIST,
   REMOVE_FROM_WISHLIST,
-  CLEAR_WISHLIST
+  CLEAR_WISHLIST,
+  GET_STORES,
 } from "./types";
 import {
   GET_PRODUCTS_URL,
@@ -20,7 +21,8 @@ import {
   GET_PRODUCT_DETAIL_URL,
   CATEGORY_URL,
   PAY_MERCADOPAGO_URL,
-  GET_WISHLIST_URL
+  GET_WISHLIST_URL,
+  STORES_URL,
 } from "../../consts";
 
 export function getProducts() {
@@ -87,33 +89,31 @@ export function clearCart() {
 export function updateCart(products) {
   return {
     type: UPDATE_CART,
-    payload: products
-  }
+    payload: products,
+  };
 }
 
-
 export function checkoutMercadoPago(itemsCheckout) {
-  return async function(dispatch) {
-    axios.post(PAY_MERCADOPAGO_URL, itemsCheckout)
-      .then ((response) =>{
-        dispatch({
-          type: PAY_MERCADOPAGO,
-          payload: response.data
-        })
-      })
-  }
+  return async function (dispatch) {
+    axios.post(PAY_MERCADOPAGO_URL, itemsCheckout).then((response) => {
+      dispatch({
+        type: PAY_MERCADOPAGO,
+        payload: response.data,
+      });
+    });
+  };
 }
 
 export function clearDetail() {
   return {
-    type: CLEAR_DETAIL
-  }
+    type: CLEAR_DETAIL,
+  };
 }
 
 export function getWishlist(payload) {
-  console.log(payload)
+  console.log(payload);
   return function (dispatch) {
-    return axios.get(GET_WISHLIST_URL, {params: payload}).then((wishlist) => {
+    return axios.get(GET_WISHLIST_URL, { params: payload }).then((wishlist) => {
       dispatch({
         type: GET_WISHLIST,
         payload: wishlist.data,
@@ -125,19 +125,29 @@ export function getWishlist(payload) {
 export function addToWishlist(product) {
   return {
     type: ADD_TO_WISHLIST,
-    payload: product
-  }
+    payload: product,
+  };
 }
 
 export function removeFromWishlist(id) {
   return {
     type: REMOVE_FROM_WISHLIST,
-    payload: id
-  }
+    payload: id,
+  };
 }
 
 export function clearWishlist() {
   return {
-    type: CLEAR_WISHLIST
-  }
+    type: CLEAR_WISHLIST,
+  };
+}
+export function getStores() {
+  return function (dispatch) {
+    return axios.get(STORES_URL).then((stores) => {
+      dispatch({
+        type: GET_STORES,
+        payload: stores.data,
+      });
+    });
+  };
 }

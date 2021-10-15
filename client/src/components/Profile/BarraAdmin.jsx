@@ -7,6 +7,9 @@ import CategoriasTable from "../Admin/Tables/CategoriasTable/CategoriasTable";
 import CreateProduct from "../Admin/CreateProduct/CreateProduct";
 import ProfileAdmin from "../Profile/ProfileAdmin";
 import OrdersTable from "../Admin/Tables/OrdersTable";
+import Stores from "../Admin/Stores/Stores";
+import { Redirect } from "react-router";
+import { Button } from "react-bootstrap";
 const BarraAdmin = () => {
   return (
     <div className={style.container}>
@@ -32,6 +35,9 @@ const BarraAdmin = () => {
         </Tab>
         <Tab eventKey="Añadir producto" title="Añadir producto">
           <CreateProduct />
+        </Tab>
+        <Tab eventKey="Locales" title="Locales">
+          <Button href="/account/stores">Locales</Button>
         </Tab>
       </Tabs>
     </div>

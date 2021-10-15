@@ -15,7 +15,6 @@ import axios from "axios";
 
 import swal from "sweetalert";
 import { useParams } from "react-router";
-import { GET_PRODUCTS } from "../../../redux/actions/types";
 import {
   GET_PRODUCTS_URL,
   ADD_CATEGORY_PRODUCT,
