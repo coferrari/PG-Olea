@@ -3,7 +3,11 @@ import { Link } from "react-router-dom";
 import styles from "./Product.module.css";
 import { Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { updateCart, addToWishlist, removeFromWishlist } from "../../redux/actions/index";
+import {
+  updateCart,
+  addToWishlist,
+  removeFromWishlist,
+} from "../../redux/actions/index";
 import { isAuthorized, decodeToken } from "../../utils/index";
 import { addOrEditCart, removeProductCart } from "../../cart/index";
 import { BsBag, BsBagCheckFill, BsHeart, BsHeartFill } from "react-icons/bs";
@@ -63,18 +67,18 @@ export function Product({
       setRemove(false);
     }
     if (addWishlist) {
-      dispatch(addToWishlist({ id, name, image }))
+      dispatch(addToWishlist({ id, name, image }));
       setAddWishlist(false);
     }
     if (removeWishlist) {
-      dispatch(removeFromWishlist(id))
+      dispatch(removeFromWishlist(id));
       setRemoveWishlist(false);
     }
   }, [add, remove, addWishlist, removeWishlist]);
 
   const isInStore = productsCarrito.findIndex((product) => product.id === id);
 
-  const isInWishlist = wishlist?.findIndex((product) => product.id === id)
+  const isInWishlist = wishlist?.findIndex((product) => product.id === id);
 
   const handleAddToCart = (e) => {
     e.preventDefault();
@@ -103,7 +107,6 @@ export function Product({
     }
   };
 
-
   const searchOffer = (categories) => {
     let descuento = 0;
     categories.map((c) => {
@@ -116,7 +119,6 @@ export function Product({
   };
   var now = new Date().toLocaleDateString();
 
-
   const handleAddFavorite = (e) => {
     e.preventDefault();
     setAddWishlist(true);
@@ -125,11 +127,11 @@ export function Product({
       const username = user.username;
       addToWishlistDB({
         username: username,
-        productId: id
-      })
+        productId: id,
+      });
     }
   };
-  
+
   const handleRemoveFavorite = (e) => {
     e.preventDefault();
     setRemoveWishlist(true);
@@ -138,8 +140,8 @@ export function Product({
       const username = user.username;
       removeFromWishlistDB({
         username: username,
-        productId: id
-      })
+        productId: id,
+      });
     }
   };
 
@@ -214,7 +216,7 @@ export function Product({
                           Math.round((price * searchOffer(categories)) / 100)}
                       </span>
                       <span className={styles.porcentaje}>
-                        {categories[0].offer}% OFF
+                        {categories?.[0].offer}% OFF
                       </span>
                     </div>
                   ) : (

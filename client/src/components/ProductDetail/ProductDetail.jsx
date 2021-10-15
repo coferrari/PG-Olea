@@ -110,7 +110,6 @@ export function ProductDetail() {
     }
   }, [dispatch, add, remove, addWishlist, removeWishlist]);
 
-
   const isInStore = productsCarrito.filter((product) => product.id === id);
   const isInWishlist = wishlist?.findIndex((product) => product.id === id);
 
@@ -211,21 +210,26 @@ export function ProductDetail() {
   var now = new Date().toLocaleDateString();
   return (
     <div className="container">
-      
       <Card>
         <Card.Body className={styles.container}>
           <div className={styles.carousel}>
             <Carousel img={product.image} />
             {validate && isInWishlist >= 0 && (
-        <button className={styles.fav} onClick={(e) => handleRemoveFavorite(e)}>
-          <BsHeartFill className={styles.removefav} />
-        </button>
-      )}
-      {validate && isInWishlist === -1 && (
-        <button className={styles.fav} onClick={(e) => handleAddFavorite(e)}>
-          <BsHeart className={styles.addfav} />
-        </button>
-      )}
+              <button
+                className={styles.fav}
+                onClick={(e) => handleRemoveFavorite(e)}
+              >
+                <BsHeartFill className={styles.removefav} />
+              </button>
+            )}
+            {validate && isInWishlist === -1 && (
+              <button
+                className={styles.fav}
+                onClick={(e) => handleAddFavorite(e)}
+              >
+                <BsHeart className={styles.addfav} />
+              </button>
+            )}
           </div>
           <div className={styles.info}>
             <div>
@@ -261,7 +265,7 @@ export function ProductDetail() {
                             )}
                         </span>
                         <span className={styles.porcentaje}>
-                          {product.categories[0].offer}% OFF
+                          {product.categories?.[0].offer}% OFF
                         </span>
                       </div>
                     ) : (
