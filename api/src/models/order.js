@@ -10,6 +10,10 @@ module.exports = (sequelize) => {
       primaryKey: true,
       autoIncrement: true,
     },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     price: {
       type: DataTypes.DECIMAL,
       allowNull: false,
@@ -19,9 +23,30 @@ module.exports = (sequelize) => {
       allowNull: false,
       defaultValue: "creada",
     },
+    statusPago: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: "pendiente",
+    },
     date: {
       type: DataTypes.DATE,
-      allowNull: true,
+      allowNull: false,
+    },
+    address: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    phone: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    contactName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    contactSurname: {
+      type: DataTypes.STRING,
+      allowNull: false,
     },
   });
 };

@@ -3,16 +3,24 @@ import Products from "../Products/Products";
 import Selects from "../Selects/Selects";
 import { Search } from "../Search/Search";
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts } from "../../redux/actions/index";
+import { getProducts, getWishlist } from "../../redux/actions/index";
 import { useParams } from "react-router";
 import style from "./Home.module.css";
+import { isAuthorized, decodeToken } from "../../utils/index";
 
 const Home = () => {
   const dispatch = useDispatch();
   let products = useSelector((state) => state.productsReducer.products);
   const { attribute, order } = useParams();
+  const validate = isAuthorized();
+
   useEffect(() => {
     dispatch(getProducts());
+    if (validate) {
+      const user = decodeToken();
+      const username = user.username;
+      dispatch(getWishlist({ username }));
+    }
   }, [dispatch]);
 
   // PARA ORDENAR

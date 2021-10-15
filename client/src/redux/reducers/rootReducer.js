@@ -4,13 +4,18 @@ import searchProductsReducer from "./searchProductsReducer";
 import productDetailReducer from "./productDetailReducer";
 import categoryReducer from "./categoryReducer";
 import carritoReducer from "./carritoReducer";
+import orderReducer from "./orderReducer";
+import wishlistReducer from "./wishlistReducer";
+
 
 const rootReducer = combineReducers({
   productsReducer,
   searchProductsReducer,
   productDetailReducer,
   categoryReducer,
-  carritoReducer
+  carritoReducer,
+  orderReducer,
+  wishlistReducer
 });
 
 export default rootReducer;

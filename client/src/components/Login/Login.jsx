@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
-import { Form, Button } from "react-bootstrap";
-import { logIn, logInGoogle } from "../../auth/users";
+import { Form, Button, Modal } from "react-bootstrap";
+import { logIn, logInGoogle, codeLogin } from "../../auth/users";
 import GoogleLogin from "react-google-login";
 import style from "./Login.module.css";
 import { createCartLogin, getByUsername } from "../../cart/index";
@@ -25,7 +25,6 @@ export function validate(input) {
   }
   return errors;
 }
-
 const LoginButton = () => {
   const cartFromLocalStorage = JSON.parse(localStorage.getItem("cart") || "[]");
   const dispatch = useDispatch();
@@ -35,7 +34,10 @@ const LoginButton = () => {
     email: "",
     password: "",
   });
+  const [code, setCode] = useState("");
+  const [smShow, setSmShow] = useState(false);
   const [errors, setErrors] = useState({});
+  const [errorCode, setErrorCode] = useState("");
   const [errorLogin, setErrorLogin] = useState("");
   const handleChange = (e) => {
     setInput({
@@ -49,12 +51,48 @@ const LoginButton = () => {
       })
     );
   };
-
-  // ingresa sesion normal
+  const codeChange = (e) => {
+    setCode(e.target.value);
+  };
+  const codeSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await codeLogin(code);
+      const validate = isAuthorized();
+      history.push("/home");
+      if (validate) {
+        const user = decodeToken();
+        const username = user.username;
+        if (cartFromLocalStorage.length > 0) {
+          createCartLogin({
+            products: cartFromLocalStorage,
+            username: username,
+          });
+        } else if (cartFromLocalStorage.length === 0) {
+          const productsDB = await getByUsername({
+            username: username,
+          });
+          if (productsDB.data.products.length) {
+            localStorage.setItem(
+              "cart",
+              JSON.stringify(productsDB.data.products)
+            );
+            dispatch(updateCart(productsDB.data.products));
+          }
+        }
+      }
+    } catch (err) {
+      setErrorCode("Su codigo es incorrecto o expiro");
+      console.log(err.message);
+    }
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await logIn(input);
+      let x = await logIn(input);
+      if (x.msg) {
+        return setSmShow(true);
+      }
       const validate = isAuthorized();
       history.push("/home");
       if (validate) {
@@ -182,6 +220,40 @@ const LoginButton = () => {
             />
           </div>
           <div className={style.errors}>{errorLogin ? errorLogin : ""}</div>
+          <Modal
+            size="sm"
+            show={smShow}
+            onHide={() => setSmShow(false)}
+            aria-labelledby="example-modal-sizes-title-sm"
+          >
+            <Modal.Header closeButton>
+              <Modal.Title id="example-modal-sizes-title-sm">
+                Confirmacion
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <Form
+                onSubmit={(e) => {
+                  codeSubmit(e);
+                }}
+              >
+                <Form.Group className="mb-3">
+                  <Form.Label>
+                    Se envio un mail a su correo. Ingrese el codigo para
+                    continuar
+                  </Form.Label>
+                  <Form.Control
+                    type="codigo"
+                    placeholder="Ingresar codigo"
+                    name="texto"
+                    onChange={(e) => codeChange(e)}
+                  />
+                </Form.Group>
+                <Button type="submit">Verificar</Button>
+                <div className={style.errors}>{errorCode ? errorCode : ""}</div>
+              </Form>
+            </Modal.Body>
+          </Modal>
         </div>
       </div>
     </div>

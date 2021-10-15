@@ -1,15 +1,16 @@
-const { User, Carrito, Product } = require("../db.js");
+const { User, Carrito, Product, Wishlist} = require("../db.js");
 const { encryptPassword, comparePassword } = require("../helpers/index");
 const jwt = require("jsonwebtoken");
 const { OAuth2Client } = require("google-auth-library");
 const client = new OAuth2Client(
   "699731210579-fq1sd4ijgh6ph842rlc3f0rf86eftdgh.apps.googleusercontent.com"
 );
-const nodemailer = require("nodemailer");
+const getRandomInt = require("../helpers/getRandom");
 const {
   getTemplate,
   sendEmail,
   getTemplateChangePassword,
+  getTemplateAuthenticationAdmin,
 } = require("../helpers/mail");
 const { use } = require("../routes/user.js");
 const userFunction = {};
@@ -42,6 +43,7 @@ userFunction.confirmRegister = async (req, res, next) => {
   const { token } = req.body;
   const verified = jwt.verify(token, process.env.TOKEN_SECRET);
   const carritocreado = await Carrito.create({});
+  const wishlist = await Wishlist.create({})
   const user = await User.create({
     name: verified.name,
     surname: verified.surname,
@@ -51,6 +53,7 @@ userFunction.confirmRegister = async (req, res, next) => {
     admin: false,
   });
   user.setCarrito(carritocreado.dataValues.id);
+  user.setWishlist(wishlist.dataValues.id);
   res.send(user);
 };
 
@@ -82,7 +85,6 @@ userFunction.changePassword = async (req, res, next) => {
     if (user.email === verified.email) {
       const newPasswordEncrypted = await encryptPassword(password);
       user.password = newPasswordEncrypted;
-
       await user.save();
       return res.send("nueva contraseña guardada");
     }
@@ -91,21 +93,65 @@ userFunction.changePassword = async (req, res, next) => {
     next(err);
   }
 };
-
 userFunction.login = async (req, res, next) => {
-  const { email, password } = req.body;
+  const { email } = req.body;
   try {
     const emailFind = await User.findOne({ where: { email } });
+    if (emailFind.admin) {
+      res.json({
+        username: emailFind.username,
+        msg: "Debe revisar el codigo que se le envio al mail",
+      });
+      const code = getRandomInt();
+      const template = getTemplateAuthenticationAdmin(email, code);
+      await sendEmail(email, "Codigo de confirmación", template);
+      emailFind.codeVerification = code;
+      emailFind.save();
+    } else {
+      const token = jwt.sign(
+        {
+          name: emailFind.name,
+          surname: emailFind.surname,
+          username: emailFind.username,
+          admin: emailFind.admin,
+          email: emailFind.email,
+          picture: emailFind.picture,
+          adress: emailFind.adress,
+          phone: emailFind.phone,
+        },
+        process.env.TOKEN_SECRET
+      );
+      return res.header("auth-token", token).json({
+        error: null,
+        data: { token },
+      });
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+userFunction.authenticateLogin = async (req, res, next) => {
+  const { code, username } = req.body;
+  try {
+    const userAdmin = await User.findByPk(username);
+    if (userAdmin.codeVerification !== parseInt(code))
+      return res.json({
+        msg: "Su codigo es incorrecto o expiro",
+      });
+    if (!userAdmin.codeVerification)
+      return res.json({
+        msg: "Su codigo es incorrecto o expiro",
+      });
     const token = jwt.sign(
       {
-        name: emailFind.name,
-        surname: emailFind.surname,
-        username: emailFind.username,
-        admin: emailFind.admin,
-        email: emailFind.email,
-        picture: emailFind.picture,
-        adress: emailFind.adress,
-        phone: emailFind.phone,
+        name: userAdmin.name,
+        surname: userAdmin.surname,
+        username: userAdmin.username,
+        admin: userAdmin.admin,
+        email: userAdmin.email,
+        picture: userAdmin.picture,
+        adress: userAdmin.adress,
+        phone: userAdmin.phone,
       },
       process.env.TOKEN_SECRET
     );
@@ -117,7 +163,6 @@ userFunction.login = async (req, res, next) => {
     next(err);
   }
 };
-
 userFunction.getAll = async (req, res, next) => {
   const users = await User.findAll({
     include: Carrito,
@@ -145,6 +190,7 @@ userFunction.googleLogin = async (req, res, next) => {
 
     if (user === null) {
       const carritocreado = await Carrito.create({});
+      const wishlist = await Wishlist.create({})
       const newPasswordEncrypted = await encryptPassword(at_hash);
       const newUser = await User.create({
         name: given_name,
@@ -156,6 +202,8 @@ userFunction.googleLogin = async (req, res, next) => {
         admin: false,
       });
       newUser.setCarrito(carritocreado.dataValues.id);
+      newUser.setWishlist(wishlist.dataValues.id);
+      
       const token = jwt.sign(
         {
           name: given_name,
@@ -219,7 +267,7 @@ userFunction.logOut = async (req, res, next) => {
 userFunction.updateProfile = async (req, res, next) => {
   try {
     const { name, surname, image, phone, adress } = req.body.usuario;
-    console.log(req.body);
+
     const { token } = req.body;
     const verified = jwt.verify(token, process.env.TOKEN_SECRET);
     const user = await User.findByPk(verified.username);
