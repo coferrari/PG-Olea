@@ -119,6 +119,11 @@ export function getOrderDetails (id) {
       dispatch({
         type: GET_ORDER_DETAILS ,
         payload: response.data,
+      })
+    })
+  }
+}
+
 export function getWishlist(payload) {
   console.log(payload)
   return function (dispatch) {
@@ -128,7 +133,7 @@ export function getWishlist(payload) {
         payload: wishlist.data,
       });
     });
-  };
+  }
 }
 
 export function addToWishlist(product) {
@@ -137,12 +142,14 @@ export function addToWishlist(product) {
     payload: product
   }
 }
+
 export function removeFromWishlist(id) {
   return {
     type: REMOVE_FROM_WISHLIST,
     payload: id
   }
 }
+
 export function clearWishlist() {
   return {
     type: CLEAR_WISHLIST
