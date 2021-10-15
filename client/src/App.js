@@ -105,7 +105,6 @@ function App() {
           <Review />
         </Route>
         <Route exact path="/admin/reviews/:productid">
-          {loggedIn.admin ? <ReviewsTable /> : <Redirect to="/home" />}
         </Route>
         <Route exact path="/admin/editproduct/:productid">
           {loggedIn.admin ? <EditProduct /> : <Redirect to="/home" />}

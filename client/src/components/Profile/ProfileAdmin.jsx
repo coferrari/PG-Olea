@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-
 import { getToken, decodeToken } from "../../utils";
-import ChangePerfil from "./UploadImg";
 import Profile from "./Profile";
 const ProfileAdmin = () => {
   const [usuario, setUsuario] = useState();

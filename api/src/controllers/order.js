@@ -169,16 +169,19 @@ class OrderModel extends Modelo {
     }
   };
   setOrderStatus = async (req, res, next) => {
-    const { status, orderID } = req.body;
+    const { status } = req.body;
+    const { orderid } = req.params;
+    console.log("status", status);
+    console.log("orderid", orderid);
     try {
-      const orden = await this.model.findByPk(orderID, { include: Product });
+      const orden = await this.model.findByPk(orderid, { include: Product });
       orden.update(
         {
           status: status,
         },
         {
           where: {
-            id: orderID,
+            id: orderid,
           },
         }
       );
@@ -209,7 +212,6 @@ class OrderModel extends Modelo {
       next(error);
     }
   };
-
   getUserOrder = async (req, res, next) => {
     const { username } = req.params;
     try {
