@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getProductsByCategory, getCategories } from "../../redux/actions";
+import { getProductsByCategory, getCategories, getWishlist } from "../../redux/actions";
 import Products from "../Products/Products";
 import { useParams, useHistory } from "react-router";
 import style from "../Selects/Selects.module.css";
 import { Search } from "../Search/Search";
 import style2 from "./CategoryProducts.module.css";
-
+import { isAuthorized, decodeToken } from "../../utils/index";
 
 export default function CategoryProduct() {
   const dispatch = useDispatch();

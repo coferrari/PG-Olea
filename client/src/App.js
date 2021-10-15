@@ -126,6 +126,7 @@ function App() {
         </Route>
         <Route exact path="/checkoutconfirm">
           <CheckoutConfirm />
+          </Route>
         <Route exact path="/wishlist">
           <Wishlist />
         </Route>
