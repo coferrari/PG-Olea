@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getAllOrder } from "./../../../cart/index";
-import { filterByStatus } from "../../../order";
+import { filterByStatus, orderByDate } from "../../../order";
 import Table from "react-bootstrap/Table";
 import { Button, Modal, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
@@ -32,21 +32,24 @@ function OrdersTable() {
   }, []);
 
   const filterOrdersbyStatus = async (e) => {
-    let select = e.target.value;
-    console.log(select);
-    if (select === "Todo") {
-      return getAllOrders();
+    let select = e.target.value
+    if(select==="Todo"){
+      getAllOrders()
     }
-    let ordersFiltered = await filterByStatus(select);
-    console.log(ordersFiltered);
-    !ordersFiltered && alert("No hay órdenes con ese estado");
-    ordersFiltered && setOrder(ordersFiltered);
-    // if(ordersFiltered===[]){
-    //   alert("No hay órdenes con ese estado")
-    // } else {
-    //   setOrder(ordersFiltered)
-    // }
-  };
+    let ordersFiltered =  await filterByStatus (select);
+    !ordersFiltered && alert("No hay órdenes con ese estado")
+    ordersFiltered && setOrder(ordersFiltered)
+  }
+
+  const handleorderByDate = async (e) => {
+    let select = e.target.value
+    console.log(select)
+    let ordenesByDate = await orderByDate(select)
+    console.log(ordenesByDate)
+    setOrder(ordenesByDate)
+  }
+
+ 
 
   return (
     <div>
@@ -69,6 +72,11 @@ function OrdersTable() {
             <option value="procesando">Procesando</option>
             <option value="cancelada">Canceladas</option>
             <option value="finalizada">Finalizadas</option>
+          </select>
+          {/* ORDEN POR FECHA */}
+          <select class="form-select" aria-label="Default select example" onChange={(e)=>{handleorderByDate(e)}}>
+            <option selected value="masReciente">Más recientes</option>
+            <option value="menosReciente">Menos Recientes</option>
           </select>
 
           <Table striped bordered hover>

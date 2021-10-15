@@ -5,6 +5,7 @@ import {
   FILTER_BY_STATUS,
   GET_ORDER_DETAILS_URL,
   GET_USER_ORDERS,
+  ORDER_BY_DATE
 } from "../consts";
 
 export const createOrder = async (payload) => {
@@ -29,5 +30,10 @@ export const filterByStatus = async (status) => {
 export const getUserOrder = async (username) => {
   console.log(username);
   const userOrders = await axios.get(`${GET_USER_ORDERS}/${username}`);
+  return userOrders.data;
+};
+
+export const orderByDate = async (opcion) => {
+  const userOrders = await axios.get(`${ORDER_BY_DATE}/${opcion}`);
   return userOrders.data;
 };
