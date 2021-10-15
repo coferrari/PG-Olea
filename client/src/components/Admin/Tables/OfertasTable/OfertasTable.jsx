@@ -28,8 +28,6 @@ function OfertasTable() {
     });
   };
   const onSubmitProduct = (e) => {
-    e.preventDefault();
-
     if (!productOff.idProduct && !productOff.offProduct && !value) {
       alert("faltan parametros");
     }
@@ -49,7 +47,6 @@ function OfertasTable() {
   };
   const onSubmitCat = (e) => {
     e.preventDefault();
-
     if (!offCat.idCat && !offCat.offCat && !value) {
       alert("faltan parametros");
     }
@@ -83,9 +80,9 @@ function OfertasTable() {
                   </option>
                 ))}
             </select>
-            <span>Porcentaje de descuento</span>
             <input
               type="range"
+              defaultValue="0"
               min={0}
               max={100}
               step={5}
@@ -93,7 +90,7 @@ function OfertasTable() {
               name="offProduct"
               onChange={(e) => onChangeProduct(e)}
             />
-
+            <label>{productOff.offProduct} % de descuento</label>
             <Button type="submit">Enviar</Button>
           </form>
         </Tab>
@@ -110,8 +107,8 @@ function OfertasTable() {
                 ))}
             </select>
 
-            <span>Porcentaje de descuento</span>
             <input
+              defaultValue="0"
               type="range"
               min={0}
               max={100}
@@ -120,7 +117,7 @@ function OfertasTable() {
               name="offCat"
               onChange={(e) => onChangeCat(e)}
             />
-
+            <label> {offCat.offCat} % de descuento</label>
             <Button type="submit">Enviar</Button>
           </form>
         </Tab>
