@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { getAllOrder } from "./../../../cart/index";
-import { filterByStatus, orderByDate } from "../../../order";
+import { filterByStatus, getUserOrder, orderByDate } from "../../../order";
 import Table from "react-bootstrap/Table";
 import { Button, Modal, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { changeStatusOrder } from "../../../auth/admin";
 import swal from "sweetalert";
+import { GoSearch } from "react-icons/go";
+import style from "../../Search/Search.module.css";
+
+
 function OrdersTable() {
   const [order, setOrder] = useState();
   const [show, setShow] = useState(false);
@@ -31,25 +35,36 @@ function OrdersTable() {
     getAllOrders();
   }, []);
 
+  const [search, setSearch] = useState("");
+
+  const handleChange = function (e) {
+    setSearch(e.target.value);
+  };
+
   const filterOrdersbyStatus = async (e) => {
     let select = e.target.value
-    if(select==="Todo"){
+    if (select === "Todo") {
       getAllOrders()
     }
-    let ordersFiltered =  await filterByStatus (select);
+    let ordersFiltered = await filterByStatus(select);
     !ordersFiltered && alert("No hay órdenes con ese estado")
     ordersFiltered && setOrder(ordersFiltered)
   }
 
   const handleorderByDate = async (e) => {
     let select = e.target.value
-    console.log(select)
     let ordenesByDate = await orderByDate(select)
-    console.log(ordenesByDate)
     setOrder(ordenesByDate)
   }
+  const handleSearch = async (e) => {
+    e.preventDefault()
+    console.log(search)
+    const userSearch = await getUserOrder(search)
+    console.log(userSearch)
+    setOrder(userSearch)
+  }
 
- 
+
 
   return (
     <div>
@@ -57,6 +72,27 @@ function OrdersTable() {
         <h1>No hay ordenes activas</h1>
       ) : (
         <div>
+          {/* BUSCARDOR */}
+          <div>
+            <input
+              className={style.search}
+              type="text"
+              name="name"
+              value={input.name}
+              placeholder="buscar órdenes de usuario..."
+              onChange={handleChange}
+            />
+            <button
+              //disabled={!input.name ? true : false}
+              className={style.bntsearch}
+              onClick={(e) => {
+                handleSearch(e)
+              }}
+            >
+              <GoSearch className={style.iconsearch} />
+            </button>
+          </div>
+
           {/* FILTROS */}
           <select
             class="form-select"
@@ -74,7 +110,7 @@ function OrdersTable() {
             <option value="finalizada">Finalizadas</option>
           </select>
           {/* ORDEN POR FECHA */}
-          <select class="form-select" aria-label="Default select example" onChange={(e)=>{handleorderByDate(e)}}>
+          <select class="form-select" aria-label="Default select example" onChange={(e) => { handleorderByDate(e) }}>
             <option selected value="masReciente">Más recientes</option>
             <option value="menosReciente">Menos Recientes</option>
           </select>
