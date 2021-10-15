@@ -42,7 +42,7 @@ function OrdersTable() {
               <th>Usuario</th>
               <th>Contacto</th>
               <th>Teléfono</th>
-              <th>Precio</th>
+              <th>Precio total</th>
               <th>Estado de orden</th>
               <th>Fecha</th>
               <th>Modificar</th>
@@ -59,7 +59,7 @@ function OrdersTable() {
                   <td>{o.userUsername}</td>
                   <td>{o.contactName + " " + o.contactSurname}</td>
                   <td>{o.phone}</td>
-                  <td>{o.price}</td>
+                  <td>${o.price}</td>
                   <td>{o.status}</td>
                   <td>{o.date.split("T")[0]}</td>
                   <td>
