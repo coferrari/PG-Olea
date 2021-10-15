@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Product } from "../Product/Product";
 import styles from "./Products.module.css";
 import { Pagination } from "../Pagination/Pagination";
@@ -12,41 +12,47 @@ export default function Products({ products }) {
     window.screen.width < 500 && setElementsPerPage(6);
     window.screen.width > 1400 && setElementsPerPage(15);
   }, [window.screen.width]);
-  
+
   // PARA PAGINAR ----------------------------------------------------------
 
   const indexOfLastElement = currentPage * elementsPerPage;
   const indexOfFirstElement = indexOfLastElement - elementsPerPage;
-  
-  const currentElements = products.slice(indexOfFirstElement, indexOfLastElement);
-  
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+  const currentElements = products.slice(
+    indexOfFirstElement,
+    indexOfLastElement
+  );
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div>
-    <div className={styles.center}>
-      <div className={styles.container}>
-        {currentElements?.map((p) => {
-          return (
-            <Product
-              key={p.id}
-              id={p.id}
-              name={p.name}
-              image={p.image[0]}
-              price={p.price}
-              stock={p.stock}
-              categories={p.categories}
-              offer={p.offer}
-              offerday={p.categories[0].offerday}
-              categoryOff={p.categories[0].offer}
-              productOff={p.offerday}
-            />
-          );
-        })}
+      <div className={styles.center}>
+        <div className={styles.container}>
+          {currentElements?.map((p) => {
+            return (
+              <Product
+                key={p.id}
+                id={p.id}
+                name={p.name}
+                image={p.image[0]}
+                price={p.price}
+                stock={p.stock}
+                categories={p.categories}
+                offer={p.offer}
+                offerday={p.categories?.[0].offerday}
+                categoryOff={p.categories?.[0].offer}
+                productOff={p.offerday}
+              />
+            );
+          })}
+        </div>
       </div>
-    </div>
-    <Pagination elementsPerPage={elementsPerPage} totalElements={products.length} paginate={paginate} />
+      <Pagination
+        elementsPerPage={elementsPerPage}
+        totalElements={products.length}
+        paginate={paginate}
+      />
     </div>
   );
 }
