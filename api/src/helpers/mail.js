@@ -87,6 +87,7 @@ const getTemplateAuthenticationAdmin = (name, code) => {
   </div>`;
 };
 const getTemplateAproved = (name, price) => {
+
   return `
   <head>
       <link rel="stylesheet" href="./style.css">
@@ -113,8 +114,10 @@ module.exports = {
   sendEmail,
   getTemplate,
   getTemplateChangePassword,
+  getTemplateProductLetter,
   getTemplateAdminChangePassword,
   getTemplateAproved,
   getTemplateAuthenticationAdmin,
   getTemplateRejected,
+
 };

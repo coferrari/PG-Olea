@@ -87,3 +87,35 @@ export const updateCategory = async (id, nameCategory) => {
   );
   return res.data;
 };
+export const productOfert = async (product, offert, date) => {
+  const res = await axios.post(
+    `/api/news/ofertproduct`,
+    {
+      product: product,
+      offert: offert,
+      fecha: date,
+    },
+    {
+      headers: {
+        authorization: getToken(),
+      },
+    }
+  );
+  return res;
+};
+export const categoryOfert = async (category, offert, date) => {
+  const res = await axios.post(
+    `/api/news/ofertcategory`,
+    {
+      category: category,
+      offert: offert,
+      fecha: date,
+    },
+    {
+      headers: {
+        authorization: getToken(),
+      },
+    }
+  );
+  return res;
+};

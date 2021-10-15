@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt");
-const { User, Carrito } = require("../src/db");
+const { User, Carrito, Wishlist } = require("../src/db");
 
 const userMockUp = async () => {
   const hashedPasswordA = await bcrypt.hash("123Usuario", 12);
@@ -12,10 +12,10 @@ const userMockUp = async () => {
       admin: false,
     });
     const carritocreado = await Carrito.create({});
+
    // const wishlistfranco = await Wishlist.create({});
     franco.setCarrito(carritocreado.dataValues.id);
     //franco.setWishlist(wishlistfranco.dataValues.id);
-
     const dibu = await User.create({
       name: "Probando Usuario",
       username: "Dibu",
@@ -24,10 +24,10 @@ const userMockUp = async () => {
       admin: false,
     });
     const carritodibu = await Carrito.create({});
+
     //const wishlistdibu = await Wishlist.create({});
     dibu.setCarrito(carritodibu.dataValues.id);
     //dibu.setWishlist(wishlistdibu.dataValues.id);
-
     const elena = await User.create({
       name: "Probando Usuario",
       username: "Elena",
@@ -67,6 +67,7 @@ const adminMockUp = async () => {
       email: "dylans55@hotmail.com",
       password: hashedPasswordB,
       admin: true,
+      newsLetter: true,
     });
     //const wishlistdylan = await Wishlist.create({});
     const carritodylan = await Carrito.create({});
