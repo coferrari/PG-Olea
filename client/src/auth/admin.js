@@ -94,11 +94,13 @@ export const changeStatusOrder = async (id, status) => {
     `/api/order/setorder/status/${id}`,
     {
       status: status,
-    }, {
+    },
+    {
       headers: {
         authorization: getToken(),
       },
     }
+  );
   return res.data;
 };
 export const productOfert = async (product, offert, date) => {
@@ -116,7 +118,7 @@ export const productOfert = async (product, offert, date) => {
     }
   );
   return res.data;
-}
+};
 export const categoryOfert = async (category, offert, date) => {
   const res = await axios.post(
     `/api/news/ofertcategory`,
