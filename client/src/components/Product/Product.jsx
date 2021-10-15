@@ -3,20 +3,22 @@ import { Link } from "react-router-dom";
 import styles from "./Product.module.css";
 import { Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { updateCart } from "../../redux/actions/index";
+import { updateCart, addToWishlist, removeFromWishlist } from "../../redux/actions/index";
 import { isAuthorized, decodeToken } from "../../utils/index";
 import { addOrEditCart, removeProductCart } from "../../cart/index";
 import { BsBag, BsBagCheckFill, BsHeart, BsHeartFill } from "react-icons/bs";
+import { addToWishlistDB, removeFromWishlistDB } from "../../wishlist/index";
 
 export function Product({ id, name, image, price, stock }) {
   const [add, setAdd] = useState(false);
   const [remove, setRemove] = useState(false);
+  const [addWishlist, setAddWishlist] = useState(false);
+  const [removeWishlist, setRemoveWishlist] = useState(false);
   const dispatch = useDispatch();
   const quantity = 1;
   const validate = isAuthorized();
-  //favorite
-  const [favorite, setFavorite] = useState(false);
   const { productsCarrito } = useSelector((state) => state.carritoReducer);
+  const { wishlist } = useSelector((state) => state.wishlistReducer);
 
   useEffect(() => {
     if (add) {
@@ -38,9 +40,19 @@ export function Product({ id, name, image, price, stock }) {
       dispatch(updateCart(cartRemoved));
       setRemove(false);
     }
-  }, [add, remove]);
+    if (addWishlist) {
+      dispatch(addToWishlist({ id, name, image }))
+      setAddWishlist(false);
+    }
+    if (removeWishlist) {
+      dispatch(removeFromWishlist(id))
+      setRemoveWishlist(false);
+    }
+  }, [add, remove, addWishlist, removeWishlist]);
 
   const isInStore = productsCarrito.findIndex((product) => product.id === id);
+
+  const isInWishlist = wishlist?.findIndex((product) => product.id === id)
 
   const handleAddToCart = (e) => {
     e.preventDefault();
@@ -69,23 +81,37 @@ export function Product({ id, name, image, price, stock }) {
     }
   };
 
-  //////
-
   const handleAddFavorite = (e) => {
     e.preventDefault();
-    setFavorite(true);
+    setAddWishlist(true);
+    if (validate) {
+      const user = decodeToken();
+      const username = user.username;
+      addToWishlistDB({
+        username: username,
+        productId: id
+      })
+    }
   };
+  
   const handleRemoveFavorite = (e) => {
     e.preventDefault();
-    setFavorite(false);
+    setRemoveWishlist(true);
+    if (validate) {
+      const user = decodeToken();
+      const username = user.username;
+      removeFromWishlistDB({
+        username: username,
+        productId: id
+      })
+    }
   };
 
   return (
     <div className={styles.container}>
       <div className={stock === 0 ? styles.sinstock : null}>
         <Card className={styles.card}>
-          {/* favorite */}
-          {favorite && (
+          {validate && isInWishlist >= 0 && (
             <button
               className={styles.fav}
               onClick={(e) => handleRemoveFavorite(e)}
@@ -93,7 +119,7 @@ export function Product({ id, name, image, price, stock }) {
               <BsHeartFill className={styles.removefav} />
             </button>
           )}
-          {!favorite && (
+          {validate && isInWishlist === -1 && (
             <button
               className={styles.fav}
               onClick={(e) => handleAddFavorite(e)}
@@ -101,7 +127,6 @@ export function Product({ id, name, image, price, stock }) {
               <BsHeart className={styles.addfav} />
             </button>
           )}
-          {/* termina favorite */}
           {isInStore === -1 && stock > 0 && (
             <button
               className={styles.cart}

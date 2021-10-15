@@ -30,6 +30,8 @@ import Footer from "./components/Footer/Footer";
 import BarraAdmin from "./components/Profile/BarraAdmin";
 import OrderDetail from "./components/OrderDetail/OrderDetail";
 import CheckoutConfirm from "./components/Checkout/CheckoutConfirm";
+import Wishlist from "./components/Wishlist/Wishlist";
+
 
 function App() {
   const loggedIn = decodeToken();
@@ -125,6 +127,8 @@ function App() {
         </Route>
         <Route exact path="/checkoutconfirm">
           <CheckoutConfirm />
+        <Route exact path="/wishlist">
+          <Wishlist />
         </Route>
       </Switch>
     </div>
