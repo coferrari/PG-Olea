@@ -9,15 +9,23 @@ const checkoutControllers = {}
 
 
 checkoutControllers.pago = (req, res) => {
-    let items = req.body
+    let itemsCheckout = req.body[0]
+    let idOrden = req.body[1]
     let preference = {
-        items: items.map(i => {
+        items: itemsCheckout.map(i => {
             return {
                 title: i.name,
                 unit_price: parseInt(i.price),
                 quantity: i.quantity,
             }
-        })
+        }),
+        back_urls: {
+            "success": "http://localhost:3000/checkoutconfirm",
+            "failure": "http://localhost:3000/checkoutconfirm",
+            "pending": "http://localhost:3000/checkoutconfirm"
+        },
+        auto_return: "approved",
+        external_reference: idOrden.toString(),
     }
     mercadopago.preferences.create(preference)
         .then(function (respuesta) {
@@ -26,7 +34,6 @@ checkoutControllers.pago = (req, res) => {
         }).catch(function (error) {
             (error);
         });
-
 }
 
 module.exports = checkoutControllers;

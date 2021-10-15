@@ -16,6 +16,7 @@ module.exports = (sequelize) => {
     },
     offer: {
       type: DataTypes.INTEGER,
+      defaultValue: 0,
       validate: {
         min: 0,
         max: 100,

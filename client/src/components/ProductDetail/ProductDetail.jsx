@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
-import { clearDetail, getProductDetail } from "../../redux/actions/index";
+import {
+  clearDetail,
+  getProductDetail,
+  addToWishlist,
+  removeFromWishlist,
+} from "../../redux/actions/index";
 import {
   Card,
   ListGroup,
@@ -12,19 +17,23 @@ import {
 } from "react-bootstrap";
 import Carousel from "../../components/Carousel/Carousel";
 import { AiFillHtml5, AiFillStar } from "react-icons/ai";
-import { updateCart } from "../../redux/actions/index";
+import { updateCart, getWishlist } from "../../redux/actions/index";
 import { isAuthorized, decodeToken } from "../../utils/index";
 import { addOrEditCart, removeProductCart } from "../../cart/index";
 import { reviewsByProduct } from "../../utils/reviews";
 import Comment from "./CommentReviews.jsx";
 import style from "./ProductReview.module.css";
 import styles from "./ProductDetail.module.css";
+import { BsHeart, BsHeartFill } from "react-icons/bs";
+import { addToWishlistDB, removeFromWishlistDB } from "../../wishlist/index";
 
 export function ProductDetail() {
   const dispatch = useDispatch();
   const { idParams } = useParams();
   const [add, setAdd] = useState(false);
   const [remove, setRemove] = useState(false);
+  const [addWishlist, setAddWishlist] = useState(false);
+  const [removeWishlist, setRemoveWishlist] = useState(false);
   const [reseñas, setReseñas] = useState();
   const [lgShow, setLgShow] = useState(false);
   const [puntuacion, setPuntuacion] = useState([0, 0, 0, 0, 0]);
@@ -32,22 +41,51 @@ export function ProductDetail() {
   const product = useSelector(
     (state) => state.productDetailReducer.productDetail
   );
-  const { id, image, name, price, stock } = useSelector(
-    (state) => state.productDetailReducer.productDetail
-  );
+  const {
+    id,
+    image,
+    name,
+    price,
+    stock,
+    offer,
+    offerday,
+    productOff,
+    categories,
+  } = useSelector((state) => state.productDetailReducer.productDetail);
   const { productsCarrito } = useSelector((state) => state.carritoReducer);
+  const { wishlist } = useSelector((state) => state.wishlistReducer);
   const quantity = 1;
+
   const getReviews = async (id) => {
     const reviews = await reviewsByProduct(id);
     setReseñas(reviews);
   };
 
   useEffect(() => {
+    if (validate) {
+      const user = decodeToken();
+      const username = user.username;
+      dispatch(getWishlist({ username }));
+    }
+  }, [dispatch]);
+
+  useEffect(() => {
     if (add) {
       const cartFromLocalStorage = JSON.parse(localStorage.getItem("cart"));
       const cartAdded = [
         ...cartFromLocalStorage,
-        { id, name, image, price, quantity, stock },
+        {
+          id,
+          name,
+          image,
+          price,
+          quantity,
+          stock,
+          offer,
+          offerday,
+          productOff: offerday,
+          categories,
+        },
       ];
       localStorage.setItem("cart", JSON.stringify(cartAdded));
       dispatch(updateCart(cartAdded));
@@ -62,15 +100,18 @@ export function ProductDetail() {
       dispatch(updateCart(cartRemoved));
       setRemove(false);
     }
-  }, [dispatch, add, remove, id, image, name, price]);
-
-  // useEffect(() => {
-  //   return () => {
-  //     dispatch(clearDetail());
-  //   };
-  // }, []);
+    if (addWishlist) {
+      dispatch(addToWishlist({ id, name, image }));
+      setAddWishlist(false);
+    }
+    if (removeWishlist) {
+      dispatch(removeFromWishlist(id));
+      setRemoveWishlist(false);
+    }
+  }, [dispatch, add, remove, addWishlist, removeWishlist]);
 
   const isInStore = productsCarrito.filter((product) => product.id === id);
+  const isInWishlist = wishlist?.findIndex((product) => product.id === id);
 
   const handleAddToCart = (e) => {
     e.preventDefault();
@@ -98,6 +139,33 @@ export function ProductDetail() {
       });
     }
   };
+
+  const handleAddFavorite = (e) => {
+    e.preventDefault();
+    setAddWishlist(true);
+    if (validate) {
+      const user = decodeToken();
+      const username = user.username;
+      addToWishlistDB({
+        username: username,
+        productId: id,
+      });
+    }
+  };
+
+  const handleRemoveFavorite = (e) => {
+    e.preventDefault();
+    setRemoveWishlist(true);
+    if (validate) {
+      const user = decodeToken();
+      const username = user.username;
+      removeFromWishlistDB({
+        username: username,
+        productId: id,
+      });
+    }
+  };
+
   const Rating = () => {
     const x = reseñas?.reduce((acc, el) => {
       return acc + parseInt(el.rating);
@@ -126,22 +194,42 @@ export function ProductDetail() {
   }, [dispatch, idParams]);
 
   const searchOffer = (categories) => {
-    let descuento = 0;
-    categories.map((c) => {
-      if (c.offer !== null) {
-        descuento = c.offer;
-      }
-    });
+    if (categories) {
+      let descuento = 0;
 
-    return descuento;
+      categories.map((c) => {
+        if (c.offer !== null) {
+          descuento = c.offer;
+        }
+      });
+
+      return descuento;
+    }
+    return "";
   };
-  console.log(product);
+  var now = new Date().toLocaleDateString();
   return (
     <div className="container">
       <Card>
         <Card.Body className={styles.container}>
           <div className={styles.carousel}>
             <Carousel img={product.image} />
+            {validate && isInWishlist >= 0 && (
+              <button
+                className={styles.fav}
+                onClick={(e) => handleRemoveFavorite(e)}
+              >
+                <BsHeartFill className={styles.removefav} />
+              </button>
+            )}
+            {validate && isInWishlist === -1 && (
+              <button
+                className={styles.fav}
+                onClick={(e) => handleAddFavorite(e)}
+              >
+                <BsHeart className={styles.addfav} />
+              </button>
+            )}
           </div>
           <div className={styles.info}>
             <div>
@@ -154,20 +242,37 @@ export function ProductDetail() {
               </Card.Text>
               <ListGroup className="list-group-flush">
                 <ListGroupItem className={styles.price}>
-                  {searchOffer(product.categories) > 0 ? (
-                    <div>
-                      <span className={styles.oldprice}>${price}</span>
-                      <span className={styles.descuento}>
-                        $
-                        {price -
-                          Math.round(
-                            (price * searchOffer(product.categories)) / 100
-                          )}
-                      </span>
-                      <span className={styles.porcentaje}>
-                        {product.categories[0].offer}% OFF
-                      </span>
-                    </div>
+                  {now === product.offerday ||
+                  now === product.categories?.[0].offerday ? (
+                    product.offer > searchOffer(product.categories) ? (
+                      <div>
+                        <span className={styles.oldprice}>${price}</span>
+                        <span className={styles.descuento}>
+                          ${price - Math.round((price * product.offer) / 100)}
+                        </span>
+                        <span className={styles.porcentaje}>
+                          {product.offer}% OFF
+                        </span>
+                      </div>
+                    ) : searchOffer(product.categories) > 0 ? (
+                      <div>
+                        <span className={styles.oldprice}>${price}</span>
+                        <span className={styles.descuento}>
+                          $
+                          {price -
+                            Math.round(
+                              (price * searchOffer(product.categories)) / 100
+                            )}
+                        </span>
+                        <span className={styles.porcentaje}>
+                          {product.categories?.[0].offer}% OFF
+                        </span>
+                      </div>
+                    ) : (
+                      <div>
+                        <span>${price}</span>
+                      </div>
+                    )
                   ) : (
                     <div>Precio: ${product?.price} </div>
                   )}

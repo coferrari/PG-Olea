@@ -17,14 +17,12 @@ class CategoryModel extends Modelo {
   };
   filterByCategory = async (req, res, next) => {
     try {
-      let productsFiltered = await Product.findAll({
+      let products = await Product.findAll({
         include: {
           model: Category,
         },
       });
-      productsFiltered = productsFiltered.filter(
-        (p) => p.categories[0].nameCategory === req.params.category
-      );
+      const productsFiltered = products.filter(p => p.categories.find(c => c.nameCategory === req.params.category));
       res.send(productsFiltered);
     } catch (error) {
       next(error);
@@ -72,7 +70,7 @@ class CategoryModel extends Modelo {
         const producto = await Product.findByPk(productID);
         await Product.findOne({
           where: {
-            id: productID,
+            id: parseInt(productID),
           },
           include: { model: Category },
         });
@@ -85,6 +83,7 @@ class CategoryModel extends Modelo {
   };
   inOffer = async (req, res, next) => {
     const { categoryID, inOffer, offerDay } = req.body;
+    console.log(categoryID, inOffer, offerDay);
     try {
       const category = await this.model.findByPk(categoryID);
       await category.update({
@@ -92,6 +91,18 @@ class CategoryModel extends Modelo {
         offerday: offerDay,
       });
       res.status(200).send(category);
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  getOffers = async (req, res, next) => {
+    const { offerday } = req.body;
+
+    try {
+      const ofertas = await this.model.findAll({ where: { offerday } });
+      const ofertasProductos = await Product.findAll({ where: { offerday } });
+      res.status(200).send(ofertasProductos.concat(ofertas));
     } catch (err) {
       next(err);
     }

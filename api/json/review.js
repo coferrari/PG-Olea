@@ -28,7 +28,6 @@ const reviewsMockUp = async () => {
     opinion: "normal",
   });
   n5.setUser("Elena");
-
   const n7 = await Reviews.create({
     productId: 1,
     comment: "es malisimo este producto!",

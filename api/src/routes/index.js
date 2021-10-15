@@ -14,6 +14,7 @@ const carritodetailRoutes = require("./carrito");
 const checkoutRoutes = require("./checkout");
 const reviewsRoutes = require("./reviews");
 const newsLettersRoutes = require("./newsLetters");
+const wishlistRoutes = require("./wishlist");
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 router.use("/user", userRoutes);
@@ -25,4 +26,7 @@ router.use("/carrito", carritodetailRoutes);
 router.use("/checkout", checkoutRoutes);
 router.use("/reviews", reviewsRoutes);
 router.use("/news", newsLettersRoutes);
+router.use("/wishlist", wishlistRoutes);
+
+
 module.exports = router;

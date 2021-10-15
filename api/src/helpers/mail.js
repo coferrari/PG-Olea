@@ -75,8 +75,7 @@ const getTemplateAdminChangePassword = (name, token) => {
   </div>
 `;
 };
-
-const getTemplateProductLetter = (name, fecha, product, offert) => {
+const getTemplateAuthenticationAdmin = (name, code) => {
   return `
   <head>
       <link rel="stylesheet" href="./style.css">
@@ -84,12 +83,11 @@ const getTemplateProductLetter = (name, fecha, product, offert) => {
   
   <div id="email___content">
       <h2>Hola ${name}</h2>
-      <p>El dia ${fecha} el producto ${product} se encontrara con un ${offert}% de descuento!</p>
-      <p><a href="https://somosolea.vercel.app/" target="_blank">Visite nuestra página!</a></p>
-  </div>
-  `;
+      <p>Para continuar con su inicio de sesion ingrese el siguiente codigo ${code}</p>
+  </div>`;
 };
-const getTemplateCategoryLetter = (name, fecha, category, offert) => {
+const getTemplateAproved = (name, price) => {
+
   return `
   <head>
       <link rel="stylesheet" href="./style.css">
@@ -97,10 +95,20 @@ const getTemplateCategoryLetter = (name, fecha, category, offert) => {
   
   <div id="email___content">
       <h2>Hola ${name}</h2>
-      <p>El dia ${fecha} toda la categoria ${category} se encontrara con un ${offert}% de descuento!</p>
-      <p><a href="https://somosolea.vercel.app/" target="_blank">Visite nuestra página!</a></p>
-  </div>
-  `;
+      <p>Queriamos avisarte que tu compra por ${price} se completo exitosamente!</p>
+      <a href="https://somosolea.vercel.app/">Visite nuestra pagina!</a>
+  </div>`;
+};
+const getTemplateRejected = (name, price) => {
+  return `
+  <head>
+      <link rel="stylesheet" href="./style.css">
+  </head>
+  <div id="email___content">
+      <h2>Hola ${name}</h2>
+      <p>Queriamos avisarte que hubo un problema en tu compra.. Intentelo nuevamente!</p>
+      <a href="https://somosolea.vercel.app/">Visite nuestra pagina!</a>
+  </div>`;
 };
 module.exports = {
   sendEmail,
@@ -108,5 +116,8 @@ module.exports = {
   getTemplateChangePassword,
   getTemplateProductLetter,
   getTemplateAdminChangePassword,
-  getTemplateCategoryLetter,
+  getTemplateAproved,
+  getTemplateAuthenticationAdmin,
+  getTemplateRejected,
+
 };

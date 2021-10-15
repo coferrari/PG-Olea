@@ -1,12 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { updateCart } from "../../redux/actions/index";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import style from "./ItemCart.module.css";
 import { Button } from "react-bootstrap";
 import { isAuthorized, decodeToken } from "../../utils/index";
 import { addOrEditCart, removeProductCart } from "../../cart/index";
 
-const ItemCart = ({ id, name, image, price, quantity, stock }) => {
+const ItemCart = ({
+  id,
+  name,
+  image,
+  price,
+  quantity,
+  stock,
+  descuentoProducto,
+  diaDescuentoCategoria,
+  diaDescuentoProducto,
+  descuentoCategoria,
+  categories,
+}) => {
   const dispatch = useDispatch();
   const [remove, setRemove] = useState(false);
   const validate = isAuthorized();
@@ -21,7 +33,14 @@ const ItemCart = ({ id, name, image, price, quantity, stock }) => {
   if (index >= 0) {
     cartFromLocalStorage[index].quantity = q;
   }
-
+  if (index >= 0) {
+    var descuentoCategoriaBD =
+      cartFromLocalStorage[index].categories?.[0].offer;
+    var diaDescuentoCategoriaBD =
+      cartFromLocalStorage[index].categories?.[0].offerday;
+    var descuentoProductoBD = cartFromLocalStorage[index].offer;
+    var diaDescuentoProductoBD = cartFromLocalStorage[index].offerday;
+  }
   // me va actualizando las cantidades del carrito
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cartFromLocalStorage));
@@ -98,7 +117,9 @@ const ItemCart = ({ id, name, image, price, quantity, stock }) => {
     }
     return str.split("").reverse().join("");
   };
-
+  var now = new Date().toLocaleDateString();
+  var precio = parseInt(price);
+  console.log(diaDescuentoProducto, "toni");
   return (
     <div className={style.container}>
       <div>
@@ -116,11 +137,54 @@ const ItemCart = ({ id, name, image, price, quantity, stock }) => {
         <h4 className={style.name}>{name}</h4>
         <p className={style.price}>
           ${" "}
-          {q
-            ? format(price * q)
-            : format(
-                price * cartFromLocalStorage[index].Carrito_Products.quantity
-              )}
+          {q ? (
+            now === diaDescuentoProducto || now === diaDescuentoCategoria ? (
+              (console.log(descuentoProducto, descuentoCategoria),
+              descuentoProducto > descuentoCategoria ? (
+                <span className={style.descuento}>
+                  {format(
+                    precio * q -
+                      Math.round((precio * descuentoProducto) / 100) * q
+                  )}
+                </span>
+              ) : (
+                <span className={style.descuento}>
+                  {format(
+                    precio * q -
+                      Math.round((precio * descuentoCategoria) / 100) * q
+                  )}
+                </span>
+              ))
+            ) : (
+              format(precio * q)
+            )
+          ) : now === diaDescuentoProductoBD ||
+            now === diaDescuentoCategoriaBD ? (
+            descuentoProductoBD > descuentoCategoriaBD ? (
+              <span className={style.descuento}>
+                {format(
+                  precio *
+                    cartFromLocalStorage[index].Carrito_Products.quantity -
+                    Math.round((precio * descuentoProductoBD) / 100) *
+                      cartFromLocalStorage[index].Carrito_Products.quantity
+                )}
+              </span>
+            ) : (
+              <span className={style.descuento}>
+                $
+                {format(
+                  precio *
+                    cartFromLocalStorage[index].Carrito_Products.quantity -
+                    Math.round((precio * descuentoCategoriaBD) / 100) *
+                      cartFromLocalStorage[index].Carrito_Products.quantity
+                )}
+              </span>
+            )
+          ) : (
+            format(
+              precio * cartFromLocalStorage[index].Carrito_Products.quantity
+            )
+          )}
         </p>
         <p className={style.stock}>* {stock} en stock</p>
         <div className={style.btncontainer}>

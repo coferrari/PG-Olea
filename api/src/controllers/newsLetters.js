@@ -5,6 +5,7 @@ const {
 } = require("../helpers/mail");
 const { sendEmail } = require("../helpers/mail");
 const newsLetter = {};
+
 newsLetter.getAll = async (req, res, next) => {
   try {
     const allUsers = await User.findAll({
@@ -78,3 +79,4 @@ newsLetter.suscribeNewsLetter = async (req, res, next) => {
 };
 
 module.exports = newsLetter;
+
