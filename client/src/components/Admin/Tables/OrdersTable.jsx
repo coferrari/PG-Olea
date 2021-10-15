@@ -47,6 +47,7 @@ function OrdersTable() {
     //   setOrder(ordersFiltered)
     // }
   };
+
   return (
     <div>
       {order === undefined ? (
