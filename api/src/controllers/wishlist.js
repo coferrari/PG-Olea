@@ -51,4 +51,6 @@ class WishlistModel extends Modelo {
 
 const wishlistControllers = new WishlistModel(Wishlist);
 
+
 module.exports = wishlistControllers;
+
