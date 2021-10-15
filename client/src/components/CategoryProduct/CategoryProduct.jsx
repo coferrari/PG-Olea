@@ -6,17 +6,26 @@ import { useParams, useHistory } from "react-router";
 import style from "../Selects/Selects.module.css";
 import { Search } from "../Search/Search";
 import style2 from "./CategoryProducts.module.css";
+import { isAuthorized, decodeToken } from "../../utils";
+import { getWishlist } from "../../redux/actions"
+
 
 export default function CategoryProduct() {
   const dispatch = useDispatch();
   const history = useHistory();
   const { nameCategory, attribute, order } = useParams();
+  const validate = isAuthorized();
   let productsByCategory = useSelector(
     (state) => state.categoryReducer.productsByCategory
   );
 
   useEffect(() => {
     dispatch(getProductsByCategory(nameCategory));
+    if (validate) {
+      const user = decodeToken();
+      const username = user.username;
+      dispatch(getWishlist({ username }));
+    }
   }, [dispatch, nameCategory]);
 
   console.log(productsByCategory);

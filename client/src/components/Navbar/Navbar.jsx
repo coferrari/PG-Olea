@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-
 import { isAuthorized, decodeToken } from "../../utils/index";
 import { Navbar, Container, Nav } from "react-bootstrap";
 import Logo from "../../img/OLEA marca de agua-07.png";
@@ -7,6 +6,7 @@ import style from "./Navbar.module.css";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCategories } from "../../redux/actions";
+import { BsHeartFill } from "react-icons/bs";
 
 const NavResponsive = () => {
   const validate = isAuthorized();
@@ -21,9 +21,15 @@ const NavResponsive = () => {
     const user = decodeToken();
     return (
       <div>
-        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" className={style.fixed}>
+        <Navbar
+          collapseOnSelect
+          expand="lg"
+          bg="dark"
+          variant="dark"
+          className={style.fixed}
+        >
           <Container>
-            <Link to="/">
+            <Link to="/home">
               <Navbar.Brand>
                 <img height="140px" src={Logo} alt="Olea" />
               </Navbar.Brand>
@@ -49,6 +55,13 @@ const NavResponsive = () => {
                 <Nav.Link>
                   <Link to="/account" className={style.linkssesion}>
                     <li>Mi cuenta</li>
+                  </Link>
+                </Nav.Link>
+                <Nav.Link>
+                  <Link to="/wishlist" className={style.linkssesion}>
+                    <li>
+                      <BsHeartFill className={style.fav} />
+                    </li>
                   </Link>
                 </Nav.Link>
                 <Nav.Link>

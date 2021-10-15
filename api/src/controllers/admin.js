@@ -5,7 +5,6 @@ const {
   sendEmail,
 } = require("../helpers/mail.js");
 adminFunction.changePassword = async (req, res, next) => {
-  console.log(req.body);
   const { email } = req.body;
   const user = await User.findOne({
     where: {

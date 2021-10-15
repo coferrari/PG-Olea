@@ -38,7 +38,8 @@ class ProductModel extends Modelo {
         stock,
         newItem,
       });
-      await newItemProduct.addCategory(categoryID);
+      console.log(categoryID);
+      await newItemProduct.addCategories(categoryID);
       return res.send("done");
     } catch (error) {
       next(error);

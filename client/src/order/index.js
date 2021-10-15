@@ -2,6 +2,7 @@ import axios from "axios";
 import {
   CHANGE_STATUS,
   CREATE_ORDER_URL,
+  FILTER_BY_STATUS,
   GET_ORDER_DETAILS_URL,
   GET_USER_ORDERS,
 } from "../consts";
@@ -19,6 +20,10 @@ export const changeStatus = async (statusPago, idOrder) => {
     estado: statusPago,
   });
   return updateOrder.data;
+};
+export const filterByStatus = async (status) => {
+  const orderByStatus = await axios.get(`${FILTER_BY_STATUS}/${status}`);
+  return orderByStatus.data;
 };
 
 export const getUserOrder = async (username) => {

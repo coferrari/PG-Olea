@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getAllOrder } from "./../../../cart/index";
+import { filterByStatus } from "../../../order";
 import Table from "react-bootstrap/Table";
 import { Button, Modal, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
@@ -11,7 +12,6 @@ function OrdersTable() {
   const [input, setInput] = useState("");
   const getAllOrders = async () => {
     const orders = await getAllOrder();
-    console.log("order", orders);
     setOrder(orders.data);
   };
   const changeInput = (e) => {
@@ -30,39 +30,65 @@ function OrdersTable() {
   useEffect(() => {
     getAllOrders();
   }, []);
+
+  const filterOrdersbyStatus = async (e) => {
+    let select = e.target.value
+    console.log(select)
+    if(select==="Todo"){
+      getAllOrders()
+    }
+
+    let ordersFiltered =  await filterByStatus (select);
+    console.log(ordersFiltered)
+    !ordersFiltered && alert("No hay órdenes con ese estado")
+    ordersFiltered && setOrder(ordersFiltered)
+    // if(ordersFiltered===[]){
+    //   alert("No hay órdenes con ese estado")
+    // } else {
+    //   setOrder(ordersFiltered)
+    // }
+  }
   return (
     <div>
       {order === undefined ? (
         <h1>No hay ordenes activas</h1>
       ) : (
-        <Table striped bordered hover>
-          <thead>
-            <tr>
-              <th>Id</th>
-              <th>Usuario</th>
-              <th>Contacto</th>
-              <th>Teléfono</th>
-              <th>Precio total</th>
-              <th>Estado de orden</th>
-              <th>Fecha</th>
-              <th>Modificar</th>
-            </tr>
-          </thead>
-          <tbody>
-            {order?.map((o) => {
-              console.log(o);
-              return (
-                <tr>
-                  <Link to={`/order/${o.id}`}>
-                    <td>{o.id}</td>
-                  </Link>
-                  <td>{o.userUsername}</td>
-                  <td>{o.contactName + " " + o.contactSurname}</td>
-                  <td>{o.phone}</td>
-                  <td>${o.price}</td>
-                  <td>{o.status}</td>
-                  <td>{o.date.split("T")[0]}</td>
-                  <td>
+        <div>
+          {/* FILTROS */}
+          <select class="form-select" aria-label="Default select example" onChange={(e)=>{filterOrdersbyStatus(e)}}>
+            <option selected value="Todo">Todas las ordenes</option>
+            <option value="creada">creadas</option>
+            <option value="procesando">procesando</option>
+            <option value="cancelada">canceladas</option>
+            <option value="finalizada">finalizadas</option>
+          </select>
+
+          <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Usuario</th>
+                <th>Contacto</th>
+                <th>Teléfono</th>
+                <th>Precio</th>
+                <th>Estado de orden</th>
+                <th>Fecha</th>
+              </tr>
+            </thead>
+            <tbody>
+              {order?.map((o) => {
+                return (
+                  <tr>
+                    <Link to={`/order/${o.id}`}>
+                      <td>{o.id}</td>
+                    </Link>
+                    <td>{o.userUsername}</td>
+                    <td>{o.contactName + " " + o.contactSurname}</td>
+                    <td>{o.phone}</td>
+                    <td>{o.price}</td>
+                    <td>{o.status}</td>
+                    <td>{o.date.split("T")[0]}</td>
+                      <td>
                     <Button variant="primary" onClick={() => setShow(true)}>
                       Modificar estado
                     </Button>
@@ -102,11 +128,12 @@ function OrdersTable() {
                       </Modal.Body>
                     </Modal>
                   </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </Table>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </Table>
+        </div>
       )}
     </div>
   );

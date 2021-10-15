@@ -213,6 +213,7 @@ const Checkout = () => {
           <p className={style.total}> Total ${format(totalSum)}</p>
 
           <div className={style.buttonConfirmarCompra}>
+
             <Button variant="dark" onClick={(e) => handleConfirmOrder(e)}>
               Confirmar orden de compra
             </Button>
