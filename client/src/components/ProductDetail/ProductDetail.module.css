@@ -57,11 +57,32 @@
 }
 
 .opinions {
-    text-transform: uppercase;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 12px;
-    letter-spacing: 1px;
-    margin: 0;
+  text-transform: uppercase;
+  font-family: "Montserrat", sans-serif;
+  font-size: 12px;
+  letter-spacing: 1px;
+  margin: 0;
+
+}
+
+.fav {
+  border: none;
+  background-color: transparent;
+  position: absolute;
+  top: 20px;
+  left: 30px;
+  width: 20px;
+  height: 20px;
+}
+
+.addfav {
+  font-size: 25px;
+}
+
+.removefav {
+  color: red;
+  font-size: 25px;
+
 }
 
 @media only screen and (min-width: 1024px) {
@@ -74,4 +95,20 @@
   .info {
     width: 50%;
   }
+}
+.oldprice {
+  display: block;
+  text-decoration: line-through;
+  font-size: 0.7rem;
+}
+
+.descuento {
+  color: rgb(29, 182, 29);
+  font-size: 1.2rem;
+}
+
+.porcentaje {
+  margin-left: 0.5rem;
+  color: rgb(29, 182, 29);
+  font-size: 0.9rem;
 }

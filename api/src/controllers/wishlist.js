@@ -21,7 +21,7 @@ class WishlistModel extends Modelo {
   };
   addProductToWishlist = async (req, res, next) => {
     try {
-      const { username, productId } = req.body;
+      const { username, productId } = req.body.data;
       const wishlist = await Wishlist.findOne({
         where: {
           userUsername: username,
@@ -51,4 +51,6 @@ class WishlistModel extends Modelo {
 
 const wishlistControllers = new WishlistModel(Wishlist);
 
+
 module.exports = wishlistControllers;
+

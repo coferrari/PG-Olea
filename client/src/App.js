@@ -29,8 +29,9 @@ import EditProduct from "./components/Admin/EditProduct/EditProduct";
 import Footer from "./components/Footer/Footer";
 import BarraAdmin from "./components/Profile/BarraAdmin";
 import OrderDetail from "./components/OrderDetail/OrderDetail";
+import OfertasTable from "./components/Admin/Tables/OfertasTable/OfertasTable.jsx";
 import CheckoutConfirm from "./components/Checkout/CheckoutConfirm";
-
+import Wishlist from "./components/Wishlist/Wishlist";
 function App() {
   const loggedIn = decodeToken();
 
@@ -103,7 +104,6 @@ function App() {
           <Review />
         </Route>
         <Route exact path="/admin/reviews/:productid">
-          {loggedIn.admin ? <ReviewsTable /> : <Redirect to="/home" />}
         </Route>
         <Route exact path="/admin/editproduct/:productid">
           {loggedIn.admin ? <EditProduct /> : <Redirect to="/home" />}
@@ -125,6 +125,10 @@ function App() {
         </Route>
         <Route exact path="/checkoutconfirm">
           <CheckoutConfirm />
+          </Route>
+
+        <Route exact path="/wishlist">
+          <Wishlist />
         </Route>
       </Switch>
     </div>

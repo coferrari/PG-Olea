@@ -70,13 +70,39 @@ class CategoryModel extends Modelo {
         const producto = await Product.findByPk(productID);
         await Product.findOne({
           where: {
-            id: productID,
+            id: parseInt(productID),
           },
           include: { model: Category },
         });
         producto.removeCategory([categoriesID]);
         res.send(producto);
       }
+    } catch (err) {
+      next(err);
+    }
+  };
+  inOffer = async (req, res, next) => {
+    const { categoryID, inOffer, offerDay } = req.body;
+    console.log(categoryID, inOffer, offerDay);
+    try {
+      const category = await this.model.findByPk(categoryID);
+      await category.update({
+        offer: inOffer,
+        offerday: offerDay,
+      });
+      res.status(200).send(category);
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  getOffers = async (req, res, next) => {
+    const { offerday } = req.body;
+
+    try {
+      const ofertas = await this.model.findAll({ where: { offerday } });
+      const ofertasProductos = await Product.findAll({ where: { offerday } });
+      res.status(200).send(ofertasProductos.concat(ofertas));
     } catch (err) {
       next(err);
     }

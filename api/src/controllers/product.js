@@ -43,7 +43,8 @@ class ProductModel extends Modelo {
         stock,
         newItem,
       });
-      await newItemProduct.addCategory(categoryID);
+      console.log(categoryID);
+      await newItemProduct.addCategories(categoryID);
       return res.send("done");
     } catch (error) {
       next(error);
@@ -255,6 +256,20 @@ class ProductModel extends Modelo {
         }
       );
       res.status(200).send("emails sent");
+    } catch (err) {
+      next(err);
+    }
+  };
+  inOffer = async (req, res, next) => {
+    const { productID, inOffer, offerDay } = req.body;
+    console.log(productID, inOffer, offerDay);
+    try {
+      const product = await this.model.findByPk(productID);
+      await product.update({
+        offer: inOffer,
+        offerday: offerDay,
+      });
+      res.status(200).send(product);
     } catch (err) {
       next(err);
     }

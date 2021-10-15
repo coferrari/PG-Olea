@@ -58,13 +58,61 @@ const ShoppingCart = () => {
     handleClose();
   };
 
+  const desc = productsCart?.reduce((acc, curr) => {
+    let result = 0;
+    if (curr.Carrito_Products) {
+      if (curr.offer >= curr.categories?.[0].offer) {
+        result =
+          acc +
+          parseInt(
+            curr.price - Math.round(parseInt(curr.price * curr.offer) / 100)
+          ) *
+            curr.Carrito_Products.quantity;
+      } else if (curr.offer < curr.categories?.[0].offer) {
+        result =
+          acc +
+          parseInt(
+            curr.price -
+              Math.round(
+                parseInt(curr.price * curr.categories?.[0].offer) / 100
+              )
+          ) *
+            curr.Carrito_Products.quantity;
+      } else {
+        result = acc + parseInt(curr.price) * curr.Carrito_Products.quantity;
+      }
+    }
+    if (curr.quantity) {
+      if (curr.offer >= curr.categories?.[0].offer) {
+        result =
+          acc +
+          parseInt(
+            curr.price - Math.round(parseInt(curr.price * curr.offer) / 100)
+          ) *
+            curr.quantity;
+      } else if (curr.offer < curr.categories?.[0].offer) {
+        result =
+          acc +
+          parseInt(
+            curr.price -
+              Math.round(
+                parseInt(curr.price * curr.categories?.[0].offer) / 100
+              )
+          ) *
+            curr.quantity;
+      } else {
+        result = acc + parseInt(curr.price) * curr.quantity;
+      }
+    }
+    return result;
+  }, 0);
+
   const totalSum = productsCart?.reduce((acc, curr) => {
     const result = curr.Carrito_Products
       ? acc + parseInt(curr.price) * curr.Carrito_Products.quantity
       : acc + parseInt(curr.price) * curr.quantity;
     return result;
   }, 0);
-
   const totalQuantity = productsCart?.reduce((acc, curr) => {
     const result = curr.Carrito_Products
       ? acc + curr.Carrito_Products.quantity
@@ -130,7 +178,7 @@ const ShoppingCart = () => {
                   </Button>
                 </div>
                 <div className={style.bntcontainer}>
-                  <div className={style.total}>total ${format(totalSum)}</div>
+                  <div className={style.total}>total ${format(desc)}</div>
                   <div>
                     <Button
                       className={style.vaciar}

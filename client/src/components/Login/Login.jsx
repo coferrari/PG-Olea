@@ -228,7 +228,7 @@ const LoginButton = () => {
           >
             <Modal.Header closeButton>
               <Modal.Title id="example-modal-sizes-title-sm">
-                Codigo de confirmación
+                Confirmacion
               </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -238,10 +238,13 @@ const LoginButton = () => {
                 }}
               >
                 <Form.Group className="mb-3">
-                  <Form.Label>Ingrese su codigo</Form.Label>
+                  <Form.Label>
+                    Se envio un mail a su correo. Ingrese el codigo para
+                    continuar
+                  </Form.Label>
                   <Form.Control
                     type="codigo"
-                    placeholder="Ingrese nombre de la categoria"
+                    placeholder="Ingresar codigo"
                     name="texto"
                     onChange={(e) => codeChange(e)}
                   />

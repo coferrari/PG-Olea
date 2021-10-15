@@ -1,4 +1,5 @@
-const { User, Carrito, Product, Wishlist } = require("../db.js");
+
+const { User, Carrito, Product, Wishlist} = require("../db.js");
 const { encryptPassword, comparePassword } = require("../helpers/index");
 const jwt = require("jsonwebtoken");
 const { OAuth2Client } = require("google-auth-library");
@@ -206,9 +207,11 @@ userFunction.googleLogin = async (req, res, next) => {
       });
       newUser.setCarrito(carritocreado.dataValues.id);
       newUser.setWishlist(wishlist.dataValues.id);
+
       await wishlist.update({
         userEmail: email
       })
+      
       const token = jwt.sign(
         {
           name: given_name,
