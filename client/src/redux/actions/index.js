@@ -119,6 +119,12 @@ export function getOrderDetails (id) {
       dispatch({
         type: GET_ORDER_DETAILS ,
         payload: response.data,
+      })
+    })
+  }
+}
+
+
 export function getWishlist(payload) {
   console.log(payload)
   return function (dispatch) {
