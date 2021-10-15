@@ -14,8 +14,8 @@ const UserOrders = () => {
     setUserOrders(order);
   };
 
-  useEffect(async () => {
-    await getOrden();
+  useEffect(() => {
+    getOrden();
   }, []);
 
   return (
@@ -23,11 +23,12 @@ const UserOrders = () => {
       <Table striped bordered>
         <thead>
           <tr>
-            <th>#Orders</th>
+            <th>#</th>
             <th>Precio</th>
-            <th>Date</th>
+            <th>Fecha</th>
             <th>Estado</th>
             <th>Productos</th>
+            <th>Detalles</th>
           </tr>
         </thead>
         <tbody>
@@ -36,11 +37,19 @@ const UserOrders = () => {
               <tr>
                 <td>{e.id}</td>
                 <td>${e.price}</td>
-                <td>{e.updatedAt}</td>
-                <td>{e.statusPago}</td>
+                <td>
+                  {e.updatedAt.slice(0, 10).split("-").reverse().join("-")}
+                </td>
+                <td>{e.status.charAt(0).toUpperCase() + e.status.slice(1)}</td>
                 <td>
                   {e.products.map((n) => {
-                    return <td>{n.name}</td>;
+                    return (
+                      <span>
+                        {n.name.charAt(0).toUpperCase() +
+                          n.name.slice(1).toLowerCase() +
+                          "-"}
+                      </span>
+                    );
                   })}
                 </td>
                 <Button
