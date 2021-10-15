@@ -1,10 +1,11 @@
-const { Order, Order_Products, Product, User } = require("../db.js");
+const { Order, Order_Products, Product, User, Carrito } = require("../db.js");
 const Modelo = require("./index.js");
 const {
   getTemplateAproved,
   sendEmail,
   getTemplateRejected,
 } = require("../helpers/mail");
+const carritoControllers = require("../controllers/carrito");
 class OrderModel extends Modelo {
   constructor(model) {
     super(model);
@@ -13,20 +14,29 @@ class OrderModel extends Modelo {
   changeStatus = async (req, res, next) => {
     const { estado } = req.body;
     const { id } = req.params;
-    console.log("estado", estado);
-    console.log("entre");
     try {
       let state;
       estado === "approved"
         ? (state = "finalizada")
-        : estado === "reject"
+        : estado === "rejected"
         ? (state = "cancelada")
         : (state = "procesando");
-      console.log(state);
       const ordenDetail = await this.model.findByPk(id, { include: Product });
       ordenDetail.status = state;
       ordenDetail.statusPago = estado;
       ordenDetail.save();
+      const userNew = await User.findOne({
+        where: {
+          username: ordenDetail.userUsername,
+        },
+      });
+      await Carrito.destroy({
+        where: {
+          userUsername: ordenDetail.userUsername,
+        },
+      });
+      const newCarrito = await Carrito.create();
+      userNew.setCarrito(newCarrito.dataValues.id);
       if (estado === "approved") {
         ordenDetail.products.forEach(async (p) => {
           let x = await Product.findByPk(p.id);
@@ -46,6 +56,8 @@ class OrderModel extends Modelo {
       }
       if (estado === "rejected") {
         let template = getTemplateRejected(ordenDetail.contactName);
+        console.log("entre rejected");
+        console.log(template);
         await sendEmail(ordenDetail.email, "Problema en la compra", template);
         return res.json({
           message: "Se envio el mail, compra rechazada.",
@@ -190,7 +202,6 @@ class OrderModel extends Modelo {
   getOrderDetails = async (req, res, next) => {
     //const { username } = req.body
     const { id } = req.params;
-    console.log(id);
     try {
       const ordenDetail = await this.model.findByPk(id, { include: Product });
       res.send(ordenDetail).status(200);
@@ -200,10 +211,13 @@ class OrderModel extends Modelo {
   };
 
   getUserOrder = async (req, res, next) => {
-    const { username } = req.body;
+    const { username } = req.params;
     try {
-      const user = await User.findByPk(username, { include: Order });
-      res.send(user);
+      const ordenDetail = await this.model.findAll({
+        where: { userUsername: username },
+        include: Product,
+      });
+      res.send(ordenDetail);
     } catch (error) {
       next(error);
     }

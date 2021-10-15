@@ -70,7 +70,7 @@ class CategoryModel extends Modelo {
         const producto = await Product.findByPk(productID);
         await Product.findOne({
           where: {
-            id: productID,
+            id: parseInt(productID),
           },
           include: { model: Category },
         });

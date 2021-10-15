@@ -32,13 +32,11 @@ const CheckoutConfirm = () => {
     history.push("/home");
   }
 
-  console.log(orden);
-
   return (
     <div>
       {location.search &&
       location.search.includes("collection_status=approved") ? (
-        <div>
+        <div className="container">
           <ListGroup>
             <ListGroup.Item variant="success">
               Compra procesada con éxito!
@@ -68,7 +66,7 @@ const CheckoutConfirm = () => {
         <div>
           Algo salió mal con el pago
           <Button variant="dark" onClick={onClick}>
-            Dark
+            Volver
           </Button>
         </div>
       )}
