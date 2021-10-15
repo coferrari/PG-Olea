@@ -57,52 +57,7 @@ const ShoppingCart = () => {
     history.push("/checkout");
     handleClose();
   };
-  console.log(productsCart);
-  // preguntar por cada vuelta si tiene un descuento aplicable
-  //   ${price - Math.round((price * offer) / 100)}
-  // const desc = productsCart?.reduce((acc, curr) => {
-  //   const result =
-  //     curr.Carrito_Products && curr.offer >= curr.categories[0].offer
-  //       ? acc +
-  //         parseInt(curr.price) -
-  //         (Math.round(parseInt(curr.price) * curr.offer) / 100) *
-  //           curr.Carrito_Products.quantity
-  //       : acc +
-  //         parseInt(curr.price) -
-  //         (Math.round(parseInt(curr.price) * curr.categories[0].offer) / 100) *
-  //           curr.Carrito_Products.quantity;
-  //   curr.Carrito_Products && !curr.offer && !curr.categories[0].offer
-  //     ? acc + parseInt(curr.price) * curr.Carrito_Products.quantity
-  //     : acc + parseInt(curr.price) * curr.quantity;
 
-  //   // curr.Carrito_Products && curr.offer >= curr.categories[0].offer
-  //   //   ? acc +
-  //   //     parseInt(curr.price) -
-  //   //     Math.round(parseInt(curr.price * curr.offer) / 100) *
-  //   //       curr.Carrito_Products.quantity
-  //   //   : curr.Carrito_Products && curr.offer < curr.categories[0].offer
-  //   //   ? acc +
-  //   //     parseInt(curr.price) -
-  //   //     Math.round(parseInt(curr.price * curr.categories[0].offer) / 100) *
-  //   //       curr.Carrito_Products.quantity
-  //   //   : curr.Carrito_Products && !curr.offer && !curr.categories[0].offer
-  //   //   ? acc + parseInt(curr.price) * curr.Carrito_Products.quantity
-  //   //   : curr.quantity && curr.offer >= curr.categories[0].offer
-  //   //   ? acc +
-  //   //     parseInt(curr.price) -
-  //   //     Math.round(parseInt(curr.price * curr.offer) / 100) * curr.quantity
-  //   //   : curr.quantity && curr.offer < curr.categories[0].offer
-  //   //   ? acc +
-  //   //     parseInt(curr.price) -
-  //   //     Math.round(
-  //   //       (parseInt(curr.price * curr.categories[0].offer) / 100) *
-  //   //         curr.quantity
-  //   //     )
-  //   //   : curr.quantity && !curr.offer && !curr.categories[0].offer
-  //   //   ? acc + parseInt(curr.price) * curr.quantity
-  //   //   : null;
-  //   return result;
-  // }, 0);
   const desc = productsCart?.reduce((acc, curr) => {
     let result = 0;
     if (curr.Carrito_Products) {
