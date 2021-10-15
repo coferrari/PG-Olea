@@ -1,10 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "../../img/OLEA marca de agua-08.png";
 import style from "./Footer.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInstagram } from "@fortawesome/free-brands-svg-icons";
+import { suscribeNewsLetter } from "../../auth/users";
+import swal from "sweetalert";
 
 function Footer() {
+  const [input, setInput] = useState("");
+  const onChange = (e) => {
+    console.log(input);
+    setInput(e.target.value);
+  };
+  const suscribe = async (e) => {
+    e.preventDefault();
+    try {
+      const x = await suscribeNewsLetter(input);
+      console.log(x);
+    } catch (err) {
+      swal("Registre su email primero");
+      console.log(err.message);
+    }
+  };
   return (
     <div>
       <footer className={style.footer}>
@@ -12,9 +29,13 @@ function Footer() {
           <div className={style.footer__flexitem}>
             <h5 className={style.subtitles}>somos olea</h5>
             <ul className={style.ul}>
-              <li className={style.list}>OLEA nace con la intención de incorporar productos amigables con el medio ambiente en nuestra vida diaria.</li>
               <li className={style.list}>
-                Es por eso que decidimos acercarte alimentos saludables, cosmética natural, objetos sustentables y muchas cosas más.
+                OLEA nace con la intención de incorporar productos amigables con
+                el medio ambiente en nuestra vida diaria.
+              </li>
+              <li className={style.list}>
+                Es por eso que decidimos acercarte alimentos saludables,
+                cosmética natural, objetos sustentables y muchas cosas más.
               </li>
             </ul>
           </div>
@@ -61,12 +82,13 @@ function Footer() {
             <form
               className={style.footer__flexformnewsletter}
               action=""
-              method="post"
+              onSubmit={(e) => suscribe(e)}
             >
               <input
                 type="email"
                 className={style.footer__flexemail}
                 name="email"
+                onChange={onChange}
                 placeholder="name@example.com"
               />
               <input
