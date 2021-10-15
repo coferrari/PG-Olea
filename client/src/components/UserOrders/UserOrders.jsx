@@ -25,9 +25,9 @@ const UserOrders = () => {
           <tr>
             <th>#</th>
             <th>Precio</th>
-            <th>Fecha</th>
             <th>Estado</th>
             <th>Productos</th>
+            <th>Fecha</th>
             <th>Detalles</th>
           </tr>
         </thead>
@@ -37,9 +37,7 @@ const UserOrders = () => {
               <tr>
                 <td>{e.id}</td>
                 <td>${e.price}</td>
-                <td>
-                  {e.updatedAt.slice(0, 10).split("-").reverse().join("-")}
-                </td>
+
                 <td>{e.status.charAt(0).toUpperCase() + e.status.slice(1)}</td>
                 <td>
                   {e.products.map((n) => {
@@ -52,14 +50,19 @@ const UserOrders = () => {
                     );
                   })}
                 </td>
-                <Button
-                  variant="outline-dark"
-                  onClick={() => {
-                    history.push(`/order/${e.id}`);
-                  }}
-                >
-                  Ver detalles
-                </Button>
+                <td>
+                  {e.updatedAt.slice(0, 10).split("-").reverse().join("-")}
+                </td>
+                <td>
+                  <Button
+                    variant="outline-dark"
+                    onClick={() => {
+                      history.push(`/order/${e.id}`);
+                    }}
+                  >
+                    Ver detalles
+                  </Button>
+                </td>
               </tr>
             );
           })}

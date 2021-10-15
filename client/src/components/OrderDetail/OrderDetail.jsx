@@ -44,7 +44,12 @@ function OrderDetail() {
             {/* <ListGroup.Item> Email: "Por ahora order ditails no trae el email" </ListGroup.Item> */}
             <ListGroup.Item>Tel: {orderDetail.phone}</ListGroup.Item>
             <ListGroup.Item>
-              Fecha: {orderDetail.date.split("T")[0]}
+              Fecha:{" "}
+              {orderDetail.updatedAt
+                .slice(0, 10)
+                .split("-")
+                .reverse()
+                .join("-")}
             </ListGroup.Item>
             <ListGroup.Item>
               Estado del pago: {orderDetail.statusPago}

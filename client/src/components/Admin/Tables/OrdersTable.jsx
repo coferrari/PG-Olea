@@ -32,22 +32,21 @@ function OrdersTable() {
   }, []);
 
   const filterOrdersbyStatus = async (e) => {
-    let select = e.target.value
-    console.log(select)
-    if(select==="Todo"){
-      getAllOrders()
+    let select = e.target.value;
+    console.log(select);
+    if (select === "Todo") {
+      return getAllOrders();
     }
-
-    let ordersFiltered =  await filterByStatus (select);
-    console.log(ordersFiltered)
-    !ordersFiltered && alert("No hay órdenes con ese estado")
-    ordersFiltered && setOrder(ordersFiltered)
+    let ordersFiltered = await filterByStatus(select);
+    console.log(ordersFiltered);
+    !ordersFiltered && alert("No hay órdenes con ese estado");
+    ordersFiltered && setOrder(ordersFiltered);
     // if(ordersFiltered===[]){
     //   alert("No hay órdenes con ese estado")
     // } else {
     //   setOrder(ordersFiltered)
     // }
-  }
+  };
   return (
     <div>
       {order === undefined ? (
@@ -55,12 +54,20 @@ function OrdersTable() {
       ) : (
         <div>
           {/* FILTROS */}
-          <select class="form-select" aria-label="Default select example" onChange={(e)=>{filterOrdersbyStatus(e)}}>
-            <option selected value="Todo">Todas las ordenes</option>
-            <option value="creada">creadas</option>
-            <option value="procesando">procesando</option>
-            <option value="cancelada">canceladas</option>
-            <option value="finalizada">finalizadas</option>
+          <select
+            class="form-select"
+            aria-label="Default select example"
+            onChange={(e) => {
+              filterOrdersbyStatus(e);
+            }}
+          >
+            <option selected value="Todo">
+              Todas las ordenes
+            </option>
+            <option value="creada">Creadas</option>
+            <option value="procesando">Procesando</option>
+            <option value="cancelada">Canceladas</option>
+            <option value="finalizada">Finalizadas</option>
           </select>
 
           <Table striped bordered hover>
@@ -85,49 +92,53 @@ function OrdersTable() {
                     <td>{o.userUsername}</td>
                     <td>{o.contactName + " " + o.contactSurname}</td>
                     <td>{o.phone}</td>
-                    <td>{o.price}</td>
-                    <td>{o.status}</td>
-                    <td>{o.date.split("T")[0]}</td>
-                      <td>
-                    <Button variant="primary" onClick={() => setShow(true)}>
-                      Modificar estado
-                    </Button>
-                    <Modal
-                      show={show}
-                      onHide={() => setShow(false)}
-                      dialogClassName="modal-90w"
-                      aria-labelledby="example-custom-modal-styling-title"
-                    >
-                      <Modal.Header closeButton>
-                        <Modal.Title id="example-custom-modal-styling-title">
-                          Actualizar orden
-                        </Modal.Title>
-                      </Modal.Header>
-                      <Modal.Body>
-                        <Form.Group controlId="formGridState">
-                          <Form.Label>Nuevo estado de la orden:</Form.Label>
-                          <Form.Select onChange={(e) => changeInput(e)}>
-                            <option>Elegir</option>
-                            <option value="finalizada">Aprobada</option>
-                            <option value="cancelada">Rechazada</option>
-                            <option value="procesando">En proceso</option>
-                          </Form.Select>
-                        </Form.Group>
-                        <Form.Group>
-                          {input ? (
-                            <Button
-                              type="submit"
-                              onClick={(e) => changeStatus(e, o.id)}
-                            >
-                              Cambiar
-                            </Button>
-                          ) : (
-                            ""
-                          )}
-                        </Form.Group>
-                      </Modal.Body>
-                    </Modal>
-                  </td>
+                    <td>${o.price}</td>
+                    <td>
+                      {o.status.charAt(0).toUpperCase() + o.status.slice(1)}
+                    </td>
+                    <td>
+                      {o.updatedAt.slice(0, 10).split("-").reverse().join("-")}
+                    </td>
+                    <td>
+                      <Button variant="primary" onClick={() => setShow(true)}>
+                        Modificar estado
+                      </Button>
+                      <Modal
+                        show={show}
+                        onHide={() => setShow(false)}
+                        dialogClassName="modal-90w"
+                        aria-labelledby="example-custom-modal-styling-title"
+                      >
+                        <Modal.Header closeButton>
+                          <Modal.Title id="example-custom-modal-styling-title">
+                            Actualizar orden
+                          </Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                          <Form.Group controlId="formGridState">
+                            <Form.Label>Nuevo estado de la orden:</Form.Label>
+                            <Form.Select onChange={(e) => changeInput(e)}>
+                              <option>Elegir</option>
+                              <option value="finalizada">Aprobada</option>
+                              <option value="cancelada">Rechazada</option>
+                              <option value="procesando">En proceso</option>
+                            </Form.Select>
+                          </Form.Group>
+                          <Form.Group>
+                            {input ? (
+                              <Button
+                                type="submit"
+                                onClick={(e) => changeStatus(e, o.id)}
+                              >
+                                Cambiar
+                              </Button>
+                            ) : (
+                              ""
+                            )}
+                          </Form.Group>
+                        </Modal.Body>
+                      </Modal>
+                    </td>
                   </tr>
                 );
               })}
