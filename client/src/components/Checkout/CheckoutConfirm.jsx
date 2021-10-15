@@ -36,7 +36,7 @@ const CheckoutConfirm = () => {
     <div>
       {location.search &&
       location.search.includes("collection_status=approved") ? (
-        <div>
+        <div className="container">
           <ListGroup>
             <ListGroup.Item variant="success">
               Compra procesada con éxito!

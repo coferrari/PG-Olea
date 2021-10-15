@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { getOrderDetails } from "../../order/index";
 import { ListGroup, Button, Table, Card } from "react-bootstrap";
-import { useLocation } from "react-router";
 import style from "./orderdetail.module.css";
 import CardHeader from "react-bootstrap/esm/CardHeader";
 import { useLocation, useHistory } from "react-router";
+import { Link } from "react-router-dom";
 
 function OrderDetail() {
   const [orderDetail, setOrderDetail] = useState();
@@ -31,9 +31,9 @@ function OrderDetail() {
       ) : (
         <div className="container">
           <ListGroup>
-            <ListGroup.Item variant="Dark">
+            {/* <ListGroup.Item variant="Dark">
               Orden Nro: {orderDetail.id}
-            </ListGroup.Item>
+            </ListGroup.Item> */}
             <ListGroup.Item>
               Usuario: {orderDetail.userUsername}{" "}
             </ListGroup.Item>
@@ -72,20 +72,22 @@ function OrderDetail() {
             <Table striped bordered hover variant="dark">
               <thead>
                 <tr>
-                  <th>id</th>
                   <th>Producto</th>
                   <th>Cantidad</th>
                   <th>Precio</th>
+                  <th>Reseñas</th>
                 </tr>
               </thead>
               <tbody>
                 {orderDetail.products?.map((o) => {
                   return (
                     <tr>
-                      <td>{o.id}</td>
                       <td>{o.name}</td>
                       <td>{o.Order_Products.quantity}</td>
                       <td>{o.price}</td>
+                      <td>
+                        <Link to={`/createreview/${o.id}`}>Dejar reseña</Link>
+                      </td>
                     </tr>
                   );
                 })}

@@ -1,10 +1,11 @@
-const { Order, Order_Products, Product, User } = require("../db.js");
+const { Order, Order_Products, Product, User, Carrito } = require("../db.js");
 const Modelo = require("./index.js");
 const {
   getTemplateAproved,
   sendEmail,
   getTemplateRejected,
 } = require("../helpers/mail");
+const carritoControllers = require("../controllers/carrito");
 class OrderModel extends Modelo {
   constructor(model) {
     super(model);
@@ -13,8 +14,6 @@ class OrderModel extends Modelo {
   changeStatus = async (req, res, next) => {
     const { estado } = req.body;
     const { id } = req.params;
-    console.log("estado", estado);
-    console.log("entre");
     try {
       let state;
       estado === "approved"
@@ -26,6 +25,18 @@ class OrderModel extends Modelo {
       ordenDetail.status = state;
       ordenDetail.statusPago = estado;
       ordenDetail.save();
+      const userNew = await User.findOne({
+        where: {
+          username: ordenDetail.userUsername,
+        },
+      });
+      await Carrito.destroy({
+        where: {
+          userUsername: ordenDetail.userUsername,
+        },
+      });
+      const newCarrito = await Carrito.create();
+      userNew.setCarrito(newCarrito.dataValues.id);
       if (estado === "approved") {
         ordenDetail.products.forEach(async (p) => {
           let x = await Product.findByPk(p.id);
