@@ -31,9 +31,6 @@ function OrderDetail() {
       ) : (
         <div className="container">
           <ListGroup>
-            {/* <ListGroup.Item variant="Dark">
-              Orden Nro: {orderDetail.id}
-            </ListGroup.Item> */}
             <ListGroup.Item>
               Usuario: {orderDetail.userUsername}{" "}
             </ListGroup.Item>
@@ -41,7 +38,6 @@ function OrderDetail() {
               Contacto:
               {orderDetail.contactName + " " + orderDetail.contactSurname}{" "}
             </ListGroup.Item>
-            {/* <ListGroup.Item> Email: "Por ahora order ditails no trae el email" </ListGroup.Item> */}
             <ListGroup.Item>Tel: {orderDetail.phone}</ListGroup.Item>
             <ListGroup.Item>
               Fecha:{" "}
@@ -61,22 +57,13 @@ function OrderDetail() {
               Monto del pedido: ${orderDetail.price}
             </ListGroup.Item>
             <ListGroup.Item>Envío : {orderDetail.address}</ListGroup.Item>
-            {/* <ListGroup.Item>Estado del pago: {orden.statusPago}</ListGroup.Item>
-            {orden.address !== "" ? (
-              <ListGroup.Item>Dirección: {orden.address}</ListGroup.Item>
-            ) : (
-              <ListGroup.Item>Retiro por local</ListGroup.Item>
-            )}
-            <ListGroup.Item>
-              Productos: {orden.products?.map((p) => p.name + ", ")}
-            </ListGroup.Item>
-            <ListGroup.Item>Total: ${orden.price}</ListGroup.Item> */}
           </ListGroup>
           <Card>
             <Card.Header> Productos de la Orden </Card.Header>
             <Table striped bordered hover variant="dark">
               <thead>
                 <tr>
+                  <th>ID Producto</th>
                   <th>Producto</th>
                   <th>Cantidad</th>
                   <th>Precio</th>
@@ -87,6 +74,10 @@ function OrderDetail() {
                 {orderDetail.products?.map((o) => {
                   return (
                     <tr>
+                      <td><Link to={`/product/${o.id}`}>
+                      {o.id}
+                      </Link>
+                      </td>
                       <td>{o.name}</td>
                       <td>{o.Order_Products.quantity}</td>
                       <td>{o.price}</td>
