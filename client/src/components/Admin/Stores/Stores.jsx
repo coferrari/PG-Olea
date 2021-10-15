@@ -30,7 +30,6 @@ function Stores() {
       )
       .then((response) => {
         const pos = response.data.results[0];
-        console.log(pos.lat);
         setLocation([pos.lat, pos.lon]);
       })
       .catch((error) => error);

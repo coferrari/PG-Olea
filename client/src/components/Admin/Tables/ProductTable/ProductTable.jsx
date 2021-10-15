@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Button, Table } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { getToken } from "../../../../utils/index";
-import { getProducts } from "../../../../redux/actions";
+import { getProducts, getProductDetail } from "../../../../redux/actions";
 import swal from "sweetalert";
 import { confirmAlert } from "react-confirm-alert"; // Import
 import { GET_PRODUCTS_URL } from "../../../../consts";
@@ -68,7 +68,9 @@ export default function ProductTable() {
                 </td>
                 <td>
                   <Link to={`/admin/editproduct/${e.id}`}>
-                    <Button>Editar Producto</Button>
+                    <Button onClick={() => dispatch(getProductDetail(e.id))}>
+                      Editar Producto
+                    </Button>
                   </Link>
                 </td>
                 <td>
