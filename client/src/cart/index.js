@@ -7,7 +7,11 @@ import {
   GET_CARRITO_USERNAME,
   GET_ALL_ORDER,
   GET_ORDER_DETAIL,
+  ADD_OFFER_CATEGORY,
+  ADD_OFFER_PRODUCT,
+  GET_OFFER,
 } from "../consts";
+import { getToken } from "../utils";
 
 export const addOrEditCart = async (payload) => {
   return await axios.post(`${ADD_OR_EDIT_CART}`, payload);
@@ -30,9 +34,39 @@ export const getByUsername = async (payload) => {
 };
 
 export const getAllOrder = async () => {
-  return await axios.get(`${GET_ALL_ORDER}`);
+  return await axios.get(`${GET_ALL_ORDER}`, {
+    headers: {
+      authorization: getToken(),
+    },
+  });
+};
+
+
+export const getOrderId = async (id) => {
+  return await axios.get(`${GET_ORDER_DETAIL}` + id);
+};
+
+export const offerCategory = async (offCat, valor) => {
+  return await axios.put(`${ADD_OFFER_CATEGORY}`, {
+    categoryID: offCat.idCat,
+    offerDay: valor,
+    inOffer: offCat.offCat,
+  });
+};
+
+export const offerProduct = async (productOff, valor) => {
+  return await axios.put(`${ADD_OFFER_PRODUCT}`, {
+    productID: productOff.idProduct,
+    offerDay: valor,
+    inOffer: productOff.offProduct,
+  });
+};
+
+export const getOffer = async (offerday) => {
+  return await axios.put(`${GET_OFFER}`, { offerday: offerday });
 };
 
 // export const getOrderId = async (id) => {
 //   return await axios.get(`${GET_ORDER_DETAIL}/${id}`);
 // };
+

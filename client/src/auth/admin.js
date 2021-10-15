@@ -87,3 +87,18 @@ export const updateCategory = async (id, nameCategory) => {
   );
   return res.data;
 };
+export const changeStatusOrder = async (id, status) => {
+  console.log("change", id, status);
+  const res = await axios.put(
+    `/api/order/setorder/status/${id}`,
+    {
+      status: status,
+    },
+    {
+      headers: {
+        authorization: getToken(),
+      },
+    }
+  );
+  console.log(res.data);
+};
