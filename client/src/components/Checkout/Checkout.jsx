@@ -204,7 +204,11 @@ const Checkout = () => {
           <p className={style.total}> Total ${format(totalSum)}</p>
 
           <div className={style.buttonConfirmarCompra}>
+
             <Button variant="dark" onClick={(e) => handleConfirmOrder(e)}>
+              Confirmar Compra
+            </Button>
+
               {linkDePago &&
                 confirmAlert({
                   title: "Atención",
@@ -225,7 +229,7 @@ const Checkout = () => {
                     },
                   ],
                 })}
-            </Button>
+                
           </div>
         </div>
       ) : (

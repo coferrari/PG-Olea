@@ -106,18 +106,11 @@ class OrderModel extends Modelo {
   };
   filterByStatus = async (req, res, next) => {
     const { status } = req.params;
-
-    if (status) {
-      const order = await this.model.findAll({
-        where: {
-          status,
-        },
-      });
-      if (order.length >= 1) {
-        res.status(200).json(order);
-      } else {
-        next(err);
-      }
+    try{
+      const order = await this.model.findAll({ where: {status}})
+      res.status(200).json(order)
+    } catch (error) {
+      next(error);
     }
   };
   createOrder = async (req, res, next) => {
