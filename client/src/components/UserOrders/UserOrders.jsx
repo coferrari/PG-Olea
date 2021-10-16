@@ -9,9 +9,13 @@ const UserOrders = () => {
   const [userOrders, setUserOrders] = useState();
   const getOrden = async () => {
     const user = decodeToken();
-    console.log(user);
     const order = await getUserOrder(user.username);
-    setUserOrders(order);
+    console.log("order", order);
+    if (order.message) {
+      console.log(order.message);
+    } else {
+      setUserOrders(order);
+    }
   };
 
   useEffect(() => {
@@ -40,7 +44,7 @@ const UserOrders = () => {
 
                 <td>{e.status.charAt(0).toUpperCase() + e.status.slice(1)}</td>
                 <td>
-                  {e.products.map((n) => {
+                  {e.products?.map((n) => {
                     return (
                       <span>
                         {n.name.charAt(0).toUpperCase() +
@@ -51,7 +55,7 @@ const UserOrders = () => {
                   })}
                 </td>
                 <td>
-                  {e.updatedAt.slice(0, 10).split("-").reverse().join("-")}
+                  {e.updatedAt?.slice(0, 10).split("-").reverse().join("-")}
                 </td>
                 <td>
                   <Button

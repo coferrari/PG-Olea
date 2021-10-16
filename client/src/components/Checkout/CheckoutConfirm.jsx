@@ -20,6 +20,7 @@ const CheckoutConfirm = () => {
 
   const getOrden = async () => {
     const x = await getOrderDetails(idOrder);
+    console.log(x);
     setOrden(x);
   };
 
@@ -45,7 +46,10 @@ const CheckoutConfirm = () => {
               Cliente: {orden.contactName + " " + orden.contactSurname}
             </ListGroup.Item>
             <ListGroup.Item>Tel: {orden.phone}</ListGroup.Item>
-            <ListGroup.Item>Fecha: {orden.date}</ListGroup.Item>
+            <ListGroup.Item>
+              Fecha:{" "}
+              {orden.updatedAt?.slice(0, 10).split("-").reverse().join("-")}
+            </ListGroup.Item>
             <ListGroup.Item>ID de compra: {idOrder} </ListGroup.Item>
             <ListGroup.Item>Estado del pago: {orden.statusPago}</ListGroup.Item>
             {orden.address !== "" ? (

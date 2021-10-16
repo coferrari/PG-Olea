@@ -63,22 +63,22 @@ const Checkout = () => {
   let idOrden = "";
   const handleConfirmOrder = async (e) => {
     e.preventDefault();
-    if (!order.phone && !order.contactName && !order.contactSurname) {
-      alert("Por favor, completá los datos personales");
+    if (!order.phone || !order.contactName || !order.contactSurname) {
+      return alert("Por favor, completá los datos personales");
     }
     if (!delivery) {
-      alert("Por favor, seleccione una opción de envío");
+      return alert("Por favor, seleccione una opción de envío");
     }
     if (delivery === "Envío" && !order.address) {
-      alert("Completá la dirección de envío");
+      return alert("Completá la dirección de envío");
     }
     if (delivery === "Envío" && order.address) {
       idOrden = await createOrder(order);
-      dispatch(checkoutMercadoPago(itemsCheckout, idOrden));
+      return dispatch(checkoutMercadoPago(itemsCheckout, idOrden));
     }
     if (delivery === "Retiro por local") {
       idOrden = await createOrder(order);
-      dispatch(checkoutMercadoPago(itemsCheckout, idOrden));
+      return dispatch(checkoutMercadoPago(itemsCheckout, idOrden));
     }
   };
   const handleChange = (e) => {
@@ -213,7 +213,6 @@ const Checkout = () => {
           <p className={style.total}> Total ${format(totalSum)}</p>
 
           <div className={style.buttonConfirmarCompra}>
-
             <Button variant="dark" onClick={(e) => handleConfirmOrder(e)}>
               Confirmar orden de compra
             </Button>

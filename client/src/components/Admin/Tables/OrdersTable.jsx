@@ -9,11 +9,11 @@ import swal from "sweetalert";
 import { GoSearch } from "react-icons/go";
 import style from "../../Search/Search.module.css";
 
-
 function OrdersTable() {
   const [order, setOrder] = useState();
   const [show, setShow] = useState(false);
   const [input, setInput] = useState("");
+  const [mensaje, setMensaje] = useState("");
   const getAllOrders = async () => {
     const orders = await getAllOrder();
     setOrder(orders.data);
@@ -42,37 +42,37 @@ function OrdersTable() {
   };
 
   const filterOrdersbyStatus = async (e) => {
-    let select = e.target.value
+    let select = e.target.value;
     if (select === "Todo") {
-      getAllOrders()
+      getAllOrders();
     }
     let ordersFiltered = await filterByStatus(select);
-    !ordersFiltered && alert("No hay órdenes con ese estado")
-    ordersFiltered && setOrder(ordersFiltered)
-  }
+    !ordersFiltered && alert("No hay órdenes con ese estado");
+    ordersFiltered && setOrder(ordersFiltered);
+  };
 
   const handleorderByDate = async (e) => {
-    let select = e.target.value
-    let ordenesByDate = await orderByDate(select)
-    setOrder(ordenesByDate)
-  }
+    let select = e.target.value;
+    let ordenesByDate = await orderByDate(select);
+    setOrder(ordenesByDate);
+  };
   const handleSearch = async (e) => {
-    e.preventDefault()
-    console.log(search)
-    const userSearch = await getUserOrder(search)
-    console.log(userSearch)
-    setOrder(userSearch)
-  }
-
-
+    e.preventDefault();
+    const userSearch = await getUserOrder(search);
+    console.log(userSearch);
+    if (userSearch.message) {
+      swal(userSearch.message);
+      return;
+    }
+    setOrder(userSearch);
+  };
 
   return (
     <div>
       {order === undefined ? (
-        <h1>No hay ordenes activas</h1>
+        <div>{mensaje ? mensaje : "Aun no hay ordenes"}</div>
       ) : (
         <div>
-          {/* BUSCARDOR */}
           <div>
             <input
               className={style.search}
@@ -86,7 +86,7 @@ function OrdersTable() {
               //disabled={!input.name ? true : false}
               className={style.bntsearch}
               onClick={(e) => {
-                handleSearch(e)
+                handleSearch(e);
               }}
             >
               <GoSearch className={style.iconsearch} />
@@ -110,8 +110,16 @@ function OrdersTable() {
             <option value="finalizada">Finalizadas</option>
           </select>
           {/* ORDEN POR FECHA */}
-          <select class="form-select" aria-label="Default select example" onChange={(e) => { handleorderByDate(e) }}>
-            <option selected value="masReciente">Más recientes</option>
+          <select
+            class="form-select"
+            aria-label="Default select example"
+            onChange={(e) => {
+              handleorderByDate(e);
+            }}
+          >
+            <option selected value="masReciente">
+              Más recientes
+            </option>
             <option value="menosReciente">Menos Recientes</option>
           </select>
 

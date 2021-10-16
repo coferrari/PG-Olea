@@ -117,9 +117,9 @@ class OrderModel extends Modelo {
   };
   filterByStatus = async (req, res, next) => {
     const { status } = req.params;
-    try{
-      const order = await this.model.findAll({ where: {status}})
-      res.status(200).json(order)
+    try {
+      const order = await this.model.findAll({ where: { status } });
+      res.status(200).json(order);
     } catch (error) {
       next(error);
     }
@@ -214,11 +214,14 @@ class OrderModel extends Modelo {
   getUserOrder = async (req, res, next) => {
     const { username } = req.params;
     try {
-      const ordenDetail = await this.model.findAll({
-        where: { userUsername: username },
-        include: Product,
-      });
-      res.send(ordenDetail);
+      const ordenDetail = await this.model.findAll({ include: Product });
+      const ordenes = ordenDetail.filter((c) =>
+        c.userUsername.toLowerCase().includes(username.toLowerCase())
+      );
+      if (ordenes.length < 1) {
+        return res.json({ message: "No existen ordenes con este usuario" });
+      }
+      res.send(ordenes);
     } catch (error) {
       next(error);
     }
