@@ -30,6 +30,7 @@
   text-transform: uppercase;
   letter-spacing: 1px;
   padding: 2px;
+  width: 350px;
 }
 
 .price {

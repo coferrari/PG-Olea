@@ -10,6 +10,7 @@ import { checkoutMercadoPago } from "../../redux/actions";
 import { createOrder } from "../../order";
 import style from "./Checkout.module.css";
 import { Card, ListGroup, Form } from "react-bootstrap";
+import swal from "sweetalert";
 
 const Checkout = () => {
   const history = useHistory();
@@ -64,13 +65,13 @@ const Checkout = () => {
   const handleConfirmOrder = async (e) => {
     e.preventDefault();
     if (!order.phone && !order.contactName && !order.contactSurname) {
-      alert("Por favor, completá los datos personales");
+      swal("Por favor, completá los datos personales");
     }
     if (!delivery) {
-      alert("Por favor, seleccione una opción de envío");
+      swal("Por favor, seleccione una opción de envío");
     }
     if (delivery === "Envío" && !order.address) {
-      alert("Completá la dirección de envío");
+      swal("Completá la dirección de envío");
     }
     if (delivery === "Envío" && order.address) {
       idOrden = await createOrder(order);
