@@ -1,7 +1,7 @@
 import React from "react";
 import style from "./ItemCheckout.module.css";
 
-const ItemCheckout = ({ id, name, image, price, quantity }) => {
+const ItemCheckout = ({ name, image, price, quantity }) => {
 
   return (
     <div className={style.container}>

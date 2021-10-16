@@ -50,7 +50,7 @@ module.exports = (sequelize) => {
     },
     newsLetter: {
       type: DataTypes.BOOLEAN,
-      allowNull: true,
+      allowNull: true
     },
     codeVerification: {
       type: DataTypes.INTEGER,

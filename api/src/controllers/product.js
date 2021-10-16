@@ -125,6 +125,7 @@ class ProductModel extends Modelo {
         },
         { model: Reviews },
       ],
+      order: [["name", "ASC"]]
     });
 
     product
@@ -241,8 +242,16 @@ class ProductModel extends Modelo {
         })
         const wishlistFiltered = wishlists.filter(w => w.products.find(p => p.id === productID));
         for (let i=0; i < wishlistFiltered.length; i++){
-          const template = getTemplateProductStock(wishlistFiltered[i].userUsername, product.name, product.image[0],product.id);
-          await sendEmail(wishlistFiltered[i].userEmail, "Ya tenemos disponible este producto para vos!", template);
+          const userSuscribe = await User.findOne({
+            where: {
+              email: wishlistFiltered[i].userEmail,
+              newsLetter: true
+            }
+          })
+          if (userSuscribe){
+            const template = getTemplateProductStock(wishlistFiltered[i].userUsername, product.name, product.image[0],product.id);
+            await sendEmail(wishlistFiltered[i].userEmail, "Ya tenemos disponible este producto para vos!", template);
+          }
         }
       }
       await this.model.update(

@@ -2,15 +2,14 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductsByCategory, getWishlist } from "../../redux/actions";
 import Products from "../Products/Products";
-import { useParams, useHistory } from "react-router";
-import style from "../Selects/Selects.module.css";
+import { useParams } from "react-router";
+import Selects from "../Selects/Selects";
 import { Search } from "../Search/Search";
-import style2 from "./CategoryProducts.module.css";
+import style from "./CategoryProducts.module.css";
 import { isAuthorized, decodeToken } from "../../utils";
 
 export default function CategoryProduct() {
   const dispatch = useDispatch();
-  const history = useHistory();
   const { nameCategory, attribute, order } = useParams();
   const validate = isAuthorized();
   let productsByCategory = useSelector(
@@ -25,6 +24,7 @@ export default function CategoryProduct() {
       dispatch(getWishlist({ username }));
     }
   }, [dispatch, nameCategory]);
+
   // PARA ORDENAR
   if (attribute === "name" && order === "asc") {
     //ordenar alfabeticamente de A a Z
@@ -56,34 +56,11 @@ export default function CategoryProduct() {
     productsByCategory = productsByCategory.sort((a, b) => b.price - a.price);
   }
 
-  const handleOrderSelect = function (order) {
-    order = order.split(" ");
-    history.push(`/category/${nameCategory}/${order[0]}/${order[1]}`);
-  };
-
   return (
     <div>
-      <div className={style2.bar}>
+      <div className={style.bar}>
         <Search />
-        <div>
-          <select
-            className={style.select}
-            onChange={(e) => handleOrderSelect(e.target.value)}
-          >
-            <option value="" selected disabled hidden>
-              Ordenar por...
-            </option>
-            <option value={"name asc"}>Alfabeticamente, A-Z</option>
-            <option value={"name desc"}>Alfabeticamente, Z-A</option>
-            <option
-              value={"price desc"}
-              onChange={(e) => handleOrderSelect(e.target.name, e.target.value)}
-            >
-              precio, mayor a menor
-            </option>
-            <option value={"price asc"}>precio, menor a mayor</option>
-          </select>
-        </div>
+        <Selects />
       </div>
       <Products products={productsByCategory} />
     </div>
