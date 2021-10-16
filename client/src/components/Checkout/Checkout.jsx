@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { checkoutMercadoPago } from "../../redux/actions";
 import { createOrder } from "../../order";
 import style from "./Checkout.module.css";
+import { format } from "../../utils/index";
 import { Card, ListGroup, Form } from "react-bootstrap";
 import swal from "sweetalert";
 
@@ -23,37 +24,65 @@ const Checkout = () => {
     (state) => state.carritoReducer.productsCarrito
   );
 
-  //TOTAL
-  const totalSum = itemsCheckout?.reduce((acc, curr) => {
-    const result = curr.Carrito_Products
-      ? acc + parseInt(curr.price) * curr.Carrito_Products.quantity
-      : acc + parseInt(curr.price) * curr.quantity;
-    return result;
-  }, 0);
-
-  const format = (num) => {
-    num = num + "";
-    var str = "";
-    for (var i = num.length - 1, j = 1; i >= 0; i--, j++) {
-      if (j % 3 === 0 && i !== 0) {
-        str += num[i] + ".";
-        continue;
-      }
-      str += num[i];
-    }
-    return str.split("").reverse().join("");
-  };
-
   const [delivery, setDelivery] = useState("");
   const handleSelected = (e) => {
     e.preventDefault();
     setDelivery(e.target.value);
   };
 
+  const desc = itemsCheckout?.reduce((acc, curr) => {
+    let result = 0;
+    if (curr.Carrito_Products) {
+      if (curr.offer >= curr.categories?.[0].offer) {
+        result =
+          acc +
+          parseInt(
+            curr.price - Math.round(parseInt(curr.price * curr.offer) / 100)
+          ) *
+            curr.Carrito_Products.quantity;
+      } else if (curr.offer < curr.categories?.[0].offer) {
+        result =
+          acc +
+          parseInt(
+            curr.price -
+              Math.round(
+                parseInt(curr.price * curr.categories?.[0].offer) / 100
+              )
+          ) *
+            curr.Carrito_Products.quantity;
+      } else {
+        result = acc + parseInt(curr.price) * curr.Carrito_Products.quantity;
+      }
+    }
+    if (curr.quantity) {
+      if (curr.offer >= curr.categories?.[0].offer) {
+        result =
+          acc +
+          parseInt(
+            curr.price - Math.round(parseInt(curr.price * curr.offer) / 100)
+          ) *
+            curr.quantity;
+      } else if (curr.offer < curr.categories?.[0].offer) {
+        result =
+          acc +
+          parseInt(
+            curr.price -
+              Math.round(
+                parseInt(curr.price * curr.categories?.[0].offer) / 100
+              )
+          ) *
+            curr.quantity;
+      } else {
+        result = acc + parseInt(curr.price) * curr.quantity;
+      }
+    }
+    return result;
+  }, 0);
+
   const [order, setOrder] = useState({
     username: datosLogin.username,
     email: datosLogin.email,
-    price: totalSum,
+    price: desc,
     products: itemsCheckout,
     address: delivery,
     phone: "",
@@ -89,6 +118,8 @@ const Checkout = () => {
       [e.target.name]: e.target.value,
     });
   };
+
+  // ESTE ES EL PRECIO TOTAL SI HAY DESCUENTOS O SI NO HAY !!!!
 
   return (
     <div>
@@ -211,7 +242,7 @@ const Checkout = () => {
           </div>
           <Details />
 
-          <p className={style.total}> Total ${format(totalSum)}</p>
+          <p className={style.total}> Total ${format(desc)}</p>
 
           <div className={style.buttonConfirmarCompra}>
             <Button variant="dark" onClick={(e) => handleConfirmOrder(e)}>
