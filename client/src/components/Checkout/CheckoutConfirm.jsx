@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useHistory } from "react-router-dom";
 import { getOrderDetails, changeStatus } from "../../order";
-import { ListGroup, Button } from "react-bootstrap";
+import { ListGroup, Button, Spinner } from "react-bootstrap";
 
 const CheckoutConfirm = () => {
   const location = useLocation();
@@ -32,9 +32,10 @@ const CheckoutConfirm = () => {
     history.push("/home");
   }
 
+  console.log(orden)
+
   return (
-    <div>
-      {location.search &&
+    <div>{ !orden.contactName ? (<Spinner animation="border" variant="secondary" />) : (location.search &&
       location.search.includes("collection_status=approved") ? (
         <div className="container">
           <ListGroup>
@@ -45,7 +46,11 @@ const CheckoutConfirm = () => {
               Cliente: {orden.contactName + " " + orden.contactSurname}
             </ListGroup.Item>
             <ListGroup.Item>Tel: {orden.phone}</ListGroup.Item>
-            <ListGroup.Item>Fecha: {orden.date}</ListGroup.Item>
+            <ListGroup.Item>Fecha: {orden.updatedAt
+                .slice(0, 10)
+                .split("-")
+                .reverse()
+                .join("-")}</ListGroup.Item>
             <ListGroup.Item>ID de compra: {idOrder} </ListGroup.Item>
             <ListGroup.Item>Estado del pago: {orden.statusPago}</ListGroup.Item>
             {orden.address !== "" ? (
@@ -63,13 +68,37 @@ const CheckoutConfirm = () => {
           </Button>
         </div>
       ) : (
-        <div>
-          Algo salió mal con el pago
+        <div className="container">
+          <ListGroup>
+            <ListGroup.Item variant="danger">
+              Algo pasó con el pago de tu orden!
+            </ListGroup.Item>
+            <ListGroup.Item>
+              Cliente: {orden.contactName + " " + orden.contactSurname}
+            </ListGroup.Item>
+            <ListGroup.Item>Tel: {orden.phone}</ListGroup.Item>
+            <ListGroup.Item>Fecha: {" "} {orden.updatedAt
+                .slice(0, 10)
+                .split("-")
+                .reverse()
+                .join("-")}</ListGroup.Item>
+            <ListGroup.Item>ID de compra: {idOrder} </ListGroup.Item>
+            <ListGroup.Item>Estado del pago: {orden.statusPago}</ListGroup.Item>
+            {orden.address !== "" ? (
+              <ListGroup.Item>Dirección: {orden.address}</ListGroup.Item>
+            ) : (
+              <ListGroup.Item>Retiro por local</ListGroup.Item>
+            )}
+            <ListGroup.Item>
+              Productos: {orden.products?.map((p) => p.name + ", ")}
+            </ListGroup.Item>
+            <ListGroup.Item>Total: ${orden.price}</ListGroup.Item>
+          </ListGroup>
           <Button variant="dark" onClick={onClick}>
             Volver
           </Button>
         </div>
-      )}
+      ))}
     </div>
   );
 };
