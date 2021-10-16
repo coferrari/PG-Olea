@@ -6,4 +6,5 @@ router.get("/", newsLetter.getAll);
 router.post("/ofertproduct", isAdmin, newsLetter.sendLetterProduct);
 router.post("/ofertcategory", isAdmin, newsLetter.sendCategoryLetter);
 router.post("/suscribe", newsLetter.suscribeNewsLetter);
+router.post("ofertproductWishlist", isAdmin, newsLetter.sendOffersToWishlistUsers);
 module.exports = router;
