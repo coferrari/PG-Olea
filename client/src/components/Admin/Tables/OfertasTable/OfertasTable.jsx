@@ -46,6 +46,7 @@ function OfertasTable() {
       idProduct: 0,
       offProduct: 0,
     });
+    swal("Se agrego la oferta");
   };
   const onChangeCat = (e) => {
     e.preventDefault();
@@ -66,6 +67,7 @@ function OfertasTable() {
       idCat: 0,
       offCat: 0,
     });
+    swal("Se agrego la oferta");
   };
 
   return (
