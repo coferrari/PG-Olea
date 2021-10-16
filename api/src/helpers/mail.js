@@ -142,7 +142,7 @@ const getTemplateProductLetter = (name, fecha, product, offert, token) => {
       <h2>Hola ${name}</h2>
       <p>El dia ${fecha} el producto ${product} se encontrara con un ${offert}% de descuento!</p>
       <p><a href="https://somosolea.vercel.app/" target="_blank">Visite nuestra página!</a></p>
-      <p><a href="https://somosolea.vercel.app/newsletter/desuscribe/${token}"" target="_blank">Anular suscripción</a></p>
+      <p><a href="https://somosolea.vercel.app/newsletter/desuscribe/${token}" target="_blank">Anular suscripción</a></p>
   </div>
   `;
 };
@@ -156,7 +156,7 @@ const getTemplateCategoryLetter = (name, fecha, category, offert, token) => {
       <h2>Hola ${name}</h2>
       <p>El dia ${fecha} toda la categoria ${category} se encontrara con un ${offert}% de descuento!</p>
       <p><a href="https://somosolea.vercel.app/" target="_blank">Visite nuestra página!</a></p>
-      <p><a href="https://somosolea.vercel.app/newsletter/desuscribe/${token}>Anular suscripción</a></p>
+      <p><a href="https://somosolea.vercel.app/newsletter/desuscribe/${token}" target="_blank">Anular suscripción</a></p>
   </div>
   `;
 };
