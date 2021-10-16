@@ -1,7 +1,6 @@
 import axios from "axios";
 import {
   GET_PRODUCTS,
-  SEARCH_PRODUCTS,
   GET_PRODUCT_DETAIL,
   CATEGORY_FILTER,
   ALL_CATEGORIES,
@@ -13,11 +12,12 @@ import {
   GET_WISHLIST,
   ADD_TO_WISHLIST,
   REMOVE_FROM_WISHLIST,
-  CLEAR_WISHLIST
+  CLEAR_WISHLIST, 
+  FILTER_PRODUCTS_SEARCH,
+  FILTER_CATEGORIES_SEARCH
 } from "./types";
 import {
   GET_PRODUCTS_URL,
-  SEARCH_PRODUCTS_URL,
   GET_PRODUCT_DETAIL_URL,
   CATEGORY_URL,
   PAY_MERCADOPAGO_URL,
@@ -38,15 +38,11 @@ export function getProducts() {
   };
 }
 
-export function searchProducts(name) {
-  return function (dispatch) {
-    return axios.get(`${SEARCH_PRODUCTS_URL}${name}`).then((products) => {
-      dispatch({
-        type: SEARCH_PRODUCTS,
-        payload: products.data,
-      });
-    });
-  };
+export function getProductsFiltered(name) {
+  return {
+    type: FILTER_PRODUCTS_SEARCH,
+    payload: name
+  }
 }
 
 export function getProductDetail(id) {
@@ -69,6 +65,13 @@ export function getProductsByCategory(name) {
       });
     });
   };
+}
+
+export function getCategoriesFiltered(name) {
+  return {
+    type: FILTER_CATEGORIES_SEARCH,
+    payload: name
+  }
 }
 
 export function getCategories() {
@@ -126,7 +129,6 @@ export function getOrderDetails (id) {
 }
 
 export function getWishlist(payload) {
-  console.log(payload)
   return function (dispatch) {
     return axios.get(GET_WISHLIST_URL, {params: payload}).then((wishlist) => {
       dispatch({

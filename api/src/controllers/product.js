@@ -125,6 +125,7 @@ class ProductModel extends Modelo {
         },
         { model: Reviews },
       ],
+      order: [["name", "ASC"]]
     });
 
     product

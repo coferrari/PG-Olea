@@ -41,7 +41,7 @@ const NavResponsive = () => {
                   return (
                     <Nav.Link key={category.id}>
                       <Link
-                        to={`/category/${category.nameCategory}`}
+                        to={`/category/${category.nameCategory}/name/asc`}
                         className={style.links}
                       >
                         {category.nameCategory}
@@ -92,7 +92,7 @@ const NavResponsive = () => {
                 return (
                   <Nav.Link key={category.id}>
                     <Link
-                      to={`/category/${category.nameCategory}`}
+                      to={`/category/${category.nameCategory}/name/asc`}
                       className={style.links}
                     >
                       {category.nameCategory}
