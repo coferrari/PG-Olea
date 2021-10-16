@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { updateCart } from "../../redux/actions/index";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import style from "./ItemCart.module.css";
 import { Button } from "react-bootstrap";
 import { isAuthorized, decodeToken } from "../../utils/index";
 import { addOrEditCart, removeProductCart } from "../../cart/index";
+import { format } from "../../utils/index";
 
 const ItemCart = ({
   id,
@@ -105,21 +106,9 @@ const ItemCart = ({
     }
   };
 
-  const format = (num) => {
-    num = num + "";
-    var str = "";
-    for (var i = num.length - 1, j = 1; i >= 0; i--, j++) {
-      if (j % 3 === 0 && i !== 0) {
-        str += num[i] + ".";
-        continue;
-      }
-      str += num[i];
-    }
-    return str.split("").reverse().join("");
-  };
   var now = new Date().toLocaleDateString();
   var precio = parseInt(price);
-  console.log(diaDescuentoProducto, "toni");
+  console.log(descuentoProducto, diaDescuentoProducto);
   return (
     <div className={style.container}>
       <div>
@@ -139,7 +128,6 @@ const ItemCart = ({
           ${" "}
           {q ? (
             now === diaDescuentoProducto || now === diaDescuentoCategoria ? (
-              (console.log(descuentoProducto, descuentoCategoria),
               descuentoProducto > descuentoCategoria ? (
                 <span className={style.descuento}>
                   {format(
@@ -154,7 +142,7 @@ const ItemCart = ({
                       Math.round((precio * descuentoCategoria) / 100) * q
                   )}
                 </span>
-              ))
+              )
             ) : (
               format(precio * q)
             )

@@ -23,7 +23,7 @@ const ItemsCart = () => {
             descuentoProducto={product.offer} // % de descuento del producto
             descuentoCategoria={product.categories?.[0].offer} // % de descuento de la cat
             diaDescuentoCategoria={product.categories?.[0].offerday} // dia de descuento de la cat
-            diaDescuentoProducto={product.productOff} // dia de descuento del producto
+            diaDescuentoProducto={product.offerday} // dia de descuento del producto
           />
         </div>
       ))}
