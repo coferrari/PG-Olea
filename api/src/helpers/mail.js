@@ -87,7 +87,12 @@ const getTemplateAuthenticationAdmin = (name, code) => {
   </div>`;
 };
 
-const getTemplateProductStock = (username, productName, productImage, productId) => {
+const getTemplateProductStock = (
+  username,
+  productName,
+  productImage,
+  productId
+) => {
   return `
   <head>
   <link rel="stylesheet" href="./style.css">
@@ -102,7 +107,7 @@ const getTemplateProductStock = (username, productName, productImage, productId)
   target="_blank"
   >${productName}</a>
 </div>`;
-}
+};
 
 const getTemplateAproved = (name, price) => {
   return `
@@ -127,7 +132,7 @@ const getTemplateRejected = (name, price) => {
       <a href="https://somosolea.vercel.app/">Visite nuestra pagina!</a>
   </div>`;
 };
-const getTemplateProductLetter = (name, fecha, product, offert) => {
+const getTemplateProductLetter = (name, fecha, product, offert, token) => {
   return `
   <head>
       <link rel="stylesheet" href="./style.css">
@@ -137,10 +142,11 @@ const getTemplateProductLetter = (name, fecha, product, offert) => {
       <h2>Hola ${name}</h2>
       <p>El dia ${fecha} el producto ${product} se encontrara con un ${offert}% de descuento!</p>
       <p><a href="https://somosolea.vercel.app/" target="_blank">Visite nuestra página!</a></p>
+      <p><a href="https://somosolea.vercel.app/newsletter/desuscribe/${token}"" target="_blank">Anular suscripción</a></p>
   </div>
   `;
 };
-const getTemplateCategoryLetter = (name, fecha, category, offert) => {
+const getTemplateCategoryLetter = (name, fecha, category, offert, token) => {
   return `
   <head>
       <link rel="stylesheet" href="./style.css">
@@ -150,6 +156,7 @@ const getTemplateCategoryLetter = (name, fecha, category, offert) => {
       <h2>Hola ${name}</h2>
       <p>El dia ${fecha} toda la categoria ${category} se encontrara con un ${offert}% de descuento!</p>
       <p><a href="https://somosolea.vercel.app/" target="_blank">Visite nuestra página!</a></p>
+      <p><a href="https://somosolea.vercel.app/newsletter/desuscribe/${token}>Anular suscripción</a></p>
   </div>
   `;
 };

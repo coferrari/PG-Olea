@@ -16,7 +16,6 @@ import RequestChangePassword from "./components/RequestChangePassword/RequestCha
 import ChangePassword from "./components/ChangePassword/ChangePassword";
 import ShoppingCart from "./components/ShoppingCart/ShoppingCart";
 import Checkout from "./components/Checkout/Checkout";
-import ProductsByName from "./components/ProductsByName/ProductsByName";
 import { decodeToken } from "./utils/index";
 import CreateProduct from "./components/Admin/CreateProduct/CreateProduct";
 import UsersTable from "./components/Admin/Tables/UsersTable/UsersTable";
@@ -32,6 +31,7 @@ import OrderDetail from "./components/OrderDetail/OrderDetail";
 import OfertasTable from "./components/Admin/Tables/OfertasTable/OfertasTable.jsx";
 import CheckoutConfirm from "./components/Checkout/CheckoutConfirm";
 import Wishlist from "./components/Wishlist/Wishlist";
+import Desuscribe from "./components/Profile/DesuscribeNewsLetter";
 function App() {
   const loggedIn = decodeToken();
 
@@ -96,8 +96,7 @@ function App() {
         <Route exact path="/createreview/:productid">
           <Review />
         </Route>
-        <Route exact path="/admin/reviews/:productid">
-        </Route>
+        <Route exact path="/admin/reviews/:productid"></Route>
         <Route exact path="/admin/editproduct/:productid">
           {loggedIn.admin ? <EditProduct /> : <Redirect to="/home" />}
         </Route>
@@ -118,8 +117,10 @@ function App() {
         </Route>
         <Route exact path="/checkoutconfirm">
           <CheckoutConfirm />
-          </Route>
-
+        </Route>
+        <Route exact path="/newsletter/desuscribe/:token">
+          <Desuscribe />
+        </Route>
         <Route exact path="/wishlist">
           <Wishlist />
         </Route>

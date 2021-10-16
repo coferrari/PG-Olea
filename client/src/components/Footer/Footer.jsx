@@ -4,6 +4,7 @@ import style from "./Footer.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 import { suscribeNewsLetter } from "../../auth/users";
+import { decodeToken } from "../../utils";
 import swal from "sweetalert";
 
 function Footer() {
@@ -12,11 +13,12 @@ function Footer() {
     console.log(input);
     setInput(e.target.value);
   };
+  const user = decodeToken();
+  console.log(user);
   const suscribe = async (e) => {
     e.preventDefault();
     try {
       const x = await suscribeNewsLetter(input);
-      console.log(x);
     } catch (err) {
       swal("Registre su email primero");
       console.log(err.message);
@@ -71,6 +73,7 @@ function Footer() {
               </div>
             </div>
           </div>
+
           <div className={style.footer__flexitem}>
             <h5 className={style.subtitles}>newsletter</h5>
             <ul className={style.ul}>
@@ -83,6 +86,7 @@ function Footer() {
               className={style.footer__flexformnewsletter}
               action=""
               onSubmit={(e) => suscribe(e)}
+              autocomplete="off"
             >
               <input
                 type="email"
@@ -98,6 +102,17 @@ function Footer() {
               />
             </form>
           </div>
+          {/* // ) : (
+          //   <div className={style.footer__flexitem}>
+          //     <h5 className={style.subtitles}>newsletter</h5>
+          //     <ul className={style.ul}>
+          //       <li className={style.list}>
+          //         Usted esta suscripto a nuestro newsletter semanal, desea
+          //         anular la suscripción?
+          //       </li>
+          //     </ul>
+          //   </div>
+          // )} */}
         </div>
         <div className={style.footer__socialmedia}>
           <div className={style.footer__socialmediaprincipal}>

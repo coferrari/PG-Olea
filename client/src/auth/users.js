@@ -68,3 +68,7 @@ export const suscribeNewsLetter = async (email) => {
   const res = await axios.post(`/api/news/suscribe`, { email: email });
   return res.data;
 };
+export const desuscribeNewsLetter = async (token) => {
+  const res = await axios.put(`/api/news/desuscribe`, { token });
+  return res.data;
+};

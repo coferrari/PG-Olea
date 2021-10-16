@@ -10,7 +10,6 @@ const UserOrders = () => {
   const getOrden = async () => {
     const user = decodeToken();
     const order = await getUserOrder(user.username);
-    console.log("order", order);
     if (order.message) {
       console.log(order.message);
     } else {

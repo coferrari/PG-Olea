@@ -1,5 +1,4 @@
-
-const { User, Carrito, Product, Wishlist} = require("../db.js");
+const { User, Carrito, Product, Wishlist } = require("../db.js");
 const { encryptPassword, comparePassword } = require("../helpers/index");
 const jwt = require("jsonwebtoken");
 const { OAuth2Client } = require("google-auth-library");
@@ -13,7 +12,6 @@ const {
   getTemplateChangePassword,
   getTemplateAuthenticationAdmin,
 } = require("../helpers/mail");
-const { use } = require("../routes/user.js");
 const userFunction = {};
 
 userFunction.register = async (req, res, next) => {
@@ -44,7 +42,7 @@ userFunction.confirmRegister = async (req, res, next) => {
   const { token } = req.body;
   const verified = jwt.verify(token, process.env.TOKEN_SECRET);
   const carritocreado = await Carrito.create({});
-  const wishlist = await Wishlist.create({})
+  const wishlist = await Wishlist.create({});
   const user = await User.create({
     name: verified.name,
     surname: verified.surname,
@@ -56,8 +54,8 @@ userFunction.confirmRegister = async (req, res, next) => {
   user.setCarrito(carritocreado.dataValues.id);
   user.setWishlist(wishlist.dataValues.id);
   await wishlist.update({
-    userEmail: verified.email
-  })
+    userEmail: verified.email,
+  });
   res.send(user);
 };
 
@@ -122,6 +120,7 @@ userFunction.login = async (req, res, next) => {
           picture: emailFind.picture,
           adress: emailFind.adress,
           phone: emailFind.phone,
+          newsLetters: emailFind.newsLetters,
         },
         process.env.TOKEN_SECRET
       );
@@ -146,6 +145,7 @@ userFunction.authenticateLogin = async (req, res, next) => {
       return res.json({
         msg: "Su codigo es incorrecto o expiro",
       });
+    console.log(userAdmin);
     const token = jwt.sign(
       {
         name: userAdmin.name,
@@ -156,6 +156,7 @@ userFunction.authenticateLogin = async (req, res, next) => {
         picture: userAdmin.picture,
         adress: userAdmin.adress,
         phone: userAdmin.phone,
+        newsLetter: userAdmin.newsLetter,
       },
       process.env.TOKEN_SECRET
     );
@@ -191,10 +192,9 @@ userFunction.googleLogin = async (req, res, next) => {
       where: { email },
       include: Carrito,
     });
-
     if (user === null) {
       const carritocreado = await Carrito.create({});
-      const wishlist = await Wishlist.create({})
+      const wishlist = await Wishlist.create({});
       const newPasswordEncrypted = await encryptPassword(at_hash);
       const newUser = await User.create({
         name: given_name,
@@ -204,14 +204,13 @@ userFunction.googleLogin = async (req, res, next) => {
         surname: family_name,
         picture,
         admin: false,
+        newsLetter: false,
       });
       newUser.setCarrito(carritocreado.dataValues.id);
       newUser.setWishlist(wishlist.dataValues.id);
-
       await wishlist.update({
-        userEmail: email
-      })
-      
+        userEmail: email,
+      });
       const token = jwt.sign(
         {
           name: given_name,
@@ -220,6 +219,7 @@ userFunction.googleLogin = async (req, res, next) => {
           surname: family_name,
           picture,
           admin: newUser.admin,
+          newsLetter: newUser.newsLetter,
         },
         process.env.TOKEN_SECRET,
         { expiresIn: "10m" }
@@ -238,6 +238,7 @@ userFunction.googleLogin = async (req, res, next) => {
           surname: family_name,
           picture,
           admin: user.admin,
+          newsLetter: user.newsLetter,
         },
         process.env.TOKEN_SECRET,
         { expiresIn: "10m" }
