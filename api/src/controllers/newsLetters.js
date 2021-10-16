@@ -21,6 +21,7 @@ newsLetter.getAll = async (req, res, next) => {
 };
 newsLetter.sendLetterProduct = async (req, res, next) => {
   const { product, offert, fecha } = req.body;
+  console.log(req.body);
   try {
     const allUsers = await User.findAll({
       where: {

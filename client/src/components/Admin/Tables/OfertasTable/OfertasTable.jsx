@@ -31,21 +31,17 @@ function OfertasTable() {
   };
 
   const onSubmitProduct = async (e) => {
+    e.preventDefault();
     if (!productOff.idProduct && !productOff.offProduct && !value) {
       return alert("faltan parametros");
     }
     let valor = value.toLocaleDateString();
-    console.log(productOff, valor);
     offerProduct(productOff, valor);
-    const res = await productOfert(
-      productOff.idProduct,
-      productOff.offProduct,
-      valor
-    );
     setProductOff({
       idProduct: 0,
       offProduct: 0,
     });
+    await productOfert(productOff.idProduct, productOff.offProduct, valor);
     swal("Se agrego la oferta");
   };
   const onChangeCat = (e) => {
