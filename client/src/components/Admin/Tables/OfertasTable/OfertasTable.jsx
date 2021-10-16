@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 import { offerCategory, offerProduct } from "../../../../cart/index";
 import { productOfert, categoryOfert } from "../../../../auth/admin";
 import Ofertas from "./Ofertas";
-
+import swal from "sweetalert";
 function OfertasTable() {
   const [value, onChange] = useState(new Date());
   const [offCat, setOffCat] = useState({
