@@ -108,7 +108,7 @@ const ItemCart = ({
 
   var now = new Date().toLocaleDateString();
   var precio = parseInt(price);
-  console.log(descuentoProducto, diaDescuentoProducto);
+
   return (
     <div className={style.container}>
       <div>

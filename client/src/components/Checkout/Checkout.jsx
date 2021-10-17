@@ -119,181 +119,190 @@ const Checkout = () => {
     });
   };
 
-  // ESTE ES EL PRECIO TOTAL SI HAY DESCUENTOS O SI NO HAY !!!!
-
   return (
-    <div>
-      {sesionIniciada === true ? (
-        <div className={style.checkoutContainer}>
+    <div className={style.cnt}>
+      <div className="container">
+        {sesionIniciada === true ? (
           <div>
-            <Card style={{ width: "%100" }}>
-              <Card.Header className={style.title}>
-                1 - Datos Personales
-              </Card.Header>
-              <ListGroup className={style.listgroup}>
-                <ListGroup.Item className={style.listgroup}>
-                  <label> Nombre </label>{" "}
-                  <input
-                    name="contactName"
-                    onChange={(e) => {
-                      handleChange(e);
-                    }}
-                    className={style.input}
-                    type="text"
-                    placeholder="Nombre"
-                    defaultValue={datosLogin.name}
-                  />
-                </ListGroup.Item>
-                <ListGroup.Item className={style.listgroup}>
-                  <label> Apellido </label>
-                  <input
-                    className={style.input}
-                    onChange={(e) => {
-                      handleChange(e);
-                    }}
-                    name="contactSurname"
-                    type="text"
-                    placeholder="Apellido"
-                    defaultValue={datosLogin.surname}
-                  />
-                </ListGroup.Item>
-                <ListGroup.Item className={style.listgroup}>
-                  <label> Teléfono </label>{" "}
-                  <input
-                    className={style.input}
-                    type="text"
-                    placeholder="Teléfono"
-                    name="phone"
-                    onChange={(e) => {
-                      handleChange(e);
-                    }}
-                  />
-                </ListGroup.Item>
-              </ListGroup>
-            </Card>
-          </div>
-          <div>
-            <Card.Header className={style.title}>
-              2 - Datos de Envío
-            </Card.Header>
-
-            <div className={style.title}>
-              <input
-                type="radio"
-                class="btn-check"
-                className={style.botonesEnvío}
-                name="options"
-                id="option1"
-                autocomplete="off"
-                onChange={(e) => {
-                  handleSelected(e);
-                }}
-                value="Envío"
-                name="options"
-              />
-              <label class="btn btn-secondary" for="option1">
-                Envío
-              </label>
-
-              <input
-                type="radio"
-                class="btn-check"
-                name="options"
-                id="option2"
-                autocomplete="off"
-                onChange={(e) => {
-                  handleSelected(e);
-                }}
-                value="Retiro por local"
-                name="options"
-              />
-              <label class="btn btn-secondary" for="option2">
-                Retiro por local
-              </label>
+            <div>
+              <Card className={style.card}>
+                <div className={style.headers}>
+                  <Card.Header className={style.title}>
+                    1 - Datos Personales
+                  </Card.Header>
+                </div>
+                <ListGroup className={style.listgroup}>
+                  <ListGroup.Item className={style.listgroup}>
+                    <div className={style.labels}>
+                      <label> Nombre </label>{" "}
+                      <Form.Control
+                        name="contactName"
+                        onChange={(e) => {
+                          handleChange(e);
+                        }}
+                        className={style.input}
+                        type="text"
+                        placeholder="Nombre"
+                        defaultValue={datosLogin.name}
+                      />
+                    </div>
+                  </ListGroup.Item>
+                  <ListGroup.Item className={style.listgroup}>
+                    <div className={style.labels}>
+                      <label> Apellido </label>
+                      <Form.Control
+                        className={style.input}
+                        onChange={(e) => {
+                          handleChange(e);
+                        }}
+                        name="contactSurname"
+                        type="text"
+                        placeholder="Apellido"
+                        defaultValue={datosLogin.surname}
+                      />
+                    </div>
+                  </ListGroup.Item>
+                  <ListGroup.Item className={style.listgroup}>
+                    <div className={style.labels}>
+                      <label> Teléfono </label>{" "}
+                      <Form.Control
+                        className={style.input}
+                        type="text"
+                        placeholder="Teléfono"
+                        name="phone"
+                        onChange={(e) => {
+                          handleChange(e);
+                        }}
+                      />
+                    </div>
+                  </ListGroup.Item>
+                </ListGroup>
+              </Card>
             </div>
-            <Card.Body className={style.bodyDelivery} eventKey={delivery}>
-              {delivery === "Envío" ? (
-                <div>
-                  <Card.Title>Envío</Card.Title>
-                  <Form.Group className={style.datosEnvio}>
-                    <Form.Label>Domicilio de envío</Form.Label>
-                    <Form.Control
-                      type="text"
-                      placeholder="Domicilio de Envío"
-                      name="address"
-                      className={style.inputDatosEnvio}
-                      onChange={(e) => {
-                        handleChange(e);
-                      }}
-                    />
-                  </Form.Group>
-                </div>
-              ) : (
-                <div>
-                  <Card.Title>Retiro</Card.Title>
-                  <Card.Text>
-                    Pasá a retirar tu pedido por Garibaldi 283, Coronel Suárez
-                    <br />
-                    Horario : Lu a Vi 9: 30-12: 30, 17: 30-19: 30 y Sa 10-12: 30
-                  </Card.Text>
-                </div>
-              )}
-            </Card.Body>
-          </div>
-          <Details />
+            <div>
+              <div className={style.headers}>
+                <Card.Header className={style.title}>
+                  2 - Datos de Envío
+                </Card.Header>
+              </div>
+              <div className={style.btns}>
+                <input
+                  type="radio"
+                  class="btn-check"
+                  name="options"
+                  id="option1"
+                  autocomplete="off"
+                  onChange={(e) => {
+                    handleSelected(e);
+                  }}
+                  value="Envío"
+                  name="options"
+                />
+                <label class="btn btn-secondary" for="option1">
+                  Envío
+                </label>
 
-          <p className={style.total}> Total ${format(desc)}</p>
+                <input
+                  type="radio"
+                  class="btn-check"
+                  name="options"
+                  id="option2"
+                  autocomplete="off"
+                  onChange={(e) => {
+                    handleSelected(e);
+                  }}
+                  value="Retiro por local"
+                  name="options"
+                />
+                <label class="btn btn-secondary" for="option2">
+                  Retiro por local
+                </label>
+              </div>
+              <Card.Body className={style.bodyDelivery} eventKey={delivery}>
+                {delivery === "Envío" ? (
+                  <div>
+                    <Card.Title className={style.labels}>Envío</Card.Title>
+                    <Form.Group className={style.datosEnvio}>
+                      <Form.Label className={style.labels}>Domicilio de envío</Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="Domicilio de Envío"
+                        name="address"
+                        className={style.inputDatosEnvio}
+                        onChange={(e) => {
+                          handleChange(e);
+                        }}
+                      />
+                    </Form.Group>
+                  </div>
+                ) : (
+                  <div>
+                    <Card.Title className={style.labels}>Retiro</Card.Title>
+                    <Card.Text className={style.text}>
+                      Pasá a retirar tu pedido por Garibaldi 283, Coronel Suárez
+                      <br />
+                      Horario : Lu a Vi 9: 30-12: 30, 17: 30-19: 30 y Sa 10-12:
+                      30
+                    </Card.Text>
+                  </div>
+                )}
+              </Card.Body>
+            </div>
+            <Details />
 
-          <div className={style.buttonConfirmarCompra}>
-            <Button variant="dark" onClick={(e) => handleConfirmOrder(e)}>
-              Confirmar orden de compra
-            </Button>
-            {linkDePago &&
-              confirmAlert({
-                title: "Atención",
-                message: "Usted será redirigido al checkout de Mercado Pago",
-                buttons: [
-                  {
-                    label: "Aceptar",
-                    onClick: () => {
-                      window.open(linkDePago);
-                      localStorage.setItem("cart", JSON.stringify([]));
-                      window.location.href = "/";
+            <p className={style.total}> Total ${format(desc)}</p>
+
+            <div className={style.buttonConfirmarCompra}>
+              <Button variant="dark" onClick={(e) => handleConfirmOrder(e)} className={style.checkout}>
+                Confirmar compra
+              </Button>
+              {linkDePago &&
+                confirmAlert({
+                  title: "Atención",
+                  message: "Usted será redirigido al checkout de Mercado Pago",
+                  buttons: [
+                    {
+                      label: "Aceptar",
+                      onClick: () => {
+                        window.open(linkDePago);
+                        localStorage.setItem("cart", JSON.stringify([]));
+                        window.location.href = "/";
+                      },
                     },
-                  },
-                  {
-                    label: "Volver",
-                    onClick: () => {
-                      window.location.href = "";
+                    {
+                      label: "Volver",
+                      onClick: () => {
+                        window.location.href = "";
+                      },
                     },
-                  },
-                ],
-              })}
+                  ],
+                })}
+            </div>
           </div>
-        </div>
-      ) : (
-        <div>
-          {confirmAlert({
-            title: "No iniciaste sesión",
-            message:
-              "Para continuar con tu compra debes registrarte o iniciar sesión",
-            buttons: [
-              {
-                label: "Iniciar Sesión",
-                onClick: () => history.push("/login"),
-              },
-              {
-                label: "Registrarse",
-                onClick: () => history.push("/register"),
-              },
-              {
-                label: "Inicio",
-                onClick: () => history.push("/"),
-              },
-            ],
-          })}
-        </div>
-      )}
+        ) : (
+          <div>
+            {confirmAlert({
+              title: "No iniciaste sesión",
+              message:
+                "Para continuar con tu compra debes registrarte o iniciar sesión",
+              buttons: [
+                {
+                  label: "Iniciar Sesión",
+                  onClick: () => history.push("/login"),
+                },
+                {
+                  label: "Registrarse",
+                  onClick: () => history.push("/register"),
+                },
+                {
+                  label: "Inicio",
+                  onClick: () => history.push("/"),
+                },
+              ],
+            })}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
