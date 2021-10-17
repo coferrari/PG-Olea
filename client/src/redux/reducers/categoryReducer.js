@@ -20,8 +20,10 @@ export default function categoryReducer(state = initialState, action) {
       };
     case FILTER_CATEGORIES_SEARCH:
       const products = state.allProductsByCategory;
-      const productsFiltered = products.filter((product) =>
-        product.name.toLowerCase().includes(action.payload.toLowerCase())
+      const productsFiltered = products.filter(
+        (product) =>
+          product.name.toLowerCase().includes(action.payload.toLowerCase()) ||
+          product.description.toLowerCase().includes(action.payload.toLowerCase())
       );
       return {
         ...state,
