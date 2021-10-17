@@ -20,6 +20,7 @@ const Checkout = () => {
   const dispatch = useDispatch();
 
   let linkDePago = useSelector((state) => state.carritoReducer.linkPago);
+  console.log("link", linkDePago);
   const itemsCheckout = useSelector(
     (state) => state.carritoReducer.productsCarrito
   );
@@ -97,17 +98,12 @@ const Checkout = () => {
       return swal("Por favor, completá los datos personales");
     }
     if (!delivery) {
-      return swal("Por favor, seleccione una opción de envío");
-    }
-    if (delivery === "Envío" && !order.address) {
-      return swal("Completá la dirección de envío");
-    }
-    if (delivery === "Envío" && order.address) {
-      idOrden = await createOrder(order);
+      swal("Por favor, seleccione una opción de envío");
+    } else if (delivery === "Envío" && !order.address) {
+      swal("Completá la dirección de envío");
+    } else if (delivery === "Envío" && order.address) {
       return dispatch(checkoutMercadoPago(itemsCheckout, idOrden));
-    }
-    if (delivery === "Retiro por local") {
-      idOrden = await createOrder(order);
+    } else if (delivery === "Retiro por local") {
       return dispatch(checkoutMercadoPago(itemsCheckout, idOrden));
     }
   };
@@ -251,23 +247,22 @@ const Checkout = () => {
             <Details />
 
             <p className={style.total}> Total ${format(desc)}</p>
-
-            <div className={style.buttonConfirmarCompra}>
-              <Button variant="dark" onClick={(e) => handleConfirmOrder(e)} className={style.checkout}>
-                Confirmar compra
-              </Button>
-              {linkDePago &&
-                confirmAlert({
-                  title: "Atención",
-                  message: "Usted será redirigido al checkout de Mercado Pago",
-                  buttons: [
-                    {
-                      label: "Aceptar",
-                      onClick: () => {
-                        window.open(linkDePago);
-                        localStorage.setItem("cart", JSON.stringify([]));
-                        window.location.href = "/";
-                      },
+          <div className={style.buttonConfirmarCompra}>
+            <Button variant="dark" onClick={(e) => handleConfirmOrder(e)}>
+              Confirmar orden de compra
+            </Button>
+            {linkDePago &&
+              confirmAlert({
+                title: "Atención",
+                message: "Usted será redirigido al checkout de Mercado Pago",
+                buttons: [
+                  {
+                    label: "Aceptar",
+                    onClick: async () => {
+                      idOrden = await createOrder(order);
+                      window.open(linkDePago);
+                      localStorage.setItem("cart", JSON.stringify([]));
+                      window.location.href = "/";
                     },
                     {
                       label: "Volver",

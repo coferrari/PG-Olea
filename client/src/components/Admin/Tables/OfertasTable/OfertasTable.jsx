@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 import { offerCategory, offerProduct } from "../../../../cart/index";
 import { productOfert, categoryOfert } from "../../../../auth/admin";
 import Ofertas from "./Ofertas";
-
+import swal from "sweetalert";
 function OfertasTable() {
   const [value, onChange] = useState(new Date());
   const [offCat, setOffCat] = useState({
@@ -31,21 +31,18 @@ function OfertasTable() {
   };
 
   const onSubmitProduct = async (e) => {
+    e.preventDefault();
     if (!productOff.idProduct && !productOff.offProduct && !value) {
       return alert("faltan parametros");
     }
     let valor = value.toLocaleDateString();
-    console.log(productOff, valor);
     offerProduct(productOff, valor);
-    const res = await productOfert(
-      productOff.idProduct,
-      productOff.offProduct,
-      valor
-    );
     setProductOff({
       idProduct: 0,
       offProduct: 0,
     });
+    await productOfert(productOff.idProduct, productOff.offProduct, valor);
+    swal("Se agrego la oferta");
   };
   const onChangeCat = (e) => {
     e.preventDefault();
@@ -66,6 +63,7 @@ function OfertasTable() {
       idCat: 0,
       offCat: 0,
     });
+    swal("Se agrego la oferta");
   };
 
   return (
