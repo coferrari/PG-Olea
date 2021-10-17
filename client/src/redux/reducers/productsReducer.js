@@ -11,16 +11,20 @@ function productsReducer(state = initialState, action) {
       return {
         ...state,
         allProducts: action.payload,
-        products: action.payload
+        products: action.payload,
       };
     case FILTER_PRODUCTS_SEARCH:
       const products = state.allProducts;
-      const productsFiltered = products.filter((product) => product.name.toLowerCase().includes(action.payload.toLowerCase()))
+      const productsFiltered = products.filter(
+        (product) =>
+          product.name.toLowerCase().includes(action.payload.toLowerCase()) ||
+          product.description.toLowerCase().includes(action.payload.toLowerCase())
+      );
       return {
         ...state,
         allProducts: products,
-        products: productsFiltered
-      }
+        products: productsFiltered,
+      };
     default:
       return state;
   }
