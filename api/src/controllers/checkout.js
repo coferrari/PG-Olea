@@ -18,9 +18,9 @@ checkoutControllers.pago = (req, res) => {
       };
     }),
     back_urls: {
-      success: "http://localhost:3000/checkoutconfirm",
-      failure: "http://localhost:3000/checkoutconfirm",
-      pending: "http://localhost:3000/checkoutconfirm",
+      success: "https://somosolea.vercel.app/checkoutconfirm",
+      failure: "https://somosolea.vercel.app/checkoutconfirm",
+      pending: "https://somosolea.vercel.app/checkoutconfirm",
     },
     auto_return: "approved",
     external_reference: idOrden.toString(),
