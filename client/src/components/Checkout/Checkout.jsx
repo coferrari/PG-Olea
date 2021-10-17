@@ -220,7 +220,7 @@ const Checkout = () => {
               </div>
               <Card.Body className={style.bodyDelivery} eventKey={delivery}>
                 {delivery === "Envío" ? (
-                  <div>
+                  <div className={style.pdn}>
                     <Card.Title className={style.labels}>Envío</Card.Title>
                     <Form.Group className={style.datosEnvio}>
                       <Form.Label className={style.labels}>Domicilio de envío</Form.Label>
@@ -236,7 +236,7 @@ const Checkout = () => {
                     </Form.Group>
                   </div>
                 ) : (
-                  <div>
+                  <div className={style.pdn}>
                     <Card.Title className={style.labels}>Retiro</Card.Title>
                     <Card.Text className={style.text}>
                       Pasá a retirar tu pedido por Garibaldi 283, Coronel Suárez
