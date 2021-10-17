@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getToken } from "../utils/index";
 const baseUrl = "/api/reviews";
 
 export const createReviews = async (
@@ -8,13 +9,21 @@ export const createReviews = async (
   comentario,
   opinion
 ) => {
-  const review = await axios.post(baseUrl, {
-    username: username,
-    productId: productId,
-    comment: comentario,
-    rating: rating,
-    opinion: opinion,
-  });
+  const review = await axios.post(
+    baseUrl,
+    {
+      username: username,
+      productId: productId,
+      comment: comentario,
+      rating: rating,
+      opinion: opinion,
+    },
+    {
+      headers: {
+        authorization: getToken(),
+      },
+    }
+  );
   return review;
 };
 export const reviewsByProduct = async (id) => {
