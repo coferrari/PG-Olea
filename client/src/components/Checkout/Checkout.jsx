@@ -221,7 +221,9 @@ const Checkout = () => {
                   <div className={style.pdn}>
                     <Card.Title className={style.labels}>Envío</Card.Title>
                     <Form.Group className={style.datosEnvio}>
-                      <Form.Label className={style.labels}>Domicilio de envío</Form.Label>
+                      <Form.Label className={style.labels}>
+                        Domicilio de envío
+                      </Form.Label>
                       <Form.Control
                         type="text"
                         placeholder="Domicilio de Envío"
@@ -249,21 +251,22 @@ const Checkout = () => {
             <Details />
 
             <p className={style.total}> Total ${format(desc)}</p>
-          <div className={style.buttonConfirmarCompra}>
-            <Button variant="dark" onClick={(e) => handleConfirmOrder(e)}>
-              Confirmar orden de compra
-            </Button>
-            {linkDePago &&
-              confirmAlert({
-                title: "Atención",
-                message: "Usted será redirigido al checkout de Mercado Pago",
-                buttons: [
-                  {
-                    label: "Aceptar",
-                    onClick: async () => {
-                      window.open(linkDePago);
-                      localStorage.setItem("cart", JSON.stringify([]));
-                      window.location.href = "/";
+            <div className={style.buttonConfirmarCompra}>
+              <Button variant="dark" onClick={(e) => handleConfirmOrder(e)}>
+                Confirmar orden de compra
+              </Button>
+              {linkDePago &&
+                confirmAlert({
+                  title: "Atención",
+                  message: "Usted será redirigido al checkout de Mercado Pago",
+                  buttons: [
+                    {
+                      label: "Aceptar",
+                      onClick: async () => {
+                        window.open(linkDePago);
+                        localStorage.setItem("cart", JSON.stringify([]));
+                        window.location.href = "/";
+                      },
                     },
                     {
                       label: "Volver",
