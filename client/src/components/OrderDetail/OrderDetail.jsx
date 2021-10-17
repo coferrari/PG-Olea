@@ -18,7 +18,7 @@ function OrderDetail() {
     setOrderDetail(orderDetails);
   };
 
-  useEffect(async () => {
+  useEffect(() => {
     getOrderIds();
   }, []);
 
@@ -74,9 +74,8 @@ function OrderDetail() {
                 {orderDetail.products?.map((o) => {
                   return (
                     <tr>
-                      <td><Link to={`/product/${o.id}`}>
-                      {o.id}
-                      </Link>
+                      <td>
+                        <Link to={`/product/${o.id}`}>{o.id}</Link>
                       </td>
                       <td>{o.name}</td>
                       <td>{o.Order_Products.quantity}</td>
