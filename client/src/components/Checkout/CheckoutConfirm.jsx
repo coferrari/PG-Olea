@@ -32,12 +32,9 @@ const CheckoutConfirm = () => {
   function onClick() {
     history.push("/home");
   }
-
-  console.log(orden);
-
   return (
     <div>
-      {!orden.contactName ? (
+      {!orden.email ? (
         <Spinner animation="border" variant="secondary" />
       ) : location.search &&
         location.search.includes("collection_status=approved") ? (
@@ -55,7 +52,7 @@ const CheckoutConfirm = () => {
               {orden.updatedAt.slice(0, 10).split("-").reverse().join("-")}
             </ListGroup.Item>
             <ListGroup.Item>ID de compra: {idOrder} </ListGroup.Item>
-            <ListGroup.Item>Estado del pago: {orden.statusPago}</ListGroup.Item>
+            <ListGroup.Item>Estado del pago: Aprobada</ListGroup.Item>
             {orden.address !== "" ? (
               <ListGroup.Item>Dirección: {orden.address}</ListGroup.Item>
             ) : (
