@@ -37,7 +37,7 @@ const CheckoutConfirm = () => {
 
   return (
     <div>
-      {!orden.contactName ? (
+      {!orden ? (
         <Spinner animation="border" variant="secondary" />
       ) : location.search &&
         location.search.includes("collection_status=approved") ? (
