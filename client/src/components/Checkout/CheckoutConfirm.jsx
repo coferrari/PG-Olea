@@ -32,12 +32,9 @@ const CheckoutConfirm = () => {
   function onClick() {
     history.push("/home");
   }
-
-  console.log(orden);
-
   return (
     <div>
-      {!orden.contactName ? (
+      {!orden.email ? (
         <Spinner animation="border" variant="secondary" />
       ) : location.search &&
         location.search.includes("collection_status=approved") ? (

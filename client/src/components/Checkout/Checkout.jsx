@@ -102,8 +102,10 @@ const Checkout = () => {
     } else if (delivery === "Envío" && !order.address) {
       swal("Completá la dirección de envío");
     } else if (delivery === "Envío" && order.address) {
+      idOrden = await createOrder(order);
       return dispatch(checkoutMercadoPago(itemsCheckout, idOrden));
     } else if (delivery === "Retiro por local") {
+      idOrden = await createOrder(order);
       return dispatch(checkoutMercadoPago(itemsCheckout, idOrden));
     }
   };
@@ -252,7 +254,6 @@ const Checkout = () => {
                   {
                     label: "Aceptar",
                     onClick: async () => {
-                      idOrden = await createOrder(order);
                       window.open(linkDePago);
                       localStorage.setItem("cart", JSON.stringify([]));
                       window.location.href = "/";
