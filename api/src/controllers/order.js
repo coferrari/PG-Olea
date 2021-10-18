@@ -4,6 +4,7 @@ const {
   getTemplateAproved,
   sendEmail,
   getTemplateRejected,
+  getTemplateEnvio,
 } = require("../helpers/mail");
 const carritoControllers = require("../controllers/carrito");
 class OrderModel extends Modelo {
@@ -45,19 +46,28 @@ class OrderModel extends Modelo {
           x.stock = nuevoStock;
           x.save();
         });
-        let template = getTemplateAproved(
-          ordenDetail.contactName,
-          ordenDetail.price
-        );
-        await sendEmail(ordenDetail.email, "Pago exitoso", template);
+        if (ordenDetail.info === "retiro") {
+          let template = getTemplateAproved(
+            ordenDetail.contactName,
+            ordenDetail.price
+          );
+          await sendEmail(ordenDetail.email, "Pago exitoso", template);
+        }
+        if (ordenDetail.info === "en-espera") {
+          ordenDetail.status = "procesando";
+          ordenDetail.save();
+          let template = getTemplateEnvio(
+            ordenDetail.contactName,
+            ordenDetail.price
+          );
+          await sendEmail(ordenDetail.email, "Pago exitoso", template);
+        }
         return res.json({
           message: "Se actualizo el estado de la orden y se cambio el stock",
         });
       }
       if (estado === "rejected") {
         let template = getTemplateRejected(ordenDetail.contactName);
-        console.log("entre rejected");
-        console.log(template);
         await sendEmail(ordenDetail.email, "Problema en la compra", template);
         return res.json({
           message: "Se envio el mail, compra rechazada.",
@@ -134,20 +144,21 @@ class OrderModel extends Modelo {
       phone,
       contactName,
       contactSurname,
+      delivery,
     } = req.body;
+    let info = delivery === "Envío" ? "en-espera" : "retiro";
     try {
-      console.log("entre");
-      console.log(email);
       const ordenCreada = await this.model.create({
-        //userUsername: username,
         email,
         price,
         address,
         phone,
         contactName,
         contactSurname,
+        info: info,
         date: Date().slice(0, 10).replace(/-/g, "/"),
       });
+      console.log(ordenCreada);
       for (let i = 0; i < products.length; i++) {
         await ordenCreada.addProduct(products[i].id);
         await Order_Products.update(
@@ -170,8 +181,6 @@ class OrderModel extends Modelo {
   setOrderStatus = async (req, res, next) => {
     const { status } = req.body;
     const { orderid } = req.params;
-    console.log("status", status);
-    console.log("orderid", orderid);
     try {
       const orden = await this.model.findByPk(orderid, { include: Product });
       orden.update(
@@ -189,11 +198,10 @@ class OrderModel extends Modelo {
       next(err);
     }
   };
+  filterByDelivery = async (req, res, next) => {};
   allOrders = async (req, res, next) => {
-    //const { username } = req.body;
     try {
       const order = await this.model.findAll({
-        //where: { userUsername: username },
         include: Product,
       });
       res.status(200).send(order);
