@@ -1,6 +1,6 @@
 import React, {useEffect, useState}from "react";
 import { changedelivery, getDeliveries} from "../../../../delivery/delivery";
-import { Table} from "react-bootstrap";
+import { Table, Button} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import swal from "sweetalert";
 
@@ -9,12 +9,15 @@ function EnviosAdmin() {
 
   const getAllDelivery = async () => {
     const delivery = await getDeliveries();
-    setOrder(delivery.data);
+    setOrder(delivery);
+    console.log("delivery",delivery)
   };
 
   useEffect(() => {
     getAllDelivery();
   }, []);
+
+
 
   const despachar = async (e,id) =>{
     e.preventDefault();
@@ -25,7 +28,6 @@ function EnviosAdmin() {
     } catch (err) {
       console.log(err.msg);
     }
-    
   }
 
   console.log(order)
@@ -60,7 +62,13 @@ function EnviosAdmin() {
                     <td>
                       {o.statusPago === "approved" ? "Aprobado" : "Desaprobado"}
                     </td> */}
-                    <td>{o.info.split("-").join(" ")}</td>
+                    <td>{o.info.split("-").join(" ")} {o.info==="en-espera"? (<Button
+                        variant="primary"
+                        onClick={(e)=>despachar(e,o.id)}
+                      >
+                        Despachar
+                      </Button>):""}
+                      </td>
                     <td>
                       {o.status.charAt(0).toUpperCase() + o.status.slice(1)}
                     </td>
@@ -68,50 +76,6 @@ function EnviosAdmin() {
                       {o.updatedAt.slice(0, 10).split("-").reverse().join("-")}
                     </td>
                     <td>
-                      {/* <Button
-                        variant="primary"
-                        onClick={() => {
-                          setShow(true);
-                          setId(o.id);
-                        }}
-                      >
-                        Despachar
-                      </Button>
-                      <Modal
-                        show={show}
-                        onHide={() => setShow(false)}
-                        dialogClassName="modal-90w"
-                        aria-labelledby="example-custom-modal-styling-title"
-                      >
-                        <Modal.Header closeButton>
-                          <Modal.Title id="example-custom-modal-styling-title">
-                            Actualizar orden
-                          </Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                          <Form.Group controlId="formGridState">
-                            <Form.Label>Nuevo estado de la orden:</Form.Label>
-                            <Form.Select onChange={(e) => changeInput(e)}>
-                              <option>Elegir</option>
-                              <option value="finalizada">Aprobada</option>
-                              <option value="cancelada">Rechazada</option>
-                              <option value="procesando">En proceso</option>
-                            </Form.Select>
-                          </Form.Group>
-                          <Form.Group>
-                            {input ? (
-                              <Button
-                                type="submit"
-                                onClick={(e) => changeStatus(e)}
-                              >
-                                Cambiar
-                              </Button>
-                            ) : (
-                              ""
-                            )}
-                          </Form.Group>
-                        </Modal.Body>
-                      </Modal> */}
                     </td>
                   </tr>
                 );
