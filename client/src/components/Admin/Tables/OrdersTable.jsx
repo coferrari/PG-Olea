@@ -42,7 +42,7 @@ function OrdersTable() {
   const filterOrdersbyStatus = async (e) => {
     let select = e.target.value;
     if (select === "Todo") {
-      getAllOrders();
+      return getAllOrders();
     }
     let ordersFiltered = await filterByStatus(select);
     !ordersFiltered && swal("No hay órdenes con ese estado");
@@ -89,35 +89,35 @@ function OrdersTable() {
             >
               <GoSearch className={style.iconsearch} />
             </button>
-          {/* FILTROS */}
-          <select
-            class="form-select"
-            aria-label="Default select example"
-            onChange={(e) => {
-              filterOrdersbyStatus(e);
-            }}
-          >
-            <option selected value="Todo">
-              Todas las ordenes
-            </option>
-            <option value="creada">Creadas</option>
-            <option value="procesando">Procesando</option>
-            <option value="cancelada">Canceladas</option>
-            <option value="finalizada">Finalizadas</option>
-          </select>
-          {/* ORDEN POR FECHA */}
-          <select
-            class="form-select"
-            aria-label="Default select example"
-            onChange={(e) => {
-              handleorderByDate(e);
-            }}
-          >
-            <option selected value="masReciente">
-              Más recientes
-            </option>
-            <option value="menosReciente">Menos Recientes</option>
-          </select>
+            {/* FILTROS */}
+            <select
+              class="form-select"
+              aria-label="Default select example"
+              onChange={(e) => {
+                filterOrdersbyStatus(e);
+              }}
+            >
+              <option selected value="Todo">
+                Todas las ordenes
+              </option>
+              <option value="creada">Creadas</option>
+              <option value="procesando">Procesando</option>
+              <option value="cancelada">Canceladas</option>
+              <option value="finalizada">Finalizadas</option>
+            </select>
+            {/* ORDEN POR FECHA */}
+            <select
+              class="form-select"
+              aria-label="Default select example"
+              onChange={(e) => {
+                handleorderByDate(e);
+              }}
+            >
+              <option selected value="masReciente">
+                Más recientes
+              </option>
+              <option value="menosReciente">Menos Recientes</option>
+            </select>
           </div>
           <Table striped bordered hover>
             <thead>

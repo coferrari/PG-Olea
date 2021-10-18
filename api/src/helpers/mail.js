@@ -172,6 +172,17 @@ const getTemplateEnvio = (name, price) => {
       <a href="https://somosolea.vercel.app/">Visite nuestra pagina!</a>
   </div>`;
 };
+const getTemplateEnCamino = (name) => {
+  return `
+  <head>
+      <link rel="stylesheet" href="./style.css">
+  </head>
+  <div id="email___content">
+      <h2>Hola ${name}</h2>
+      <p>Tu orden esta en camino! Notificanos por la pagina cuando te llego!</p>
+      <a href="https://somosolea.vercel.app/">Visite nuestra pagina!</a>
+  </div>`;
+};
 module.exports = {
   sendEmail,
   getTemplate,
@@ -183,5 +194,6 @@ module.exports = {
   getTemplateProductStock,
   getTemplateRejected,
   getTemplateEnvio,
+  getTemplateEnCamino,
   getTemplateCategoryLetter,
 };

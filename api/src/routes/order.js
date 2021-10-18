@@ -20,5 +20,8 @@ router.put("/setorder/status/:orderid", OrderControllers.setOrderStatus);
 router.get("/findAll/orders", isAdmin, OrderControllers.allOrders);
 router.get("/getorderdetails/:id", OrderControllers.getOrderDetails);
 router.get("/getuserorder/:username", OrderControllers.getUserOrder);
+router.get("/filterdelivery", OrderControllers.filterByDelivery);
+router.put("/changedelivery/:id", OrderControllers.sendDelivery);
 router.put("/change/:id", OrderControllers.changeStatus);
+router.put("/setOrderEntregada/:orderId", OrderControllers.setOrderEntregada);
 module.exports = router;
