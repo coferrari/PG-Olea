@@ -45,7 +45,7 @@ function OrdersTable() {
       return getAllOrders();
     }
     let ordersFiltered = await filterByStatus(select);
-    !ordersFiltered && alert("No hay órdenes con ese estado");
+    !ordersFiltered && swal("No hay órdenes con ese estado");
     ordersFiltered && setOrder(ordersFiltered);
   };
 
