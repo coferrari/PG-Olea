@@ -9,18 +9,34 @@ const setHeaders = require("./utils/middlewares/setHeaders");
 require("./db.js");
 
 const server = express();
-
+server.use(cors());
+server.use(express.json());
 server.name = "API";
+const http = require("http").createServer(server);
+const io = require("socket.io")(http, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"],
+  },
+});
 
-server.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
-server.use(bodyParser.json({ limit: "50mb" }));
+//socket io
+io.on("connection", (socket) => {
+  console.log("connected.");
+  socket.on("join", ({ name, room }) => {
+    console.log(`se conecto  ${name} a la sala ${room}`);
+  });
+  server.on("disconnected", ({ name, room }) => {
+    console.log(`disconnected ${name},${room}`);
+  });
+});
+
 server.use(cookieParser());
 server.use(morgan("dev"));
 server.use(setHeaders);
-server.use(cors());
 server.use("/api", routes);
 
 // Error catching endware.
 server.use(errorHandler);
 
-module.exports = server;
+module.exports = http;

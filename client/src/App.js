@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route, Redirect, Switch } from "react-router-dom";
 import Home from "./components/Home/Home";
 import CategoryProduct from "./components/CategoryProduct/CategoryProduct";
@@ -32,9 +32,11 @@ import OfertasTable from "./components/Admin/Tables/OfertasTable/OfertasTable.js
 import CheckoutConfirm from "./components/Checkout/CheckoutConfirm";
 import Wishlist from "./components/Wishlist/Wishlist";
 import Desuscribe from "./components/Profile/DesuscribeNewsLetter";
+
+import JoinChat from "./components/Chat/JoinChat";
+import Chat from "./components/Chat/Chat";
 function App() {
   const loggedIn = decodeToken();
-
   return (
     <div>
       <Navbar />
@@ -123,6 +125,12 @@ function App() {
         </Route>
         <Route exact path="/wishlist">
           <Wishlist />
+        </Route>
+        <Route exact path="/joinchat">
+          <JoinChat></JoinChat>
+        </Route>
+        <Route path="/chat">
+          <Chat></Chat>
         </Route>
       </Switch>
     </div>
