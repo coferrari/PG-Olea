@@ -1,21 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  Button,
-  Form,
-  InputGroup,
-  Row,
-  Col,
-  Container,
-  Image,
-} from "react-bootstrap";
+import { Button, Form, Row, Col, Container, Image } from "react-bootstrap";
 import { getCategories } from "../../../redux/actions";
 import { getToken } from "../../../utils/index";
 import axios from "axios";
 import { GET_PRODUCTS_URL } from "../../../consts";
 import swal from "sweetalert";
 import style from "./CreateProduct.module.css";
-import { Redirect } from "react-router-dom";
 
 export default function CreateProduct() {
   const dispatch = useDispatch();

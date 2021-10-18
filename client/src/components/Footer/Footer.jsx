@@ -4,8 +4,22 @@ import style from "./Footer.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 import Map from "../Map/Map";
-
+import { STORES_URL } from "../../consts";
+import { Dropdown, DropdownButton } from "react-bootstrap";
+import axios from "axios";
 function Footer() {
+  const [stores, setStores] = useState(null);
+  const [address, setAddress] = useState("Eliga el local que desee localizar");
+  const [position, setPosition] = useState();
+  useEffect(() => {
+    axios.get(STORES_URL).then((response) => {
+      setStores(response.data);
+    });
+    if (stores !== null) {
+      setAddress(stores[0].address);
+    }
+  }, []);
+  console.log(stores);
   return (
     <div>
       <footer className={style.footer}>
@@ -25,7 +39,22 @@ function Footer() {
           </div>
           <div>
             <div>
-              <Map />
+              <DropdownButton id="dropdown-item-button" title={address}>
+                {stores?.map((e) => {
+                  return (
+                    <Dropdown.Item
+                      onClick={() => {
+                        setAddress(e.address);
+                        setPosition(e.location);
+                      }}
+                      as="button"
+                    >
+                      {e.address}
+                    </Dropdown.Item>
+                  );
+                })}
+              </DropdownButton>
+              <Map position={position} address={address} />
             </div>
           </div>
           <div className={style.footer__flexitem}>

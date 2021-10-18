@@ -1,11 +1,11 @@
 import React from "react";
-import ReactDOM from "react-dom";
+
 import style from "../Map/Map.module.css";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 
 const Map = ({ position, address }) => {
   const position1 = position ? [position[0], position[1]] : "[]";
-  console.log(position);
+
   return position ? (
     <div id="mapid" className={style.map}>
       <MapContainer
@@ -29,7 +29,7 @@ const Map = ({ position, address }) => {
       </MapContainer>
     </div>
   ) : (
-    <div>Esta cargando</div>
+    <div></div>
   );
 };
 export default Map;
