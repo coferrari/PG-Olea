@@ -30,5 +30,6 @@ router.delete("/deleteuser/:username", isAdmin, adminFunction.deleteUser);
 router.put("/generateadmin", isAdmin, adminFunction.generateAdmin);
 router.get("/logout", userFunction.logOut);
 router.put("/:id", userFunction.updateRecommendend);
+router.get("/:id", userFunction.getByID);
 
 module.exports = router;
