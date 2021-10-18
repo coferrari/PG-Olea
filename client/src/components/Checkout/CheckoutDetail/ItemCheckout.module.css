@@ -1,28 +1,29 @@
 .container {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: 150px 260px;
+  grid-template-rows: 1fr;
+  align-items: center;
   font-family: "Montserrat", sans-serif;
   font-weight: 500;
-  border-style: solid;
-  border-radius: 20px;
-  border-width: thin;
-  border-color: grey;
   margin: 10px;
-  justify-content: center;
-  padding: 20px 20px;
+  padding: 15px;
+  border: 1px solid lightgray;
+  height: 180px;
 }
 
 .containerimg {
   height: 150px;
+  display: flex;
+  justify-content: center;
 }
 
 .img {
   height: 100%;
-  border-radius: 20px;
 }
 
 .details {
   padding-top: 20px;
+  padding-left: 20px;
 }
 
 .name {

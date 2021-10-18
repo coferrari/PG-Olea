@@ -1,4 +1,6 @@
+
 import React, { useState, useEffect } from "react";
+
 import logo from "../../img/OLEA marca de agua-08.png";
 import style from "./Footer.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,6 +9,9 @@ import Map from "../Map/Map";
 import { STORES_URL } from "../../consts";
 import { Dropdown, DropdownButton } from "react-bootstrap";
 import axios from "axios";
+import { suscribeNewsLetter } from "../../auth/users";
+import { decodeToken } from "../../utils";
+import swal from "sweetalert";
 function Footer() {
   const [stores, setStores] = useState(null);
   const [address, setAddress] = useState("Eliga el local que desee localizar");
@@ -19,7 +24,21 @@ function Footer() {
       setAddress(stores[0].address);
     }
   }, []);
-  console.log(stores);
+ const [input, setInput] = useState("");
+  const onChange = (e) => {
+    setInput(e.target.value);
+  };
+  const user = decodeToken();
+  const suscribe = async (e) => {
+    e.preventDefault();
+    try {
+      const x = await suscribeNewsLetter(input);
+    } catch (err) {
+      swal("Registre su email primero");
+      
+    }
+  };
+
   return (
     <div>
       <footer className={style.footer}>
@@ -89,6 +108,7 @@ function Footer() {
               </div>
             </div>
           </div>
+
           <div className={style.footer__flexitem}>
             <h5 className={style.subtitles}>newsletter</h5>
             <ul className={style.ul}>
@@ -100,12 +120,14 @@ function Footer() {
             <form
               className={style.footer__flexformnewsletter}
               action=""
-              method="post"
+              onSubmit={(e) => suscribe(e)}
+              autocomplete="off"
             >
               <input
                 type="email"
                 className={style.footer__flexemail}
                 name="email"
+                onChange={onChange}
                 placeholder="name@example.com"
               />
               <input
@@ -115,6 +137,17 @@ function Footer() {
               />
             </form>
           </div>
+          {/* // ) : (
+          //   <div className={style.footer__flexitem}>
+          //     <h5 className={style.subtitles}>newsletter</h5>
+          //     <ul className={style.ul}>
+          //       <li className={style.list}>
+          //         Usted esta suscripto a nuestro newsletter semanal, desea
+          //         anular la suscripción?
+          //       </li>
+          //     </ul>
+          //   </div>
+          // )} */}
         </div>
         <div className={style.footer__socialmedia}>
           <div className={style.footer__socialmediaprincipal}>

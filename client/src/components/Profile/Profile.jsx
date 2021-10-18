@@ -3,6 +3,7 @@ import style from "./ProfileAdmin.module.css";
 import { getToken, decodeToken } from "../../utils";
 import ChangePerfil from "./UploadImg";
 import { BsPersonSquare } from "react-icons/bs";
+import UserOrders from "../UserOrders/UserOrders";
 
 const Profile = () => {
   const [usuario, setUsuario] = useState();
@@ -13,8 +14,13 @@ const Profile = () => {
     let user = decodeToken();
     setUsuario(user);
   };
+  // const userOrder = async () => {
+  //   let user = decodeToken();
+  //   await getOrderUser(usuario.username);
+  // };
   useEffect(() => {
     newToken();
+    // await userOrder();
   }, [token]);
   return (
     <div className="container">
@@ -39,6 +45,9 @@ const Profile = () => {
           <div className={style.mail}>{usuario.adress}</div>
           <div>
             <ChangePerfil />
+          </div>
+          <div>
+            <UserOrders />
           </div>
         </div>
       ) : (

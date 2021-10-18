@@ -74,6 +74,7 @@ const {
   Stores,
 } = sequelize.models;
 
+
 // Aca vendrian las relaciones
 
 User.hasMany(Order);
@@ -102,6 +103,7 @@ Product.belongsToMany(Category, { through: "Product_Category" });
 //
 Reviews.belongsTo(Product);
 Product.hasMany(Reviews);
+//
 Reviews.belongsTo(User);
 User.hasMany(Reviews);
 

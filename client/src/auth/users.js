@@ -25,9 +25,7 @@ export const logIn = async (user) => {
   }
 };
 export const codeLogin = async (code) => {
-  console.log(code);
   const user = localStorage.getItem("user");
-  console.log("user");
   const token = await axios.post(`/api/user/authenticateadmin`, {
     code: code,
     username: user,
@@ -62,4 +60,21 @@ export const updateProfile = async (usuario) => {
     token: getToken(),
   });
   localStorage.setItem("token", tokenRefresh.data.data.token);
+};
+export const suscribeNewsLetter = async (email) => {
+  console.log(email);
+  const res = await axios.post(
+    `/api/news/suscribe`,
+    { email: email },
+    {
+      headers: {
+        authorization: getToken(),
+      },
+    }
+  );
+  return res.data;
+};
+export const desuscribeNewsLetter = async (token) => {
+  const res = await axios.put(`/api/news/desuscribe`, { token });
+  return res.data;
 };

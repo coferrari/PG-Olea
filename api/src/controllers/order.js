@@ -1,13 +1,78 @@
-const { Order, Order_Products, Product, User } = require("../db.js");
+const { Order, Order_Products, Product, User, Carrito } = require("../db.js");
 const Modelo = require("./index.js");
+const {
+  getTemplateAproved,
+  sendEmail,
+  getTemplateRejected,
+} = require("../helpers/mail");
+const carritoControllers = require("../controllers/carrito");
 class OrderModel extends Modelo {
   constructor(model) {
     super(model);
   }
   //A partir de aca se pueden agregar funciones que necesitemos en la ruta
+  changeStatus = async (req, res, next) => {
+    const { estado } = req.body;
+    const { id } = req.params;
+    try {
+      let state;
+      estado === "approved"
+        ? (state = "finalizada")
+        : estado === "rejected"
+        ? (state = "cancelada")
+        : (state = "procesando");
+      const ordenDetail = await this.model.findByPk(id, { include: Product });
+      ordenDetail.status = state;
+      ordenDetail.statusPago = estado;
+      ordenDetail.save();
+      const userNew = await User.findOne({
+        where: {
+          username: ordenDetail.userUsername,
+        },
+      });
+      await Carrito.destroy({
+        where: {
+          userUsername: ordenDetail.userUsername,
+        },
+      });
+      const newCarrito = await Carrito.create();
+      userNew.setCarrito(newCarrito.dataValues.id);
+      if (estado === "approved") {
+        ordenDetail.products.forEach(async (p) => {
+          let x = await Product.findByPk(p.id);
+          let cantidad = p["Order_Products"].quantity;
+          let nuevoStock = x.stock - cantidad;
+          x.stock = nuevoStock;
+          x.save();
+        });
+        let template = getTemplateAproved(
+          ordenDetail.contactName,
+          ordenDetail.price
+        );
+        await sendEmail(ordenDetail.email, "Pago exitoso", template);
+        return res.json({
+          message: "Se actualizo el estado de la orden y se cambio el stock",
+        });
+      }
+      if (estado === "rejected") {
+        let template = getTemplateRejected(ordenDetail.contactName);
+        console.log("entre rejected");
+        console.log(template);
+        await sendEmail(ordenDetail.email, "Problema en la compra", template);
+        return res.json({
+          message: "Se envio el mail, compra rechazada.",
+        });
+      }
+      res.json({
+        message: "Se actualizo el estado de la orden",
+        order: ordenDetail,
+      });
+    } catch (err) {
+      next(err);
+    }
+  };
   orderByStatus = async (req, res, next) => {
     const { status } = req.params;
-
     if (status === "active") {
       try {
         const orderStatus = await this.model.findAll({
@@ -30,8 +95,7 @@ class OrderModel extends Modelo {
   };
   orderByDate = async (req, res, next) => {
     const { date } = req.params;
-
-    if (date === "ASC") {
+    if (date === "masReciente") {
       try {
         const orderDate = await this.model.findAll({
           order: [["createdAt", "ASC"]],
@@ -40,7 +104,7 @@ class OrderModel extends Modelo {
       } catch (err) {
         next(err);
       }
-    } else if (date === "DES") {
+    } else if (date === "menosReciente") {
       try {
         const orderDate = await this.model.findAll({
           order: [["createdAt", "DESC"]],
@@ -53,29 +117,35 @@ class OrderModel extends Modelo {
   };
   filterByStatus = async (req, res, next) => {
     const { status } = req.params;
-
-    if (status) {
-      const order = await this.model.findAll({
-        where: {
-          status,
-        },
-      });
-      if (order.length >= 1) {
-        res.status(200).json(order);
-      } else {
-        next(err);
-      }
+    try {
+      const order = await this.model.findAll({ where: { status } });
+      res.status(200).json(order);
+    } catch (error) {
+      next(error);
     }
   };
-
   createOrder = async (req, res, next) => {
+    const {
+      username,
+      email,
+      price,
+      products,
+      address,
+      phone,
+      contactName,
+      contactSurname,
+    } = req.body;
     try {
-      const { username, price, products, addres, addresNum } = req.body;
+      console.log("entre");
+      console.log(email);
       const ordenCreada = await this.model.create({
-        userUsername: username,
+        //userUsername: username,
+        email,
         price,
-        addres,
-        addresNum,
+        address,
+        phone,
+        contactName,
+        contactSurname,
         date: Date().slice(0, 10).replace(/-/g, "/"),
       });
       for (let i = 0; i < products.length; i++) {
@@ -90,22 +160,27 @@ class OrderModel extends Modelo {
           }
         );
       }
+      const user = await User.findByPk(username);
+      await user.addOrder(ordenCreada.id);
       res.json(ordenCreada);
     } catch (error) {
       next(error);
     }
   };
   setOrderStatus = async (req, res, next) => {
-    const { status, orderID } = req.body;
+    const { status } = req.body;
+    const { orderid } = req.params;
+    console.log("status", status);
+    console.log("orderid", orderid);
     try {
-      const orden = await this.model.findByPk(orderID, { include: Product });
+      const orden = await this.model.findByPk(orderid, { include: Product });
       orden.update(
         {
           status: status,
         },
         {
           where: {
-            id: orderID,
+            id: orderid,
           },
         }
       );
@@ -115,10 +190,10 @@ class OrderModel extends Modelo {
     }
   };
   allOrders = async (req, res, next) => {
-    const { username } = req.body;
+    //const { username } = req.body;
     try {
       const order = await this.model.findAll({
-        where: { userUsername: username },
+        //where: { userUsername: username },
         include: Product,
       });
       res.status(200).send(order);
@@ -126,14 +201,29 @@ class OrderModel extends Modelo {
       next(err);
     }
   };
-  getAll = async (req, res, next) => {
+  getOrderDetails = async (req, res, next) => {
+    //const { username } = req.body
+    const { id } = req.params;
     try {
-      const order = await this.model.findAll({
-        include: User,
-      });
-      res.status(200).send(order);
-    } catch (err) {
-      next(err);
+      const ordenDetail = await this.model.findByPk(id, { include: Product });
+      res.send(ordenDetail).status(200);
+    } catch (error) {
+      next(error);
+    }
+  };
+  getUserOrder = async (req, res, next) => {
+    const { username } = req.params;
+    try {
+      const ordenDetail = await this.model.findAll({ include: Product });
+      const ordenes = ordenDetail.filter((c) =>
+        c.userUsername.toLowerCase().includes(username.toLowerCase())
+      );
+      if (ordenes.length < 1) {
+        return res.json({ message: "No existen ordenes con este usuario" });
+      }
+      res.send(ordenes);
+    } catch (error) {
+      next(error);
     }
   };
 }

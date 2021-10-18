@@ -17,5 +17,7 @@ router.post("/add/carrito", productControllers.addOrEditProduct);
 router.post("/add/carritologin", productControllers.createCartLogin);
 router.put("/:id", isAdmin, productControllers.update);
 router.delete("/:id", isAdmin, productControllers.delete);
-router.put("/update/stock", isAdmin, productControllers.editStock);
+router.put("/update/stock", productControllers.editStock);
+router.put("/update/offer", productControllers.inOffer);
+
 module.exports = router;

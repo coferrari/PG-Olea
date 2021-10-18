@@ -1,13 +1,58 @@
-.checkoutContainer{
-  width: auto;
+.cnt {
+  padding: 20px;
 }
 
 .title {
   display: flex;
-  background-color: #212529;
-  color: white;
+  /* background-color: #212529; */
+  background-color: lightgray;
+  color: #212529;
   font-family: "Montserrat", sans-serif;
   justify-content: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 16px;
+  border: none;
+}
+
+.labels {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  font-family: "Montserrat", sans-serif;
+  color: #212529;
+  justify-content: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 14px;
+}
+
+.pdn {
+  padding:0;
+  margin: 0;
+}
+
+.btns {
+  display: flex;
+  flex: content;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  gap: 20px;
+  font-family: "Montserrat", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 12px;
+}
+
+.headers {
+  border: 1px solid lightgray;
+}
+
+.text {
+  font-family: "Open Sans", sans-serif;
 }
 
 .links {
@@ -16,6 +61,10 @@
   font-family: "Montserrat", sans-serif;
   font-size: 14px;
   letter-spacing: 1px;
+}
+
+.card {
+  border: none;
 }
 
 .tabsDelivery{
@@ -44,7 +93,7 @@
   justify-content: center;
   border: none;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   width: 100%;
 }
@@ -53,26 +102,28 @@
   padding: 5px 2px;
   margin: 10px 10px;
   width: fit-content;
+  font-family: "Montserrat", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 14px;
 }
 
-.navLink{
-  color: white;
-}
-
-.navLink:hover{
- transition: color .5;
- color: white;
-}
 
 .datosEnvio{
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
 .inputDatosEnvio{
-  width: 500px;
+  width: 400px;
+  margin-left: 20px;
+  padding: 5px 2px;
+  font-family: "Montserrat", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 14px;
 }
 
 .buttonConfirmarCompra{
@@ -80,11 +131,34 @@
   justify-content: center;
   margin: 40px 40px;
 }
+
 .total {
-  font-size: 30px;
+  font-size: 18px;
+  padding: 3px;
   display: flex;
   justify-content: center;
   color: white;
-  background-color: black;
+  background-color: #212529;
   font-family: "Montserrat", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.checkout {
+  font-family: "Montserrat", sans-serif;
+  border-radius: 0;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  width: 365px;
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+@media only screen and (min-width: 1000px) {
+  .listgroup {
+    flex-direction: row;
+  }
+  .datosEnvio{
+    flex-direction: row;
+  }
 }

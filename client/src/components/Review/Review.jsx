@@ -3,14 +3,17 @@ import { Form, Button } from "react-bootstrap";
 import { AiFillStar } from "react-icons/ai";
 import { decodeToken } from "../../utils";
 import { createReviews } from "../../utils/reviews";
+import { useHistory } from "react-router";
 import { useParams } from "react-router-dom";
 import style from "./review.module.css";
 const Review = () => {
   const user = decodeToken();
   const { productid } = useParams();
+  const history = useHistory();
   const [stars, setStars] = useState("");
   const [text, setText] = useState("");
   const [opinion, setOpinion] = useState("");
+  const [error, setError] = useState("");
   const reviewStar = (number) => {
     setStars(number);
   };
@@ -22,7 +25,12 @@ const Review = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await createReviews(user.username, productid, stars, text, opinion);
+    try {
+      await createReviews(user.username, productid, stars, text, opinion);
+      history.push(`/product/${productid}`);
+    } catch (err) {
+      setError("Usted no tiene permisos para crear la reseña");
+    }
   };
   return (
     <div className={style.container}>
@@ -83,9 +91,10 @@ const Review = () => {
           </Form.Group>
           <div>
             <Button variant="dark" type="submit">
-              Ingresa
+              Crear reseña
             </Button>
           </div>
+          <div className={style.errors}>{error ? error : ""}</div>
         </Form>
       </div>
     </div>

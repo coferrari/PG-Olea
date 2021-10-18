@@ -8,6 +8,7 @@ const ordersMockUp = require("./json/ordernes");
 const reviewsMockUp = require("./json/review");
 const product = require("./src/models/product.js");
 const { DB_URL } = process.env;
+
 conn
   .sync({ force: true })
   .then(async () => {

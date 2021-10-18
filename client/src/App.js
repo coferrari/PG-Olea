@@ -16,7 +16,6 @@ import RequestChangePassword from "./components/RequestChangePassword/RequestCha
 import ChangePassword from "./components/ChangePassword/ChangePassword";
 import ShoppingCart from "./components/ShoppingCart/ShoppingCart";
 import Checkout from "./components/Checkout/Checkout";
-import ProductsByName from "./components/ProductsByName/ProductsByName";
 import { decodeToken } from "./utils/index";
 import CreateProduct from "./components/Admin/CreateProduct/CreateProduct";
 import UsersTable from "./components/Admin/Tables/UsersTable/UsersTable";
@@ -29,9 +28,15 @@ import EditProduct from "./components/Admin/EditProduct/EditProduct";
 import Footer from "./components/Footer/Footer";
 import BarraAdmin from "./components/Profile/BarraAdmin";
 import OrderDetail from "./components/OrderDetail/OrderDetail";
+import OfertasTable from "./components/Admin/Tables/OfertasTable/OfertasTable.jsx";
+import CheckoutConfirm from "./components/Checkout/CheckoutConfirm";
 import Wishlist from "./components/Wishlist/Wishlist";
+
 import Map from "./components/Map/Map";
 import Stores from "./components/Admin/Stores/Stores";
+
+
+import Desuscribe from "./components/Profile/DesuscribeNewsLetter";
 
 function App() {
   const loggedIn = decodeToken();
@@ -67,7 +72,8 @@ function App() {
           <Home />
           <Footer />
         </Route>
-        <Route path="/category/:nameCategory">
+        <Route path="/category/:nameCategory/:attribute/:order">
+          <ShoppingCart />
           <CategoryProduct />
           <Footer />
         </Route>
@@ -93,16 +99,10 @@ function App() {
         <Route exact path="/admin/categoriestable">
           {loggedIn.admin ? <CategoriasTable /> : <Redirect to="/home" />}
         </Route>
-        <Route exact path="/search/:name">
-          <ProductsByName />
-          <Footer />
-        </Route>
         <Route exact path="/createreview/:productid">
           <Review />
         </Route>
-        <Route exact path="/admin/reviews/:productid">
-          {loggedIn.admin ? <ReviewsTable /> : <Redirect to="/home" />}
-        </Route>
+        <Route exact path="/admin/reviews/:productid"></Route>
         <Route exact path="/admin/editproduct/:productid">
           {loggedIn.admin ? <EditProduct /> : <Redirect to="/home" />}
         </Route>
@@ -120,6 +120,12 @@ function App() {
         </Route>
         <Route exact path="/order/:id">
           <OrderDetail />
+        </Route>
+        <Route exact path="/checkoutconfirm">
+          <CheckoutConfirm />
+        </Route>
+        <Route exact path="/newsletter/desuscribe/:token">
+          <Desuscribe />
         </Route>
         <Route exact path="/wishlist">
           <Wishlist />

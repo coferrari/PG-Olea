@@ -4,7 +4,7 @@ import { Button, Form, Row, Col, Container, Image } from "react-bootstrap";
 import { getCategories } from "../../../redux/actions";
 import { getToken } from "../../../utils/index";
 import axios from "axios";
-
+import { editStock } from "../../../stock/index";
 import swal from "sweetalert";
 import { useParams } from "react-router";
 import {
@@ -36,16 +36,23 @@ export default function EditProduct() {
 
   const handleSubmit = async (e) => {
     {
+      console.log("new product", newProduct);
       e.preventDefault();
+      newProduct.stock && await editStock({
+          stock: parseInt(newProduct.stock),
+          productID: parseInt(productid)
+        })
       await axios.put(`${GET_PRODUCTS_URL}${productid}`, newProduct, {
         headers: {
           authorization: getToken(),
         },
       });
 
+
       return swal("Este producto ha sido modificado").then(function () {
         window.location = "/account";
       });
+
     }
   };
   const handleEdit = () => {
