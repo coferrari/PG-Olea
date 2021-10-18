@@ -311,4 +311,17 @@ userFunction.updateProfile = async (req, res, next) => {
     next(err);
   }
 };
+userFunction.updateRecommendend = async (req, res, next) => {
+  const { id } = req.params;
+  const body = req.body;
+  User.update(body, {
+    where: {
+      id,
+    },
+  })
+    .then((update) => {
+      res.send(update);
+    })
+    .catch((error) => next(error));
+};
 module.exports = userFunction;
