@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { changeStatusOrder } from "../../../auth/admin";
 import swal from "sweetalert";
 import { GoSearch } from "react-icons/go";
-import style from "../../Search/Search.module.css";
+import style from "./OrdersTable.module.css";
 
 function OrdersTable() {
   const [order, setOrder] = useState();
@@ -73,13 +73,13 @@ function OrdersTable() {
         <div>{mensaje ? mensaje : "Aun no hay ordenes"}</div>
       ) : (
         <div>
-          <div>
+          <div className={style.menuOrdenes}>
             <input
-              className={style.search}
+              className={style.searchOrdenes}
               type="text"
               name="name"
               value={input.name}
-              placeholder="buscar órdenes de usuario..."
+              placeholder="buscar órdenes por usuario..."
               onChange={handleChange}
             />
             <button
@@ -91,7 +91,7 @@ function OrdersTable() {
             >
               <GoSearch className={style.iconsearch} />
             </button>
-          </div>
+         
 
           {/* FILTROS */}
           <select
@@ -122,7 +122,7 @@ function OrdersTable() {
             </option>
             <option value="menosReciente">Menos Recientes</option>
           </select>
-
+          </div>
           <Table striped bordered hover>
             <thead>
               <tr>
@@ -153,7 +153,9 @@ function OrdersTable() {
                       {o.updatedAt.slice(0, 10).split("-").reverse().join("-")}
                     </td>
                     <td>
-                      <Button variant="primary" onClick={() => setShow(true)}>
+                      <Button variant="primary" onClick={() => {
+                        setShow(true)
+                        }}>
                         Modificar estado
                       </Button>
                       <Modal
