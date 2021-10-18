@@ -1,7 +1,19 @@
 .chat {
     width: 50%;
     min-height: 30vh;
-    max-height: 30vh;
+    max-height: 50vh;
     overflow: scroll;
     border: 1px solid pink;
+    display: flex;
+    flex-direction: column;
+}
+
+.me {
+    background-color: pink;
+    justify-content: flex-start;
+}
+
+.you {
+    background-color: cadetblue;
+    justify-content: flex-end;
 }

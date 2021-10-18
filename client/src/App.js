@@ -127,11 +127,8 @@ function App() {
           <Wishlist />
         </Route>
         <Route exact path="/chat">
-          <Chat />
-        </Route>
-        {/* <Route exact path="/chat">
           {loggedIn ? <Chat /> : <Redirect to="/home" />}
-        </Route> */}
+        </Route>
       </Switch>
     </div>
   );
