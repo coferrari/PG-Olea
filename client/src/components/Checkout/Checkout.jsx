@@ -110,10 +110,10 @@ const Checkout = () => {
       swal("Completá la dirección de envío");
     } else if (delivery === "Envío" && order.address) {
       idOrden = await createOrder(order);
-      return dispatch(checkoutMercadoPago(itemsCheckout, idOrden));
+      return dispatch(checkoutMercadoPago([order], idOrden));
     } else if (delivery === "Retiro por local") {
       idOrden = await createOrder(order);
-      return dispatch(checkoutMercadoPago(itemsCheckout, idOrden));
+      return dispatch(checkoutMercadoPago([order], idOrden));
     }
   };
   const handleChange = (e) => {

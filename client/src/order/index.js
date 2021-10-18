@@ -42,4 +42,4 @@ export const orderByDate = async (opcion) => {
 export const setOrderEntregada = async (orderId) => {
   const order = await axios.put(`${SET_ORDER_ENTREGADA}/${orderId}`);
   return order.data;
-}
+};
