@@ -72,6 +72,7 @@ const {
   Reviews,
   Wishlist,
   Stores,
+  Turn
 } = sequelize.models;
 
 
@@ -118,6 +119,10 @@ Wishlist.belongsToMany(Product, {
 Product.belongsToMany(Wishlist, {
   through: "Wishlist_Products",
 });
+
+//
+Turn.hasOne(User);
+User.belongsTo(Turn, {foreignKey: "turnId", allowNull: true});
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
