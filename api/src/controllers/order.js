@@ -6,7 +6,6 @@ const {
   getTemplateRejected,
   getTemplateEnvio,
 } = require("../helpers/mail");
-const carritoControllers = require("../controllers/carrito");
 class OrderModel extends Modelo {
   constructor(model) {
     super(model);
@@ -158,7 +157,6 @@ class OrderModel extends Modelo {
         info: info,
         date: Date().slice(0, 10).replace(/-/g, "/"),
       });
-      console.log(ordenCreada);
       for (let i = 0; i < products.length; i++) {
         await ordenCreada.addProduct(products[i].id);
         await Order_Products.update(
@@ -198,7 +196,29 @@ class OrderModel extends Modelo {
       next(err);
     }
   };
-  filterByDelivery = async (req, res, next) => {};
+  filterByDelivery = async (req, res, next) => {
+    try {
+      let orden = await this.model.findAll();
+      orden = orden.filter((c) => c.info !== "retiro");
+      res.status(200).send(orden);
+    } catch (err) {
+      next(err);
+    }
+  };
+  sendDelivery = async (req, res, next) => {
+    const { id } = req.params;
+    try {
+      const orden = await this.model.findByPk(id);
+      if (orden === null) {
+        return res.status(400).send({ message: "No existe la orden" });
+      }
+      orden.info = "en-camino";
+      orden.save();
+      res.status(200).json({ message: "Orden en camino" });
+    } catch (err) {
+      next(err);
+    }
+  };
   allOrders = async (req, res, next) => {
     try {
       const order = await this.model.findAll({
@@ -210,7 +230,6 @@ class OrderModel extends Modelo {
     }
   };
   getOrderDetails = async (req, res, next) => {
-    //const { username } = req.body
     const { id } = req.params;
     try {
       const ordenDetail = await this.model.findByPk(id, { include: Product });
