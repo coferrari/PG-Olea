@@ -12,7 +12,7 @@ import { Redirect } from "react-router";
 import { Button } from "react-bootstrap";
 
 import OfertasTable from "../Admin/Tables/OfertasTable/OfertasTable";
-import EnviosAdmin from "../Admin/Tables/EnvíosAdmin/EnvíosAdmin";
+import EnviosAdmin from "../Admin/Tables/EnviosAdmin/EnviosAdmin";
 
 const BarraAdmin = () => {
   return (

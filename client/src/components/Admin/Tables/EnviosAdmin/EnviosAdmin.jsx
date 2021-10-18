@@ -30,7 +30,6 @@ function EnviosAdmin() {
     }
   }
 
-  console.log(order)
 
     return (
       <div>
