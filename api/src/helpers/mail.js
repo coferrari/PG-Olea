@@ -83,7 +83,7 @@ const getTemplateAuthenticationAdmin = (name, code) => {
   
   <div id="email___content">
       <h2>Hola ${name}</h2>
-      <p>Para continuar con su inicio de sesion ingrese el siguiente codigo ${code}</p>
+      <p>Para continuar con su inicio de sesión ingrese el siguiente código ${code}</p>
   </div>`;
 };
 
@@ -112,8 +112,8 @@ const getTemplateAproved = (name, price) => {
   
   <div id="email___content">
       <h2>Hola ${name}</h2>
-      <p>Queriamos avisarte que tu compra por ${price} se completo exitosamente!</p>
-      <a href="https://somosolea.vercel.app/">Visite nuestra pagina!</a>
+      <p>Queríamos avisarte que tu compra por ${price} se completó exitosamente!</p>
+      <a href="https://somosolea.vercel.app/">Visite nuestra página!</a>
   </div>`;
 };
 const getTemplateRejected = (name, price) => {
@@ -123,8 +123,8 @@ const getTemplateRejected = (name, price) => {
   </head>
   <div id="email___content">
       <h2>Hola ${name}</h2>
-      <p>Queriamos avisarte que hubo un problema en tu compra.. Intentelo nuevamente!</p>
-      <a href="https://somosolea.vercel.app/">Visite nuestra pagina!</a>
+      <p>Queríamos avisarte que hubo un problema en tu compra.. Inténtelo nuevamente!</p>
+      <a href="https://somosolea.vercel.app/">Visite nuestra página!</a>
   </div>`;
 };
 const getTemplateProductLetter = (name, fecha, product, offert) => {
@@ -135,7 +135,7 @@ const getTemplateProductLetter = (name, fecha, product, offert) => {
   
   <div id="email___content">
       <h2>Hola ${name}</h2>
-      <p>El dia ${fecha} el producto ${product} se encontrara con un ${offert}% de descuento!</p>
+      <p>El dia ${fecha} el producto ${product} se encontrará con un ${offert}% de descuento!</p>
       <p><a href="https://somosolea.vercel.app/" target="_blank">Visite nuestra página!</a></p>
   </div>
   `;
@@ -148,11 +148,26 @@ const getTemplateCategoryLetter = (name, fecha, category, offert) => {
   
   <div id="email___content">
       <h2>Hola ${name}</h2>
-      <p>El dia ${fecha} toda la categoria ${category} se encontrara con un ${offert}% de descuento!</p>
+      <p>El día ${fecha} toda la categoría ${category} se encontrará con un ${offert}% de descuento!</p>
       <p><a href="https://somosolea.vercel.app/" target="_blank">Visite nuestra página!</a></p>
   </div>
   `;
 };
+const getTemplateProductLetterWishlist = (name, fecha, product, offer) => {
+  return `
+  <head>
+      <link rel="stylesheet" href="./style.css">
+  </head>
+  
+  <div id="email___content">
+      <h2>Hola ${name}</h2>
+      <p>Vimos que el producto ${product} te interesa!</p>
+      <p>Por eso queríamos avisarte que el día ${fecha} se encontrará con un ${offer}% de descuento!</p>
+      <p><a href="https://somosolea.vercel.app/" target="_blank">Visite nuestra página!</a></p>
+  </div>
+  `;
+};
+
 module.exports = {
   sendEmail,
   getTemplate,
@@ -164,4 +179,5 @@ module.exports = {
   getTemplateProductStock,
   getTemplateRejected,
   getTemplateCategoryLetter,
+  getTemplateProductLetterWishlist
 };

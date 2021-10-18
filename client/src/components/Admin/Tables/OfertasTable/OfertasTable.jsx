@@ -7,7 +7,7 @@ import Tabs from "react-bootstrap/Tabs";
 import Button from "react-bootstrap/Button";
 import { useSelector } from "react-redux";
 import { offerCategory, offerProduct } from "../../../../cart/index";
-import { productOfert, categoryOfert } from "../../../../auth/admin";
+import { productOfert, categoryOfert, productWishlist } from "../../../../auth/admin";
 import Ofertas from "./Ofertas";
 
 function OfertasTable() {
@@ -35,13 +35,18 @@ function OfertasTable() {
       return alert("faltan parametros");
     }
     let valor = value.toLocaleDateString();
-    console.log(productOff, valor);
+    console.log("este es el console log", productOff, valor);
     offerProduct(productOff, valor);
-    const res = await productOfert(
+    await productOfert(
       productOff.idProduct,
       productOff.offProduct,
       valor
     );
+    await productWishlist(
+      productOff.idProduct,
+      productOff.offProduct,
+      valor
+    )
     setProductOff({
       idProduct: 0,
       offProduct: 0,
