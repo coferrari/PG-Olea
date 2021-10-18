@@ -10,10 +10,29 @@ require("./db.js");
 
 const server = express();
 
+const http = require("http");
+const app = http.createServer(server);
+const io = require('socket.io')(app, {
+    cors: {
+      origin: '*',
+    }
+  });
+
+io.on('connection', (socket) => { /* socket object may be used to send specific messages to the new connected client */
+    console.log('new client connected');
+    socket.on('connected', () => {
+        console.log('user connected')
+    });
+    socket.on("message", (message) => {
+        io.emit("messages", {message})
+    })
+    socket.on('disconnect', () => {
+        io.emit('messages', {app: "Servidor", message: "ha abandonado el chat"})
+    })
+});
+
 server.name = "API";
 
-server.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
-server.use(bodyParser.json({ limit: "50mb" }));
 server.use(cookieParser());
 server.use(morgan("dev"));
 server.use(setHeaders);
@@ -23,4 +42,4 @@ server.use("/api", routes);
 // Error catching endware.
 server.use(errorHandler);
 
-module.exports = server;
+module.exports = app;

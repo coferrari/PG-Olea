@@ -32,9 +32,11 @@ import OfertasTable from "./components/Admin/Tables/OfertasTable/OfertasTable.js
 import CheckoutConfirm from "./components/Checkout/CheckoutConfirm";
 import Wishlist from "./components/Wishlist/Wishlist";
 import Desuscribe from "./components/Profile/DesuscribeNewsLetter";
+import Chat from "./components/Chat/Chat";
+
 function App() {
   const loggedIn = decodeToken();
-
+  
   return (
     <div>
       <Navbar />
@@ -123,6 +125,9 @@ function App() {
         </Route>
         <Route exact path="/wishlist">
           <Wishlist />
+        </Route>
+        <Route exact path="/chat">
+          <Chat />
         </Route>
       </Switch>
     </div>
