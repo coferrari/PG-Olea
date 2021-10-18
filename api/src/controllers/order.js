@@ -234,6 +234,20 @@ class OrderModel extends Modelo {
       next(error);
     }
   };
+  setOrderEntregada = async (req, res, next) => {
+    const { orderId } = req.params;
+    try {
+      const order = await this.model.findByPk(orderId);
+      order.update({
+        status: "finalizada",
+        info: "entregada"
+      })
+      order.save();
+      res.send("Orden seteada a entregada");
+    } catch (error){
+      next(error);
+    }
+  }
 }
 
 const OrderControllers = new OrderModel(Order);

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { getUserOrder } from "../../order";
+import { getUserOrder, setOrderEntregada } from "../../order";
 import { Table, Button } from "react-bootstrap";
 import { decodeToken } from "../../utils";
+import swal from "sweetalert";
 
 const UserOrders = () => {
   const history = useHistory();
@@ -20,6 +21,13 @@ const UserOrders = () => {
   useEffect(() => {
     getOrden();
   }, []);
+
+  const handleSet = async (orderId) => {
+    await setOrderEntregada(orderId);
+    return swal("Se ha notificado que tu orden fue entregada").then(function () {
+      window.location = "/account";
+    });
+  }
 
   return (
     <div>
@@ -62,10 +70,19 @@ const UserOrders = () => {
                     onClick={() => {
                       history.push(`/order/${e.id}`);
                     }}
-                  >
+                    >
                     Ver detalles
                   </Button>
                 </td>
+                    <td>
+                      {e.info !== "retiro" && e.info !== "entregada" && 
+                        <Button
+                        variant="outline-dark"
+                        onClick = {() => handleSet(e.id)}>
+                        Ya me llegó
+                        </Button>
+                      }
+                    </td>
               </tr>
             );
           })}

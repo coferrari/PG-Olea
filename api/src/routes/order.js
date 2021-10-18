@@ -21,4 +21,5 @@ router.get("/findAll/orders", isAdmin, OrderControllers.allOrders);
 router.get("/getorderdetails/:id", OrderControllers.getOrderDetails);
 router.get("/getuserorder/:username", OrderControllers.getUserOrder);
 router.put("/change/:id", OrderControllers.changeStatus);
+router.put("/setOrderEntregada/:orderId", OrderControllers.setOrderEntregada);
 module.exports = router;
