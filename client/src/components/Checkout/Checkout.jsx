@@ -28,6 +28,12 @@ const Checkout = () => {
   const [delivery, setDelivery] = useState("");
   const handleSelected = (e) => {
     e.preventDefault();
+    setOrder((prevState) => {
+      return {
+        ...prevState,
+        delivery: e.target.value,
+      };
+    });
     setDelivery(e.target.value);
   };
 
@@ -85,12 +91,13 @@ const Checkout = () => {
     email: datosLogin.email,
     price: desc,
     products: itemsCheckout,
-    address: delivery,
+    address: "",
     phone: "",
     contactName: "",
     contactSurname: "",
+    delivery: delivery,
   });
-
+  console.log(order);
   let idOrden = "";
   const handleConfirmOrder = async (e) => {
     e.preventDefault();

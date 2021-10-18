@@ -13,6 +13,7 @@ function OrdersTable() {
   const [order, setOrder] = useState();
   const [show, setShow] = useState(false);
   const [input, setInput] = useState("");
+  const [id, setId] = useState();
   const [mensaje, setMensaje] = useState("");
   const getAllOrders = async () => {
     const orders = await getAllOrder();
@@ -21,7 +22,7 @@ function OrdersTable() {
   const changeInput = (e) => {
     setInput(e.target.value);
   };
-  const changeStatus = async (e, id) => {
+  const changeStatus = async (e) => {
     e.preventDefault();
     try {
       await changeStatusOrder(id, input);
@@ -34,13 +35,10 @@ function OrdersTable() {
   useEffect(() => {
     getAllOrders();
   }, []);
-
   const [search, setSearch] = useState("");
-
   const handleChange = function (e) {
     setSearch(e.target.value);
   };
-
   const filterOrdersbyStatus = async (e) => {
     let select = e.target.value;
     if (select === "Todo") {
@@ -66,7 +64,7 @@ function OrdersTable() {
     }
     setOrder(userSearch);
   };
-
+  console.log("id", id);
   return (
     <div>
       {order === undefined ? (
@@ -91,8 +89,6 @@ function OrdersTable() {
             >
               <GoSearch className={style.iconsearch} />
             </button>
-         
-
           {/* FILTROS */}
           <select
             class="form-select"
@@ -131,6 +127,8 @@ function OrdersTable() {
                 <th>Contacto</th>
                 <th>Teléfono</th>
                 <th>Precio</th>
+                <th>Estado pago</th>
+                <th>Delivery</th>
                 <th>Estado de orden</th>
                 <th>Fecha</th>
               </tr>
@@ -147,15 +145,23 @@ function OrdersTable() {
                     <td>{o.phone}</td>
                     <td>${o.price}</td>
                     <td>
+                      {o.statusPago === "approved" ? "Aprobado" : "Desaprobado"}
+                    </td>
+                    <td>{o.info.split("-").join(" ")}</td>
+                    <td>
                       {o.status.charAt(0).toUpperCase() + o.status.slice(1)}
                     </td>
                     <td>
                       {o.updatedAt.slice(0, 10).split("-").reverse().join("-")}
                     </td>
                     <td>
-                      <Button variant="primary" onClick={() => {
-                        setShow(true)
-                        }}>
+                      <Button
+                        variant="primary"
+                        onClick={() => {
+                          setShow(true);
+                          setId(o.id);
+                        }}
+                      >
                         Modificar estado
                       </Button>
                       <Modal
@@ -183,7 +189,7 @@ function OrdersTable() {
                             {input ? (
                               <Button
                                 type="submit"
-                                onClick={(e) => changeStatus(e, o.id)}
+                                onClick={(e) => changeStatus(e)}
                               >
                                 Cambiar
                               </Button>

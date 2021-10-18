@@ -28,6 +28,11 @@ module.exports = (sequelize) => {
       allowNull: false,
       defaultValue: "pendiente",
     },
+    info: {
+      type: DataTypes.ENUM("retiro", "en-espera", "en-camino", "entregada"),
+      allowNull: false,
+      defaultValue: "retiro",
+    },
     date: {
       type: DataTypes.DATE,
       allowNull: false,

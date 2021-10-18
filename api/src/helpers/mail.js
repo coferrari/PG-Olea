@@ -160,6 +160,18 @@ const getTemplateCategoryLetter = (name, fecha, category, offert, token) => {
   </div>
   `;
 };
+const getTemplateEnvio = (name, price) => {
+  return `
+  <head>
+      <link rel="stylesheet" href="./style.css">
+  </head>
+  <div id="email___content">
+      <h2>Hola ${name}</h2>
+      <p>Queriamos avisarte que tu compra por ${price} se completo exitosamente!</p>
+      <p>Te enviaremos otro email cuando tu orden este en camino!</p>
+      <a href="https://somosolea.vercel.app/">Visite nuestra pagina!</a>
+  </div>`;
+};
 module.exports = {
   sendEmail,
   getTemplate,
@@ -170,5 +182,6 @@ module.exports = {
   getTemplateAuthenticationAdmin,
   getTemplateProductStock,
   getTemplateRejected,
+  getTemplateEnvio,
   getTemplateCategoryLetter,
 };
