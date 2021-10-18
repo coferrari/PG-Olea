@@ -36,7 +36,7 @@ import Chat from "./components/Chat/Chat";
 
 function App() {
   const loggedIn = decodeToken();
-  
+
   return (
     <div>
       <Navbar />
@@ -129,6 +129,9 @@ function App() {
         <Route exact path="/chat">
           <Chat />
         </Route>
+        {/* <Route exact path="/chat">
+          {loggedIn ? <Chat /> : <Redirect to="/home" />}
+        </Route> */}
       </Switch>
     </div>
   );
