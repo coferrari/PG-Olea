@@ -1,29 +1,44 @@
-import React, { useState } from "react";
+
+import React, { useState, useEffect } from "react";
+
 import logo from "../../img/OLEA marca de agua-08.png";
 import style from "./Footer.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInstagram } from "@fortawesome/free-brands-svg-icons";
+import Map from "../Map/Map";
+import { STORES_URL } from "../../consts";
+import { Dropdown, DropdownButton } from "react-bootstrap";
+import axios from "axios";
 import { suscribeNewsLetter } from "../../auth/users";
 import { decodeToken } from "../../utils";
 import swal from "sweetalert";
-
 function Footer() {
-  const [input, setInput] = useState("");
+  const [stores, setStores] = useState(null);
+  const [address, setAddress] = useState("Eliga el local que desee localizar");
+  const [position, setPosition] = useState();
+  useEffect(() => {
+    axios.get(STORES_URL).then((response) => {
+      setStores(response.data);
+    });
+    if (stores !== null) {
+      setAddress(stores[0].address);
+    }
+  }, []);
+ const [input, setInput] = useState("");
   const onChange = (e) => {
-    console.log(input);
     setInput(e.target.value);
   };
   const user = decodeToken();
-  console.log(user);
   const suscribe = async (e) => {
     e.preventDefault();
     try {
       const x = await suscribeNewsLetter(input);
     } catch (err) {
       swal("Registre su email primero");
-      console.log(err.message);
+      
     }
   };
+
   return (
     <div>
       <footer className={style.footer}>
@@ -40,6 +55,26 @@ function Footer() {
                 cosmética natural, objetos sustentables y muchas cosas más.
               </li>
             </ul>
+          </div>
+          <div>
+            <div>
+              <DropdownButton id="dropdown-item-button" title={address}>
+                {stores?.map((e) => {
+                  return (
+                    <Dropdown.Item
+                      onClick={() => {
+                        setAddress(e.address);
+                        setPosition(e.location);
+                      }}
+                      as="button"
+                    >
+                      {e.address}
+                    </Dropdown.Item>
+                  );
+                })}
+              </DropdownButton>
+              <Map position={position} address={address} />
+            </div>
           </div>
           <div className={style.footer__flexitem}>
             <h5 className={style.subtitles}>contacto</h5>

@@ -5,6 +5,7 @@ import categoryReducer from "./categoryReducer";
 import carritoReducer from "./carritoReducer";
 import orderReducer from "./orderReducer";
 import wishlistReducer from "./wishlistReducer";
+import storesReducer from "./storesReducer";
 
 
 const rootReducer = combineReducers({
@@ -12,8 +13,9 @@ const rootReducer = combineReducers({
   productDetailReducer,
   categoryReducer,
   carritoReducer,
+  wishlistReducer,
+  storesReducer,
   orderReducer,
-  wishlistReducer
-});
+ });
 
 export default rootReducer;
