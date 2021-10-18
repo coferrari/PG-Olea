@@ -5,6 +5,7 @@ const {
   sendEmail,
   getTemplateRejected,
   getTemplateEnvio,
+  getTemplateEnCamino,
 } = require("../helpers/mail");
 class OrderModel extends Modelo {
   constructor(model) {
@@ -214,6 +215,8 @@ class OrderModel extends Modelo {
       }
       orden.info = "en-camino";
       orden.save();
+      let template = getTemplateEnCamino(orden.contactName);
+      await sendEmail(orden.email, "Envio en camino", template);
       res.status(200).json({ message: "Orden en camino" });
     } catch (err) {
       next(err);
