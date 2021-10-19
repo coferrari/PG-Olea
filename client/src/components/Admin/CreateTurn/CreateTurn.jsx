@@ -59,14 +59,14 @@ export default function CreateTurn() {
           <option value="" selected disabled hidden>
             Seleccione un horario
           </option>
-          <option value="10-11hs">10 - 11hs</option>
-          <option value="11-12hs">11 - 12hs</option>
-          <option value="12-13hs">12 - 13hs</option>
-          <option value="13-14hs">13 - 14hs</option>
-          <option value="14-15hs">14 - 15hs</option>
-          <option value="15-16hs">15 - 16hs</option>
-          <option value="16-17hs">16 - 17hs</option>
-          <option value="17-18hs">17 - 18hs</option>
+          <option value="10-11hs">10-11hs</option>
+          <option value="11-12hs">11-12hs</option>
+          <option value="12-13hs">12-13hs</option>
+          <option value="13-14hs">13-14hs</option>
+          <option value="14-15hs">14-15hs</option>
+          <option value="15-16hs">15-16hs</option>
+          <option value="16-17hs">16-17hs</option>
+          <option value="17-18hs">17-18hs</option>
         </select>
         <Button type="submit">Crear turno</Button>
       </form>
