@@ -36,7 +36,7 @@ import Map from "./components/Map/Map";
 import Stores from "./components/Admin/Stores/Stores";
 
 import Desuscribe from "./components/Profile/DesuscribeNewsLetter";
-import CreateTurn from "./components/Admin/CreateTurn/CreateTurn";
+import UserTurn from "./components/UserTurn/UserTurn";
 
 function App() {
   const loggedIn = decodeToken();
@@ -133,9 +133,9 @@ function App() {
         <Route exact path="/account/stores">
           {loggedIn.admin ? <Stores /> : <Redirect to="/home" />}
         </Route>
-        {/* <Route exact path="/account/turns">
-          {loggedIn.admin ? <CreateTurn /> : <Redirect to="/home" />}
-        </Route> */}
+        <Route exact path="/account/turns">
+          <UserTurn />
+        </Route>
       </Switch>
     </div>
   );

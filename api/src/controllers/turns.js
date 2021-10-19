@@ -59,13 +59,16 @@ class TurnModel extends Modelo {
   //       }
   //   };
   cancelTurn = async (req, res, next) => {
+    console.log(req.body, "este es el body");
     const { orderId, store, date, hour } = req.body;
     try {
+      console.log("entro al try");
       const order = await Order.findOne({
         where: {
           id: orderId,
         },
       });
+      console.log(orderId);
       const turn = await this.model.findOne({
         where: {
           store,
@@ -82,11 +85,13 @@ class TurnModel extends Modelo {
       turn.save();
       return res.send("Turno cancelado");
     } catch (error) {
+      console.log("entro al catch");
       next(error);
     }
   };
+
   getTurnByUser = async (req, res, next) => {
-    const { username } = req.body;
+    const { username } = req.params;
     try {
       let order = await Order.findAll({
         where: {
