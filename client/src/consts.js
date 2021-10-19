@@ -29,3 +29,8 @@ export const STORES_URL = "/api/stores";
 
 export const ORDER_BY_DATE = "/api/order/date";
 
+export const SET_ORDER_ENTREGADA = "/api/order/setOrderEntregada";
+
+export const GET_DELIVERY_URL = "api/order/filterdelivery";
+export const CHANGE_STATUS_DELIVERY = "api/order/changedelivery";
+

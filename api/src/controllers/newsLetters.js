@@ -86,7 +86,6 @@ newsLetter.sendCategoryLetter = async (req, res, next) => {
 };
 newsLetter.suscribeNewsLetter = async (req, res, next) => {
   const { email } = req.body;
-  console.log(req.body);
   try {
     const user = await User.findOne({ where: { email: email } });
     if (!user) {

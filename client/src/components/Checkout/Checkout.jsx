@@ -28,6 +28,12 @@ const Checkout = () => {
   const [delivery, setDelivery] = useState("");
   const handleSelected = (e) => {
     e.preventDefault();
+    setOrder((prevState) => {
+      return {
+        ...prevState,
+        delivery: e.target.value,
+      };
+    });
     setDelivery(e.target.value);
   };
 
@@ -85,12 +91,13 @@ const Checkout = () => {
     email: datosLogin.email,
     price: desc,
     products: itemsCheckout,
-    address: delivery,
+    address: "",
     phone: "",
     contactName: "",
     contactSurname: "",
+    delivery: delivery,
   });
-
+  console.log(order);
   let idOrden = "";
   const handleConfirmOrder = async (e) => {
     e.preventDefault();
@@ -103,10 +110,10 @@ const Checkout = () => {
       swal("Completá la dirección de envío");
     } else if (delivery === "Envío" && order.address) {
       idOrden = await createOrder(order);
-      return dispatch(checkoutMercadoPago(itemsCheckout, idOrden));
+      return dispatch(checkoutMercadoPago([order], idOrden));
     } else if (delivery === "Retiro por local") {
       idOrden = await createOrder(order);
-      return dispatch(checkoutMercadoPago(itemsCheckout, idOrden));
+      return dispatch(checkoutMercadoPago([order], idOrden));
     }
   };
   const handleChange = (e) => {

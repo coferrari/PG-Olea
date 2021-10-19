@@ -61,6 +61,12 @@ const CheckoutConfirm = () => {
             <ListGroup.Item>
               Productos: {orden.products?.map((p) => p.name + ", ")}
             </ListGroup.Item>
+            <ListGroup.Item>
+              {" "}
+              {orden.info === "en-espera"
+                ? "Envio a domicilio"
+                : "Retira por local"}{" "}
+            </ListGroup.Item>
             <ListGroup.Item>Total: ${orden.price}</ListGroup.Item>
           </ListGroup>
           <Button variant="dark" onClick={onClick}>
@@ -91,6 +97,7 @@ const CheckoutConfirm = () => {
             <ListGroup.Item>
               Productos: {orden.products?.map((p) => p.name + ", ")}
             </ListGroup.Item>
+            <ListGroup.Item> {orden.info} </ListGroup.Item>
             <ListGroup.Item>Total: ${orden.price}</ListGroup.Item>
           </ListGroup>
           <Button variant="dark" onClick={onClick}>

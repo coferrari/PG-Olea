@@ -12,6 +12,7 @@ import { Redirect } from "react-router";
 import { Button } from "react-bootstrap";
 
 import OfertasTable from "../Admin/Tables/OfertasTable/OfertasTable";
+import EnviosAdmin from "../Admin/Tables/EnviosAdmin/EnviosAdmin";
 
 const BarraAdmin = () => {
   return (
@@ -45,6 +46,9 @@ const BarraAdmin = () => {
         </Tab>
         <Tab eventKey="Ofertas" title="Ofertas">
           <OfertasTable />
+       </Tab>
+        <Tab eventKey="Envios" title="Envios">
+          <EnviosAdmin />
        </Tab>
       </Tabs>
     </div>
