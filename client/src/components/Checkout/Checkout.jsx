@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Details from "./CheckoutDetail/CheckoutDetail";
 import { decodeToken, isAuthorized } from "../../utils";
 import { Button } from "react-bootstrap";
@@ -12,6 +12,7 @@ import style from "./Checkout.module.css";
 import { format } from "../../utils/index";
 import { Card, ListGroup, Form } from "react-bootstrap";
 import swal from "sweetalert";
+import { getStores } from "../../redux/actions";
 
 const Checkout = () => {
   const history = useHistory();
@@ -19,11 +20,17 @@ const Checkout = () => {
   const datosLogin = decodeToken();
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(getStores());
+  }, [dispatch]);
+
   let linkDePago = useSelector((state) => state.carritoReducer.linkPago);
-  console.log("link", linkDePago);
   const itemsCheckout = useSelector(
     (state) => state.carritoReducer.productsCarrito
   );
+
+  let stores = useSelector((state) =>state.storesReducer.stores)
+  console.log("stores",stores)
 
   const [delivery, setDelivery] = useState("");
   const handleSelected = (e) => {
@@ -46,17 +53,17 @@ const Checkout = () => {
           parseInt(
             curr.price - Math.round(parseInt(curr.price * curr.offer) / 100)
           ) *
-            curr.Carrito_Products.quantity;
+          curr.Carrito_Products.quantity;
       } else if (curr.offer < curr.categories?.[0].offer) {
         result =
           acc +
           parseInt(
             curr.price -
-              Math.round(
-                parseInt(curr.price * curr.categories?.[0].offer) / 100
-              )
+            Math.round(
+              parseInt(curr.price * curr.categories?.[0].offer) / 100
+            )
           ) *
-            curr.Carrito_Products.quantity;
+          curr.Carrito_Products.quantity;
       } else {
         result = acc + parseInt(curr.price) * curr.Carrito_Products.quantity;
       }
@@ -68,17 +75,17 @@ const Checkout = () => {
           parseInt(
             curr.price - Math.round(parseInt(curr.price * curr.offer) / 100)
           ) *
-            curr.quantity;
+          curr.quantity;
       } else if (curr.offer < curr.categories?.[0].offer) {
         result =
           acc +
           parseInt(
             curr.price -
-              Math.round(
-                parseInt(curr.price * curr.categories?.[0].offer) / 100
-              )
+            Math.round(
+              parseInt(curr.price * curr.categories?.[0].offer) / 100
+            )
           ) *
-            curr.quantity;
+          curr.quantity;
       } else {
         result = acc + parseInt(curr.price) * curr.quantity;
       }
@@ -97,7 +104,6 @@ const Checkout = () => {
     contactSurname: "",
     delivery: delivery,
   });
-  console.log(order);
   let idOrden = "";
   const handleConfirmOrder = async (e) => {
     e.preventDefault();
@@ -123,6 +129,13 @@ const Checkout = () => {
       [e.target.name]: e.target.value,
     });
   };
+  const handleRetiroPorLocal = (e) => {
+    e.preventDefault(e)
+    setOrder({
+      ...order,
+      address: e.target.value,
+    })
+  }
 
   return (
     <div className={style.cnt}>
@@ -244,12 +257,20 @@ const Checkout = () => {
                   </div>
                 ) : (
                   <div className={style.pdn}>
-                    <Card.Title className={style.labels}>Retiro</Card.Title>
+                    <Card.Title className={style.labels}>
+                      <label>Local: </label>
+                      <select
+                        class="form-select"
+                        aria-label="Default select example"
+                         onChange={(e) => {handleRetiroPorLocal(e)}}
+                      >
+                        {stores && stores.map((s)=>{
+                          return <option value={`${s.address}`}>{s.address}</option>
+                        })}
+                      </select>
+                    </Card.Title>
                     <Card.Text className={style.text}>
-                      Pasá a retirar tu pedido por Garibaldi 283, Coronel Suárez
-                      <br />
-                      Horario : Lu a Vi 9: 30-12: 30, 17: 30-19: 30 y Sa 10-12:
-                      30
+                      Horario : Lunes a Viernes 9:30 -12:30, 17:30-19:30 y Sábado 10-12:30
                     </Card.Text>
                   </div>
                 )}
