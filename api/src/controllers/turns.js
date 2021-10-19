@@ -1,4 +1,5 @@
-const { Turn, Order } = require("../db.js");
+const { Turn, User, Order, Product } = require("../db.js");
+const { getTemplateProductLetter } = require("../helpers/mail.js");
 const Modelo = require("./index.js");
 
 var id = 0;
@@ -85,15 +86,24 @@ class TurnModel extends Modelo {
     }
   };
   getTurnByUser = async (req, res, next) => {
-    const { username } = req.params;
+    const { username } = req.body;
     try {
       let order = await Order.findAll({
         where: {
           userUsername: username,
         },
+        include: Product,
       });
-      order = order.filter((o) => o.turnId !== null);
-      res.send(order);
+      order = order.find((o) => o.turnId !== null && o.status !== "finalizada");
+      if (order) {
+        const turn = await this.model.findOne({
+          where: {
+            id: order.turnId,
+          },
+        });
+        return res.send([order, turn]);
+      }
+      res.send("No se han encontrado turnos");
     } catch (error) {
       next(error);
     }
