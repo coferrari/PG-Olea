@@ -8,6 +8,8 @@ import { CANCEL_TURN } from "../../consts";
 import swal from "sweetalert";
 import axios from "axios";
 
+//agregar desde la fecha actual
+
 export default function UserTurn() {
   const [turn, setTurn] = useState();
   const history = useHistory();
@@ -16,7 +18,6 @@ export default function UserTurn() {
     const { username } = decodeToken();
     const turnUser = await getTurnByUser(username);
     await setTurn(turnUser);
-    console.log(turnUser);
   };
 
   useEffect(() => {
@@ -34,6 +35,7 @@ export default function UserTurn() {
     });
     setTurn(null);
     swal("Tu turno fue cancelado");
+    history.push("/");
   };
 
   const backOnClick = () => {

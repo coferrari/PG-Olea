@@ -26,7 +26,7 @@ export default function CreateTurn() {
     });
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     if (!turn.store && !turn.hour && !value) {
       return alert("faltan parametros");
@@ -34,7 +34,8 @@ export default function CreateTurn() {
     let valor = value.toLocaleDateString();
     newTurn({ store: turn.store, date: valor, hour: turn.hour });
     setTurn({ store: "", date: "", hour: "" });
-    swal("Se creó el turno");
+    await swal("Se creó el turno");
+    window.location.reload(true);
   };
 
   return (

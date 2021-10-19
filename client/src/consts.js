@@ -29,3 +29,5 @@ export const ORDER_BY_DATE = "/api/order/date";
 export const CREATE_TURN = "/api/turn/";
 export const GET_TURN_BY_USER = "/api/turn/getTurnByUser";
 export const CANCEL_TURN = "/api/turn/cancelturn";
+export const GET_TURNS = "/api/turn/getAll";
+export const DELETE_TURN = "/api/turn/deleteturn";
