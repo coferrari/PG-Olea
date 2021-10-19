@@ -1,7 +1,14 @@
 import React from "react";
 
 import style from "../Map/Map.module.css";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  MapConsumer,
+} from "react-leaflet";
+import { useSelector } from "react-redux";
 
 const Map = ({ position, address }) => {
   const position1 = position ? [position[0], position[1]] : "[]";
@@ -14,13 +21,18 @@ const Map = ({ position, address }) => {
         scrollWheelZoom={false}
         className={style.map}
       >
-        <TileLayer
-          attribution='<a  href="https://www.google.com/maps/dir//-37.4581198,-61.9376018/@-37.4580681,-62.0078425,12z">OpenGoogleMaps</a>'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
+        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+        <MapConsumer>
+          {(map) => {
+            map.flyTo(position1 === null ? [0, 0] : position1);
+            map.zoom = 15;
+            return null;
+          }}
+        </MapConsumer>
         <Marker position={position1}>
           <Popup>
-            Sucursal de <br />
+            Sucursal de
+            <br />
             Olea en
             <br />
             {address}
