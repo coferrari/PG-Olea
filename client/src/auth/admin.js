@@ -119,6 +119,22 @@ export const productOfert = async (product, offert, date) => {
   );
   return res.data;
 };
+export const productWishlist = async (product, offer, date) => {
+  const resWishlist = await axios.post(
+    `/api/news/offerWishlist`,
+    {
+      product,
+      offer,
+      fecha: date
+    },
+    {
+      headers: {
+        authorization: getToken(),
+      },
+    }
+  );
+  return resWishlist.data;
+}
 export const categoryOfert = async (category, offert, date) => {
   const res = await axios.post(
     `/api/news/ofertcategory`,
