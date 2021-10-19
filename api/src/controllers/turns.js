@@ -8,11 +8,10 @@ class TurnModel extends Modelo {
   }
   getAll = async (req, res, next) => {
     try {
-        const turns = await this.model.findAll({include: User});
-        console.log(turns);
-        return res.send(turns.dataValues);
-    } catch (error){
-        next(error);
+      const turns = await this.model.findAll({ include: User });
+      return res.send(turns.dataValues);
+    } catch (error) {
+      next(error);
     }
   };
   create = async (req, res, next) => {
@@ -26,7 +25,7 @@ class TurnModel extends Modelo {
       });
       return res.send("Nuevo turno creado");
     } catch (error) {
-        res.status(400).send("No se pudo crear el turno");
+      res.status(400).send("No se pudo crear el turno");
     }
   };
   getByStore = async (req, res, next) => {
@@ -42,57 +41,57 @@ class TurnModel extends Modelo {
     }
   };
   assignTurn = async (req, res, next) => {
-      const { username, store, date, hour } = req.body;
-      try {
-        const user = await User.findOne({
-            where: {
-                username
-            }
-        })
-        const turn = await this.model.findOne({
-            where: {
-                store,
-                date,
-                hour
-            }
-        })
-        user.setTurn(turn.dataValues.id);
-        await turn.increment({
-            full: +1
-        })
-        turn.save();
-        return res.send("Turno asignado");
-      } catch (error){
-          next(error);
-      }
+    const { username, store, date, hour } = req.body;
+    try {
+      const user = await User.findOne({
+        where: {
+          username,
+        },
+      });
+      const turn = await this.model.findOne({
+        where: {
+          store,
+          date,
+          hour,
+        },
+      });
+      user.setTurn(turn.dataValues.id);
+      await turn.increment({
+        full: +1,
+      });
+      turn.save();
+      return res.send("Turno asignado");
+    } catch (error) {
+      next(error);
+    }
   };
   cancelTurn = async (req, res, next) => {
     const { username, store, date, hour } = req.body;
     try {
       const user = await User.findOne({
-          where: {
-              username
-          }
-      })
+        where: {
+          username,
+        },
+      });
       const turn = await this.model.findOne({
-          where: {
-              store,
-              date,
-              hour
-          }
-      })
+        where: {
+          store,
+          date,
+          hour,
+        },
+      });
       await user.update({
-          turnId: null
-      })
+        turnId: null,
+      });
       await turn.increment({
-          full: -1
-      })
+        full: -1,
+      });
       turn.save();
       return res.send("Turno cancelado");
-    } catch (error){
-        next(error);
+    } catch (error) {
+      next(error);
     }
-}
+  };
 }
 
 const turnControllers = new TurnModel(Turn);
