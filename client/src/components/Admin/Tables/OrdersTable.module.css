@@ -2,7 +2,6 @@
     background-color: white;
     border: none;
   }
-  
   .iconsearch {
   font-size: 20px;
   margin: 10px;
@@ -22,4 +21,8 @@
   .menuOrdenes {
     display: flex;
     flex-direction: row;
+  }
+
+  .ordersTable{
+    margin-top: 20px;
   }

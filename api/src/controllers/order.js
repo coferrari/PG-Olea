@@ -145,6 +145,7 @@ class OrderModel extends Modelo {
       contactName,
       contactSurname,
       delivery,
+      local
     } = req.body;
     let info = delivery === "Envío" ? "en-espera" : "retiro";
     try {
@@ -156,7 +157,8 @@ class OrderModel extends Modelo {
         contactName,
         contactSurname,
         info: info,
-        date: Date().slice(0, 10).replace(/-/g, "/"),
+        local,
+        //date: Date().slice(0, 10).replace(/-/g, "/"),
       });
       for (let i = 0; i < products.length; i++) {
         await ordenCreada.addProduct(products[i].id);

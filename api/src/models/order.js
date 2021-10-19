@@ -33,10 +33,10 @@ module.exports = (sequelize) => {
       allowNull: false,
       defaultValue: "retiro",
     },
-    date: {
-      type: DataTypes.DATE,
-      allowNull: false,
-    },
+    // date: {
+    //   type: DataTypes.DATE,
+    //   allowNull: false,
+    // },
     address: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -53,5 +53,9 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    local : {
+      type: DataTypes.TEXT,
+      allowNull: true
+    }
   });
 };
