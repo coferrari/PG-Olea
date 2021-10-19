@@ -34,22 +34,22 @@ export default function Recommendend() {
     console.log(users, "aaa");
     const pri = Object.keys(mayor[0]);
     const sec = Object.keys(mayor[1]);
-    const finale =
-      productsFiltersRecommended(pri[0])?.slice(0, 3) +
-      productsFiltersRecommended(sec[0])?.slice(0, 2);
+    const pre1 = productsFiltersRecommended(pri[0])?.slice(0, 3);
+    const pre2 = productsFiltersRecommended(sec[0])?.slice(0, 3);
+    const finale = pre1.concat(pre2);
     setProductsRecommended(finale);
   };
 
   const productsFiltersRecommended = (cat) => {
-    const filt = products.filter((e) => cat === e.categories[0].nameCategory);
-    setProductsRecommended(filt);
+    return products.filter((e) => cat === e.categories[0].nameCategory);
   };
+  console.log(productsRecommended, "aaa");
 
   return (
     <div>
-      {/* {productsRecommended?.map((e) => {
+      {productsRecommended?.map((e) => {
         return <div>{e.name}</div>;
-      })} */}
+      })}
     </div>
   );
 }
