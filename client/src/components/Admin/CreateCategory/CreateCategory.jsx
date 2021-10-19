@@ -6,7 +6,6 @@ const CreateCategory = () => {
   const [show, setShow] = useState(false);
   const [input, setInput] = useState("");
   const handleInputChange = (e) => {
-    console.log(input);
     setInput(e.target.value);
   };
   const handleSubmit = async (e) => {

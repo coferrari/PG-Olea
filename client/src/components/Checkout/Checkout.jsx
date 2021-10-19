@@ -28,10 +28,7 @@ const Checkout = () => {
   const itemsCheckout = useSelector(
     (state) => state.carritoReducer.productsCarrito
   );
-
-  let stores = useSelector((state) =>state.storesReducer.stores)
-  console.log("stores",stores)
-
+  let stores = useSelector((state) => state.storesReducer.stores);
   const [delivery, setDelivery] = useState("");
   const handleSelected = (e) => {
     e.preventDefault();
@@ -53,17 +50,17 @@ const Checkout = () => {
           parseInt(
             curr.price - Math.round(parseInt(curr.price * curr.offer) / 100)
           ) *
-          curr.Carrito_Products.quantity;
+            curr.Carrito_Products.quantity;
       } else if (curr.offer < curr.categories?.[0].offer) {
         result =
           acc +
           parseInt(
             curr.price -
-            Math.round(
-              parseInt(curr.price * curr.categories?.[0].offer) / 100
-            )
+              Math.round(
+                parseInt(curr.price * curr.categories?.[0].offer) / 100
+              )
           ) *
-          curr.Carrito_Products.quantity;
+            curr.Carrito_Products.quantity;
       } else {
         result = acc + parseInt(curr.price) * curr.Carrito_Products.quantity;
       }
@@ -75,17 +72,17 @@ const Checkout = () => {
           parseInt(
             curr.price - Math.round(parseInt(curr.price * curr.offer) / 100)
           ) *
-          curr.quantity;
+            curr.quantity;
       } else if (curr.offer < curr.categories?.[0].offer) {
         result =
           acc +
           parseInt(
             curr.price -
-            Math.round(
-              parseInt(curr.price * curr.categories?.[0].offer) / 100
-            )
+              Math.round(
+                parseInt(curr.price * curr.categories?.[0].offer) / 100
+              )
           ) *
-          curr.quantity;
+            curr.quantity;
       } else {
         result = acc + parseInt(curr.price) * curr.quantity;
       }
@@ -131,7 +128,7 @@ const Checkout = () => {
     });
   };
   const handleRetiroPorLocal = (e) => {
-    e.preventDefault(e)
+    e.preventDefault(e);
     setOrder({
       ...order,
       local: e.target.value,
@@ -271,7 +268,8 @@ const Checkout = () => {
                       </select>
                     </Card.Title>
                     <Card.Text className={style.text}>
-                      Horario : Lunes a Viernes 9:30 -12:30, 17:30-19:30 y Sábado 10-12:30
+                      Horario : Lunes a Viernes 9:30 -12:30, 17:30-19:30 y
+                      Sábado 10-12:30
                     </Card.Text>
                   </div>
                 ) : "" )}

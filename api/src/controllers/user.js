@@ -145,7 +145,6 @@ userFunction.authenticateLogin = async (req, res, next) => {
       return res.json({
         msg: "Su codigo es incorrecto o expiro",
       });
-    console.log(userAdmin);
     const token = jwt.sign(
       {
         name: userAdmin.name,

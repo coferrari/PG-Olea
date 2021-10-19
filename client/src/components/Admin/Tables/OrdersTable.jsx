@@ -57,14 +57,12 @@ function OrdersTable() {
   const handleSearch = async (e) => {
     e.preventDefault();
     const userSearch = await getUserOrder(search);
-    console.log(userSearch);
     if (userSearch.message) {
       swal(userSearch.message);
       return;
     }
     setOrder(userSearch);
   };
-  console.log("id", id);
   return (
     <div>
       {order === undefined ? (
