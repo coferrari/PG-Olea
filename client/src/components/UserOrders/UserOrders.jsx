@@ -24,10 +24,12 @@ const UserOrders = () => {
 
   const handleSet = async (orderId) => {
     await setOrderEntregada(orderId);
-    return swal("Se ha notificado que tu orden fue entregada").then(function () {
-      window.location = "/account";
-    });
-  }
+    return swal("Se ha notificado que tu orden fue entregada").then(
+      function () {
+        window.location = "/account";
+      }
+    );
+  };
 
   return (
     <div>
@@ -40,6 +42,7 @@ const UserOrders = () => {
             <th>Productos</th>
             <th>Fecha</th>
             <th>Detalles</th>
+            <th>Envio</th>
           </tr>
         </thead>
         <tbody>
@@ -70,19 +73,24 @@ const UserOrders = () => {
                     onClick={() => {
                       history.push(`/order/${e.id}`);
                     }}
-                    >
+                  >
                     Ver detalles
                   </Button>
                 </td>
-                    <td>
-                      {e.info !== "retiro" && e.info !== "entregada" && 
-                        <Button
-                        variant="outline-dark"
-                        onClick = {() => handleSet(e.id)}>
-                        Ya me llegó
-                        </Button>
-                      }
-                    </td>
+                <td>
+                  {e.info !== "retiro" && e.info !== "entregada" ? (
+                    <Button
+                      variant="outline-dark"
+                      onClick={() => handleSet(e.id)}
+                    >
+                      Ya me llegó
+                    </Button>
+                  ) : e.info === "entregada" ? (
+                    "Entregada"
+                  ) : (
+                    "Retira por local"
+                  )}
+                </td>
               </tr>
             );
           })}
