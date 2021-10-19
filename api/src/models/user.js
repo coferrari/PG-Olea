@@ -56,9 +56,20 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
-    recommendend: {
-      type: DataTypes.ARRAY(DataTypes.TEXT),
+    almacen: {
+      type: DataTypes.INTEGER,
       allowNull: true,
+      defaultValue: 0,
+    },
+    cosmetica: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: 0,
+    },
+    decoracion: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: 0,
     },
   });
 };

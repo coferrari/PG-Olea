@@ -14,7 +14,7 @@ export const ADD_CATEGORY_PRODUCT = "/api/category/product/addCategories";
 export const DELET_CATEGORY_PRODUCT = "/api/category/product/deleteCategory";
 export const EDIT_STOCK = "/api/product/update/stock";
 export const CREATE_ORDER_URL = "/api/order/createOrder";
-export const GET_ORDER_DETAILS_URL = "/api/order/getOrderDetails"
+export const GET_ORDER_DETAILS_URL = "/api/order/getOrderDetails";
 export const ADD_OFFER_CATEGORY = "/api/category/cat/inOffer";
 export const ADD_OFFER_PRODUCT = "/api/product/update/Offer";
 export const GET_OFFER = "/api/category/offerday/get";
@@ -24,8 +24,7 @@ export const GET_USER_ORDERS = "/api/order/getuserorder";
 export const GET_WISHLIST_URL = "/api/wishlist";
 export const ADD_TO_WISHLIST_URL = "/api/wishlist/add";
 export const REMOVE_FROM_WISHLIST_URL = "/api/wishlist/delete";
-
+export const USER_URL = "/api/user/";
 export const STORES_URL = "/api/stores";
 
 export const ORDER_BY_DATE = "/api/order/date";
-

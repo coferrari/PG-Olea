@@ -313,14 +313,13 @@ userFunction.updateProfile = async (req, res, next) => {
 };
 userFunction.updateRecommendend = async (req, res, next) => {
   const { id } = req.params;
-  const body = req.body;
-  User.update(body, {
-    where: {
-      id,
-    },
-  })
-    .then((update) => {
-      res.send(update);
+  const { nameCategory } = req.body;
+  User.findByPk(id)
+    .then((user) => {
+      const us = user[nameCategory] + 1;
+      user[nameCategory] = us;
+      user.save();
+      res.json({ message: us });
     })
     .catch((error) => next(error));
 };
@@ -328,7 +327,6 @@ userFunction.getByID = (req, res, next) => {
   const { id } = req.params;
   User.findByPk(id)
     .then((result) => {
-      console.log(result.recommendend);
       res.send(result);
     })
     .catch((error) => next(error));
