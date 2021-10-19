@@ -1,4 +1,4 @@
-const { Order, Order_Products, Product, User, Carrito } = require("../db.js");
+const { Order, Order_Products, Product, User, Carrito, Turn } = require("../db.js");
 const Modelo = require("./index.js");
 const {
   getTemplateAproved,
@@ -136,8 +136,6 @@ class OrderModel extends Modelo {
       contactSurname,
     } = req.body;
     try {
-      console.log("entre");
-      console.log(email);
       const ordenCreada = await this.model.create({
         //userUsername: username,
         email,
@@ -162,6 +160,21 @@ class OrderModel extends Modelo {
       }
       const user = await User.findByPk(username);
       await user.addOrder(ordenCreada.id);
+
+      if (req.body.store && req.body.date && req.body.hour) {
+        const turn = await Turn.findOne({
+          where: {
+              store: req.body.store,
+              date: req.body.date,
+              hour: req.body.hour
+            }
+        })
+        ordenCreada.setTurn(turn.dataValues.id);
+        await turn.increment({
+            full: +1
+        })
+        turn.save();
+      }
       res.json(ordenCreada);
     } catch (error) {
       next(error);
