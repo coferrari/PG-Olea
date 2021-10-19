@@ -121,6 +121,9 @@ userFunction.login = async (req, res, next) => {
           adress: emailFind.adress,
           phone: emailFind.phone,
           newsLetters: emailFind.newsLetters,
+          almacen: emailFind.almacen,
+          cosmetica: emailFind.cosmetica,
+          decoracion: emailFind.decoracion,
         },
         process.env.TOKEN_SECRET
       );
@@ -220,6 +223,9 @@ userFunction.googleLogin = async (req, res, next) => {
           picture,
           admin: newUser.admin,
           newsLetter: newUser.newsLetter,
+          almacen: newUser.almacen,
+          cosmetica: newUser.cosmetica,
+          decoracion: newUser.decoracion,
         },
         process.env.TOKEN_SECRET,
         { expiresIn: "10m" }
@@ -236,9 +242,12 @@ userFunction.googleLogin = async (req, res, next) => {
           username: email,
           email: email,
           surname: family_name,
-          picture,
+          picture: user.picture,
           admin: user.admin,
           newsLetter: user.newsLetter,
+          almacen: user.almacen,
+          cosmetica: user.cosmetica,
+          decoracion: user.decoracion,
         },
         process.env.TOKEN_SECRET,
         { expiresIn: "10m" }
