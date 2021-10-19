@@ -1,6 +1,5 @@
 export const CATEGORY_URL = "/api/category/";
 export const GET_PRODUCTS_URL = "/api/product/";
-export const SEARCH_PRODUCTS_URL = "/api/product/searchby/name?name=";
 export const GET_PRODUCT_DETAIL_URL = "/api/product/search/";
 export const ADD_OR_EDIT_CART = "/api/product/add/carrito";
 export const REMOVE_CART = "/api/product/delete/carrito";
@@ -25,4 +24,13 @@ export const GET_USER_ORDERS = "/api/order/getuserorder";
 export const GET_WISHLIST_URL = "/api/wishlist";
 export const ADD_TO_WISHLIST_URL = "/api/wishlist/add";
 export const REMOVE_FROM_WISHLIST_URL = "/api/wishlist/delete";
+
+export const STORES_URL = "/api/stores";
+
 export const ORDER_BY_DATE = "/api/order/date";
+
+export const SET_ORDER_ENTREGADA = "/api/order/setOrderEntregada";
+
+export const GET_DELIVERY_URL = "api/order/filterdelivery";
+export const CHANGE_STATUS_DELIVERY = "api/order/changedelivery";
+

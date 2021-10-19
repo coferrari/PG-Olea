@@ -1,5 +1,14 @@
+.cnt {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .container {
-    padding-bottom: 50px;
+    max-width: 1200px;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
 }

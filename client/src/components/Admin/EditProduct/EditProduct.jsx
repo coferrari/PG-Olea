@@ -1,43 +1,38 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  Button,
-  Form,
-  InputGroup,
-  Row,
-  Col,
-  Container,
-  Image,
-} from "react-bootstrap";
-import { getCategories, getProductDetail } from "../../../redux/actions";
+import { Button, Form, Row, Col, Container, Image } from "react-bootstrap";
+import { getCategories } from "../../../redux/actions";
 import { getToken } from "../../../utils/index";
 import axios from "axios";
 import { editStock } from "../../../stock/index";
 import swal from "sweetalert";
 import { useParams } from "react-router";
-import { GET_PRODUCTS } from "../../../redux/actions/types";
 import {
   GET_PRODUCTS_URL,
   ADD_CATEGORY_PRODUCT,
   DELET_CATEGORY_PRODUCT,
+  GET_PRODUCT_DETAIL_URL,
 } from "../../../consts";
 import style from "./EditProduct.module.css";
 
 export default function EditProduct() {
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.categoryReducer.categories);
-  const product = useSelector(
-    (state) => state.productDetailReducer.productDetail
-  );
+
   const { productid } = useParams();
   const [newProduct, setNewProduct] = useState({});
   const [editCats, setEditCats] = useState(false);
-  const [image, setImage] = useState();
+
   const [verImagenes, setVerImagenes] = useState({ compr: false, click: 0 });
   useEffect(() => {
     dispatch(getCategories());
-    dispatch(getProductDetail(productid));
-  }, [dispatch]);
+    init();
+  }, [dispatch, productid]);
+  const init = () => {
+    axios.get(GET_PRODUCT_DETAIL_URL + productid).then((response) => {
+      setNewProduct(response.data);
+    });
+  };
 
   const handleSubmit = async (e) => {
     {
@@ -52,17 +47,21 @@ export default function EditProduct() {
           authorization: getToken(),
         },
       });
-      return swal("Este producto ha sido modificado");
+
+
+      return swal("Este producto ha sido modificado").then(function () {
+        window.location = "/account";
+      });
 
     }
   };
   const handleEdit = () => {
     if (verImagenes.click === 0) {
-      setNewProduct(product);
       setVerImagenes({ click: 1, compr: !verImagenes.compr });
     } else setVerImagenes({ ...verImagenes, compr: !verImagenes.compr });
   };
   const onChangeInput = (e) => {
+    console.log(newProduct);
     e.preventDefault();
     setNewProduct({
       ...newProduct,
@@ -139,7 +138,7 @@ export default function EditProduct() {
             <Form.Control
               type="nombre"
               name="name"
-              defaultValue={product.name}
+              defaultValue={newProduct.name}
               onChange={(e) => onChangeInput(e)}
             />
           </Form.Group>
@@ -151,7 +150,7 @@ export default function EditProduct() {
               name="price"
               min="0"
               onChange={(e) => onChangeInput(e)}
-              defaultValue={product.price}
+              defaultValue={newProduct.price}
             />
           </Form.Group>
           <Form.Group className="mb-3">
@@ -165,7 +164,7 @@ export default function EditProduct() {
                       handleEdit(
                         setNewProduct({
                           ...newProduct,
-                          image: [...product.image, e.target.value],
+                          image: [...newProduct.image, e.target.value],
                         })
                       )
                     }
@@ -194,8 +193,9 @@ export default function EditProduct() {
                   <Container className={style.containerimg}>
                     {newProduct.image?.map((e) => (
                       <Row key={e}>
-                        <Col xs={6} md={4}>
+                        <Col key={e} xs={6} md={4}>
                           <Button
+                            key={e}
                             onClick={() =>
                               setNewProduct({
                                 ...newProduct,
@@ -205,7 +205,12 @@ export default function EditProduct() {
                           >
                             x
                           </Button>
-                          <Image src={e} rounded className={style.img} />
+                          <Image
+                            key={e}
+                            src={e}
+                            rounded
+                            className={style.img}
+                          />
                         </Col>
                       </Row>
                     ))}
@@ -226,7 +231,7 @@ export default function EditProduct() {
               placeholder="Ingrese Descripcion"
               name="description"
               onChange={(e) => onChangeInput(e)}
-              defaultValue={product.description}
+              defaultValue={newProduct.description}
             />
           </Form.Group>
           <Form.Group className="mb-3">
@@ -257,7 +262,7 @@ export default function EditProduct() {
                   onClick={() => {
                     setNewProduct({
                       ...newProduct,
-                      categoryID: product.categories.map((e) => e.id),
+                      categoryID: newProduct.categories.map((e) => e.id),
                     });
 
                     setEditCats(true);
@@ -276,7 +281,7 @@ export default function EditProduct() {
               name="stock"
               min="0"
               onChange={(e) => onChangeInput(e)}
-              defaultValue={product.stock}
+              defaultValue={newProduct.stock}
             />
           </Form.Group>
           <Button variant="dark" type="submit">

@@ -1,7 +1,6 @@
 import axios from "axios";
 import {
   GET_PRODUCTS,
-  SEARCH_PRODUCTS,
   GET_PRODUCT_DETAIL,
   CATEGORY_FILTER,
   ALL_CATEGORIES,
@@ -13,16 +12,27 @@ import {
   GET_WISHLIST,
   ADD_TO_WISHLIST,
   REMOVE_FROM_WISHLIST,
-  CLEAR_WISHLIST
+
+
+  GET_STORES,
+
+  CLEAR_WISHLIST, 
+  FILTER_PRODUCTS_SEARCH,
+  FILTER_CATEGORIES_SEARCH
+
 } from "./types";
 import {
   GET_PRODUCTS_URL,
-  SEARCH_PRODUCTS_URL,
   GET_PRODUCT_DETAIL_URL,
   CATEGORY_URL,
   PAY_MERCADOPAGO_URL,
+
+
+  STORES_URL,
+
   GET_ORDER_DETAILS_URL,
   GET_WISHLIST_URL
+
 
 } from "../../consts";
 import {getToken} from "../../utils/index";
@@ -38,15 +48,11 @@ export function getProducts() {
   };
 }
 
-export function searchProducts(name) {
-  return function (dispatch) {
-    return axios.get(`${SEARCH_PRODUCTS_URL}${name}`).then((products) => {
-      dispatch({
-        type: SEARCH_PRODUCTS,
-        payload: products.data,
-      });
-    });
-  };
+export function getProductsFiltered(name) {
+  return {
+    type: FILTER_PRODUCTS_SEARCH,
+    payload: name
+  }
 }
 
 export function getProductDetail(id) {
@@ -69,6 +75,13 @@ export function getProductsByCategory(name) {
       });
     });
   };
+}
+
+export function getCategoriesFiltered(name) {
+  return {
+    type: FILTER_CATEGORIES_SEARCH,
+    payload: name
+  }
 }
 
 export function getCategories() {
@@ -95,9 +108,11 @@ export function updateCart(products) {
   };
 }
 
+
 export function checkoutMercadoPago(itemsCheckout,idOrden) {
   return function (dispatch) {
     axios.post(PAY_MERCADOPAGO_URL, [itemsCheckout, idOrden]).then((response) => {
+
       dispatch({
         type: PAY_MERCADOPAGO,
         payload: response.data,
@@ -110,7 +125,10 @@ export function clearDetail() {
   return {
     type: CLEAR_DETAIL,
   };
+
 }
+
+
 
 
 export function getOrderDetails (id) {
@@ -126,9 +144,9 @@ export function getOrderDetails (id) {
 }
 
 export function getWishlist(payload) {
-  console.log(payload)
+
   return function (dispatch) {
-    return axios.get(GET_WISHLIST_URL, {params: payload}).then((wishlist) => {
+    return axios.get(GET_WISHLIST_URL, { params: payload }).then((wishlist) => {
       dispatch({
         type: GET_WISHLIST,
         payload: wishlist.data,
@@ -140,20 +158,31 @@ export function getWishlist(payload) {
 export function addToWishlist(product) {
   return {
     type: ADD_TO_WISHLIST,
-    payload: product
-  }
+    payload: product,
+  };
 }
 
 export function removeFromWishlist(id) {
   return {
     type: REMOVE_FROM_WISHLIST,
-    payload: id
-  }
+    payload: id,
+  };
 }
 
 export function clearWishlist() {
   return {
-    type: CLEAR_WISHLIST
-  }
+
+    type: CLEAR_WISHLIST,
+  };
+}
+export function getStores() {
+  return function (dispatch) {
+    return axios.get(STORES_URL).then((stores) => {
+      dispatch({
+        type: GET_STORES,
+        payload: stores.data,
+      });
+    });
+  };
 }
 

@@ -75,6 +75,7 @@ const getTemplateAdminChangePassword = (name, token) => {
   </div>
 `;
 };
+
 const getTemplateAuthenticationAdmin = (name, code) => {
   return `
   <head>
@@ -87,12 +88,16 @@ const getTemplateAuthenticationAdmin = (name, code) => {
   </div>`;
 };
 
-const getTemplateProductStock = (username, productName, productImage, productId) => {
+const getTemplateProductStock = (
+  username,
+  productName,
+  productImage,
+  productId
+) => {
   return `
   <head>
   <link rel="stylesheet" href="./style.css">
 </head>
-
 <div id="email___content">
   <h2>Hola ${username}</h2>
   <p>Te avisamos que ya tenemos disponible el siguiente producto por el cual estas interesado/a: </p>
@@ -102,7 +107,7 @@ const getTemplateProductStock = (username, productName, productImage, productId)
   target="_blank"
   >${productName}</a>
 </div>`;
-}
+};
 
 const getTemplateAproved = (name, price) => {
   return `
@@ -127,7 +132,7 @@ const getTemplateRejected = (name, price) => {
       <a href="https://somosolea.vercel.app/">Visite nuestra página!</a>
   </div>`;
 };
-const getTemplateProductLetter = (name, fecha, product, offert) => {
+const getTemplateProductLetter = (name, fecha, product, offert, token) => {
   return `
   <head>
       <link rel="stylesheet" href="./style.css">
@@ -137,10 +142,11 @@ const getTemplateProductLetter = (name, fecha, product, offert) => {
       <h2>Hola ${name}</h2>
       <p>El dia ${fecha} el producto ${product} se encontrará con un ${offert}% de descuento!</p>
       <p><a href="https://somosolea.vercel.app/" target="_blank">Visite nuestra página!</a></p>
+      <p><a href="https://somosolea.vercel.app/newsletter/desuscribe/${token}" target="_blank">Anular suscripción</a></p>
   </div>
   `;
 };
-const getTemplateCategoryLetter = (name, fecha, category, offert) => {
+const getTemplateCategoryLetter = (name, fecha, category, offert, token) => {
   return `
   <head>
       <link rel="stylesheet" href="./style.css">
@@ -150,15 +156,14 @@ const getTemplateCategoryLetter = (name, fecha, category, offert) => {
       <h2>Hola ${name}</h2>
       <p>El día ${fecha} toda la categoría ${category} se encontrará con un ${offert}% de descuento!</p>
       <p><a href="https://somosolea.vercel.app/" target="_blank">Visite nuestra página!</a></p>
+      <p><a href="https://somosolea.vercel.app/newsletter/desuscribe/${token}" target="_blank">Anular suscripción</a></p>
   </div>
   `;
 };
 const getTemplateProductLetterWishlist = (name, fecha, product, offer) => {
-  return `
-  <head>
+   return `<head>
       <link rel="stylesheet" href="./style.css">
   </head>
-  
   <div id="email___content">
       <h2>Hola ${name}</h2>
       <p>Vimos que el producto ${product} te interesa!</p>
@@ -167,7 +172,26 @@ const getTemplateProductLetterWishlist = (name, fecha, product, offer) => {
   </div>
   `;
 };
-
+const getTemplateEnvio = (name, price) => {
+  return `
+  <div id="email___content">
+      <h2>Hola ${name}</h2>
+      <p>Queriamos avisarte que tu compra por ${price} se completo exitosamente!</p>
+      <p>Te enviaremos otro email cuando tu orden este en camino!</p>
+      <a href="https://somosolea.vercel.app/">Visite nuestra pagina!</a>
+  </div>`;
+};
+const getTemplateEnCamino = (name) => {
+  return `
+  <head>
+      <link rel="stylesheet" href="./style.css">
+  </head>
+  <div id="email___content">
+      <h2>Hola ${name}</h2>
+      <p>Tu orden esta en camino! Notificanos por la pagina cuando te llego!</p>
+      <a href="https://somosolea.vercel.app/">Visite nuestra pagina!</a>
+  </div>`;
+};
 module.exports = {
   sendEmail,
   getTemplate,
@@ -178,6 +202,8 @@ module.exports = {
   getTemplateAuthenticationAdmin,
   getTemplateProductStock,
   getTemplateRejected,
+  getTemplateEnvio,
+  getTemplateEnCamino,
   getTemplateCategoryLetter,
   getTemplateProductLetterWishlist
 };

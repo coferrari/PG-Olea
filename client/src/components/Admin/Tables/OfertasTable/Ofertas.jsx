@@ -3,6 +3,7 @@ import { getOffer } from "../../../../cart/index";
 import Calendar from "react-calendar";
 import Table from "react-bootstrap/Table";
 import { offerCategory, offerProduct } from "../../../../cart/index";
+import swal from "sweetalert";
 function Ofertas() {
   const [off, setOff] = useState([]);
   const [removed, setRemove] = useState(false);
@@ -26,6 +27,7 @@ function Ofertas() {
     };
     let fecha = offerday;
     offerProduct(res, fecha);
+    
   };
 
   const handleClickCategory = (e, offerday, offer, id) => {
@@ -36,7 +38,6 @@ function Ofertas() {
       offCat: offer,
     };
     let fecha = offerday;
-
     offerCategory(res, fecha);
   };
 

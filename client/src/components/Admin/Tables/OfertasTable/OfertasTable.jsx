@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 import { offerCategory, offerProduct } from "../../../../cart/index";
 import { productOfert, categoryOfert, productWishlist } from "../../../../auth/admin";
 import Ofertas from "./Ofertas";
-
+import swal from "sweetalert";
 function OfertasTable() {
   const [value, onChange] = useState(new Date());
   const [offCat, setOffCat] = useState({
@@ -31,11 +31,11 @@ function OfertasTable() {
   };
 
   const onSubmitProduct = async (e) => {
+    e.preventDefault();
     if (!productOff.idProduct && !productOff.offProduct && !value) {
       return alert("faltan parametros");
     }
     let valor = value.toLocaleDateString();
-    console.log("este es el console log", productOff, valor);
     offerProduct(productOff, valor);
     await productOfert(
       productOff.idProduct,
@@ -46,12 +46,14 @@ function OfertasTable() {
       productOff.idProduct,
       productOff.offProduct,
       valor
-    )
+    );
     setProductOff({
       idProduct: 0,
       offProduct: 0,
     });
+    swal("Se agrego la oferta");
   };
+  
   const onChangeCat = (e) => {
     e.preventDefault();
     setOffCat({
@@ -59,6 +61,7 @@ function OfertasTable() {
       [e.target.name]: e.target.value,
     });
   };
+  
   const onSubmitCat = async (e) => {
     e.preventDefault();
     if (!offCat.idCat && !offCat.offCat && !value) {
@@ -71,6 +74,7 @@ function OfertasTable() {
       idCat: 0,
       offCat: 0,
     });
+    swal("Se agrego la oferta");
   };
 
   return (

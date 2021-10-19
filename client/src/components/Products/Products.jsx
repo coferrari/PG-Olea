@@ -27,32 +27,40 @@ export default function Products({ products }) {
 
   return (
     <div>
-      <div className={styles.center}>
-        <div className={styles.container}>
-          {currentElements?.map((p) => {
-            return (
-              <Product
-                key={p.id}
-                id={p.id}
-                name={p.name}
-                image={p.image[0]}
-                price={p.price}
-                stock={p.stock}
-                categories={p.categories}
-                offer={p.offer}
-                offerday={p.categories?.[0].offerday}
-                categoryOff={p.categories?.[0].offer}
-                productOff={p.offerday}
-              />
-            );
-          })}
+      {products.length ? (
+        <div>
+          <div className={styles.center}>
+            <div className={styles.container}>
+              {currentElements?.map((p) => {
+                return (
+                  <Product
+                    key={p.id}
+                    id={p.id}
+                    name={p.name}
+                    image={p.image[0]}
+                    price={p.price}
+                    stock={p.stock}
+                    categories={p.categories}
+                    offer={p.offer}
+                    offerday={p.categories?.[0].offerday}
+                    categoryOff={p.categories?.[0].offer}
+                    productOff={p.offerday}
+                  />
+                );
+              })}
+            </div>
+          </div>
+          <Pagination
+            elementsPerPage={elementsPerPage}
+            totalElements={products.length}
+            paginate={paginate}
+          />
         </div>
-      </div>
-      <Pagination
-        elementsPerPage={elementsPerPage}
-        totalElements={products.length}
-        paginate={paginate}
-      />
+      ) : (
+        <div className={styles.cards}>
+              <h4 className={styles.nosearch}>no encontramos ningún producto que coincida con tu búsqueda</h4>
+            </div>
+      )}
     </div>
   );
 }

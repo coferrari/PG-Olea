@@ -1,22 +1,35 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { getUserOrder } from "../../order";
+import { getUserOrder, setOrderEntregada } from "../../order";
 import { Table, Button } from "react-bootstrap";
 import { decodeToken } from "../../utils";
+import swal from "sweetalert";
 
 const UserOrders = () => {
   const history = useHistory();
   const [userOrders, setUserOrders] = useState();
   const getOrden = async () => {
     const user = decodeToken();
-    console.log(user);
     const order = await getUserOrder(user.username);
-    setUserOrders(order);
+    if (order.message) {
+      console.log(order.message);
+    } else {
+      setUserOrders(order);
+    }
   };
 
   useEffect(() => {
     getOrden();
   }, []);
+
+  const handleSet = async (orderId) => {
+    await setOrderEntregada(orderId);
+    return swal("Se ha notificado que tu orden fue entregada").then(
+      function () {
+        window.location = "/account";
+      }
+    );
+  };
 
   return (
     <div>
@@ -29,6 +42,7 @@ const UserOrders = () => {
             <th>Productos</th>
             <th>Fecha</th>
             <th>Detalles</th>
+            <th>Envio</th>
           </tr>
         </thead>
         <tbody>
@@ -40,7 +54,7 @@ const UserOrders = () => {
 
                 <td>{e.status.charAt(0).toUpperCase() + e.status.slice(1)}</td>
                 <td>
-                  {e.products.map((n) => {
+                  {e.products?.map((n) => {
                     return (
                       <span>
                         {n.name.charAt(0).toUpperCase() +
@@ -51,7 +65,7 @@ const UserOrders = () => {
                   })}
                 </td>
                 <td>
-                  {e.updatedAt.slice(0, 10).split("-").reverse().join("-")}
+                  {e.updatedAt?.slice(0, 10).split("-").reverse().join("-")}
                 </td>
                 <td>
                   <Button
@@ -62,6 +76,20 @@ const UserOrders = () => {
                   >
                     Ver detalles
                   </Button>
+                </td>
+                <td>
+                  {e.info !== "retiro" && e.info !== "entregada" ? (
+                    <Button
+                      variant="outline-dark"
+                      onClick={() => handleSet(e.id)}
+                    >
+                      Ya me llegó
+                    </Button>
+                  ) : e.info === "entregada" ? (
+                    "Entregada"
+                  ) : (
+                    "Retira por local"
+                  )}
                 </td>
               </tr>
             );
