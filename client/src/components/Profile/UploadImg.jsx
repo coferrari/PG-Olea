@@ -69,7 +69,7 @@ const ChangePerfil = () => {
   }, [token]);
   return (
     <div>
-      <Button variant="primary" onClick={() => setShow(true)}>
+      <Button className={style.buttonEditProfile} variant="dark" onClick={() => setShow(true)}>
         Editar perfil
       </Button>
       <Modal

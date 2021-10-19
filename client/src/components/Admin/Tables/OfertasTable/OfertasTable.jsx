@@ -110,7 +110,7 @@ function OfertasTable() {
               onChange={(e) => onChangeProduct(e)}
             />
             <label>{productOff.offProduct} % de descuento</label>
-            <Button type="submit">Enviar</Button>
+            <Button variant="dark" type="submit">Enviar</Button>
           </form>
         </Tab>
         <Tab eventKey="Categorias" title="Categorias">
@@ -137,7 +137,7 @@ function OfertasTable() {
               onChange={(e) => onChangeCat(e)}
             />
             <label> {offCat.offCat} % de descuento</label>
-            <Button type="submit">Enviar</Button>
+            <Button variant="dark" type="submit">Enviar</Button>
           </form>
         </Tab>
         <Tab eventKey="Ofertas" title="Ofertas">

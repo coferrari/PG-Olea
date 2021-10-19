@@ -40,9 +40,10 @@ const BarraAdmin = () => {
         <Tab eventKey="Añadir producto" title="Añadir producto">
           <CreateProduct />
         </Tab>
-
-        <Tab eventKey="Locales" title="Locales">
-          <Button href="/account/stores">Locales</Button>
+        <Tab  eventKey="Locales" title="Locales">
+          <div className={style.containerbotonMisLocales}>
+          <Button className={style.botonMisLocales} variant="dark" href="/account/stores">Mis locales </Button>
+          </div>
         </Tab>
         <Tab eventKey="Ofertas" title="Ofertas">
           <OfertasTable />

@@ -217,7 +217,7 @@ export default function CreateProduct() {
               defaultValue="0"
             />
           </Form.Group>
-          <Button variant="dark" type="submit">
+          <Button className={style.botonAgregar} variant="dark" type="submit">
             Agregar Producto
           </Button>
         </Form>

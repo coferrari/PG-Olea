@@ -119,7 +119,7 @@ function OrdersTable() {
               <option value="menosReciente">Menos Recientes</option>
             </select>
           </div>
-          <Table striped bordered hover>
+          <Table className={style.ordersTable} striped bordered hover>
             <thead>
               <tr>
                 <th>Id</th>
@@ -128,7 +128,6 @@ function OrdersTable() {
                 <th>Teléfono</th>
                 <th>Precio</th>
                 <th>Estado pago</th>
-                <th>Delivery</th>
                 <th>Estado de orden</th>
                 <th>Fecha</th>
               </tr>
@@ -137,9 +136,11 @@ function OrdersTable() {
               {order?.map((o) => {
                 return (
                   <tr>
+                    <td>
                     <Link to={`/order/${o.id}`}>
-                      <td>{o.id}</td>
+                      {o.id}
                     </Link>
+                    </td>
                     <td>{o.userUsername}</td>
                     <td>{o.contactName + " " + o.contactSurname}</td>
                     <td>{o.phone}</td>
@@ -147,7 +148,6 @@ function OrdersTable() {
                     <td>
                       {o.statusPago === "approved" ? "Aprobado" : "Desaprobado"}
                     </td>
-                    <td>{o.info.split("-").join(" ")}</td>
                     <td>
                       {o.status.charAt(0).toUpperCase() + o.status.slice(1)}
                     </td>
@@ -156,7 +156,7 @@ function OrdersTable() {
                     </td>
                     <td>
                       <Button
-                        variant="primary"
+                        variant="dark"
                         onClick={() => {
                           setShow(true);
                           setId(o.id);

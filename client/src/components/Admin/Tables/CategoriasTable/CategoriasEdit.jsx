@@ -33,7 +33,7 @@ const CategoriasEdit = ({ id, nameCategory }) => {
   };
   return (
     <div>
-      <Button variant="primary" onClick={() => setShow(true)}>
+      <Button variant="dark" onClick={() => setShow(true)}>
         Editar nombre
       </Button>
       <Modal
@@ -64,7 +64,7 @@ const CategoriasEdit = ({ id, nameCategory }) => {
                 onChange={handleInputChange}
               />
             </Form.Group>
-            <Button type="submit">Cambiar</Button>
+            <Button variant="dark" type="submit">Cambiar</Button>
           </Form>
         </Modal.Body>
       </Modal>

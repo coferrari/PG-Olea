@@ -98,11 +98,12 @@ const Checkout = () => {
     email: datosLogin.email,
     price: desc,
     products: itemsCheckout,
+    delivery: delivery,
     address: "",
+    local:"",
     phone: "",
     contactName: "",
     contactSurname: "",
-    delivery: delivery,
   });
   let idOrden = "";
   const handleConfirmOrder = async (e) => {
@@ -133,7 +134,7 @@ const Checkout = () => {
     e.preventDefault(e)
     setOrder({
       ...order,
-      address: e.target.value,
+      local: e.target.value,
     })
   }
 
@@ -255,7 +256,7 @@ const Checkout = () => {
                       />
                     </Form.Group>
                   </div>
-                ) : (
+                ) : (delivery === "Retiro por local" ? (
                   <div className={style.pdn}>
                     <Card.Title className={style.labels}>
                       <label>Local: </label>
@@ -263,7 +264,7 @@ const Checkout = () => {
                         class="form-select"
                         aria-label="Default select example"
                          onChange={(e) => {handleRetiroPorLocal(e)}}
-                      >
+                      > <option>Seleccioná tu local</option>
                         {stores && stores.map((s)=>{
                           return <option value={`${s.address}`}>{s.address}</option>
                         })}
@@ -273,7 +274,7 @@ const Checkout = () => {
                       Horario : Lunes a Viernes 9:30 -12:30, 17:30-19:30 y Sábado 10-12:30
                     </Card.Text>
                   </div>
-                )}
+                ) : "" )}
               </Card.Body>
             </div>
             <Details />
