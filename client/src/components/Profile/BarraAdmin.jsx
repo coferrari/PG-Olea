@@ -8,6 +8,7 @@ import CreateProduct from "../Admin/CreateProduct/CreateProduct";
 import ProfileAdmin from "../Profile/ProfileAdmin";
 import OrdersTable from "../Admin/Tables/OrdersTable";
 import Stores from "../Admin/Stores/Stores";
+import CreateTurn from "../Admin/CreateTurn/CreateTurn";
 import { Redirect } from "react-router";
 import { Button } from "react-bootstrap";
 
@@ -45,7 +46,10 @@ const BarraAdmin = () => {
         </Tab>
         <Tab eventKey="Ofertas" title="Ofertas">
           <OfertasTable />
-       </Tab>
+        </Tab>
+        <Tab eventKey="Turnos" title="Turnos">
+          <CreateTurn />
+        </Tab>
       </Tabs>
     </div>
   );
