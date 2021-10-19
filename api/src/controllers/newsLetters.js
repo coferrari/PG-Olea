@@ -22,7 +22,6 @@ newsLetter.getAll = async (req, res, next) => {
 };
 newsLetter.sendLetterProduct = async (req, res, next) => {
   const { product, offert, fecha } = req.body;
-  console.log(req.body);
   try {
     const allUsers = await User.findAll({
       where: {
@@ -102,14 +101,11 @@ newsLetter.suscribeNewsLetter = async (req, res, next) => {
 
 newsLetter.sendOffersToWishlistUsers = async (req, res, next) => {
   const { product, offer, fecha } = req.body;
-  console.log("este es el body", req.body);
   try {
     const producto = await Product.findByPk(product);
-    console.log("este es el producto", producto);
     const wishlists = await Wishlist.findAll({
       include: Product,
     });
-    console.log("todas las wishlist", wishlists);
     const wishlistFiltered = wishlists.filter((w) =>
       w.products.find((p) => p.id == product)
     );
@@ -121,7 +117,6 @@ newsLetter.sendOffersToWishlistUsers = async (req, res, next) => {
           newsLetter: true,
         },
       });
-      console.log("usuario suscripto", userSuscribe);
       if (userSuscribe) {
         const template = getTemplateProductLetterWishlist(
           userSuscribe.name,

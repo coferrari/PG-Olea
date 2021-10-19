@@ -89,7 +89,6 @@ export const updateCategory = async (id, nameCategory) => {
 };
 
 export const changeStatusOrder = async (id, status) => {
-  console.log("change", id, status);
   const res = await axios.put(
     `/api/order/setorder/status/${id}`,
     {
@@ -125,7 +124,7 @@ export const productWishlist = async (product, offer, date) => {
     {
       product,
       offer,
-      fecha: date
+      fecha: date,
     },
     {
       headers: {
@@ -134,7 +133,7 @@ export const productWishlist = async (product, offer, date) => {
     }
   );
   return resWishlist.data;
-}
+};
 export const categoryOfert = async (category, offert, date) => {
   const res = await axios.post(
     `/api/news/ofertcategory`,
