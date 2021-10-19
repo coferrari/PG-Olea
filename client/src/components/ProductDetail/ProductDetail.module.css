@@ -62,7 +62,6 @@
   font-size: 12px;
   letter-spacing: 1px;
   margin: 0;
-
 }
 
 .fav {
@@ -82,7 +81,23 @@
 .removefav {
   color: red;
   font-size: 25px;
+}
 
+.recommendend {
+  margin-top: 2rem;
+  padding: 6rem;
+  border: 0.2px solid rgb(226, 222, 222);
+}
+
+.recommendend h3 {
+  display: flex;
+
+  justify-content: center;
+  font-family: "Montserrat", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 21px;
+  padding-top: 20px;
 }
 
 @media only screen and (min-width: 1024px) {

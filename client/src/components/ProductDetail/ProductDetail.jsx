@@ -425,7 +425,8 @@ export function ProductDetail() {
           </div>
         )}
       </Modal>
-      <div>
+      <div className={styles.recommendend}>
+        <h3>Podría interesarte</h3>
         <Recommendend />
       </div>
     </div>
