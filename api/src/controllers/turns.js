@@ -54,20 +54,17 @@ class TurnModel extends Modelo {
   };
   getAvailableTurns = async (req, res, next) => {
     try {
-      const actualDate = new Date().toJSON().slice(0,10);
       let turns = await this.model.findAll();
-      turns = turns.filter(t => {
-        const date = t.date.split(" ");
-        const formatDate = new Date(date).toJSON().slice(0,10);
-        if (t.full < 10 && formatDate >= actualDate){
+      turns = turns.filter((t) => {
+        if (t.full < 10) {
           return t;
         }
-      })
+      });
       res.send(turns);
-    } catch(error){
-      next(error)
+    } catch (error) {
+      next(error);
     }
-  }
+  };
 
   getTurnByUser = async (req, res, next) => {
     const { username } = req.params;
