@@ -53,6 +53,8 @@ const adminMockUp = async () => {
       isAdmin: true,
       email: "oleaproyecto@gmail.com",
       password: hashedPasswordB,
+      picture:
+        "https://instagram.fcsz2-1.fna.fbcdn.net/v/t51.2885-15/e35/130216063_425321335307878_1007044463125293714_n.jpg?_nc_ht=instagram.fcsz2-1.fna.fbcdn.net&_nc_cat=110&_nc_ohc=oLltUDV-viQAX8Pcw92&edm=AP_V10EBAAAA&ccb=7-4&oh=c4e7c432db068d2eceba80b35027a39b&oe=61771227&_nc_sid=4f375e",
       admin: true,
     });
     const wishlistolea = await Wishlist.create({});
