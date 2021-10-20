@@ -1,4 +1,4 @@
-const server = require("./src/app.js");
+const app = require("./src/app.js");
 const { conn } = require("./src/db.js");
 const marcas = require("./json/marcas.js");
 const categoryMockUp = require("./json/categorias");
@@ -21,7 +21,7 @@ conn
     await reviewsMockUp();
     // await ordersMockUp();
     await storesMockUp();
-    await server.listen(process.env.PORT || 3001, () => {
+    await app.listen(process.env.PORT || 3001, () => {
       console.log("%s listening at 3001"); // eslint-disable-line no-console
     });
   })

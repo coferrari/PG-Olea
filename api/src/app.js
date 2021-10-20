@@ -9,11 +9,20 @@ const setHeaders = require("./utils/middlewares/setHeaders");
 require("./db.js");
 
 const server = express();
+server.use(cors());
+server.use(express.json());
+const http = require("http");
+const app = http.createServer(server);
+const io = require("socket.io")(app, {
+  cors: {
+    origin: "*",
+  },
+});
+const socketEvents = require('./socket/socket');
+socketEvents(io);
 
 server.name = "API";
 
-server.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
-server.use(bodyParser.json({ limit: "50mb" }));
 server.use(cookieParser());
 server.use(morgan("dev"));
 server.use(setHeaders);
@@ -23,4 +32,4 @@ server.use("/api", routes);
 // Error catching endware.
 server.use(errorHandler);
 
-module.exports = server;
+module.exports = app;

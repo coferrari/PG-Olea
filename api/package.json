@@ -34,6 +34,7 @@
     "passport-google-oauth": "^2.0.0",
     "pg": "^8.5.1",
     "sequelize": "^6.6.5",
+    "socket.io": "^4.3.1",
     "twilio": "^3.69.0"
   },
   "devDependencies": {
