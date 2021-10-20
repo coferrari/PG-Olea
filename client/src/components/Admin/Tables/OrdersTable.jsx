@@ -117,7 +117,7 @@ function OrdersTable() {
               <option value="menosReciente">Menos Recientes</option>
             </select>
           </div>
-          <Table className={style.ordersTable} striped bordered hover>
+          <Table className="container" striped bordered hover>
             <thead>
               <tr>
                 <th>Id</th>
@@ -128,6 +128,7 @@ function OrdersTable() {
                 <th>Estado pago</th>
                 <th>Estado de orden</th>
                 <th>Fecha</th>
+                <th>Editar</th>
               </tr>
             </thead>
             <tbody>
