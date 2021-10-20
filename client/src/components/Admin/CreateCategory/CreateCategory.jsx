@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import { Button, Form, Modal } from "react-bootstrap";
 import { createCategory } from "../../../auth/admin";
+import style from "./CreateCategory.module.css"
 const CreateCategory = () => {
   const [show, setShow] = useState(false);
   const [input, setInput] = useState("");
@@ -19,8 +19,8 @@ const CreateCategory = () => {
     }
   };
   return (
-    <div>
-      <Button variant="primary" onClick={() => setShow(true)}>
+    <div className={style.buttonCrearCategoria}>
+      <Button  variant="dark" onClick={() => setShow(true)}>
         Crear una categoria
       </Button>
       <Modal

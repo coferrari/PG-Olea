@@ -29,7 +29,7 @@ function EnviosAdmin() {
 
   return (
     <div>
-      <Table striped bordered hover>
+      <Table className="container" striped bordered hover>
         <thead>
           <tr>
             <th>Id</th>

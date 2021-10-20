@@ -95,11 +95,12 @@ const Checkout = () => {
     email: datosLogin.email,
     price: desc,
     products: itemsCheckout,
+    delivery: delivery,
     address: "",
+    local:"",
     phone: "",
     contactName: "",
     contactSurname: "",
-    delivery: delivery,
   });
   let idOrden = "";
   const handleConfirmOrder = async (e) => {
@@ -130,9 +131,9 @@ const Checkout = () => {
     e.preventDefault(e);
     setOrder({
       ...order,
-      address: e.target.value,
-    });
-  };
+      local: e.target.value,
+    })
+  }
 
   return (
     <div className={style.cnt}>
@@ -252,25 +253,18 @@ const Checkout = () => {
                       />
                     </Form.Group>
                   </div>
-                ) : (
+                ) : (delivery === "Retiro por local" ? (
                   <div className={style.pdn}>
                     <Card.Title className={style.labels}>
                       <label>Local: </label>
                       <select
                         class="form-select"
                         aria-label="Default select example"
-                        onChange={(e) => {
-                          handleRetiroPorLocal(e);
-                        }}
-                      >
-                        {stores &&
-                          stores.map((s) => {
-                            return (
-                              <option value={`${s.address}`}>
-                                {s.address}
-                              </option>
-                            );
-                          })}
+                         onChange={(e) => {handleRetiroPorLocal(e)}}
+                      > <option>Seleccioná tu local</option>
+                        {stores && stores.map((s)=>{
+                          return <option value={`${s.address}`}>{s.address}</option>
+                        })}
                       </select>
                     </Card.Title>
                     <Card.Text className={style.text}>
@@ -278,7 +272,7 @@ const Checkout = () => {
                       Sábado 10-12:30
                     </Card.Text>
                   </div>
-                )}
+                ) : "" )}
               </Card.Body>
             </div>
             <Details />
