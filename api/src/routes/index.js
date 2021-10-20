@@ -16,6 +16,7 @@ const reviewsRoutes = require("./reviews");
 const storesRoutes = require("./stores");
 const wishlistRouter = require("./wishlist");
 const newsLettersRoutes = require("./newsLetters");
+const turnRoutes = require ("./turn");
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
@@ -32,6 +33,7 @@ router.use("/stores", storesRoutes);
 
 router.use("/wishlist", wishlistRouter);
 router.use("/news", newsLettersRoutes);
+router.use("/turn", turnRoutes);
 
 
 

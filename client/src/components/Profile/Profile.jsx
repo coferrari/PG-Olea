@@ -4,6 +4,7 @@ import { getToken, decodeToken } from "../../utils";
 import ChangePerfil from "./UploadImg";
 import { BsPersonSquare } from "react-icons/bs";
 import UserOrders from "../UserOrders/UserOrders";
+import { Button } from "react-bootstrap";
 
 const Profile = () => {
   const [usuario, setUsuario] = useState();
@@ -48,6 +49,11 @@ const Profile = () => {
           </div>
           <div className={style.userOrder}>
             <UserOrders />
+          </div>
+          <div>
+            <Button variant="dark" href="/account/turns">
+              Ver mis turnos
+            </Button>
           </div>
         </div>
       ) : (
