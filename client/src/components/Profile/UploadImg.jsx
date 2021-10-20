@@ -58,7 +58,6 @@ const ChangePerfil = () => {
       : (user.adress = usuario.adress);
     await updateProfile(user);
   };
-  console.log(urlImage);
   const sendUpdates = async (e) => {
     e.preventDefault();
     await upload();
