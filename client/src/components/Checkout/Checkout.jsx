@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Details from "./CheckoutDetail/CheckoutDetail";
 import { decodeToken, isAuthorized } from "../../utils";
 import { Button } from "react-bootstrap";
@@ -7,10 +7,11 @@ import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 import { useHistory } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { checkoutMercadoPago } from "../../redux/actions";
+import { getAvailableTurns } from "../../turns/index";
 import { createOrder } from "../../order";
 import style from "./Checkout.module.css";
 import { format } from "../../utils/index";
-import { Card, ListGroup, Form } from "react-bootstrap";
+import { Card, ListGroup, Form, Dropdown } from "react-bootstrap";
 import swal from "sweetalert";
 
 const Checkout = () => {
@@ -20,15 +21,40 @@ const Checkout = () => {
   const dispatch = useDispatch();
 
   let linkDePago = useSelector((state) => state.carritoReducer.linkPago);
-  console.log("link", linkDePago);
   const itemsCheckout = useSelector(
     (state) => state.carritoReducer.productsCarrito
   );
 
+  const [turnos, setTurnos] = useState();
+  const [selectedTurn, setSelectedTurn] = useState();
   const [delivery, setDelivery] = useState("");
   const handleSelected = (e) => {
     e.preventDefault();
     setDelivery(e.target.value);
+  };
+
+  const getTurns = async () => {
+    const turns = await getAvailableTurns();
+    setTurnos(turns);
+  };
+
+  useEffect(() => {
+    getTurns();
+  }, []);
+
+  const handleTurn = (e, store, date, hour) => {
+    e.preventDefault();
+    setOrder({
+      ...order,
+      store,
+      date,
+      hour,
+    });
+    setSelectedTurn(e.target.title);
+  };
+
+  const onDeleteX = () => {
+    setSelectedTurn(null);
   };
 
   const desc = itemsCheckout?.reduce((acc, curr) => {
@@ -89,6 +115,9 @@ const Checkout = () => {
     phone: "",
     contactName: "",
     contactSurname: "",
+    store: null,
+    date: null,
+    hour: null,
   });
 
   let idOrden = "";
@@ -239,10 +268,48 @@ const Checkout = () => {
                   <div className={style.pdn}>
                     <Card.Title className={style.labels}>Retiro</Card.Title>
                     <Card.Text className={style.text}>
-                      Pasá a retirar tu pedido por Garibaldi 283, Coronel Suárez
+                      <div>
+                        {!turnos?.[0] ? (
+                          <div>No hay turnos disponibles</div>
+                        ) : (
+                          <Dropdown>
+                            <Dropdown.Toggle variant="dark" id="dropdown-basic">
+                              Elegí tu turno
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu>
+                              {turnos?.map((t) => {
+                                return (
+                                  t?.full < 10 && (
+                                    <Dropdown.Item
+                                      align={"center"}
+                                      title={`el ${t?.date} a las ${t?.hour} en ${t?.store}`}
+                                      onClick={(e) => {
+                                        handleTurn(e, t.store, t.date, t.hour);
+                                      }}
+                                    >
+                                      el {t?.date} a las {t?.hour} en {t?.store}
+                                    </Dropdown.Item>
+                                  )
+                                );
+                              })}
+                            </Dropdown.Menu>
+                          </Dropdown>
+                        )}
+                      </div>
                       <br />
-                      Horario : Lu a Vi 9: 30-12: 30, 17: 30-19: 30 y Sa 10-12:
-                      30
+                      {selectedTurn && (
+                        <div>
+                          <span>{selectedTurn}</span>
+                          <Button
+                            variant="dark"
+                            onClick={() => {
+                              onDeleteX();
+                            }}
+                          >
+                            x
+                          </Button>
+                        </div>
+                      )}
                     </Card.Text>
                   </div>
                 )}

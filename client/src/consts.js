@@ -24,9 +24,11 @@ export const GET_USER_ORDERS = "/api/order/getuserorder";
 export const GET_WISHLIST_URL = "/api/wishlist";
 export const ADD_TO_WISHLIST_URL = "/api/wishlist/add";
 export const REMOVE_FROM_WISHLIST_URL = "/api/wishlist/delete";
-
 export const STORES_URL = "/api/stores";
-
 export const ORDER_BY_DATE = "/api/order/date";
-
 export const CREATE_TURN = "/api/turn/";
+export const GET_TURN_BY_USER = "/api/turn/getTurnByUser";
+export const CANCEL_TURN = "/api/turn/cancelturn";
+export const GET_TURNS = "/api/turn/getAll";
+export const DELETE_TURN = "/api/turn/deleteturn";
+export const GET_AVAILABLE_TURNS = "/api/turn/getAvailableTurns";

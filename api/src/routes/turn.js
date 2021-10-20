@@ -9,8 +9,9 @@ const router = Router();
 // Ejemplo: router.use('/auth', authRouter);
 router.get("/getAll", turnControllers.getAll);
 router.post("/", turnControllers.create);
-router.get("/getTurnByStore", turnControllers.getByStore);
-router.post("/assignTurn", turnControllers.assignTurn);
-router.delete("/cancelTurn", turnControllers.cancelTurn);
+router.delete("/deleteturn/:id", turnControllers.delete);
+router.get("/getTurnByUser/:username", turnControllers.getTurnByUser);
+router.delete("/cancelturn", turnControllers.cancelTurn);
+router.get("/getAvailableTurns" , turnControllers.getAvailableTurns);
 
 module.exports = router;
