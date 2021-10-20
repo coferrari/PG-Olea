@@ -7,6 +7,7 @@ const { adminMockUp, userMockUp } = require("./json/admins");
 const ordersMockUp = require("./json/ordernes");
 const reviewsMockUp = require("./json/review");
 const product = require("./src/models/product.js");
+const storesMockUp = require("./json/stores.js");
 const { DB_URL } = process.env;
 
 conn
@@ -19,6 +20,7 @@ conn
     await productMockUp();
     await reviewsMockUp();
     // await ordersMockUp();
+    await storesMockUp();
     await server.listen(process.env.PORT || 3001, () => {
       console.log("%s listening at 3001"); // eslint-disable-line no-console
     });

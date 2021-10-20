@@ -51,6 +51,10 @@ module.exports = (sequelize) => {
     newsLetter: {
       type: DataTypes.BOOLEAN,
       allowNull: true,
+
+
+      defaultValue: true
+
     },
     codeVerification: {
       type: DataTypes.INTEGER,

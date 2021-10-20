@@ -174,7 +174,7 @@ export default function UsersTable() {
                   <td> Si</td>
                 ) : (
                   <td>
-                    <Button onClick={() => generateAdmin(user.username)}>
+                    <Button variant="dark" onClick={() => generateAdmin(user.username)}>
                       Dar admin
                     </Button>
                   </td>
@@ -184,6 +184,7 @@ export default function UsersTable() {
                 ) : (
                   <td>
                     <Button
+                    variant="dark"
                       onClick={() => {
                         changePass(user.email);
                       }}
@@ -197,6 +198,7 @@ export default function UsersTable() {
                 ) : (
                   <td>
                     <Button
+                      variant="dark"
                       onClick={() => {
                         removeUser(user.username);
                       }}

@@ -1,7 +1,11 @@
 #mapid {
   height: 180px;
 }
+.btn {
+  text-align: center;
+  padding-top: 10%;
+}
 .map {
   height: 180px;
-  width: 180px;
+  width: 210px;
 }

@@ -46,7 +46,7 @@ const Profile = () => {
           <div>
             <ChangePerfil />
           </div>
-          <div>
+          <div className={style.userOrder}>
             <UserOrders />
           </div>
         </div>

@@ -38,21 +38,20 @@ export default function EditProduct() {
     {
       console.log("new product", newProduct);
       e.preventDefault();
-      newProduct.stock && await editStock({
+      newProduct.stock &&
+        (await editStock({
           stock: parseInt(newProduct.stock),
-          productID: parseInt(productid)
-        })
+          productID: parseInt(productid),
+        }));
       await axios.put(`${GET_PRODUCTS_URL}${productid}`, newProduct, {
         headers: {
           authorization: getToken(),
         },
       });
 
-
       return swal("Este producto ha sido modificado").then(function () {
         window.location = "/account";
       });
-
     }
   };
   const handleEdit = () => {
@@ -61,7 +60,6 @@ export default function EditProduct() {
     } else setVerImagenes({ ...verImagenes, compr: !verImagenes.compr });
   };
   const onChangeInput = (e) => {
-    console.log(newProduct);
     e.preventDefault();
     setNewProduct({
       ...newProduct,

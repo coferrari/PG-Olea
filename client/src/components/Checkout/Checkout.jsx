@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Details from "./CheckoutDetail/CheckoutDetail";
 import { decodeToken, isAuthorized } from "../../utils";
 import { Button } from "react-bootstrap";
@@ -12,6 +12,7 @@ import style from "./Checkout.module.css";
 import { format } from "../../utils/index";
 import { Card, ListGroup, Form } from "react-bootstrap";
 import swal from "sweetalert";
+import { getStores } from "../../redux/actions";
 
 const Checkout = () => {
   const history = useHistory();
@@ -19,15 +20,24 @@ const Checkout = () => {
   const datosLogin = decodeToken();
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(getStores());
+  }, [dispatch]);
+
   let linkDePago = useSelector((state) => state.carritoReducer.linkPago);
-  console.log("link", linkDePago);
   const itemsCheckout = useSelector(
     (state) => state.carritoReducer.productsCarrito
   );
-
+  let stores = useSelector((state) => state.storesReducer.stores);
   const [delivery, setDelivery] = useState("");
   const handleSelected = (e) => {
     e.preventDefault();
+    setOrder((prevState) => {
+      return {
+        ...prevState,
+        delivery: e.target.value,
+      };
+    });
     setDelivery(e.target.value);
   };
 
@@ -85,12 +95,13 @@ const Checkout = () => {
     email: datosLogin.email,
     price: desc,
     products: itemsCheckout,
-    address: delivery,
+    delivery: delivery,
+    address: "",
+    local:"",
     phone: "",
     contactName: "",
     contactSurname: "",
   });
-
   let idOrden = "";
   const handleConfirmOrder = async (e) => {
     e.preventDefault();
@@ -103,10 +114,10 @@ const Checkout = () => {
       swal("Completá la dirección de envío");
     } else if (delivery === "Envío" && order.address) {
       idOrden = await createOrder(order);
-      return dispatch(checkoutMercadoPago(itemsCheckout, idOrden));
+      return dispatch(checkoutMercadoPago([order], idOrden));
     } else if (delivery === "Retiro por local") {
       idOrden = await createOrder(order);
-      return dispatch(checkoutMercadoPago(itemsCheckout, idOrden));
+      return dispatch(checkoutMercadoPago([order], idOrden));
     }
   };
   const handleChange = (e) => {
@@ -116,6 +127,13 @@ const Checkout = () => {
       [e.target.name]: e.target.value,
     });
   };
+  const handleRetiroPorLocal = (e) => {
+    e.preventDefault(e);
+    setOrder({
+      ...order,
+      local: e.target.value,
+    })
+  }
 
   return (
     <div className={style.cnt}>
@@ -235,17 +253,26 @@ const Checkout = () => {
                       />
                     </Form.Group>
                   </div>
-                ) : (
+                ) : (delivery === "Retiro por local" ? (
                   <div className={style.pdn}>
-                    <Card.Title className={style.labels}>Retiro</Card.Title>
+                    <Card.Title className={style.labels}>
+                      <label>Local: </label>
+                      <select
+                        class="form-select"
+                        aria-label="Default select example"
+                         onChange={(e) => {handleRetiroPorLocal(e)}}
+                      > <option>Seleccioná tu local</option>
+                        {stores && stores.map((s)=>{
+                          return <option value={`${s.address}`}>{s.address}</option>
+                        })}
+                      </select>
+                    </Card.Title>
                     <Card.Text className={style.text}>
-                      Pasá a retirar tu pedido por Garibaldi 283, Coronel Suárez
-                      <br />
-                      Horario : Lu a Vi 9: 30-12: 30, 17: 30-19: 30 y Sa 10-12:
-                      30
+                      Horario : Lunes a Viernes 9:30 -12:30, 17:30-19:30 y
+                      Sábado 10-12:30
                     </Card.Text>
                   </div>
-                )}
+                ) : "" )}
               </Card.Body>
             </div>
             <Details />
