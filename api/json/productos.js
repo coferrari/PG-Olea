@@ -193,13 +193,13 @@ const productMockUp = async () => {
     });
     p12.addCategory(1);
     var p13 = await Product.create({
-      name: "Crema facial HYDRA ZEN",
-      price: "3000",
-      stock: 10,
+      name: "Esponja de Baño",
+      price: "790",
+      stock: 4,
       categoryID: 2,
-      image: ["https://i1.perfumesclub.com/grande/114749.jpg"],
+      image: ["https://i1.wp.com/wholegreen.com.ar/wp-content/uploads/2020/12/CEPIvirginia800x800.png?resize=600%2C600&ssl=1"],
       description:
-        "Gracias a una inédita tecnología, Hydra Zen Neurocalm aporta una hidratación intensa, inmediata, continua y calma las pieles sensibles. Una textura gourmand aceite en agua que se funde en contacto con la piel. Está hidratada con intensidad y calmada durante más tiempo, más suave, lisa y luminosa.",
+        "Esponja corporal de mango largo, hecho de bambú y esponja de origen vegetal. Para hacerte sentir la mejor sensación mientras eliminas impurezas y células muertas de la piel. Masajea, exfolia y limpia mejorando la elasticidad y firmeza de tu piel notablemente.",
     });
     p13.addCategory(2);
     var p14 = await Product.create({
@@ -235,9 +235,135 @@ const productMockUp = async () => {
       stock: 10,
     });
     p16.addCategory(2);
+    var p17 = await Product.create({
+      name: "Muzzalmendra",
+      description:
+        "Queso alternativo a base de almendra Felices las vacas. El preferido por todos.INGREDIENTES Agua, almendras, aceite de coco, fécula de mandioca, arroz, levadura, especias, sal, ARO: mozzarella. CONTIENE ALMENDRAS. PUEDE CONTENER CASTAÑAS DE CAJÚ Y DERIVADOS DE SOJA",
+      image: [
+        "https://d3ugyf2ht6aenh.cloudfront.net/stores/859/431/products/ms_muzzalmendras1-660b50ef8d95f8e65116263723477242-640-0.jpg",
+        "https://d3ugyf2ht6aenh.cloudfront.net/stores/859/431/products/img_20681-5ad03297d546ee728916263743981925-640-0.jpg",
+        "https://d3ugyf2ht6aenh.cloudfront.net/stores/859/431/products/img_20641-a81569d12dd02ea9e216263743974815-480-0.jpg",
+        "https://feliceslasvacas.com/wp-content/uploads/2021/07/21-04-27_Muzzalmendra_500_ORIGINAL.jpg",
+      ],
+      price: "498",
+      stock: 21,
+    });
+    p17.addCategory(1);
+    var p18 = await Product.create({
+      name: "Queso Cremoso 500gr Felices Las Vacas",
+      description:
+        "Queso alternativo a base de almendra Felices las vacas. El preferido por todos.INGREDIENTES Agua, almendras, aceite de coco, fécula de mandioca, arroz, levadura, especias, sal, ARO: crema. CONTIENE ALMENDRAS. PUEDE CONTENER CASTAÑAS DE CAJÚ Y DERIVADOS DE SOJA",
+      image: [
+        "https://d3ugyf2ht6aenh.cloudfront.net/stores/859/431/products/whatsapp-image-2021-06-22-at-10-32-45-am1-4447eebda1113b8ca516243691423139-640-0.jpeg",
+        "https://d3ugyf2ht6aenh.cloudfront.net/stores/859/431/products/img_21791-795c9793626856dd2516263743691623-480-0.jpg",
+        "https://d3ugyf2ht6aenh.cloudfront.net/stores/859/431/products/img_21711-68b4ac4c7b1b82358f16263743690839-480-0.jpg",
+        "https://feliceslasvacas.com/wp-content/uploads/2021/07/tabla-2.jpg",
+      ],
+      price: "498",
+      stock: 12,
+    });
+    p18.addCategory(1);
+    var p19 = await Product.create({
+      name: "BEL LAB SKIN UP TÓNICO FACIAL BIFÁSICO LIMPIADOR X 120ML",
+      description:
+        "Potente tónico desarrollado para otorgarle una limpieza profunda a la piel, ideal para pieles acnéicas, con tendencia a grasa debido a su alto poder astringente. Posee propiedades desinfectantes, desinflamatorias, analgésicas y cicatrizantes.",
+      image: [
+        "https://www.farmacialeloir.com.ar/img/articulos/bel_lab_skin_up_tonico_facial_bifasico_limpiador_2_imagen1.jpg",
+      ],
+      price: "1185",
+      stock: 20,
+    });
+    p19.addCategory(2);
+    var p20 = await Product.create({
+      name: "Cepillo de Dientes de Bambú Hawai – Whole Green",
+      description:
+        "97 % biodegradable, 3 % reciclable. Misma vida útil que los cepillos de plástico. Diseño estético con mango y cerda de color (Blanco, verde agua, celeste claro, violeta y naranja). Diferentes tipos de dureza de cerdas para que el cepillo se adapte adecuadamente a cada persona(Sueva, Medio y Duro).",
+      image: [
+        "https://i2.wp.com/wholegreen.com.ar/wp-content/uploads/2020/05/1200x1200_0005__DSC5653.jpg?resize=600%2C600&ssl=1",
+      ],
+      price: "315",
+      stock: 8,
+    });
+    p20.addCategory(2);
+    var p21 = await Product.create({
+      name: "Beepure Mantequilla de Mani",
+      description:
+        "Mantequilla de maní 100% maní SIN AZÚCAR. Seleccionamos el mejor maní cordobés para preparar la mantequilla de maní BEEPURE. Está buenísima para untar en tostadas, para combinar con granolas, frutas y preparaciones reposteras. Certificación SIN TACC.",
+      image: [
+        "https://d3ugyf2ht6aenh.cloudfront.net/stores/001/040/363/products/beepure-mantequilla-de-mani-terminado1-3be2ab5336dfa8ca5815970928574162-640-0.png",
+      ],
+      price: "315",
+      stock: 18,
+    });
+    p21.addCategory(1);
+    var p22 = await Product.create({
+      name: "LECHE DE ALMENDRAS sabor CHOCOLATE",
+      price: "305",
+      newItem: false,
+      image: [
+        "https://cocoonfoods.com.ar/wp-content/uploads/2019/06/choco.png",
+        "https://cocoonfoods.com.ar/wp-content/uploads/2020/10/tchocolate-600x600-1.jpg",
+      ],
+      stock: 10,
+      description:
+        "Disfrutá del mejor sabor a chocolate intenso en nuestra chocolatada de almendras. Un sabor equilibrado y liviano para los amantes de lo dulce, y sin culpa! Ingredientes: Agua, azúcar, pasta de almendras, cacao en polvo, carbonato de calcio, sal, complejo vitamínico (Vitaminas A, D2, 3, riboflavina, B12), EST: Goma xantana (INS 415), goma gellan (INS 418), EMU: Lecitina de girasol (INS 322).",
+      categoryID: 1,
+      rating: 4,
+      brand: 5,
+    });
+    p22.addCategory(1);
+    var p23 = await Product.create({
+      name: "LECHE DE ALMENDRAS sabor original",
+      price: "305",
+      newItem: false,
+      image: [
+        "https://cocoonfoods.com.ar/wp-content/uploads/2019/06/originall.png",
+        "https://cocoonfoods.com.ar/wp-content/uploads/2020/09/toriginal-600x600-1.jpg",
+      ],
+      stock: 0,
+      description:
+        "100% natural, de extractos vegetales, nuestra bebida Original es la alternativa saludable y liviana para agregarle a tu café o disfrutarla sola, ¡tomala bien fría! Ingredientes: Agua, pasta de almendras, azúcar, carbonato de calcio, sal, complejo vitamínico (Vitaminas A, D2, E, riboflavina, B12), EST: Goma xantana (INS 415), goma gellan (INS 418), EMU: Lecitina de girasol (INS 322).",
+      categoryID: 1,
+      rating: 4,
+      brand: 5,
+    });
+    p23.addCategory(1);
+    var p24 = await Product.create({
+      name: "LECHE DE ALMENDRAS SIN AZÚCAR sabor original",
+      price: "305",
+      newItem: false,
+      image: [
+        "https://cocoonfoods.com.ar/wp-content/uploads/2019/06/sinaz.png",
+        "https://cocoonfoods.com.ar/wp-content/uploads/2020/10/tsinazucar-600x600-1.jpg",
+      ],
+      stock: 5,
+      description:
+        "Bebida de almendras con verdadero sabor a almendras. Sin azúcar, sin saborizantes, sin aditivos artificiales. ¡Naturalmente rica! Ingredientes: Agua, pasta de almendras, carbonato de calcio, sal, complejo vitamínico (Vitaminas A, D2, E, riboflavina, B12), EST: Goma xantana (INS 415), goma gellan (INS 418), aromatizante, EMU: Lecitina de girasol (INS 322).",
+      categoryID: 1,
+      rating: 4,
+      brand: 5,
+    });
+    p24.addCategory(1);
+    var p25 = await Product.create({
+      name: "LECHE DE ALMENDRAS CASTAÑAS DE CAJÚ",
+      price: "305",
+      newItem: false,
+      image: [
+        "https://cocoonfoods.com.ar/wp-content/uploads/2021/06/producto-castanas-caju.jpg",
+        "https://cocoonfoods.com.ar/wp-content/uploads/2021/06/info-nutri-caju.png",
+      ],
+      stock: 5,
+      description:
+        "Nuestra bebida de castañas de cajú es tan rica y naturalmente dulce. Tomalá sola, ¡bien fría! o sumala en tus licuados. Ingredientes: Agua, pasta de castañas de cajú, carbonato de calcio, EMU: Lecitina de girasol (INS 322), sal, EST: Goma xántica (INS 415), aromatizante, EST: Goma gellan (INS 418), ACI: Ácido cítrico (INS 330), complejo vitamínico (Vitaminas A, D2, E, riboflavina y B12), EST: goma guar (INS 412).",
+      categoryID: 1,
+      rating: 4,
+      brand: 5,
+    });
+    p25.addCategory(1);
   } catch (e) {
     console.log(e.message);
   }
 };
 
 module.exports = productMockUp;
+
