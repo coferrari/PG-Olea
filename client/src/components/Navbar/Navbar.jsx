@@ -19,6 +19,7 @@ const NavResponsive = () => {
 
   if (validate) {
     const user = decodeToken();
+    console.log(user, "user");
     return (
       <div>
         <Navbar
@@ -64,13 +65,15 @@ const NavResponsive = () => {
                     </li>
                   </Link>
                 </Nav.Link>
-                <Nav.Link>
-                  <Link to="/chat" className={style.linkssesion}>
-                    <li>
-                      <BsFillChatLeftFill className={style.icon} />
-                    </li>
-                  </Link>
-                </Nav.Link>
+                {user.admin && (
+                  <Nav.Link>
+                    <Link to="/chat" className={style.linkssesion}>
+                      <li>
+                        <BsFillChatLeftFill className={style.icon} />
+                      </li>
+                    </Link>
+                  </Nav.Link>
+                )}
                 <Nav.Link>
                   <Link to="/logout" className={style.linkssesion}>
                     <li>Cerrar sesión</li>

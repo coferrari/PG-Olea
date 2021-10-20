@@ -130,7 +130,7 @@ function App() {
           <Wishlist />
         </Route>
         <Route exact path="/chat">
-          {loggedIn ? <Chat /> : <Redirect to="/home" />}
+          {loggedIn.admin ? <Chat /> : <Redirect to="/home" />}
     </Route>
         <Route exact path="/account/stores">
           {loggedIn.admin ? <Stores /> : <Redirect to="/home" />}
