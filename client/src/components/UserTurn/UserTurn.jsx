@@ -44,14 +44,17 @@ export default function UserTurn() {
 
   return (
     <div>
-      {!turn ? (
+      {!turn?.[1]?.store ? (
+        <div>
         <Card>
           <Card.Title>No hay turnos pendientes</Card.Title>
           <Button variant="dark" onClick={backOnClick}>
             Volver
           </Button>
         </Card>
+        </div>
       ) : (
+        <div>
         <Card className="text-center">
           <Card.Header>Retiro por sucursal</Card.Header>
           <Card.Body>
@@ -64,7 +67,7 @@ export default function UserTurn() {
             <Card.Title>Detalles de la compra</Card.Title>
             <Card.Text>
               Productos:{" "}
-              {turn[0].products.map((p) => {
+              {turn?.[0].products?.map((p) => {
                 return (
                   <div>
                     {p.name} x {p.Order_Products.quantity}
@@ -81,6 +84,7 @@ export default function UserTurn() {
             </Button>
           </Card.Body>
         </Card>
+        </div>
       )}
     </div>
   );

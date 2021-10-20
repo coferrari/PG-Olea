@@ -23,7 +23,7 @@ export default function Turns() {
 
   return (
     <div>
-      {!turnos ? (
+      {!turnos?.[0]?.store ? (
         <Card body>No hay turnos creados.</Card>
       ) : (
         <Table striped bordered hover>
