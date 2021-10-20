@@ -22,6 +22,8 @@ function OrderDetail() {
     getOrderIds();
   }, []);
 
+  
+
   return (
     <div className={style.containerAll}>
       {!orderDetail ? (
@@ -56,7 +58,7 @@ function OrderDetail() {
             <ListGroup.Item>
               Monto del pedido: ${orderDetail.price}
             </ListGroup.Item>
-            <ListGroup.Item>Envío : {orderDetail.address}</ListGroup.Item>
+            <ListGroup.Item>{orderDetail.address ? "Envío : "+  orderDetail.address : "Retiro por: " + orderDetail.local}</ListGroup.Item>
           </ListGroup>
           <Card>
             <Card.Header> Productos de la Orden </Card.Header>
@@ -73,7 +75,7 @@ function OrderDetail() {
               <tbody>
                 {orderDetail.products?.map((o) => {
                   return (
-                    <tr>
+                    <tr key={o.id}>
                       <td>
                         <Link to={`/product/${o.id}`}>{o.id}</Link>
                       </td>
