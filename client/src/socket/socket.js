@@ -1,5 +1,5 @@
 import io from 'socket.io-client'
 
-let socket = io("http://localhost:3001/");
+let socket = io("https://olea-deploy.herokuapp.com/");
 
 export default socket;
