@@ -26,6 +26,9 @@ import style from "./ProductReview.module.css";
 import styles from "./ProductDetail.module.css";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
 import { addToWishlistDB, removeFromWishlistDB } from "../../wishlist/index";
+import { USER_URL } from "../../consts";
+import axios from "axios";
+import Recommendend from "../Recommended/Recommended";
 
 export function ProductDetail() {
   const dispatch = useDispatch();
@@ -61,13 +64,20 @@ export function ProductDetail() {
     setReseñas(reviews);
   };
 
-  useEffect(() => {
+  useEffect(async () => {
     if (validate) {
       const user = decodeToken();
       const username = user.username;
+
       dispatch(getWishlist({ username }));
+
+      categories?.map((e) => {
+        axios.put(USER_URL + username, {
+          nameCategory: e.nameCategory.toLowerCase(),
+        });
+      });
     }
-  }, [dispatch]);
+  }, [dispatch, id]);
 
   useEffect(() => {
     if (add) {
@@ -208,6 +218,11 @@ export function ProductDetail() {
     return "";
   };
   var now = new Date().toLocaleDateString();
+
+  // const recommendend = (nameCategory) => {
+  //   axios.put(USER_URL + username, { nameCategory: nameCategory });
+  // };
+
   return (
     <div className="container">
       <Card>
@@ -410,6 +425,10 @@ export function ProductDetail() {
           </div>
         )}
       </Modal>
+      <div className={styles.recommendend}>
+        <h3>Podría interesarte</h3>
+        <Recommendend />
+      </div>
     </div>
   );
 }

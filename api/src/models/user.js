@@ -51,11 +51,29 @@ module.exports = (sequelize) => {
     newsLetter: {
       type: DataTypes.BOOLEAN,
       allowNull: true,
+
+
       defaultValue: true
+
     },
     codeVerification: {
       type: DataTypes.INTEGER,
       allowNull: true,
+    },
+    almacen: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: 0,
+    },
+    cosmetica: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: 0,
+    },
+    decoracion: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: 0,
     },
   });
 };

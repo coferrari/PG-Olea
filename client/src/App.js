@@ -31,8 +31,8 @@ import OrderDetail from "./components/OrderDetail/OrderDetail";
 import OfertasTable from "./components/Admin/Tables/OfertasTable/OfertasTable.jsx";
 import CheckoutConfirm from "./components/Checkout/CheckoutConfirm";
 import Wishlist from "./components/Wishlist/Wishlist";
-import Map from "./components/Map/Map";
 import Stores from "./components/Admin/Stores/Stores";
+import Map from "./components/Map/Map";
 import Desuscribe from "./components/Profile/DesuscribeNewsLetter";
 import Chat from "./components/Chat/Chat";
 
