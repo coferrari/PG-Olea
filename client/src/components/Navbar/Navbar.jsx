@@ -19,7 +19,6 @@ const NavResponsive = () => {
 
   if (validate) {
     const user = decodeToken();
-    console.log(user, "user");
     return (
       <div>
         <Navbar
