@@ -4,6 +4,7 @@ import {
   GET_TURN_BY_USER,
   DELETE_TURN,
   GET_TURNS,
+  GET_AVAILABLE_TURNS
 } from "../consts";
 
 export const newTurn = async (payload) => {
@@ -25,3 +26,8 @@ export const deleteTurn = async (id) => {
   const deleted = await axios.delete(`${DELETE_TURN}/${id}`);
   return deleted.data;
 };
+
+export const getAvailableTurns = async () => {
+  const turns = await axios.get(GET_AVAILABLE_TURNS);
+  return turns.data; 
+}

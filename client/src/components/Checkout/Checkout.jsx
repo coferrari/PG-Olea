@@ -7,7 +7,7 @@ import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 import { useHistory } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { checkoutMercadoPago } from "../../redux/actions";
-import { getTurns } from "../../turns/index";
+import { getAvailableTurns } from "../../turns/index";
 import { createOrder } from "../../order";
 import style from "./Checkout.module.css";
 import { format } from "../../utils/index";
@@ -33,13 +33,13 @@ const Checkout = () => {
     setDelivery(e.target.value);
   };
 
-  const getAllTurns = async () => {
-    const turns = await getTurns();
+  const getTurns = async () => {
+    const turns = await getAvailableTurns();
     setTurnos(turns);
   };
 
   useEffect(() => {
-    getAllTurns();
+    getTurns();
   }, []);
 
   const handleTurn = (e, store, date, hour) => {

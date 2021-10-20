@@ -31,3 +31,4 @@ export const GET_TURN_BY_USER = "/api/turn/getTurnByUser";
 export const CANCEL_TURN = "/api/turn/cancelturn";
 export const GET_TURNS = "/api/turn/getAll";
 export const DELETE_TURN = "/api/turn/deleteturn";
+export const GET_AVAILABLE_TURNS = "/api/turn/getAvailableTurns";

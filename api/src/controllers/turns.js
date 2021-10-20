@@ -21,43 +21,6 @@ class TurnModel extends Modelo {
       res.status(400).send("No se pudo crear el turno");
     }
   };
-  //   getByStore = async (req, res, next) => {
-  //     try {
-  //       const { store } = req.body;
-
-  //       const turns = await this.model.findAll({
-  //         where: { store },
-  //       });
-  //       return res.send(turns);
-  //     } catch (err) {
-  //       next(err);
-  //     }
-  //   };
-  //   assignTurn = async (req, res, next) => {
-  //       const { username, store, date, hour } = req.body;
-  //       try {
-  //         const user = await User.findOne({
-  //             where: {
-  //                 username
-  //             }
-  //         })
-  //         const turn = await this.model.findOne({
-  //             where: {
-  //                 store,
-  //                 date,
-  //                 hour
-  //             }
-  //         })
-  //         user.setTurn(turn.dataValues.id);
-  //         await turn.increment({
-  //             full: +1
-  //         })
-  //         turn.save();
-  //         return res.send("Turno asignado");
-  //       } catch (error){
-  //           next(error);
-  //       }
-  //   };
   cancelTurn = async (req, res, next) => {
     console.log(req.body, "este es el body");
     const { orderId, store, date, hour } = req.body;
@@ -89,6 +52,22 @@ class TurnModel extends Modelo {
       next(error);
     }
   };
+  getAvailableTurns = async (req, res, next) => {
+    try {
+      const actualDate = new Date().toJSON().slice(0,10);
+      let turns = await this.model.findAll();
+      turns = turns.filter(t => {
+        const date = t.date.split(" ");
+        const formatDate = new Date(date).toJSON().slice(0,10);
+        if (t.full < 10 && formatDate >= actualDate){
+          return t;
+        }
+      })
+      res.send(turns);
+    } catch(error){
+      next(error)
+    }
+  }
 
   getTurnByUser = async (req, res, next) => {
     const { username } = req.params;
