@@ -5,6 +5,7 @@ import { useHistory } from "react-router";
 import style from "./Register.module.css";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
+import swal from "sweetalert";
 
 export function validate(input) {
   let errors = {};
@@ -63,7 +64,7 @@ const Register = () => {
         {
           label: "Yes",
           onClick: async () => {
-            alert(
+            swal(
               "Revise su bandeja de entrada para continuar con el registro"
             );
             await register(input);

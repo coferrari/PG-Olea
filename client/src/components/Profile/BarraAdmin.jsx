@@ -14,6 +14,7 @@ import { Redirect } from "react-router";
 import { Button } from "react-bootstrap";
 
 import OfertasTable from "../Admin/Tables/OfertasTable/OfertasTable";
+import EnviosAdmin from "../Admin/Tables/EnviosAdmin/EnviosAdmin";
 
 const BarraAdmin = () => {
   return (
@@ -41,9 +42,10 @@ const BarraAdmin = () => {
         <Tab eventKey="Añadir producto" title="Añadir producto">
           <CreateProduct />
         </Tab>
-
-        <Tab eventKey="Locales" title="Locales">
-          <Button href="/account/stores">Locales</Button>
+        <Tab  eventKey="Locales" title="Locales">
+          <div className={style.containerbotonMisLocales}>
+          <Button className={style.botonMisLocales} variant="dark" href="/account/stores">Mis locales </Button>
+          </div>
         </Tab>
         <Tab eventKey="Ofertas" title="Ofertas">
           <OfertasTable />
@@ -54,6 +56,10 @@ const BarraAdmin = () => {
         <Tab eventKey="Turns" title="Turnos">
           <Turns />
         </Tab>
+       </Tab>
+        <Tab eventKey="Envios" title="Envios">
+          <EnviosAdmin />
+       </Tab>
       </Tabs>
     </div>
   );

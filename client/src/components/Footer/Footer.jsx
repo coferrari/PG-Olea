@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 
 import logo from "../../img/OLEA marca de agua-08.png";
@@ -7,7 +6,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 import Map from "../Map/Map";
 import { STORES_URL } from "../../consts";
-import { Dropdown, DropdownButton } from "react-bootstrap";
+import {
+  Dropdown,
+  DropdownButton,
+  SplitButton,
+  ButtonGroup,
+} from "react-bootstrap";
 import axios from "axios";
 import { suscribeNewsLetter } from "../../auth/users";
 import { decodeToken } from "../../utils";
@@ -24,7 +28,7 @@ function Footer() {
       setAddress(stores[0].address);
     }
   }, []);
- const [input, setInput] = useState("");
+  const [input, setInput] = useState("");
   const onChange = (e) => {
     setInput(e.target.value);
   };
@@ -35,7 +39,6 @@ function Footer() {
       const x = await suscribeNewsLetter(input);
     } catch (err) {
       swal("Registre su email primero");
-      
     }
   };
 
@@ -58,22 +61,33 @@ function Footer() {
           </div>
           <div>
             <div>
-              <DropdownButton id="dropdown-item-button" title={address}>
-                {stores?.map((e) => {
-                  return (
-                    <Dropdown.Item
-                      onClick={() => {
-                        setAddress(e.address);
-                        setPosition(e.location);
-                      }}
-                      as="button"
-                    >
-                      {e.address}
-                    </Dropdown.Item>
-                  );
-                })}
-              </DropdownButton>
-              <Map position={position} address={address} />
+              <div>
+                <DropdownButton
+                  as={ButtonGroup}
+                  size="sm"
+                  variant="secondary"
+                  title="Drop small"
+                  title={address}
+                >
+                  {stores?.map((e) => {
+                    return (
+                      <Dropdown.Item
+                        onClick={() => {
+                          setAddress(e.address);
+                          setPosition(e.location);
+                        }}
+                        as="button"
+                      >
+                        {e.address}
+                      </Dropdown.Item>
+                    );
+                  })}
+                </DropdownButton>
+              </div>
+              <div>
+                <br />
+                <Map position={position} address={address} />
+              </div>
             </div>
           </div>
           <div className={style.footer__flexitem}>

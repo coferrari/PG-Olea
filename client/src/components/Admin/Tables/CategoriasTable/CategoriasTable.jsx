@@ -37,7 +37,7 @@ export default function CategoriasTable() {
     await deleteCategory(id);
   };
   return (
-    <div>
+    <div className="container">
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -58,7 +58,7 @@ export default function CategoriasTable() {
                   <CategoriasEdit id={e.id} nameCategory={e.nameCategory} />
                 </td>
                 <td>
-                  <Button onClick={() => remove(e.nameCategory, e.id)}>
+                  <Button variant="dark" onClick={() => remove(e.nameCategory, e.id)}>
                     Eliminar
                   </Button>
                 </td>
@@ -67,8 +67,8 @@ export default function CategoriasTable() {
             );
           })}
         </tbody>
-        <CreateCategory />
       </Table>
+        <CreateCategory />
     </div>
   );
 }

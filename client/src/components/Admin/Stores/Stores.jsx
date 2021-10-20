@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, InputGroup, FormControl, Form } from "react-bootstrap";
+import { Button, InputGroup, FormControl, Form, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Map from "../../Map/Map";
 import { getStores } from "../../../redux/actions/index";
@@ -62,16 +62,89 @@ function Stores() {
   return (
     <div>
       {stores.length === 0 ? (
-        <div>
-          <h1>No hay locales agregados</h1>
-          <h3>Agregar Locales</h3>
+        <div className={style.frm}>
+          <div className={"container"}>
+            <h1>No hay locales agregados</h1>
+
+            <div className={style.frm}>
+              {" "}
+              <Form>
+                <Form.Group className="mb-3"></Form.Group>
+                <Form.Group className="mb-3">
+                  <h3>Agregar Locales</h3>
+                  <Form.Label>
+                    Ingrese la direccion de la nueva sucursal
+                  </Form.Label>
+                  <InputGroup className="mb-3" className={style.input}>
+                    <FormControl
+                      placeholder="Ingrese una direccion"
+                      aria-label="Recipient's username"
+                      aria-describedby="basic-addon2"
+                      onChange={(e) => {
+                        onChangeAddress(e);
+                      }}
+                    />
+
+                    <Button
+                      variant="outline-secondary"
+                      id="button-addon2"
+                      onClick={(e) => onClickAddress(e)}
+                    >
+                      Button
+                    </Button>
+                  </InputGroup>
+                </Form.Group>
+              </Form>
+              {
+                <div id="mapid" className={style.map}>
+                  <MapContainer
+                    center={position === null ? [0, 0] : position}
+                    zoom={15}
+                    scrollWheelZoom={false}
+                    className={style.map}
+                  >
+                    <MapConsumer>
+                      {(map) => {
+                        map.flyTo(position === null ? [0, 0] : position);
+                        map.zoom = 15;
+                        return null;
+                      }}
+                    </MapConsumer>
+                    <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                    <Marker position={position === null ? [0, 0] : position}>
+                      <Popup>
+                        Sucursal de <br />
+                        Olea en
+                        <br />
+                        {address}
+                      </Popup>
+                    </Marker>
+                  </MapContainer>
+                  <div className={style.btn}>
+                    {position !== null ? (
+                      <Button onClick={(e) => submitStore(e)}>
+                        Agregar Local
+                      </Button>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="container">
           <div className="container">
             <Form>
+              <Form.Group className="mb-3"></Form.Group>
               <Form.Group className="mb-3">
-                <Form.Label>Ingrese la direccion de la Sucursal</Form.Label>
-              </Form.Group>
-              <Form.Group className="mb-3">
-                <InputGroup className="mb-3">
+                <h3>Agregar Locales</h3>
+                <Form.Label>
+                  Ingrese la direccion de la nueva sucursal
+                </Form.Label>
+                <InputGroup className="mb-3" className={style.input}>
                   <FormControl
                     placeholder="Ingrese una direccion"
                     aria-label="Recipient's username"
@@ -85,86 +158,6 @@ function Stores() {
                     variant="outline-secondary"
                     id="button-addon2"
                     onClick={(e) => onClickAddress(e)}
-                  >
-                    Button
-                  </Button>
-                </InputGroup>
-              </Form.Group>
-            </Form>
-            {
-              <div id="mapid" className={style.map}>
-                <MapContainer
-                  center={position === null ? [0, 0] : position}
-                  zoom={15}
-                  scrollWheelZoom={false}
-                  className={style.map}
-                >
-                  <MapConsumer>
-                    {(map) => {
-                      map.flyTo(position === null ? [0, 0] : position);
-                      map.zoom = 15;
-                      return null;
-                    }}
-                  </MapConsumer>
-                  <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                  <Marker position={position === null ? [0, 0] : position}>
-                    <Popup>
-                      Sucursal de <br />
-                      Olea en
-                      <br />
-                      {address}
-                    </Popup>
-                  </Marker>
-                </MapContainer>
-                {position !== null ? (
-                  <Button onClick={(e) => submitStore(e)}>Agregar Local</Button>
-                ) : (
-                  ""
-                )}
-              </div>
-            }
-          </div>
-        </div>
-      ) : (
-        <div className="container">
-          {stores.map((e) => {
-            return (
-              <div>
-                <label>{e.address}</label>
-                <Button
-                  onClick={async () => {
-                    await axios.delete(STORES_URL + "/" + e.id, {
-                      headers: {
-                        authorization: getToken(),
-                      },
-                    });
-                    await dispatch(getStores());
-                  }}
-                >
-                  x
-                </Button>
-                <Map position={e.location} address={e.address} />
-              </div>
-            );
-          })}
-          <div className="container">
-            <Form onSubmit={(e) => e.preventDefault()}>
-              <Form.Group className="mb-3">
-                <Form.Label>Ingrese la direccion de la Sucursal</Form.Label>
-              </Form.Group>
-              <Form.Group className="mb-3">
-                <InputGroup className="mb-3">
-                  <FormControl
-                    placeholder="Ingrese una direccion"
-                    onChange={(e) => {
-                      onChangeAddress(e);
-                    }}
-                  />
-
-                  <Button
-                    onClick={async (e) => {
-                      await onClickAddress(e);
-                    }}
                   >
                     Button
                   </Button>
@@ -210,13 +203,43 @@ function Stores() {
                   ))}
                   <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                 </MapContainer>
-                {position !== null ? (
-                  <Button onClick={(e) => submitStore(e)}>Agregar Local</Button>
-                ) : (
-                  ""
-                )}
+                <div className={style.btn}>
+                  {position !== null ? (
+                    <Button onClick={(e) => submitStore(e)}>
+                      Agregar Local
+                    </Button>
+                  ) : (
+                    ""
+                  )}
+                </div>
               </div>
             }
+            <div className={style.grid}>
+              <Row xs={1} md={2} className="g-4">
+                {stores.map((e) => {
+                  return (
+                    <div className={style.stores}>
+                      <label>{e.address}</label>
+                      <Button
+                        variant="danger"
+                        className={style.btngrid}
+                        onClick={async () => {
+                          await axios.delete(STORES_URL + "/" + e.id, {
+                            headers: {
+                              authorization: getToken(),
+                            },
+                          });
+                          await dispatch(getStores());
+                        }}
+                      >
+                        <div className={style.x}>x</div>
+                      </Button>
+                      <Map position={e.location} address={e.address} />
+                    </div>
+                  );
+                })}
+              </Row>
+            </div>
           </div>
         </div>
       )}

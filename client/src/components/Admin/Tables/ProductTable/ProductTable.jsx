@@ -63,18 +63,18 @@ export default function ProductTable() {
                 <td>{e.description}</td>
                 <td>
                   <Link to={`/admin/reviews/${e.id}`}>
-                    <Button>Ver Reviews</Button>
+                    <Button variant="dark">Ver Reviews</Button>
                   </Link>
                 </td>
                 <td>
                   <Link to={`/admin/editproduct/${e.id}`}>
-                    <Button onClick={() => dispatch(getProductDetail(e.id))}>
+                    <Button variant="dark" onClick={() => dispatch(getProductDetail(e.id))}>
                       Editar Producto
                     </Button>
                   </Link>
                 </td>
                 <td>
-                  <Button onClick={() => remove(e.name, e.id)}>Eliminar</Button>
+                  <Button variant="dark" onClick={() => remove(e.name, e.id)}>Eliminar</Button>
                 </td>
               </tr>
             );

@@ -2,6 +2,34 @@
   height: 180px;
 }
 .map {
+  text-align: center;
   height: 400px;
   width: 700px;
+}
+
+.input {
+  width: 400px;
+}
+.btn {
+  text-align: center;
+  padding-top: 2%;
+  padding-bottom: 2%;
+}
+.grid {
+  padding-top: 5%;
+}
+.stores {
+  margin-right: 2%;
+  width: 180px;
+  text-align: center;
+}
+.btngrid {
+  text-align: center;
+  font-size: xx-small;
+  float: right;
+  width: 2%;
+  height: 10%;
+}
+.x {
+  text-align: center;
 }
