@@ -82,15 +82,15 @@ const productMockUp = async () => {
     });
     p5.addCategory(1);
     var p6 = await Product.create({
-      name: "Difusor: PARIS",
+      name: "DIFUSOR: AIRES AFRICANOS",
       price: "2100",
       newItem: true,
       image: [
-        "https://d3ugyf2ht6aenh.cloudfront.net/stores/845/679/products/0e7ac9e5-f4c3-489e-945a-e80e93570f6111-bf409684e9ea462db216254981703589-1024-1024.jpeg",
+        "https://d3ugyf2ht6aenh.cloudfront.net/stores/845/679/products/img_77141-c0036d4ecfcfd29fa016254986584838-640-0.jpeg",
       ],
       stock: 8,
       description:
-        "difusor en envase de vidrio con varillas de rattan y tapa de madera - 200 ML.",
+        "Este blend frutal y floral es vibrante. Su protagonista es el pomelo rosado, combinado con notas florales de geranios, bayas de enebro, licor de damascos y ámbar. Es un aroma único y luminoso como una mañana de verano. Nuestro favorito y a la vez nuestro best seller, ante la duda es por acá. Difusor con varillas y tapa de madera de 200 ml. No solo es hermoso sino que huele increíble, contiene la máxima concentración de esencia de todos nuestros preparados.",
       categoryID: 3,
       rating: 2,
       brand: 3,
@@ -129,33 +129,33 @@ const productMockUp = async () => {
     });
     p8.addCategory(3);
     var p9 = await Product.create({
-      name: "LECHE DE ALMENDRAS SIN AZÚCAR",
+      name: "LECHE DE COCO SIN AZÚCAR",
       price: "305",
       newItem: false,
       image: [
-        "https://cdn.shopify.com/s/files/1/0522/2724/4206/products/Leche-de-Almendras-Sin-Azucar-Cocoon-100403-V1_cf96af61-58f1-4fe2-a845-f76fc0b4387a_700x.jpg?v=1610671474",
+        "https://cocoonfoods.com.ar/wp-content/uploads/2020/09/galeriacoco1.png",
+        "https://cocoonfoods.com.ar/wp-content/uploads/2020/10/2forumlacoco-600x600-1.png",
       ],
-      stock: 10,
+      stock: 23,
       description:
-        "Ingredientes: Agua, pasta de almendras, carbonato de calcio, sal, complejo vitamínico (Vitaminas A, D2, E, riboflavina, B12), EST: Goma xantana (INS 415), goma gellan (INS 418), aromatizante, EMU: Lecitina de girasol (INS 322).",
+        "Nuestra bebida de coco es tan rica y naturalmente dulce que no necesitamos agregarle azúcar. Tiene un sabor increíble y un aroma para hacerte sentir de vacaciones en cualquier momento. Tomalá sola, ¡bien fría! o sumala en tus licuados. Ingredientes: Agua, crema de coco, carbonato de calcio, aromatizante, sal, EST: lecitina de girasol (INS 322(, EST: goma gellan (INS 418), ACI: ácido cítrico (INS 330), complejo vitamínico (vitamina A, D2, E, riboflavina y B12).",
       categoryID: 1,
       rating: 4,
       brand: 5,
     });
     p9.addCategory(1);
     var p10 = await Product.create({
-      name: "Vela blanca",
-      price: "1100",
+      name: "DIFUSOR: MANZANILLA, TILO & JAZMÍN",
+      price: "2100",
       newItem: false,
       image: [
-        "https://d3ugyf2ht6aenh.cloudfront.net/stores/845/679/products/86afe347-a49e-46e8-bc00-93341511a9841-43f005170753f169a616154900448327-640-0.jpeg",
-        "https://d3ugyf2ht6aenh.cloudfront.net/stores/845/679/products/1f8e0580-3729-4d68-94db-1603c8a3a8fd1-ad1ac32eff9c49b0ea16154900448179-640-0.jpeg",
+        "https://d3ugyf2ht6aenh.cloudfront.net/stores/845/679/products/img_77081-2f75dff2b1e2f1da1816254987769123-640-0.jpeg",
       ],
       stock: 8,
       description:
-        "EDICIÓN LIMITADA - vela de cera de soja en vaso cilíndrico blanco, al prenderla la luz se trasluce suavemente tipo fanal. disponible en aires africanos y verbena naranja.",
+        "La dulzura de la manzanilla, la sutileza del tilo y la frescura del jazmín componen este aroma que abraza. Huele al confort del hogar, a mañanas en la playa, es una bocanada de aire fresco. Difusor con varillas y tapa de madera de 200 ml. No solo es hermoso sino que huele increíble, contiene la máxima concentración de esencia de todos nuestros preparados.",
       categoryID: 3,
-      rating: 2,
+      rating: 1,
       brand: 3,
     });
     p10.addCategory(3);
@@ -197,7 +197,9 @@ const productMockUp = async () => {
       price: "790",
       stock: 4,
       categoryID: 2,
-      image: ["https://i1.wp.com/wholegreen.com.ar/wp-content/uploads/2020/12/CEPIvirginia800x800.png?resize=600%2C600&ssl=1"],
+      image: [
+        "https://i1.wp.com/wholegreen.com.ar/wp-content/uploads/2020/12/CEPIvirginia800x800.png?resize=600%2C600&ssl=1",
+      ],
       description:
         "Esponja corporal de mango largo, hecho de bambú y esponja de origen vegetal. Para hacerte sentir la mejor sensación mientras eliminas impurezas y células muertas de la piel. Masajea, exfolia y limpia mejorando la elasticidad y firmeza de tu piel notablemente.",
     });
@@ -360,10 +362,55 @@ const productMockUp = async () => {
       brand: 5,
     });
     p25.addCategory(1);
+    var p26 = await Product.create({
+      name: "DIFUSOR: PEONÍAS & FRESIAS",
+      price: "2100",
+      newItem: false,
+      image: [
+        "https://d3ugyf2ht6aenh.cloudfront.net/stores/845/679/products/img_775711-a81026f67b15ba516816254984972759-640-0.jpeg",
+      ],
+      stock: 8,
+      description:
+        "Una combinación floral que toma toda la frescura de las fresias y la dulzura de las peonías. Huele a mañanas primaverales. Difusor con varillas y tapa de madera de 200 ml. No solo es hermoso sino que huele increíble, contiene la máxima concentración de esencia de todos nuestros preparados.",
+      categoryID: 3,
+      rating: 1,
+      brand: 3,
+    });
+    p26.addCategory(3);
+    var p27 = await Product.create({
+      name: "HOME SPRAY: NARANJA & PIMIENTA",
+      price: "2500",
+      newItem: false,
+      image: [
+        "https://d3ugyf2ht6aenh.cloudfront.net/stores/845/679/products/img_76221-2a9d8698e6c0a6f10716254974287936-640-0.jpeg",
+      ],
+      stock: 8,
+      description:
+        "Naranja y pimienta se unen en esta experiencia única. Las notas picantes y especiadas de la pimienta se tropiezan con la frescura de la naranja dando lugar a este blend increíble, lleno de personalidad. Bruma para ambientes y textiles de 500ml. Ideal para perfumar por todos lados regulando intensidad deseada.",
+      categoryID: 3,
+      rating: 1,
+      brand: 3,
+    });
+    p27.addCategory(3);
+    var p27 = await Product.create({
+      name: "VELAS DE NOCHE",
+      price: "400",
+      newItem: false,
+      image: [
+        "https://d3ugyf2ht6aenh.cloudfront.net/stores/845/679/products/img_64011-039c54c4ebd1fc6e3616338918439545-640-0.jpeg",
+        "https://d3ugyf2ht6aenh.cloudfront.net/stores/845/679/products/img_64401-379ac58b97cdca83d716338918434671-640-0.jpeg",
+      ],
+      stock: 8,
+      description:
+        "Pack de 6 velitas de noche de cera de soja (sin esencia). duran un montón encendidas y vienen en bolsita compostable.",
+      categoryID: 3,
+      rating: 5,
+      brand: 3,
+    });
+    p27.addCategory(3);
   } catch (e) {
     console.log(e.message);
   }
 };
 
 module.exports = productMockUp;
-
