@@ -269,26 +269,32 @@ const Checkout = () => {
                     <Card.Title className={style.labels}>Retiro</Card.Title>
                     <Card.Text className={style.text}>
                       <div>
-                        <Dropdown>
-                          <Dropdown.Toggle variant="dark" id="dropdown-basic">
-                            Elegí tu turno
-                          </Dropdown.Toggle>
-                          <Dropdown.Menu>
-                            {turnos?.map((t) => {
-                              return (
-                                <Dropdown.Item
-                                  align={"center"}
-                                  title={`el ${t?.date} a las ${t?.hour} en ${t?.store}`}
-                                  onClick={(e) => {
-                                    handleTurn(e, t.store, t.date, t.hour);
-                                  }}
-                                >
-                                  el {t?.date} a las {t?.hour} en {t?.store}
-                                </Dropdown.Item>
-                              );
-                            })}
-                          </Dropdown.Menu>
-                        </Dropdown>
+                        {!turnos?.[0] ? (
+                          <div>No hay turnos disponibles</div>
+                        ) : (
+                          <Dropdown>
+                            <Dropdown.Toggle variant="dark" id="dropdown-basic">
+                              Elegí tu turno
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu>
+                              {turnos?.map((t) => {
+                                return (
+                                  t?.full < 10 && (
+                                    <Dropdown.Item
+                                      align={"center"}
+                                      title={`el ${t?.date} a las ${t?.hour} en ${t?.store}`}
+                                      onClick={(e) => {
+                                        handleTurn(e, t.store, t.date, t.hour);
+                                      }}
+                                    >
+                                      el {t?.date} a las {t?.hour} en {t?.store}
+                                    </Dropdown.Item>
+                                  )
+                                );
+                              })}
+                            </Dropdown.Menu>
+                          </Dropdown>
+                        )}
                       </div>
                       <br />
                       {selectedTurn && (
