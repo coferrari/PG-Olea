@@ -12,9 +12,9 @@ checkoutControllers.pago = (req, res) => {
   let preference = {
     items: itemsCheckout.map((i) => {
       return {
-        title: i.name,
+        title: "Productos Olea", // i.name,
         unit_price: parseInt(i.price),
-        quantity: i.quantity,
+        quantity: 1 //i.quantity,
       };
     }),
     back_urls: {

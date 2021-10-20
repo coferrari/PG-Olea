@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Details from "./CheckoutDetail/CheckoutDetail";
 import { decodeToken, isAuthorized } from "../../utils";
 import { Button } from "react-bootstrap";
@@ -12,6 +12,7 @@ import style from "./Checkout.module.css";
 import { format } from "../../utils/index";
 import { Card, ListGroup, Form } from "react-bootstrap";
 import swal from "sweetalert";
+import { getStores } from "../../redux/actions";
 
 const Checkout = () => {
   const history = useHistory();
@@ -19,15 +20,24 @@ const Checkout = () => {
   const datosLogin = decodeToken();
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(getStores());
+  }, [dispatch]);
+
   let linkDePago = useSelector((state) => state.carritoReducer.linkPago);
-  console.log("link", linkDePago);
   const itemsCheckout = useSelector(
     (state) => state.carritoReducer.productsCarrito
   );
-
+  let stores = useSelector((state) => state.storesReducer.stores);
   const [delivery, setDelivery] = useState("");
   const handleSelected = (e) => {
     e.preventDefault();
+    setOrder((prevState) => {
+      return {
+        ...prevState,
+        delivery: e.target.value,
+      };
+    });
     setDelivery(e.target.value);
   };
 
@@ -85,12 +95,13 @@ const Checkout = () => {
     email: datosLogin.email,
     price: desc,
     products: itemsCheckout,
-    address: delivery,
+    delivery: delivery,
+    address: "",
+    local:"",
     phone: "",
     contactName: "",
     contactSurname: "",
   });
-
   let idOrden = "";
   const handleConfirmOrder = async (e) => {
     e.preventDefault();
@@ -102,9 +113,11 @@ const Checkout = () => {
     } else if (delivery === "Envío" && !order.address) {
       swal("Completá la dirección de envío");
     } else if (delivery === "Envío" && order.address) {
-      return dispatch(checkoutMercadoPago(itemsCheckout, idOrden));
+      idOrden = await createOrder(order);
+      return dispatch(checkoutMercadoPago([order], idOrden));
     } else if (delivery === "Retiro por local") {
-      return dispatch(checkoutMercadoPago(itemsCheckout, idOrden));
+      idOrden = await createOrder(order);
+      return dispatch(checkoutMercadoPago([order], idOrden));
     }
   };
   const handleChange = (e) => {
@@ -114,183 +127,208 @@ const Checkout = () => {
       [e.target.name]: e.target.value,
     });
   };
-
-  // ESTE ES EL PRECIO TOTAL SI HAY DESCUENTOS O SI NO HAY !!!!
+  const handleRetiroPorLocal = (e) => {
+    e.preventDefault(e);
+    setOrder({
+      ...order,
+      local: e.target.value,
+    })
+  }
 
   return (
-    <div>
-      {sesionIniciada === true ? (
-        <div className={style.checkoutContainer}>
+    <div className={style.cnt}>
+      <div className="container">
+        {sesionIniciada === true ? (
           <div>
-            <Card style={{ width: "%100" }}>
-              <Card.Header className={style.title}>
-                1 - Datos Personales
-              </Card.Header>
-              <ListGroup className={style.listgroup}>
-                <ListGroup.Item className={style.listgroup}>
-                  <label> Nombre </label>{" "}
-                  <input
-                    name="contactName"
-                    onChange={(e) => {
-                      handleChange(e);
-                    }}
-                    className={style.input}
-                    type="text"
-                    placeholder="Nombre"
-                    defaultValue={datosLogin.name}
-                  />
-                </ListGroup.Item>
-                <ListGroup.Item className={style.listgroup}>
-                  <label> Apellido </label>
-                  <input
-                    className={style.input}
-                    onChange={(e) => {
-                      handleChange(e);
-                    }}
-                    name="contactSurname"
-                    type="text"
-                    placeholder="Apellido"
-                    defaultValue={datosLogin.surname}
-                  />
-                </ListGroup.Item>
-                <ListGroup.Item className={style.listgroup}>
-                  <label> Teléfono </label>{" "}
-                  <input
-                    className={style.input}
-                    type="text"
-                    placeholder="Teléfono"
-                    name="phone"
-                    onChange={(e) => {
-                      handleChange(e);
-                    }}
-                  />
-                </ListGroup.Item>
-              </ListGroup>
-            </Card>
-          </div>
-          <div>
-            <Card.Header className={style.title}>
-              2 - Datos de Envío
-            </Card.Header>
-
-            <div className={style.title}>
-              <input
-                type="radio"
-                class="btn-check"
-                className={style.botonesEnvío}
-                name="options"
-                id="option1"
-                autocomplete="off"
-                onChange={(e) => {
-                  handleSelected(e);
-                }}
-                value="Envío"
-                name="options"
-              />
-              <label class="btn btn-secondary" for="option1">
-                Envío
-              </label>
-
-              <input
-                type="radio"
-                class="btn-check"
-                name="options"
-                id="option2"
-                autocomplete="off"
-                onChange={(e) => {
-                  handleSelected(e);
-                }}
-                value="Retiro por local"
-                name="options"
-              />
-              <label class="btn btn-secondary" for="option2">
-                Retiro por local
-              </label>
+            <div>
+              <Card className={style.card}>
+                <div className={style.headers}>
+                  <Card.Header className={style.title}>
+                    1 - Datos Personales
+                  </Card.Header>
+                </div>
+                <ListGroup className={style.listgroup}>
+                  <ListGroup.Item className={style.listgroup}>
+                    <div className={style.labels}>
+                      <label> Nombre </label>{" "}
+                      <Form.Control
+                        name="contactName"
+                        onChange={(e) => {
+                          handleChange(e);
+                        }}
+                        className={style.input}
+                        type="text"
+                        placeholder="Nombre"
+                        defaultValue={datosLogin.name}
+                      />
+                    </div>
+                  </ListGroup.Item>
+                  <ListGroup.Item className={style.listgroup}>
+                    <div className={style.labels}>
+                      <label> Apellido </label>
+                      <Form.Control
+                        className={style.input}
+                        onChange={(e) => {
+                          handleChange(e);
+                        }}
+                        name="contactSurname"
+                        type="text"
+                        placeholder="Apellido"
+                        defaultValue={datosLogin.surname}
+                      />
+                    </div>
+                  </ListGroup.Item>
+                  <ListGroup.Item className={style.listgroup}>
+                    <div className={style.labels}>
+                      <label> Teléfono </label>{" "}
+                      <Form.Control
+                        className={style.input}
+                        type="text"
+                        placeholder="Teléfono"
+                        name="phone"
+                        onChange={(e) => {
+                          handleChange(e);
+                        }}
+                      />
+                    </div>
+                  </ListGroup.Item>
+                </ListGroup>
+              </Card>
             </div>
-            <Card.Body className={style.bodyDelivery} eventKey={delivery}>
-              {delivery === "Envío" ? (
-                <div>
-                  <Card.Title>Envío</Card.Title>
-                  <Form.Group className={style.datosEnvio}>
-                    <Form.Label>Domicilio de envío</Form.Label>
-                    <Form.Control
-                      type="text"
-                      placeholder="Domicilio de Envío"
-                      name="address"
-                      className={style.inputDatosEnvio}
-                      onChange={(e) => {
-                        handleChange(e);
-                      }}
-                    />
-                  </Form.Group>
-                </div>
-              ) : (
-                <div>
-                  <Card.Title>Retiro</Card.Title>
-                  <Card.Text>
-                    Pasá a retirar tu pedido por Garibaldi 283, Coronel Suárez
-                    <br />
-                    Horario : Lu a Vi 9: 30-12: 30, 17: 30-19: 30 y Sa 10-12: 30
-                  </Card.Text>
-                </div>
-              )}
-            </Card.Body>
-          </div>
-          <Details />
+            <div>
+              <div className={style.headers}>
+                <Card.Header className={style.title}>
+                  2 - Datos de Envío
+                </Card.Header>
+              </div>
+              <div className={style.btns}>
+                <input
+                  type="radio"
+                  class="btn-check"
+                  name="options"
+                  id="option1"
+                  autocomplete="off"
+                  onChange={(e) => {
+                    handleSelected(e);
+                  }}
+                  value="Envío"
+                  name="options"
+                />
+                <label class="btn btn-secondary" for="option1">
+                  Envío
+                </label>
 
-          <p className={style.total}> Total ${format(desc)}</p>
+                <input
+                  type="radio"
+                  class="btn-check"
+                  name="options"
+                  id="option2"
+                  autocomplete="off"
+                  onChange={(e) => {
+                    handleSelected(e);
+                  }}
+                  value="Retiro por local"
+                  name="options"
+                />
+                <label class="btn btn-secondary" for="option2">
+                  Retiro por local
+                </label>
+              </div>
+              <Card.Body className={style.bodyDelivery} eventKey={delivery}>
+                {delivery === "Envío" ? (
+                  <div className={style.pdn}>
+                    <Card.Title className={style.labels}>Envío</Card.Title>
+                    <Form.Group className={style.datosEnvio}>
+                      <Form.Label className={style.labels}>
+                        Domicilio de envío
+                      </Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="Domicilio de Envío"
+                        name="address"
+                        className={style.inputDatosEnvio}
+                        onChange={(e) => {
+                          handleChange(e);
+                        }}
+                      />
+                    </Form.Group>
+                  </div>
+                ) : (delivery === "Retiro por local" ? (
+                  <div className={style.pdn}>
+                    <Card.Title className={style.labels}>
+                      <label>Local: </label>
+                      <select
+                        class="form-select"
+                        aria-label="Default select example"
+                         onChange={(e) => {handleRetiroPorLocal(e)}}
+                      > <option>Seleccioná tu local</option>
+                        {stores && stores.map((s)=>{
+                          return <option value={`${s.address}`}>{s.address}</option>
+                        })}
+                      </select>
+                    </Card.Title>
+                    <Card.Text className={style.text}>
+                      Horario : Lunes a Viernes 9:30 -12:30, 17:30-19:30 y
+                      Sábado 10-12:30
+                    </Card.Text>
+                  </div>
+                ) : "" )}
+              </Card.Body>
+            </div>
+            <Details />
 
-          <div className={style.buttonConfirmarCompra}>
-            <Button variant="dark" onClick={(e) => handleConfirmOrder(e)}>
-              Confirmar orden de compra
-            </Button>
-            {linkDePago &&
-              confirmAlert({
-                title: "Atención",
-                message: "Usted será redirigido al checkout de Mercado Pago",
-                buttons: [
-                  {
-                    label: "Aceptar",
-                    onClick: async () => {
-                      idOrden = await createOrder(order);
-                      window.open(linkDePago);
-                      localStorage.setItem("cart", JSON.stringify([]));
-                      window.location.href = "/";
+            <p className={style.total}> Total ${format(desc)}</p>
+            <div className={style.buttonConfirmarCompra}>
+              <Button variant="dark" onClick={(e) => handleConfirmOrder(e)}>
+                Confirmar orden de compra
+              </Button>
+              {linkDePago &&
+                confirmAlert({
+                  title: "Atención",
+                  message: "Usted será redirigido al checkout de Mercado Pago",
+                  buttons: [
+                    {
+                      label: "Aceptar",
+                      onClick: async () => {
+                        window.open(linkDePago);
+                        localStorage.setItem("cart", JSON.stringify([]));
+                        window.location.href = "/";
+                      },
                     },
-                  },
-                  {
-                    label: "Volver",
-                    onClick: () => {
-                      window.location.href = "";
+                    {
+                      label: "Volver",
+                      onClick: () => {
+                        window.location.href = "";
+                      },
                     },
-                  },
-                ],
-              })}
+                  ],
+                })}
+            </div>
           </div>
-        </div>
-      ) : (
-        <div>
-          {confirmAlert({
-            title: "No iniciaste sesión",
-            message:
-              "Para continuar con tu compra debes registrarte o iniciar sesión",
-            buttons: [
-              {
-                label: "Iniciar Sesión",
-                onClick: () => history.push("/login"),
-              },
-              {
-                label: "Registrarse",
-                onClick: () => history.push("/register"),
-              },
-              {
-                label: "Inicio",
-                onClick: () => history.push("/"),
-              },
-            ],
-          })}
-        </div>
-      )}
+        ) : (
+          <div>
+            {confirmAlert({
+              title: "No iniciaste sesión",
+              message:
+                "Para continuar con tu compra debes registrarte o iniciar sesión",
+              buttons: [
+                {
+                  label: "Iniciar Sesión",
+                  onClick: () => history.push("/login"),
+                },
+                {
+                  label: "Registrarse",
+                  onClick: () => history.push("/register"),
+                },
+                {
+                  label: "Inicio",
+                  onClick: () => history.push("/"),
+                },
+              ],
+            })}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

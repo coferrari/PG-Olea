@@ -1,7 +1,8 @@
-const { User, Product, Category } = require("../db");
+const { User, Product, Category, Wishlist } = require("../db");
 const {
   getTemplateProductLetter,
   getTemplateCategoryLetter,
+  getTemplateProductLetterWishlist,
 } = require("../helpers/mail");
 const { sendEmail } = require("../helpers/mail");
 const jwt = require("jsonwebtoken");
@@ -21,7 +22,6 @@ newsLetter.getAll = async (req, res, next) => {
 };
 newsLetter.sendLetterProduct = async (req, res, next) => {
   const { product, offert, fecha } = req.body;
-  console.log(req.body);
   try {
     const allUsers = await User.findAll({
       where: {
@@ -86,7 +86,6 @@ newsLetter.sendCategoryLetter = async (req, res, next) => {
 };
 newsLetter.suscribeNewsLetter = async (req, res, next) => {
   const { email } = req.body;
-  console.log(req.body);
   try {
     const user = await User.findOne({ where: { email: email } });
     if (!user) {
@@ -99,6 +98,45 @@ newsLetter.suscribeNewsLetter = async (req, res, next) => {
     next(err);
   }
 };
+
+newsLetter.sendOffersToWishlistUsers = async (req, res, next) => {
+  const { product, offer, fecha } = req.body;
+  try {
+    const producto = await Product.findByPk(product);
+    const wishlists = await Wishlist.findAll({
+      include: Product,
+    });
+    const wishlistFiltered = wishlists.filter((w) =>
+      w.products.find((p) => p.id == product)
+    );
+    console.log("wishlist filtrada", wishlistFiltered);
+    for (let i = 0; i < wishlistFiltered.length; i++) {
+      const userSuscribe = await User.findOne({
+        where: {
+          email: wishlistFiltered[i].userEmail,
+          newsLetter: true,
+        },
+      });
+      if (userSuscribe) {
+        const template = getTemplateProductLetterWishlist(
+          userSuscribe.name,
+          fecha,
+          producto.name,
+          offer
+        );
+        await sendEmail(
+          wishlistFiltered[i].userEmail,
+          "Tenemos en oferta este producto que te interesa!",
+          template
+        );
+      }
+    }
+    res.json({ message: "email enviado" });
+  } catch (err) {
+    next(err);
+  }
+};
+
 newsLetter.desuscribeNewsLetter = async (req, res, next) => {
   const { token } = req.body;
   try {
@@ -114,4 +152,5 @@ newsLetter.desuscribeNewsLetter = async (req, res, next) => {
     next(err);
   }
 };
+
 module.exports = newsLetter;

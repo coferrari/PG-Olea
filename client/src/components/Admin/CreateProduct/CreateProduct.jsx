@@ -1,14 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  Button,
-  Form,
-  InputGroup,
-  Row,
-  Col,
-  Container,
-  Image,
-} from "react-bootstrap";
+import { Button, Form, Row, Col, Container, Image } from "react-bootstrap";
 import { getCategories } from "../../../redux/actions";
 import { getToken } from "../../../utils/index";
 import axios from "axios";
@@ -62,7 +54,9 @@ export default function CreateProduct() {
         },
       });
 
-      swal("Este producto ha sido creado exitosamente");
+      swal("Este producto ha sido creado exitosamente").then(function () {
+        window.location = "/account";
+      });
     }
   };
 
@@ -154,7 +148,7 @@ export default function CreateProduct() {
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Imagenes Cargadas</Form.Label>
-              <Container className={style.containerimg} >
+              <Container className={style.containerimg}>
                 {newProduct.image?.map((e) => (
                   <Row>
                     <Col xs={6} md={4}>
@@ -223,7 +217,7 @@ export default function CreateProduct() {
               defaultValue="0"
             />
           </Form.Group>
-          <Button variant="dark" type="submit">
+          <Button className={style.botonAgregar} variant="dark" type="submit">
             Agregar Producto
           </Button>
         </Form>

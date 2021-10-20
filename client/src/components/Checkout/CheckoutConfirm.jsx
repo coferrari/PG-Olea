@@ -33,11 +33,9 @@ const CheckoutConfirm = () => {
     history.push("/home");
   }
 
-  console.log(orden);
-
   return (
     <div>
-      {!orden.contactName ? (
+      {!orden.email ? (
         <Spinner animation="border" variant="secondary" />
       ) : location.search &&
         location.search.includes("collection_status=approved") ? (
@@ -55,18 +53,24 @@ const CheckoutConfirm = () => {
               {orden.updatedAt.slice(0, 10).split("-").reverse().join("-")}
             </ListGroup.Item>
             <ListGroup.Item>ID de compra: {idOrder} </ListGroup.Item>
-            <ListGroup.Item>Estado del pago: {orden.statusPago}</ListGroup.Item>
+            <ListGroup.Item>Estado del pago: Aprobada</ListGroup.Item>
             {orden.address !== "" ? (
               <ListGroup.Item>Dirección: {orden.address}</ListGroup.Item>
             ) : (
-              <ListGroup.Item>Retiro por local</ListGroup.Item>
+              <ListGroup.Item>Retiro por local : {orden.local}</ListGroup.Item>
             )}
             <ListGroup.Item>
               Productos: {orden.products?.map((p) => p.name + ", ")}
             </ListGroup.Item>
+            <ListGroup.Item>
+              {" "}
+              {orden.info === "en-espera"
+                ? "Envio a domicilio"
+                : "Retira por local"}{" "}
+            </ListGroup.Item>
             <ListGroup.Item>Total: ${orden.price}</ListGroup.Item>
           </ListGroup>
-          <Button variant="dark" onClick={onClick}>
+          <Button className="container" variant="dark" onClick={onClick}>
             Volver
           </Button>
         </div>
@@ -85,18 +89,24 @@ const CheckoutConfirm = () => {
               {orden.updatedAt.slice(0, 10).split("-").reverse().join("-")}
             </ListGroup.Item>
             <ListGroup.Item>ID de compra: {idOrder} </ListGroup.Item>
-            <ListGroup.Item>Estado del pago: {orden.statusPago}</ListGroup.Item>
+            <ListGroup.Item>Estado del pago: Rechazado</ListGroup.Item>
             {orden.address !== "" ? (
               <ListGroup.Item>Dirección: {orden.address}</ListGroup.Item>
             ) : (
-              <ListGroup.Item>Retiro por local</ListGroup.Item>
+              <ListGroup.Item>Retiro por local: {orden.local}</ListGroup.Item>
             )}
             <ListGroup.Item>
               Productos: {orden.products?.map((p) => p.name + ", ")}
             </ListGroup.Item>
+            <ListGroup.Item>
+              {" "}
+              {orden.info === "en-espera"
+                ? "Envio a domicilio"
+                : "Retira por local"}{" "}
+            </ListGroup.Item>
             <ListGroup.Item>Total: ${orden.price}</ListGroup.Item>
           </ListGroup>
-          <Button variant="dark" onClick={onClick}>
+          <Button className="container" variant="dark" onClick={onClick}>
             Volver
           </Button>
         </div>

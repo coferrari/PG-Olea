@@ -27,6 +27,7 @@ function Ofertas() {
     };
     let fecha = offerday;
     offerProduct(res, fecha);
+    
   };
 
   const handleClickCategory = (e, offerday, offer, id) => {

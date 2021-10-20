@@ -7,7 +7,7 @@ import Tabs from "react-bootstrap/Tabs";
 import Button from "react-bootstrap/Button";
 import { useSelector } from "react-redux";
 import { offerCategory, offerProduct } from "../../../../cart/index";
-import { productOfert, categoryOfert } from "../../../../auth/admin";
+import { productOfert, categoryOfert, productWishlist } from "../../../../auth/admin";
 import Ofertas from "./Ofertas";
 import swal from "sweetalert";
 function OfertasTable() {
@@ -37,13 +37,23 @@ function OfertasTable() {
     }
     let valor = value.toLocaleDateString();
     offerProduct(productOff, valor);
+    await productOfert(
+      productOff.idProduct,
+      productOff.offProduct,
+      valor
+    );
+    await productWishlist(
+      productOff.idProduct,
+      productOff.offProduct,
+      valor
+    );
     setProductOff({
       idProduct: 0,
       offProduct: 0,
     });
-    await productOfert(productOff.idProduct, productOff.offProduct, valor);
     swal("Se agrego la oferta");
   };
+  
   const onChangeCat = (e) => {
     e.preventDefault();
     setOffCat({
@@ -51,6 +61,7 @@ function OfertasTable() {
       [e.target.name]: e.target.value,
     });
   };
+  
   const onSubmitCat = async (e) => {
     e.preventDefault();
     if (!offCat.idCat && !offCat.offCat && !value) {
@@ -99,7 +110,7 @@ function OfertasTable() {
               onChange={(e) => onChangeProduct(e)}
             />
             <label>{productOff.offProduct} % de descuento</label>
-            <Button type="submit">Enviar</Button>
+            <Button variant="dark" type="submit">Enviar</Button>
           </form>
         </Tab>
         <Tab eventKey="Categorias" title="Categorias">
@@ -126,7 +137,7 @@ function OfertasTable() {
               onChange={(e) => onChangeCat(e)}
             />
             <label> {offCat.offCat} % de descuento</label>
-            <Button type="submit">Enviar</Button>
+            <Button variant="dark" type="submit">Enviar</Button>
           </form>
         </Tab>
         <Tab eventKey="Ofertas" title="Ofertas">

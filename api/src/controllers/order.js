@@ -4,8 +4,9 @@ const {
   getTemplateAproved,
   sendEmail,
   getTemplateRejected,
+  getTemplateEnvio,
+  getTemplateEnCamino,
 } = require("../helpers/mail");
-const carritoControllers = require("../controllers/carrito");
 class OrderModel extends Modelo {
   constructor(model) {
     super(model);
@@ -45,19 +46,28 @@ class OrderModel extends Modelo {
           x.stock = nuevoStock;
           x.save();
         });
-        let template = getTemplateAproved(
-          ordenDetail.contactName,
-          ordenDetail.price
-        );
-        await sendEmail(ordenDetail.email, "Pago exitoso", template);
+        if (ordenDetail.info === "retiro") {
+          let template = getTemplateAproved(
+            ordenDetail.contactName,
+            ordenDetail.price
+          );
+          await sendEmail(ordenDetail.email, "Pago exitoso", template);
+        }
+        if (ordenDetail.info === "en-espera") {
+          ordenDetail.status = "procesando";
+          ordenDetail.save();
+          let template = getTemplateEnvio(
+            ordenDetail.contactName,
+            ordenDetail.price
+          );
+          await sendEmail(ordenDetail.email, "Pago exitoso", template);
+        }
         return res.json({
           message: "Se actualizo el estado de la orden y se cambio el stock",
         });
       }
       if (estado === "rejected") {
         let template = getTemplateRejected(ordenDetail.contactName);
-        console.log("entre rejected");
-        console.log(template);
         await sendEmail(ordenDetail.email, "Problema en la compra", template);
         return res.json({
           message: "Se envio el mail, compra rechazada.",
@@ -134,19 +144,21 @@ class OrderModel extends Modelo {
       phone,
       contactName,
       contactSurname,
+      delivery,
+      local
     } = req.body;
+    let info = delivery === "Envío" ? "en-espera" : "retiro";
     try {
-      console.log("entre");
-      console.log(email);
       const ordenCreada = await this.model.create({
-        //userUsername: username,
         email,
         price,
         address,
         phone,
         contactName,
         contactSurname,
-        date: Date().slice(0, 10).replace(/-/g, "/"),
+        info: info,
+        local,
+        //date: Date().slice(0, 10).replace(/-/g, "/"),
       });
       for (let i = 0; i < products.length; i++) {
         await ordenCreada.addProduct(products[i].id);
@@ -170,8 +182,6 @@ class OrderModel extends Modelo {
   setOrderStatus = async (req, res, next) => {
     const { status } = req.body;
     const { orderid } = req.params;
-    console.log("status", status);
-    console.log("orderid", orderid);
     try {
       const orden = await this.model.findByPk(orderid, { include: Product });
       orden.update(
@@ -189,11 +199,34 @@ class OrderModel extends Modelo {
       next(err);
     }
   };
+  filterByDelivery = async (req, res, next) => {
+    try {
+      let orden = await this.model.findAll();
+      orden = orden.filter((c) => c.info !== "retiro");
+      res.status(200).send(orden);
+    } catch (err) {
+      next(err);
+    }
+  };
+  sendDelivery = async (req, res, next) => {
+    const { id } = req.params;
+    try {
+      const orden = await this.model.findByPk(id);
+      if (orden === null) {
+        return res.status(400).send({ message: "No existe la orden" });
+      }
+      orden.info = "en-camino";
+      orden.save();
+      let template = getTemplateEnCamino(orden.contactName);
+      await sendEmail(orden.email, "Envio en camino", template);
+      res.status(200).json({ message: "Orden en camino" });
+    } catch (err) {
+      next(err);
+    }
+  };
   allOrders = async (req, res, next) => {
-    //const { username } = req.body;
     try {
       const order = await this.model.findAll({
-        //where: { userUsername: username },
         include: Product,
       });
       res.status(200).send(order);
@@ -202,7 +235,6 @@ class OrderModel extends Modelo {
     }
   };
   getOrderDetails = async (req, res, next) => {
-    //const { username } = req.body
     const { id } = req.params;
     try {
       const ordenDetail = await this.model.findByPk(id, { include: Product });
@@ -226,6 +258,20 @@ class OrderModel extends Modelo {
       next(error);
     }
   };
+  setOrderEntregada = async (req, res, next) => {
+    const { orderId } = req.params;
+    try {
+      const order = await this.model.findByPk(orderId);
+      order.update({
+        status: "finalizada",
+        info: "entregada"
+      })
+      order.save();
+      res.send("Orden seteada a entregada");
+    } catch (error){
+      next(error);
+    }
+  }
 }
 
 const OrderControllers = new OrderModel(Order);

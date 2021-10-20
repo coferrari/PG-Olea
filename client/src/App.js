@@ -31,8 +31,11 @@ import OrderDetail from "./components/OrderDetail/OrderDetail";
 import OfertasTable from "./components/Admin/Tables/OfertasTable/OfertasTable.jsx";
 import CheckoutConfirm from "./components/Checkout/CheckoutConfirm";
 import Wishlist from "./components/Wishlist/Wishlist";
+import Map from "./components/Map/Map";
+import Stores from "./components/Admin/Stores/Stores";
 import Desuscribe from "./components/Profile/DesuscribeNewsLetter";
 import Chat from "./components/Chat/Chat";
+
 
 function App() {
   const loggedIn = decodeToken();
@@ -128,6 +131,10 @@ function App() {
         </Route>
         <Route exact path="/chat">
           {loggedIn ? <Chat /> : <Redirect to="/home" />}
+    </Route>
+        <Route exact path="/account/stores">
+          {loggedIn.admin ? <Stores /> : <Redirect to="/home" />}
+
         </Route>
       </Switch>
     </div>

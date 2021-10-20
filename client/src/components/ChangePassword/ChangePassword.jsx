@@ -3,6 +3,7 @@ import { Form, Button } from "react-bootstrap";
 import { changePassword } from "../../auth/users";
 import style from "./ChangePassword.module.css";
 import { useHistory, useParams } from "react-router";
+import swal from "sweetalert";
 
 export function validate(input) {
   let errors = {};
@@ -39,6 +40,7 @@ const ChangePassword = () => {
     try {
       await changePassword(input.email, input.passwordTwo, token);
       // const x = await changePassword(input.email, input.passwordTwo, token);
+      swal("Se modificó su contraseña correctamente")
       history.push("/login");
     } catch (err) {
       setErrorEmail(

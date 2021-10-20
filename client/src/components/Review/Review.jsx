@@ -13,6 +13,7 @@ const Review = () => {
   const [stars, setStars] = useState("");
   const [text, setText] = useState("");
   const [opinion, setOpinion] = useState("");
+  const [error, setError] = useState("");
   const reviewStar = (number) => {
     setStars(number);
   };
@@ -24,8 +25,12 @@ const Review = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await createReviews(user.username, productid, stars, text, opinion);
-    history.push(`/product/${productid}`);
+    try {
+      await createReviews(user.username, productid, stars, text, opinion);
+      history.push(`/product/${productid}`);
+    } catch (err) {
+      setError("Usted no tiene permisos para crear la reseña");
+    }
   };
   return (
     <div className={style.container}>
@@ -86,9 +91,10 @@ const Review = () => {
           </Form.Group>
           <div>
             <Button variant="dark" type="submit">
-              Ingresa
+              Crear reseña
             </Button>
           </div>
+          <div className={style.errors}>{error ? error : ""}</div>
         </Form>
       </div>
     </div>

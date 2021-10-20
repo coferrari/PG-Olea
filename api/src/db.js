@@ -70,8 +70,10 @@ const {
   Carrito_Products,
   Order_Products,
   Reviews,
-  Wishlist
+  Wishlist,
+  Stores,
 } = sequelize.models;
+
 
 // Aca vendrian las relaciones
 

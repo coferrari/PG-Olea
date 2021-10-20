@@ -28,10 +28,15 @@ module.exports = (sequelize) => {
       allowNull: false,
       defaultValue: "pendiente",
     },
-    date: {
-      type: DataTypes.DATE,
+    info: {
+      type: DataTypes.ENUM("retiro", "en-espera", "en-camino", "entregada"),
       allowNull: false,
+      defaultValue: "retiro",
     },
+    // date: {
+    //   type: DataTypes.DATE,
+    //   allowNull: false,
+    // },
     address: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -48,5 +53,9 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    local : {
+      type: DataTypes.TEXT,
+      allowNull: true
+    }
   });
 };

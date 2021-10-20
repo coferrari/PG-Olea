@@ -39,11 +39,11 @@ const ItemCheckout = ({
       <div>
         {Array.isArray(image) ? (
           <div className={style.containerimg}>
-            <img className={style.img} src={image[0]} />
+            <img className={style.img} src={image[0]} alt={image[0]}/>
           </div>
         ) : (
           <div className={style.containerimg}>
-            <img className={style.img} src={image} />
+            <img className={style.img} src={image} alt={image} />
           </div>
         )}
       </div>
@@ -99,8 +99,7 @@ const ItemCheckout = ({
             )
           )}
         </p>
-        <p className={style.price}>Cantidad {quantity}</p>
-        <div className={style.btncontainer}></div>
+        <p className={style.price}>Cantidad: {quantity}</p>
       </div>
     </div>
   );
