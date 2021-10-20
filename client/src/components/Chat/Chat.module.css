@@ -1,19 +1,152 @@
+.container {
+  padding-top: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.header {
+  background-color: #1c1b1b;
+  color: white;
+  width: 80vw;
+  max-width: 600px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  text-transform: uppercase;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  margin: 0;
+  letter-spacing: 2px;
+}
+
 .chat {
-    width: 50%;
-    min-height: 30vh;
-    max-height: 50vh;
-    overflow: scroll;
-    border: 1px solid pink;
-    display: flex;
-    flex-direction: column;
+  width: 80vw;
+  max-width: 600px;
+  min-height: 50vh;
+  max-height: 50vh;
+  overflow: scroll;
+  border: 1px solid lightgray;
+  display: flex;
+  flex-direction: column;
+}
+
+.info {
+  display: flex;
+  flex-direction: row;
+}
+
+.time {
+  color: grey;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+
+.mymsg {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row-reverse;
+}
+
+.yourmsg {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
 }
 
 .me {
-    background-color: pink;
-    justify-content: flex-start;
+  min-width: 200px;
+  max-width: 300px;
+  overflow: auto;
+  align-items: center;
+  margin-bottom: 5px;
 }
 
 .you {
-    background-color: cadetblue;
-    justify-content: flex-end;
+  height: fit-content;
+  min-width: 300px;
+  max-width: 300px;
+  overflow: auto;
+}
+
+.mymsginfo {
+  background-color: lightblue;
+  padding: 7px 15px;
+  border-radius: 15px;
+}
+
+.yourmsginfo {
+  background-color: lightgray;
+  padding: 7px 15px;
+  border-radius: 15px;
+  color: #1c1b1b;
+}
+
+
+.user {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.msgcontainerme {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+}
+
+.msgcontaineryou {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.contimg {
+  height: 50px;
+  margin: 10px
+}
+
+.img {
+  height: 100%;
+  border-radius: 50%;
+}
+
+.btnsend {
+  background-color: white;
+  border: none;
+  outline: none;
+}
+
+.iconsend {
+  font-size: 25px;
+  color: #1c1b1b;
+  margin: 10px;
+}
+
+.textarea {
+  width: 100%;
+  outline: none;
+  border: 1px solid lightgray;
+  padding: 7px;
+}
+
+.chatbtns {
+  display: flex;
+  flex-direction: row;
+  width: 80vw;
+  max-width: 600px;
+  background-color: thistle;
+  border: 1px solid lightgray;
+}
+
+.picker {
+  position: absolute;
 }

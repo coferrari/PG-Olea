@@ -18,28 +18,8 @@ const io = require("socket.io")(app, {
     origin: "*",
   },
 });
-
-io.on("connection", (socket) => {
-    let name;
-  console.log(`user connected: ${socket.id}`);
-  socket.on("connected", (username) => {
-      name = username
-    socket.broadcast.emit("messages", {
-      username,
-      message: `${username} se unió al chat`,
-    });
-  });
-  socket.on("message", (data) => {
-    io.emit("messages", data);
-  });
-
-  socket.on("disconnect", () => {
-    io.emit("messages", {
-      app: "Servidor",
-      message: `${name} ha abandonado el chat`,
-    });
-  });
-});
+const socketEvents = require('./socket/socket');
+socketEvents(io);
 
 server.name = "API";
 

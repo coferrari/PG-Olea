@@ -6,7 +6,7 @@ import style from "./Navbar.module.css";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCategories } from "../../redux/actions";
-import { BsHeartFill } from "react-icons/bs";
+import { BsHeartFill, BsFillChatLeftFill } from "react-icons/bs";
 
 const NavResponsive = () => {
   const validate = isAuthorized();
@@ -60,7 +60,14 @@ const NavResponsive = () => {
                 <Nav.Link>
                   <Link to="/wishlist" className={style.linkssesion}>
                     <li>
-                      <BsHeartFill className={style.fav} />
+                      <BsHeartFill className={style.icon} />
+                    </li>
+                  </Link>
+                </Nav.Link>
+                <Nav.Link>
+                  <Link to="/chat" className={style.linkssesion}>
+                    <li>
+                      <BsFillChatLeftFill className={style.icon} />
                     </li>
                   </Link>
                 </Nav.Link>
