@@ -3,6 +3,7 @@ import socket from "../../socket/socket";
 import { isAuthorized, decodeToken } from "../../utils/index";
 import style from "./Chat.module.css";
 import { FiSend } from "react-icons/fi";
+import { CgProfile } from "react-icons/cg";
 
 const Chat = () => {
   const [message, setMessage] = useState({});
@@ -83,7 +84,11 @@ const Chat = () => {
                     }
                   >
                     <div className={style.contimg}>
-                      <img className={style.img} src={m.img} alt={m.author} />
+                      {m.img ? (
+                        <img className={style.img} src={m.img} alt={m.author} />
+                      ) : (
+                        <CgProfile className={style.iconprofile} />
+                      )}
                     </div>
                     <div
                       className={

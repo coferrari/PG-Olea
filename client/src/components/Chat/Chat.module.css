@@ -150,3 +150,8 @@
 .picker {
   position: absolute;
 }
+
+.iconprofile {
+  font-size: 50px;
+  color: grey;
+}
