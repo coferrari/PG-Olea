@@ -1,4 +1,4 @@
-import { GET_PRODUCTS, FILTER_PRODUCTS_SEARCH } from "../actions/types";
+import { GET_PRODUCTS, FILTER_PRODUCTS_SEARCH, CLEAR_PRODUCTS } from "../actions/types";
 
 const initialState = {
   allProducts: [],
@@ -25,6 +25,12 @@ function productsReducer(state = initialState, action) {
         allProducts: products,
         products: productsFiltered,
       };
+    case CLEAR_PRODUCTS:
+      return {
+        ...state, 
+        allProducts: [],
+        products:[]
+      }
     default:
       return state;
   }

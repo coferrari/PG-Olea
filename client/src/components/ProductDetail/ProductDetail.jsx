@@ -6,6 +6,7 @@ import {
   getProductDetail,
   addToWishlist,
   removeFromWishlist,
+  getProducts
 } from "../../redux/actions/index";
 import {
   Card,
@@ -16,7 +17,7 @@ import {
   ProgressBar,
 } from "react-bootstrap";
 import Carousel from "../../components/Carousel/Carousel";
-import { AiFillHtml5, AiFillStar } from "react-icons/ai";
+import { AiFillStar } from "react-icons/ai";
 import { updateCart, getWishlist } from "../../redux/actions/index";
 import { isAuthorized, decodeToken } from "../../utils/index";
 import { addOrEditCart, removeProductCart } from "../../cart/index";
@@ -78,6 +79,13 @@ export function ProductDetail() {
       });
     }
   }, [dispatch, id]);
+
+  useEffect(() => {
+    dispatch(getProducts());
+    return () => {
+      dispatch(clearDetail());
+    };
+  }, []);
 
   useEffect(() => {
     if (add) {
@@ -225,122 +233,126 @@ export function ProductDetail() {
 
   return (
     <div className="container">
-      <Card>
-        <Card.Body className={styles.container}>
-          <div className={styles.carousel}>
-            <Carousel img={product.image} />
-            {validate && isInWishlist >= 0 && (
-              <button
-                className={styles.fav}
-                onClick={(e) => handleRemoveFavorite(e)}
-              >
-                <BsHeartFill className={styles.removefav} />
-              </button>
-            )}
-            {validate && isInWishlist === -1 && (
-              <button
-                className={styles.fav}
-                onClick={(e) => handleAddFavorite(e)}
-              >
-                <BsHeart className={styles.addfav} />
-              </button>
-            )}
-          </div>
-          <div className={styles.info}>
-            <div>
-              <Card.Title className={styles.title}>{product?.name}</Card.Title>
-              <Card.Text className={styles.description}>
-                {product?.description}
-              </Card.Text>
-              <Card.Text className={styles.description}>
-                <p>* {product?.stock} en stock</p>
-              </Card.Text>
-              <ListGroup className="list-group-flush">
-                <ListGroupItem className={styles.price}>
-                  {now === product.offerday ||
-                  now === product.categories?.[0].offerday ? (
-                    product.offer > searchOffer(product.categories) ? (
-                      <div>
-                        <span className={styles.oldprice}>${price}</span>
-                        <span className={styles.descuento}>
-                          ${price - Math.round((price * product.offer) / 100)}
-                        </span>
-                        <span className={styles.porcentaje}>
-                          {product.offer}% OFF
-                        </span>
-                      </div>
-                    ) : searchOffer(product.categories) > 0 ? (
-                      <div>
-                        <span className={styles.oldprice}>${price}</span>
-                        <span className={styles.descuento}>
-                          $
-                          {price -
-                            Math.round(
-                              (price * searchOffer(product.categories)) / 100
-                            )}
-                        </span>
-                        <span className={styles.porcentaje}>
-                          {product.categories?.[0].offer}% OFF
-                        </span>
-                      </div>
+      {id ? (
+        <Card>
+          <Card.Body className={styles.container}>
+            <div className={styles.carousel}>
+              <Carousel img={product.image} />
+              {validate && isInWishlist >= 0 && (
+                <button
+                  className={styles.fav}
+                  onClick={(e) => handleRemoveFavorite(e)}
+                >
+                  <BsHeartFill className={styles.removefav} />
+                </button>
+              )}
+              {validate && isInWishlist === -1 && (
+                <button
+                  className={styles.fav}
+                  onClick={(e) => handleAddFavorite(e)}
+                >
+                  <BsHeart className={styles.addfav} />
+                </button>
+              )}
+            </div>
+            <div className={styles.info}>
+              <div>
+                <Card.Title className={styles.title}>
+                  {product?.name}
+                </Card.Title>
+                <Card.Text className={styles.description}>
+                  {product?.description}
+                </Card.Text>
+                <Card.Text className={styles.description}>
+                  <p>* {product?.stock} en stock</p>
+                </Card.Text>
+                <ListGroup className="list-group-flush">
+                  <ListGroupItem className={styles.price}>
+                    {now === product.offerday ||
+                    now === product.categories?.[0].offerday ? (
+                      product.offer > searchOffer(product.categories) ? (
+                        <div>
+                          <span className={styles.oldprice}>${price}</span>
+                          <span className={styles.descuento}>
+                            ${price - Math.round((price * product.offer) / 100)}
+                          </span>
+                          <span className={styles.porcentaje}>
+                            {product.offer}% OFF
+                          </span>
+                        </div>
+                      ) : searchOffer(product.categories) > 0 ? (
+                        <div>
+                          <span className={styles.oldprice}>${price}</span>
+                          <span className={styles.descuento}>
+                            $
+                            {price -
+                              Math.round(
+                                (price * searchOffer(product.categories)) / 100
+                              )}
+                          </span>
+                          <span className={styles.porcentaje}>
+                            {product.categories?.[0].offer}% OFF
+                          </span>
+                        </div>
+                      ) : (
+                        <div>
+                          <span>${price}</span>
+                        </div>
+                      )
                     ) : (
-                      <div>
-                        <span>${price}</span>
-                      </div>
-                    )
-                  ) : (
-                    <div>Precio: ${product?.price} </div>
-                  )}
-                </ListGroupItem>
-                <ListGroupItem>
+                      <div>Precio: ${product?.price} </div>
+                    )}
+                  </ListGroupItem>
+                  <ListGroupItem>
+                    <Button
+                      variant="outline-dark"
+                      onClick={() => {
+                        setLgShow(true);
+                        tickets();
+                      }}
+                    >
+                      <h4 className={styles.opinions}>
+                        Opiniones sobre el producto
+                      </h4>
+                    </Button>{" "}
+                  </ListGroupItem>
+                </ListGroup>
+              </div>
+              <div>
+                {isInStore.length === 0 && stock > 0 && (
                   <Button
-                    variant="outline-dark"
-                    onClick={() => {
-                      setLgShow(true);
-                      tickets();
-                    }}
+                    variant="dark"
+                    className={styles.addcart}
+                    type="submit"
+                    onClick={(e) => handleAddToCart(e)}
                   >
-                    <h4 className={styles.opinions}>
-                      Opiniones sobre el producto
-                    </h4>
-                  </Button>{" "}
-                </ListGroupItem>
-              </ListGroup>
+                    Agregar al carrito
+                  </Button>
+                )}
+                {isInStore.length > 0 && stock > 0 && (
+                  <Button
+                    variant="secondary"
+                    className={styles.removecart}
+                    type="submit"
+                    onClick={(e) => handleRemoveFromCart(e)}
+                  >
+                    Eliminar del carrito
+                  </Button>
+                )}
+                {stock === 0 && (
+                  <Button
+                    variant="secondary"
+                    className={styles.removecart}
+                    disabled
+                  >
+                    sin stock
+                  </Button>
+                )}
+              </div>
             </div>
-            <div>
-              {isInStore.length === 0 && stock > 0 && (
-                <Button
-                  variant="dark"
-                  className={styles.addcart}
-                  type="submit"
-                  onClick={(e) => handleAddToCart(e)}
-                >
-                  Agregar al carrito
-                </Button>
-              )}
-              {isInStore.length > 0 && stock > 0 && (
-                <Button
-                  variant="secondary"
-                  className={styles.removecart}
-                  type="submit"
-                  onClick={(e) => handleRemoveFromCart(e)}
-                >
-                  Eliminar del carrito
-                </Button>
-              )}
-              {stock === 0 && (
-                <Button
-                  variant="secondary"
-                  className={styles.removecart}
-                  disabled
-                >
-                  sin stock
-                </Button>
-              )}
-            </div>
-          </div>
-        </Card.Body>
-      </Card>
+          </Card.Body>
+        </Card>
+      ) : <div className={styles.loading}></div>}
       <Modal
         size="lg"
         show={lgShow}
@@ -425,10 +437,12 @@ export function ProductDetail() {
           </div>
         )}
       </Modal>
-      <div className={styles.recommendend}>
-        <h3>Podría interesarte</h3>
-        <Recommendend />
-      </div>
+      {validate && (
+        <div className={styles.recommendend}>
+          <h3>Podría interesarte</h3>
+          <Recommendend />
+        </div>
+      )}
     </div>
   );
 }
