@@ -164,7 +164,7 @@ class OrderModel extends Modelo {
         contactName,
         contactSurname,
         info: info,
-        local,
+        local: req.body.store 
         //date: Date().slice(0, 10).replace(/-/g, "/"),
       });
       for (let i = 0; i < products.length; i++) {
