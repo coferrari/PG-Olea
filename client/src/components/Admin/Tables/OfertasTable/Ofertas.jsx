@@ -27,6 +27,7 @@ function Ofertas() {
     };
     let fecha = offerday;
     offerProduct(res, fecha);
+    swal("Descuento eliminado");
   };
 
   const handleClickCategory = (e, offerday, offer, id) => {
@@ -38,7 +39,7 @@ function Ofertas() {
     };
     let fecha = offerday;
     offerCategory(res, fecha);
-    swal("Categoria eliminada");
+    swal("Descuento eliminado");
   };
 
   return (
