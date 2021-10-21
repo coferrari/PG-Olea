@@ -22,6 +22,8 @@ function OrderDetail() {
     getOrderIds();
   }, []);
 
+  
+
   return (
     <div className={style.containerAll}>
       {!orderDetail ? (
@@ -76,7 +78,7 @@ function OrderDetail() {
               <tbody>
                 {orderDetail.products?.map((o) => {
                   return (
-                    <tr>
+                    <tr key={o.id}>
                       <td>
                         <Link to={`/product/${o.id}`}>{o.id}</Link>
                       </td>
