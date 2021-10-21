@@ -19,7 +19,7 @@ function Ofertas() {
   }, [value]);
 
   const handleClick = (e, offerday, offer, id) => {
-    e.preventDefault();
+    // e.preventDefault();
     setremovedProduct(true);
     let res = {
       idProduct: id,
@@ -27,11 +27,10 @@ function Ofertas() {
     };
     let fecha = offerday;
     offerProduct(res, fecha);
-    
   };
 
   const handleClickCategory = (e, offerday, offer, id) => {
-    e.preventDefault();
+    // e.preventDefault();
     setRemove(true);
     let res = {
       idCat: id,
@@ -39,6 +38,7 @@ function Ofertas() {
     };
     let fecha = offerday;
     offerCategory(res, fecha);
+    swal("Categoria eliminada");
   };
 
   return (
