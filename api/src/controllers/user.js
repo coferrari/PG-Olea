@@ -215,10 +215,10 @@ userFunction.googleLogin = async (req, res, next) => {
       });
       const token = jwt.sign(
         {
-          name: given_name,
-          username: email,
-          email: email,
-          surname: family_name,
+          name: newUser.name,
+          username: newUser.username,
+          email: newUser.email,
+          surname: newUser.surname,
           picture,
           admin: newUser.admin,
           newsLetter: newUser.newsLetter,
