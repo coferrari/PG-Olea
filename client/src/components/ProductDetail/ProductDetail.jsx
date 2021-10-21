@@ -437,12 +437,12 @@ export function ProductDetail() {
           </div>
         )}
       </Modal>
-      {/* {validate && ( */}
+      {validate && (
         <div className={styles.recommendend}>
           <h3>Podría interesarte</h3>
           <Recommendend />
         </div>
-      {/* )} */}
+      )}
     </div>
   );
 }
