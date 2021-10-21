@@ -11,7 +11,7 @@ export default function ReviewsTable() {
   const [reviews, setReviews] = useState();
   const { productid } = useParams();
   const review = async () => {
-    const res = await axios.get(GET_REVIEWS + productid, {
+    const res = await axios.get(GET_REVIEWS + "/" + productid, {
       headers: {
         authorization: getToken(),
       },
@@ -32,7 +32,7 @@ export default function ReviewsTable() {
           label: "Si",
           onClick: async () => {
             swal("Esta review ha sido eliminado");
-            await axios.delete(GET_REVIEWS + id, {
+            await axios.delete(GET_REVIEWS + "/" + id, {
               headers: {
                 authorization: getToken(),
               },

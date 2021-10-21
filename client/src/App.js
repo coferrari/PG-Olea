@@ -101,7 +101,9 @@ function App() {
         <Route exact path="/createreview/:productid">
           <Review />
         </Route>
-        <Route exact path="/admin/reviews/:productid"></Route>
+        <Route exact path="/admin/reviews/:productid">
+          {loggedIn.admin ? <ReviewsTable /> : <Redirect to="/home" />}
+        </Route>
         <Route exact path="/admin/editproduct/:productid">
           {loggedIn.admin ? <EditProduct /> : <Redirect to="/home" />}
         </Route>
@@ -131,10 +133,9 @@ function App() {
         </Route>
         <Route exact path="/chat">
           {loggedIn.admin ? <Chat /> : <Redirect to="/home" />}
-    </Route>
+        </Route>
         <Route exact path="/account/stores">
           {loggedIn.admin ? <Stores /> : <Redirect to="/home" />}
-
         </Route>
         <Route exact path="/account/turns">
           <UserTurn />
