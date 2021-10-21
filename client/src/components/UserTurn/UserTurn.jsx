@@ -7,7 +7,7 @@ import { decodeToken } from "../../utils";
 import { CANCEL_TURN } from "../../consts";
 import swal from "sweetalert";
 import axios from "axios";
-
+import style from "./userturnos.module.css";
 //agregar desde la fecha actual
 
 export default function UserTurn() {
@@ -42,12 +42,15 @@ export default function UserTurn() {
     history.push("/account");
   };
 
+  console.log(turn);
   return (
     <div>
       {!turn?.[1]?.store ? (
         <div>
           <Card>
-            <Card.Title>No hay turnos pendientes</Card.Title>
+            <Card.Title className={style.turnos}>
+              No hay turnos pendientes
+            </Card.Title>
             <Button variant="dark" onClick={backOnClick}>
               Volver
             </Button>

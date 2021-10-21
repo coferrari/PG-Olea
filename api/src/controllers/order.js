@@ -22,6 +22,7 @@ class OrderModel extends Modelo {
   changeStatus = async (req, res, next) => {
     const { estado } = req.body;
     const { id } = req.params;
+
     try {
       let state;
       estado === "approved"
@@ -152,9 +153,10 @@ class OrderModel extends Modelo {
       contactName,
       contactSurname,
       delivery,
-      local
+      local,
     } = req.body;
     let info = delivery === "Envío" ? "en-espera" : "retiro";
+    console.log("delivery", delivery);
     try {
       const ordenCreada = await this.model.create({
         email,
@@ -164,7 +166,7 @@ class OrderModel extends Modelo {
         contactName,
         contactSurname,
         info: info,
-        local: req.body.store 
+        local: req.body.store,
         //date: Date().slice(0, 10).replace(/-/g, "/"),
       });
       for (let i = 0; i < products.length; i++) {
@@ -286,14 +288,14 @@ class OrderModel extends Modelo {
       const order = await this.model.findByPk(orderId);
       order.update({
         status: "finalizada",
-        info: "entregada"
-      })
+        info: "entregada",
+      });
       order.save();
       res.send("Orden seteada a entregada");
-    } catch (error){
+    } catch (error) {
       next(error);
     }
-  }
+  };
 }
 
 const OrderControllers = new OrderModel(Order);
