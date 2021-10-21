@@ -215,10 +215,10 @@ userFunction.googleLogin = async (req, res, next) => {
       });
       const token = jwt.sign(
         {
-          name: given_name,
-          username: email,
-          email: email,
-          surname: family_name,
+          name: newUser.name,
+          username: newUser.username,
+          email: newUser.email,
+          surname: newUser.surname,
           picture,
           admin: newUser.admin,
           newsLetter: newUser.newsLetter,
@@ -237,10 +237,10 @@ userFunction.googleLogin = async (req, res, next) => {
     if (user) {
       const token = jwt.sign(
         {
-          name: given_name,
-          username: email,
-          email: email,
-          surname: family_name,
+          name: user.name,
+          username: user.username,
+          email: user.email,
+          surname: user.surname,
           picture: user.picture,
           admin: user.admin,
           newsLetter: user.newsLetter,

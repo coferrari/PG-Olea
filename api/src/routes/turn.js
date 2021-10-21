@@ -12,6 +12,6 @@ router.post("/", turnControllers.create);
 router.delete("/deleteturn/:id", turnControllers.delete);
 router.get("/getTurnByUser/:username", turnControllers.getTurnByUser);
 router.delete("/cancelturn", turnControllers.cancelTurn);
-router.get("/getAvailableTurns" , turnControllers.getAvailableTurns);
+router.get("/getAvailableTurns", turnControllers.getAvailableTurns);
 
 module.exports = router;

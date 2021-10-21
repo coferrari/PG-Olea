@@ -33,10 +33,9 @@ const Checkout = () => {
     setOrder({
       ...order,
       delivery: e.target.value,
-    })
+    });
     setDelivery(e.target.value);
   };
-
   const getTurns = async () => {
     const turns = await getAvailableTurns();
     setTurnos(turns);
@@ -54,6 +53,7 @@ const Checkout = () => {
       date,
       hour,
     });
+
     setSelectedTurn(e.target.title);
   };
 
@@ -115,14 +115,14 @@ const Checkout = () => {
     email: datosLogin.email,
     price: desc,
     products: itemsCheckout,
-    address: delivery,
+    address: "",
     phone: "",
     contactName: "",
     contactSurname: "",
     store: null,
     date: null,
     hour: null,
-    delivery: ""
+    delivery: "",
   });
 
   let idOrden = "";
@@ -132,13 +132,15 @@ const Checkout = () => {
       return swal("Por favor, completá los datos personales");
     }
     if (!delivery) {
-      swal("Por favor, seleccione una opción de envío");
+      return swal("Por favor, seleccione una opción de envío");
     } else if (delivery === "Envío" && !order.address) {
-      swal("Completá la dirección de envío");
+      return swal("Completá la dirección de envío");
     } else if (delivery === "Envío" && order.address) {
+      console.log("envio", order);
       idOrden = await createOrder(order);
       return dispatch(checkoutMercadoPago(itemsCheckout, idOrden));
     } else if (delivery === "Retiro por local") {
+      console.log("retiro", order);
       idOrden = await createOrder(order);
       return dispatch(checkoutMercadoPago(itemsCheckout, idOrden));
     }

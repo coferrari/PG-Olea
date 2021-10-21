@@ -8,7 +8,8 @@ import { CANCEL_TURN } from "../../consts";
 import { Spinner } from "react-bootstrap";
 import swal from "sweetalert";
 import axios from "axios";
-import style from "../Checkout/CheckoutConfirm.module.css";
+import styles from "../Checkout/CheckoutConfirm.module.css";
+import style from "./userturnos.module.css";
 
 //agregar desde la fecha actual
 
@@ -52,7 +53,7 @@ export default function UserTurn() {
 
   if (loading)
     return (
-      <Spinner className={style.spinner} animation="grow" variant="secondary" />
+      <Spinner className={styles.spinner} animation="grow" variant="secondary" />
     );
 
   return (
@@ -60,7 +61,9 @@ export default function UserTurn() {
       {!turn?.[1]?.store ? (
         <div>
           <Card>
-            <Card.Title>No hay turnos pendientes</Card.Title>
+            <Card.Title className={style.turnos}>
+              <Card.Header>No hay turnos pendientes</Card.Header>
+            </Card.Title>
             <Button variant="dark" onClick={backOnClick}>
               Volver
             </Button>
