@@ -21,7 +21,6 @@ const CheckoutConfirm = () => {
 
   const getOrden = async () => {
     const x = await getOrderDetails(idOrder);
-    console.log(x);
     setOrden(x);
   };
 

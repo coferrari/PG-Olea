@@ -89,7 +89,6 @@
   color: #1c1b1b;
 }
 
-
 .user {
   display: flex;
   flex-direction: column;
@@ -149,9 +148,11 @@
 
 .picker {
   position: absolute;
+  top: 40vh;
 }
 
 .iconprofile {
   font-size: 50px;
   color: grey;
 }
+

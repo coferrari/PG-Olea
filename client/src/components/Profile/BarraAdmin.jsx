@@ -8,6 +8,8 @@ import CreateProduct from "../Admin/CreateProduct/CreateProduct";
 import ProfileAdmin from "../Profile/ProfileAdmin";
 import OrdersTable from "../Admin/Tables/OrdersTable";
 import Stores from "../Admin/Stores/Stores";
+import CreateTurn from "../Admin/Turns/CreateTurn";
+import Turns from "../Admin/Turns/Turns";
 import { Redirect } from "react-router";
 import { Button } from "react-bootstrap";
 
@@ -40,17 +42,29 @@ const BarraAdmin = () => {
         <Tab eventKey="Añadir producto" title="Añadir producto">
           <CreateProduct />
         </Tab>
-        <Tab  eventKey="Locales" title="Locales">
+        <Tab eventKey="Locales" title="Locales">
           <div className={style.containerbotonMisLocales}>
-          <Button className={style.botonMisLocales} variant="dark" href="/account/stores">Mis locales </Button>
+            <Button
+              className={style.botonMisLocales}
+              variant="dark"
+              href="/account/stores"
+            >
+              Mis locales{" "}
+            </Button>
           </div>
         </Tab>
         <Tab eventKey="Ofertas" title="Ofertas">
           <OfertasTable />
-       </Tab>
+        </Tab>
+        <Tab eventKey="Turnos" title="Crear turno">
+          <CreateTurn />
+        </Tab>
+        <Tab eventKey="Turns" title="Turnos">
+          <Turns />
+        </Tab>
         <Tab eventKey="Envios" title="Envios">
           <EnviosAdmin />
-       </Tab>
+        </Tab>
       </Tabs>
     </div>
   );
