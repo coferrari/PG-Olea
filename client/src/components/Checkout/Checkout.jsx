@@ -7,12 +7,12 @@ import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 import { useHistory } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { checkoutMercadoPago } from "../../redux/actions";
+import { getAvailableTurns } from "../../turns/index";
 import { createOrder } from "../../order";
 import style from "./Checkout.module.css";
 import { format } from "../../utils/index";
-import { Card, ListGroup, Form } from "react-bootstrap";
+import { Card, ListGroup, Form, Dropdown } from "react-bootstrap";
 import swal from "sweetalert";
-import { getStores } from "../../redux/actions";
 
 const Checkout = () => {
   const history = useHistory();
@@ -20,25 +20,41 @@ const Checkout = () => {
   const datosLogin = decodeToken();
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getStores());
-  }, [dispatch]);
-
   let linkDePago = useSelector((state) => state.carritoReducer.linkPago);
   const itemsCheckout = useSelector(
     (state) => state.carritoReducer.productsCarrito
   );
-  let stores = useSelector((state) => state.storesReducer.stores);
+
+  const [turnos, setTurnos] = useState();
+  const [selectedTurn, setSelectedTurn] = useState();
   const [delivery, setDelivery] = useState("");
   const handleSelected = (e) => {
     e.preventDefault();
-    setOrder((prevState) => {
-      return {
-        ...prevState,
-        delivery: e.target.value,
-      };
-    });
     setDelivery(e.target.value);
+  };
+
+  const getTurns = async () => {
+    const turns = await getAvailableTurns();
+    setTurnos(turns);
+  };
+
+  useEffect(() => {
+    getTurns();
+  }, []);
+
+  const handleTurn = (e, store, date, hour) => {
+    e.preventDefault();
+    setOrder({
+      ...order,
+      store,
+      date,
+      hour,
+    });
+    setSelectedTurn(e.target.title);
+  };
+
+  const onDeleteX = () => {
+    setSelectedTurn(null);
   };
 
   const desc = itemsCheckout?.reduce((acc, curr) => {
@@ -95,13 +111,15 @@ const Checkout = () => {
     email: datosLogin.email,
     price: desc,
     products: itemsCheckout,
-    delivery: delivery,
-    address: "",
-    local:"",
+    address: delivery,
     phone: "",
     contactName: "",
     contactSurname: "",
+    store: null,
+    date: null,
+    hour: null,
   });
+
   let idOrden = "";
   const handleConfirmOrder = async (e) => {
     e.preventDefault();
@@ -114,10 +132,10 @@ const Checkout = () => {
       swal("Completá la dirección de envío");
     } else if (delivery === "Envío" && order.address) {
       idOrden = await createOrder(order);
-      return dispatch(checkoutMercadoPago([order], idOrden));
+      return dispatch(checkoutMercadoPago(itemsCheckout, idOrden));
     } else if (delivery === "Retiro por local") {
       idOrden = await createOrder(order);
-      return dispatch(checkoutMercadoPago([order], idOrden));
+      return dispatch(checkoutMercadoPago(itemsCheckout, idOrden));
     }
   };
   const handleChange = (e) => {
@@ -127,13 +145,6 @@ const Checkout = () => {
       [e.target.name]: e.target.value,
     });
   };
-  const handleRetiroPorLocal = (e) => {
-    e.preventDefault(e);
-    setOrder({
-      ...order,
-      local: e.target.value,
-    })
-  }
 
   return (
     <div className={style.cnt}>
@@ -231,7 +242,7 @@ const Checkout = () => {
                   name="options"
                 />
                 <label class="btn btn-secondary" for="option2">
-                  Retiro por local
+                  Retiro
                 </label>
               </div>
               <Card.Body className={style.bodyDelivery} eventKey={delivery}>
@@ -253,26 +264,70 @@ const Checkout = () => {
                       />
                     </Form.Group>
                   </div>
-                ) : (delivery === "Retiro por local" ? (
+                ) : (
                   <div className={style.pdn}>
-                    <Card.Title className={style.labels}>
-                      <label>Local: </label>
-                      <select
-                        class="form-select"
-                        aria-label="Default select example"
-                         onChange={(e) => {handleRetiroPorLocal(e)}}
-                      > <option>Seleccioná tu local</option>
-                        {stores && stores.map((s)=>{
-                          return <option value={`${s.address}`}>{s.address}</option>
-                        })}
-                      </select>
-                    </Card.Title>
+                    <Card.Title className={style.labels}>Retiro</Card.Title>
                     <Card.Text className={style.text}>
-                      Horario : Lunes a Viernes 9:30 -12:30, 17:30-19:30 y
-                      Sábado 10-12:30
+                      <div>
+                        {!turnos?.[0] ? (
+                          <div>No hay turnos disponibles</div>
+                        ) : (
+                          <Dropdown className={style.pdn}>
+                            <div>
+                              <Dropdown.Toggle
+                                variant="dark"
+                                id="dropdown-basic"
+                                className={style.toggle}
+                              >
+                                Elegí tu turno
+                              </Dropdown.Toggle>
+                            </div>
+                            <div>
+                              <Dropdown.Menu>
+                                {turnos?.map((t) => {
+                                  return (
+                                    t?.full < 10 && (
+                                      <Dropdown.Item
+                                        align={"center"}
+                                        className={style.item}
+                                        title={`${t?.date} a las ${t?.hour} en ${t?.store}`}
+                                        onClick={(e) => {
+                                          handleTurn(
+                                            e,
+                                            t.store,
+                                            t.date,
+                                            t.hour
+                                          );
+                                        }}
+                                      >
+                                        el {t?.date} a las {t?.hour} en{" "}
+                                        {t?.store}
+                                      </Dropdown.Item>
+                                    )
+                                  );
+                                })}
+                              </Dropdown.Menu>
+                            </div>
+                          </Dropdown>
+                        )}
+                      </div>
+                      <br />
+                      {selectedTurn && (
+                        <div className={style.turno}>
+                          <span className={style.span}>{selectedTurn}</span>
+                          <Button
+                            variant="light"
+                            onClick={() => {
+                              onDeleteX();
+                            }}
+                          >
+                            X
+                          </Button>
+                        </div>
+                      )}
                     </Card.Text>
                   </div>
-                ) : "" )}
+                )}
               </Card.Body>
             </div>
             <Details />
