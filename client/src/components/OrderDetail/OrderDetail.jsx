@@ -56,7 +56,10 @@ function OrderDetail() {
             <ListGroup.Item>
               Monto del pedido: ${orderDetail.price}
             </ListGroup.Item>
-            <ListGroup.Item>Envío : {orderDetail.address}</ListGroup.Item>
+            <ListGroup.Item>Envío: {orderDetail.address}</ListGroup.Item>
+            <ListGroup.Item>
+              Retiro por local: {orderDetail.local}
+            </ListGroup.Item>
           </ListGroup>
           <Card>
             <Card.Header> Productos de la Orden </Card.Header>

@@ -39,51 +39,51 @@ export default function UserTurn() {
   };
 
   const backOnClick = () => {
-    history.push("/");
+    history.push("/account");
   };
 
   return (
     <div>
       {!turn?.[1]?.store ? (
         <div>
-        <Card>
-          <Card.Title>No hay turnos pendientes</Card.Title>
-          <Button variant="dark" onClick={backOnClick}>
-            Volver
-          </Button>
-        </Card>
-        </div>
-      ) : (
-        <div>
-        <Card className="text-center">
-          <Card.Header>Retiro por sucursal</Card.Header>
-          <Card.Body>
-            <Card.Title>Detalles del turno</Card.Title>
-            <Card.Text>
-              <div>Sucursal: {turn[1].store}</div>
-              <div>Fecha: {turn[1].date}</div>
-              <div>Horario: {turn[1].hour}</div>
-            </Card.Text>
-            <Card.Title>Detalles de la compra</Card.Title>
-            <Card.Text>
-              Productos:{" "}
-              {turn?.[0].products?.map((p) => {
-                return (
-                  <div>
-                    {p.name} x {p.Order_Products.quantity}
-                  </div>
-                );
-              })}
-              <div>Total: ${turn[0].price}</div>
-            </Card.Text>
+          <Card>
+            <Card.Title>No hay turnos pendientes</Card.Title>
             <Button variant="dark" onClick={backOnClick}>
               Volver
             </Button>
-            <Button variant="danger" onClick={onClick}>
-              Cancelar turno
-            </Button>
-          </Card.Body>
-        </Card>
+          </Card>
+        </div>
+      ) : (
+        <div>
+          <Card className="text-center">
+            <Card.Header>Retiro por sucursal</Card.Header>
+            <Card.Body>
+              <Card.Title>Detalles del turno</Card.Title>
+              <Card.Text>
+                <div>Sucursal: {turn[1].store}</div>
+                <div>Fecha: {turn[1].date}</div>
+                <div>Horario: {turn[1].hour}</div>
+              </Card.Text>
+              <Card.Title>Detalles de la compra</Card.Title>
+              <Card.Text>
+                Productos:{" "}
+                {turn?.[0].products?.map((p) => {
+                  return (
+                    <div>
+                      {p.name} x {p.Order_Products.quantity}
+                    </div>
+                  );
+                })}
+                <div>Total: ${turn[0].price}</div>
+              </Card.Text>
+              <Button variant="dark" onClick={backOnClick}>
+                Volver
+              </Button>
+              <Button variant="danger" onClick={onClick}>
+                Cancelar turno
+              </Button>
+            </Card.Body>
+          </Card>
         </div>
       )}
     </div>

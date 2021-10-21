@@ -42,9 +42,15 @@ const BarraAdmin = () => {
         <Tab eventKey="Añadir producto" title="Añadir producto">
           <CreateProduct />
         </Tab>
-        <Tab  eventKey="Locales" title="Locales">
+        <Tab eventKey="Locales" title="Locales">
           <div className={style.containerbotonMisLocales}>
-          <Button className={style.botonMisLocales} variant="dark" href="/account/stores">Mis locales </Button>
+            <Button
+              className={style.botonMisLocales}
+              variant="dark"
+              href="/account/stores"
+            >
+              Mis locales{" "}
+            </Button>
           </div>
         </Tab>
         <Tab eventKey="Ofertas" title="Ofertas">
@@ -56,10 +62,9 @@ const BarraAdmin = () => {
         <Tab eventKey="Turns" title="Turnos">
           <Turns />
         </Tab>
-       </Tab>
         <Tab eventKey="Envios" title="Envios">
           <EnviosAdmin />
-       </Tab>
+        </Tab>
       </Tabs>
     </div>
   );

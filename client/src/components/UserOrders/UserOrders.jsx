@@ -87,8 +87,10 @@ const UserOrders = () => {
                     </Button>
                   ) : e.info === "entregada" ? (
                     "Entregada"
-                  ) : (
+                  ) : e.local !== null ? (
                     "Retira por local"
+                  ) : (
+                    e.address
                   )}
                 </td>
               </tr>

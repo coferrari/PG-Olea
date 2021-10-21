@@ -242,7 +242,7 @@ const Checkout = () => {
                   name="options"
                 />
                 <label class="btn btn-secondary" for="option2">
-                  Retiro por local
+                  Retiro
                 </label>
               </div>
               <Card.Body className={style.bodyDelivery} eventKey={delivery}>
@@ -272,41 +272,56 @@ const Checkout = () => {
                         {!turnos?.[0] ? (
                           <div>No hay turnos disponibles</div>
                         ) : (
-                          <Dropdown>
-                            <Dropdown.Toggle variant="dark" id="dropdown-basic">
-                              Elegí tu turno
-                            </Dropdown.Toggle>
-                            <Dropdown.Menu>
-                              {turnos?.map((t) => {
-                                return (
-                                  t?.full < 10 && (
-                                    <Dropdown.Item
-                                      align={"center"}
-                                      title={`el ${t?.date} a las ${t?.hour} en ${t?.store}`}
-                                      onClick={(e) => {
-                                        handleTurn(e, t.store, t.date, t.hour);
-                                      }}
-                                    >
-                                      el {t?.date} a las {t?.hour} en {t?.store}
-                                    </Dropdown.Item>
-                                  )
-                                );
-                              })}
-                            </Dropdown.Menu>
+                          <Dropdown className={style.pdn}>
+                            <div>
+                              <Dropdown.Toggle
+                                variant="dark"
+                                id="dropdown-basic"
+                                className={style.toggle}
+                              >
+                                Elegí tu turno
+                              </Dropdown.Toggle>
+                            </div>
+                            <div>
+                              <Dropdown.Menu>
+                                {turnos?.map((t) => {
+                                  return (
+                                    t?.full < 10 && (
+                                      <Dropdown.Item
+                                        align={"center"}
+                                        className={style.item}
+                                        title={`${t?.date} a las ${t?.hour} en ${t?.store}`}
+                                        onClick={(e) => {
+                                          handleTurn(
+                                            e,
+                                            t.store,
+                                            t.date,
+                                            t.hour
+                                          );
+                                        }}
+                                      >
+                                        el {t?.date} a las {t?.hour} en{" "}
+                                        {t?.store}
+                                      </Dropdown.Item>
+                                    )
+                                  );
+                                })}
+                              </Dropdown.Menu>
+                            </div>
                           </Dropdown>
                         )}
                       </div>
                       <br />
                       {selectedTurn && (
-                        <div>
-                          <span>{selectedTurn}</span>
+                        <div className={style.turno}>
+                          <span className={style.span}>{selectedTurn}</span>
                           <Button
-                            variant="dark"
+                            variant="light"
                             onClick={() => {
                               onDeleteX();
                             }}
                           >
-                            x
+                            X
                           </Button>
                         </div>
                       )}
@@ -373,4 +388,3 @@ const Checkout = () => {
   );
 };
 export default Checkout;
-
