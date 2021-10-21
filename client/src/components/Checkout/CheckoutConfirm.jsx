@@ -3,7 +3,6 @@ import { useLocation, useHistory } from "react-router-dom";
 import { getOrderDetails, changeStatus } from "../../order";
 import { ListGroup, Button, Spinner } from "react-bootstrap";
 import style from "./CheckoutConfirm.module.css";
-import styles from "../OrderDetail/orderdetail.module.css";
 
 const CheckoutConfirm = () => {
   const location = useLocation();
@@ -37,11 +36,13 @@ const CheckoutConfirm = () => {
   return (
     <div>
       {!orden.email ? (
-        <Spinner
-          className={style.spinner}
-          animation="grow"
-          variant="secondary"
-        />
+        <div>
+          <Spinner
+            className={style.spinner}
+            animation="grow"
+            variant="secondary"
+          />
+        </div>
       ) : location.search &&
         location.search.includes("collection_status=approved") ? (
         <div className="container">

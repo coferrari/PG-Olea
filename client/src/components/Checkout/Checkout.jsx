@@ -30,6 +30,10 @@ const Checkout = () => {
   const [delivery, setDelivery] = useState("");
   const handleSelected = (e) => {
     e.preventDefault();
+    setOrder({
+      ...order,
+      delivery: e.target.value,
+    })
     setDelivery(e.target.value);
   };
 
@@ -118,6 +122,7 @@ const Checkout = () => {
     store: null,
     date: null,
     hour: null,
+    delivery: ""
   });
 
   let idOrden = "";
