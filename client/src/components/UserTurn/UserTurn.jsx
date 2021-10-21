@@ -41,15 +41,13 @@ export default function UserTurn() {
   const backOnClick = () => {
     history.push("/account");
   };
-
-  console.log(turn);
   return (
     <div>
       {!turn?.[1]?.store ? (
         <div>
           <Card>
             <Card.Title className={style.turnos}>
-              No hay turnos pendientes
+              <Card.Header>No hay turnos pendientes</Card.Header>
             </Card.Title>
             <Button variant="dark" onClick={backOnClick}>
               Volver
