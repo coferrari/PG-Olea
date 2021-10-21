@@ -52,6 +52,7 @@ const Checkout = () => {
       date,
       hour,
     });
+
     setSelectedTurn(e.target.title);
   };
 

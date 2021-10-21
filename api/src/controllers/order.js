@@ -183,7 +183,6 @@ class OrderModel extends Modelo {
       }
       const user = await User.findByPk(username);
       await user.addOrder(ordenCreada.id);
-
       if (req.body.store && req.body.date && req.body.hour) {
         const turn = await Turn.findOne({
           where: {
@@ -192,6 +191,7 @@ class OrderModel extends Modelo {
             hour: req.body.hour,
           },
         });
+        console.log("estoy en turno", turn);
         ordenCreada.setTurn(turn.dataValues.id);
         await turn.increment({
           full: +1,
