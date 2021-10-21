@@ -5,13 +5,17 @@ import { Card, Button } from "react-bootstrap";
 import { getTurnByUser } from "../../turns/index";
 import { decodeToken } from "../../utils";
 import { CANCEL_TURN } from "../../consts";
+import { Spinner } from "react-bootstrap";
 import swal from "sweetalert";
 import axios from "axios";
+import styles from "../Checkout/CheckoutConfirm.module.css";
 import style from "./userturnos.module.css";
+
 //agregar desde la fecha actual
 
 export default function UserTurn() {
   const [turn, setTurn] = useState();
+  const [loading, setLoading] = useState(true);
   const history = useHistory();
 
   const getTurnUser = async () => {
@@ -22,7 +26,12 @@ export default function UserTurn() {
 
   useEffect(() => {
     getTurnUser();
-  }, []);
+    if (loading) {
+      setTimeout(() => {
+        setLoading(false);
+      }, 1500);
+    }
+  }, [loading]);
 
   const onClick = async () => {
     await axios.delete(CANCEL_TURN, {
@@ -41,6 +50,12 @@ export default function UserTurn() {
   const backOnClick = () => {
     history.push("/account");
   };
+
+  if (loading)
+    return (
+      <Spinner className={styles.spinner} animation="grow" variant="secondary" />
+    );
+
   return (
     <div>
       {!turn?.[1]?.store ? (

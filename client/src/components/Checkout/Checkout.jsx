@@ -29,6 +29,7 @@ const Checkout = () => {
   const [selectedTurn, setSelectedTurn] = useState();
   const [delivery, setDelivery] = useState("");
   const handleSelected = (e) => {
+    e.preventDefault();
     setOrder({
       ...order,
       delivery: e.target.value,
