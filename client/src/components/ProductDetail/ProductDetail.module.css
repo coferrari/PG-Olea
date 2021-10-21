@@ -127,3 +127,7 @@
   color: rgb(29, 182, 29);
   font-size: 0.9rem;
 }
+
+.loading {
+  height: 65vh;
+}
