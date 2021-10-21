@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { getOrderDetails } from "../../order/index";
-import { ListGroup, Button, Table, Card } from "react-bootstrap";
+import { ListGroup, Button, Table, Card, Spinner } from "react-bootstrap";
 import style from "./orderdetail.module.css";
 import CardHeader from "react-bootstrap/esm/CardHeader";
 import { useLocation, useHistory } from "react-router";
 import { Link } from "react-router-dom";
+import styles from "../Checkout/CheckoutConfirm.module.css";
 
 function OrderDetail() {
   const [orderDetail, setOrderDetail] = useState();
+  const [loading, setLoading] = useState(true);
 
   const location = useLocation();
   const id = location.pathname.split("/")[2];
@@ -20,9 +22,21 @@ function OrderDetail() {
 
   useEffect(() => {
     getOrderIds();
-  }, []);
+    if (loading) {
+      setTimeout(() => {
+        setLoading(false);
+      }, 1500);
+    }
+  }, [loading]);
 
-  
+  if (loading)
+    return (
+      <Spinner
+        className={styles.spinner}
+        animation="grow"
+        variant="secondary"
+      />
+    );
 
   return (
     <div className={style.containerAll}>

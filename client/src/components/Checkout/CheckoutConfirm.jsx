@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useHistory } from "react-router-dom";
 import { getOrderDetails, changeStatus } from "../../order";
 import { ListGroup, Button, Spinner } from "react-bootstrap";
-import style from "./CheckoutConfirm.module.css"
+import style from "./CheckoutConfirm.module.css";
+import styles from "../OrderDetail/orderdetail.module.css";
 
 const CheckoutConfirm = () => {
   const location = useLocation();
   const history = useHistory();
   const datosPago = location.search.split("&");
+  const [loading, setLoading] = useState(true);
 
   //ESTADO DE PAGO
   const status = datosPago[3].split("=");
@@ -27,16 +29,29 @@ const CheckoutConfirm = () => {
   useEffect(async () => {
     await changeStatus(statusPago, idOrder);
     getOrden();
-  }, []);
+    if (loading) {
+      setTimeout(() => {
+        setLoading(false);
+      }, 1500);
+    }
+  }, [loading]);
 
   function onClick() {
     history.push("/home");
   }
 
+  if (loading)
+    return (
+      <Spinner className={style.spinner} animation="grow" variant="secondary" />
+    );
+
   return (
     <div>
       {!orden.email ? (
-        <Spinner className={style.spinner}  animation="border" variant="secondary"  />
+        <div>
+          <h1 className={styles.h1}>Ups, ocurrió un erorr</h1>
+          <h1 className={styles.h1}>Ups, no se encontró la orden</h1>
+        </div>
       ) : location.search &&
         location.search.includes("collection_status=approved") ? (
         <div className="container">
