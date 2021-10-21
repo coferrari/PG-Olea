@@ -109,7 +109,7 @@ newsLetter.sendOffersToWishlistUsers = async (req, res, next) => {
     const wishlistFiltered = wishlists.filter((w) =>
       w.products.find((p) => p.id == product)
     );
-    console.log("wishlist filtrada", wishlistFiltered);
+
     for (let i = 0; i < wishlistFiltered.length; i++) {
       const userSuscribe = await User.findOne({
         where: {

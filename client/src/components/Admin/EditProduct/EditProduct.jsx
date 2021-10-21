@@ -36,7 +36,6 @@ export default function EditProduct() {
 
   const handleSubmit = async (e) => {
     {
-      console.log("new product", newProduct);
       e.preventDefault();
       newProduct.stock &&
         (await editStock({

@@ -161,7 +161,7 @@ const getTemplateCategoryLetter = (name, fecha, category, offert, token) => {
   `;
 };
 const getTemplateProductLetterWishlist = (name, fecha, product, offer) => {
-   return `<head>
+  return `<head>
       <link rel="stylesheet" href="./style.css">
   </head>
   <div id="email___content">
@@ -205,5 +205,5 @@ module.exports = {
   getTemplateEnvio,
   getTemplateEnCamino,
   getTemplateCategoryLetter,
-  getTemplateProductLetterWishlist
+  getTemplateProductLetterWishlist,
 };

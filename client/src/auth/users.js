@@ -62,7 +62,6 @@ export const updateProfile = async (usuario) => {
   localStorage.setItem("token", tokenRefresh.data.data.token);
 };
 export const suscribeNewsLetter = async (email) => {
-  console.log(email);
   const res = await axios.post(
     `/api/news/suscribe`,
     { email: email },

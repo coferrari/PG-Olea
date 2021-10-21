@@ -22,7 +22,9 @@ class CategoryModel extends Modelo {
           model: Category,
         },
       });
-      const productsFiltered = products.filter(p => p.categories.find(c => c.nameCategory === req.params.category));
+      const productsFiltered = products.filter((p) =>
+        p.categories.find((c) => c.nameCategory === req.params.category)
+      );
       res.send(productsFiltered);
     } catch (error) {
       next(error);
@@ -31,7 +33,7 @@ class CategoryModel extends Modelo {
   updateName = async (req, res, next) => {
     const { id } = req.params;
     const { nameCategory } = req.body;
-    console.log(id);
+
     try {
       const category = await Category.findByPk(id);
       category.nameCategory = nameCategory;
@@ -83,7 +85,7 @@ class CategoryModel extends Modelo {
   };
   inOffer = async (req, res, next) => {
     const { categoryID, inOffer, offerDay } = req.body;
-    console.log(categoryID, inOffer, offerDay);
+
     try {
       const category = await this.model.findByPk(categoryID);
       await category.update({

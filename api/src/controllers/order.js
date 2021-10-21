@@ -156,7 +156,7 @@ class OrderModel extends Modelo {
       local,
     } = req.body;
     let info = delivery === "Envío" ? "en-espera" : "retiro";
-    console.log("delivery", delivery);
+
     try {
       const ordenCreada = await this.model.create({
         email,
@@ -191,7 +191,7 @@ class OrderModel extends Modelo {
             hour: req.body.hour,
           },
         });
-        console.log("estoy en turno", turn);
+
         ordenCreada.setTurn(turn.dataValues.id);
         await turn.increment({
           full: +1,
