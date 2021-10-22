@@ -15,21 +15,15 @@
   padding-top: 2%;
   padding-bottom: 2%;
 }
-.grid {
-  padding-top: 5%;
+.flex {
+  padding-top: 4.5%;
+  display: flex;
+  flex-wrap: wrap;
 }
 .stores {
-  margin-right: 2%;
-  width: 180px;
-  text-align: center;
-}
-.btngrid {
-  text-align: center;
-  font-size: xx-small;
-  float: right;
-  width: 2%;
-  height: 10%;
-}
-.x {
-  text-align: center;
+  width: 330px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
