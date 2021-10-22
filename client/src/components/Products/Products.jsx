@@ -1,17 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { Product } from "../Product/Product";
 import styles from "./Products.module.css";
+import styles2 from "../Checkout/CheckoutConfirm.module.css";
 import { Pagination } from "../Pagination/Pagination";
-// import Pagination from 'react-responsive-pagination';
+import { Spinner } from "react-bootstrap";
 
 export default function Products({ products }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [elementsPerPage, setElementsPerPage] = useState(12);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     window.screen.width < 500 && setElementsPerPage(6);
     window.screen.width > 1400 && setElementsPerPage(15);
-  }, [window.screen.width]);
+    if (loading) {
+      setTimeout(() => {
+        setLoading(false);
+      }, 1500);
+    }
+  }, [window.screen.width, loading]);
 
   // PARA PAGINAR ----------------------------------------------------------
 
@@ -24,6 +31,11 @@ export default function Products({ products }) {
   );
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  if (loading)
+  return (
+    <Spinner className={styles2.spinner} animation="grow" variant="secondary" />
+  );
 
   return (
     <div>

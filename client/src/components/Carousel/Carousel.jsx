@@ -1,20 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getProducts } from "../../redux/actions/index";
+import { useSelector } from "react-redux";
 import { Container } from "react-bootstrap";
 import styles from "./Carousel.module.css";
 import { Carousel } from "react-bootstrap";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 
 export default function Carousell({ img }) {
-  const dispatch = useDispatch();
+
   const products = useSelector((state) => state.productsReducer.products);
-
   const [product, setProduct] = useState(0);
-
-  useEffect(() => {
-    dispatch(getProducts());
-  }, [dispatch]);
 
   const newItemProducts = img
     ? img
@@ -39,8 +33,8 @@ export default function Carousell({ img }) {
             {img?.map((p, i) => {
               if (product === i) {
                 return (
-                  <div className={styles.imgs}>
-                    <img className={styles.img} key={i} variant="top" src={p} />
+                  <div className={styles.imgs} key={i} >
+                    <img className={styles.img} variant="top" src={p} />
                   </div>
                 );
               } else return "";
