@@ -214,26 +214,28 @@ function Stores() {
                 </div>
               </div>
             }
-            <div className={style.grid}>
+            <div className={style.flex}>
               <Row xs={1} md={2} className="g-4">
                 {stores.map((e) => {
                   return (
                     <div className={style.stores}>
-                      <label>{e.address}</label>
-                      <Button
-                        variant="danger"
-                        className={style.btngrid}
-                        onClick={async () => {
-                          await axios.delete(STORES_URL + "/" + e.id, {
-                            headers: {
-                              authorization: getToken(),
-                            },
-                          });
-                          await dispatch(getStores());
-                        }}
-                      >
-                        <div className={style.x}>x</div>
-                      </Button>
+                      <div>
+                        <label>{e.address}</label>
+                        <Button
+                          className={style.x}
+                          variant="danger"
+                          onClick={async () => {
+                            await axios.delete(STORES_URL + "/" + e.id, {
+                              headers: {
+                                authorization: getToken(),
+                              },
+                            });
+                            await dispatch(getStores());
+                          }}
+                        >
+                          X
+                        </Button>
+                      </div>
                       <Map position={e.location} address={e.address} />
                     </div>
                   );
