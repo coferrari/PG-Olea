@@ -5,7 +5,7 @@ const userMockUp = async () => {
   const hashedPasswordA = await bcrypt.hash("123Usuario", 12);
   try {
     const franco = await User.create({
-      name: "Probando Usuario",
+      name: "Franco",
       username: "Franco",
       email: "user@email.com",
       password: hashedPasswordA,
