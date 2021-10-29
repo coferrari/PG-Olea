@@ -43,7 +43,6 @@ const userMockUp = async () => {
     console.log(e.message);
   }
 };
-
 const adminMockUp = async () => {
   const hashedPasswordB = await bcrypt.hash("Henry2021", 12);
   try {
